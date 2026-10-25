@@ -18,7 +18,7 @@ const news = [
     title: "Demo post with a video",
     original_title: "Demo post with a video",
     summary: "Bài viết mẫu dùng cho kiểm thử, có video minh họa.",
-    body: "Đoạn mở đầu của bài mẫu.\n\n## Điểm chính\n\n- Ý thứ nhất\n- Ý thứ hai",
+    body: "Đoạn mở đầu của bài mẫu.\n\n{{figure:1}}\n\n## Điểm chính\n\n- Ý thứ nhất\n- Ý thứ hai",
     text_en: {
       title: "Demo post with a video (English)",
       summary: "A sample post for tests, with a video.",
@@ -37,6 +37,19 @@ const news = [
       credit_url: "https://example.com/demo-video-post",
       rights: "permission_pending",
     },
+    figures: [
+      {
+        id: IMAGE_ID,
+        url: `/api/v1/media/${IMAGE_ID}`,
+        width: 16,
+        height: 9,
+        alt: "Hình trong bài mẫu",
+        caption: "Chú thích hình trong bài",
+        credit: "Demo Lab",
+        credit_url: "https://example.com/demo-video-post",
+        rights: "permission_pending",
+      },
+    ],
     links: [
       { kind: "paper", label: "Demo paper", url: "https://example.com/paper" },
     ],
@@ -67,6 +80,7 @@ const news = [
     language: "vi",
     ai_assisted: false,
     image: null,
+    figures: [],
     links: [],
     category: "industrial",
     region: "vietnam",
@@ -133,6 +147,7 @@ createServer(async (req, res) => {
         "editor_note",
         "fetched_at",
         "body",
+        "figures",
         "links",
       ]) {
         delete card[key];

@@ -1,5 +1,5 @@
 {
-  "description": "Rows approved (Duyệt) in the news sheet 'Tin tức CV 2026-10-25', exported 2026-10-25. Post text (Vietnamese and English) is written by VietnamCV from each source with AI assistance, never the full article. Images given by url are the source's own lead image, shown with credit; their rights stay permission_pending until the owner agrees (ADR-010). Images given by file are VietnamCV's own illustrations.",
+  "description": "Rows approved (Duyệt) in the news sheet 'Tin tức CV 2026-10-25', exported 2026-10-25. Post text (Vietnamese and English) is written by VietnamCV from each source with AI assistance, never the full article. Images given by url are the source's own images (the lead image and, under figures, the images inside the article), shown with credit; their rights stay permission_pending until the owner agrees (ADR-010). Images given by file are VietnamCV's own illustrations.",
   "sources": [
     {
       "code": "vnexpress",
@@ -58,12 +58,12 @@
         "vi": {
           "title": "AI Việt giải bài toán vận hành từ sản xuất đến dịch vụ",
           "summary": "Ở vòng sơ khảo Âu Lạc Grand Prize 2026, đội ViCore dùng ảnh sản phẩm đạt chuẩn làm mẫu để phát hiện lỗi trên dây chuyền, kể cả lỗi hiếm chưa có ảnh huấn luyện. Nhiều đội khác mang đến giải pháp cho robot, trạm sạc xe điện, vận hành hệ thống IT và kho lưu trữ video.",
-          "body": "Vòng sơ khảo giải Âu Lạc Grand Prize 2026 quy tụ nhiều đội Việt Nam mang AI vào các bài toán vận hành cụ thể trong sản xuất, năng lượng, vận hành hệ thống công nghệ thông tin và truyền thông. Phần đáng chú ý với cộng đồng thị giác máy tính là cách các đội dùng camera để kiểm tra chất lượng và điều khiển robot.\n\n## ViCore: tìm lỗi bằng cách học sản phẩm đạt chuẩn\n\nBài toán ViCore chọn là dây chuyền sản xuất thước đo, nơi sản phẩm chạy với tốc độ khoảng 100 mét mỗi phút. Lỗi xuất hiện ở nhiều vị trí, với nhiều hình dạng, và có những loại lỗi hiếm mà nhà máy gần như không có ảnh để huấn luyện mô hình.\n\nThay vì dạy mô hình nhận từng loại lỗi, nhóm lấy ảnh các sản phẩm đạt chuẩn làm mẫu, rồi đánh dấu những vùng khác thường so với mẫu. Đây là hướng phát hiện bất thường (anomaly detection) quen thuộc trong kiểm tra công nghiệp, phù hợp khi dữ liệu lỗi khan hiếm. Đội cũng có ứng dụng theo dõi thao tác lắp ráp qua camera để cảnh báo khi công nhân bỏ sót hoặc làm sai thứ tự một bước, và ứng dụng nhận diện hình ảnh hướng dẫn robot gắp, đặt và cấp phôi. Thành viên ViCore là kỹ sư tự động hóa, xuất phát từ chính những vấn đề gặp ở xưởng.\n\n## Các đội khác\n\n- 1Robot tự phát triển phần mềm điều phối robot của nhiều hãng, trong đó có kỹ thuật định vị xe bằng cách đối chiếu ảnh camera với bản đồ.\n- Volterra dự báo nhu cầu sạc, điện mặt trời và năng lượng lưu trữ để phân bổ công suất cho trạm sạc xe điện.\n- CloudThinker VibeOps dùng tác tử AI đọc dữ liệu giám sát và gợi ý nguyên nhân sự cố; trong một số trường hợp đội trình diễn, bước điều tra mất khoảng 3 đến 5 phút. Kỹ sư vẫn là người quyết định cách xử lý.\n- CMC Video Miner phân tích hình ảnh, lời nói và nội dung video để tìm đoạn tư liệu theo câu hỏi bằng ngôn ngữ tự nhiên, đã thử nghiệm với kho lưu trữ của một đài truyền hình.\n\nÂu Lạc Grand Prize có giải thưởng 1 triệu USD, do Liên minh AI Âu Lạc khởi xướng và FPT tài trợ, dự kiến trao ba năm liên tiếp từ 2026."
+          "body": "Vòng sơ khảo giải Âu Lạc Grand Prize 2026 quy tụ nhiều đội Việt Nam mang AI vào các bài toán vận hành cụ thể trong sản xuất, năng lượng, vận hành hệ thống công nghệ thông tin và truyền thông. Phần đáng chú ý với cộng đồng thị giác máy tính là cách các đội dùng camera để kiểm tra chất lượng và điều khiển robot.\n\n## ViCore: tìm lỗi bằng cách học sản phẩm đạt chuẩn\n\nBài toán ViCore chọn là dây chuyền sản xuất thước đo, nơi sản phẩm chạy với tốc độ khoảng 100 mét mỗi phút. Lỗi xuất hiện ở nhiều vị trí, với nhiều hình dạng, và có những loại lỗi hiếm mà nhà máy gần như không có ảnh để huấn luyện mô hình.\n\nThay vì dạy mô hình nhận từng loại lỗi, nhóm lấy ảnh các sản phẩm đạt chuẩn làm mẫu, rồi đánh dấu những vùng khác thường so với mẫu. Đây là hướng phát hiện bất thường (anomaly detection) quen thuộc trong kiểm tra công nghiệp, phù hợp khi dữ liệu lỗi khan hiếm. Đội cũng có ứng dụng theo dõi thao tác lắp ráp qua camera để cảnh báo khi công nhân bỏ sót hoặc làm sai thứ tự một bước, và ứng dụng nhận diện hình ảnh hướng dẫn robot gắp, đặt và cấp phôi. Thành viên ViCore là kỹ sư tự động hóa, xuất phát từ chính những vấn đề gặp ở xưởng.\n\n{{figure:1}}\n\n## Các đội khác\n\n- 1Robot tự phát triển phần mềm điều phối robot của nhiều hãng, trong đó có kỹ thuật định vị xe bằng cách đối chiếu ảnh camera với bản đồ.\n- Volterra dự báo nhu cầu sạc, điện mặt trời và năng lượng lưu trữ để phân bổ công suất cho trạm sạc xe điện.\n- CloudThinker VibeOps dùng tác tử AI đọc dữ liệu giám sát và gợi ý nguyên nhân sự cố; trong một số trường hợp đội trình diễn, bước điều tra mất khoảng 3 đến 5 phút. Kỹ sư vẫn là người quyết định cách xử lý.\n- CMC Video Miner phân tích hình ảnh, lời nói và nội dung video để tìm đoạn tư liệu theo câu hỏi bằng ngôn ngữ tự nhiên, đã thử nghiệm với kho lưu trữ của một đài truyền hình.\n\n{{figure:2}}\n\n{{figure:3}}\n\n{{figure:4}}\n\nÂu Lạc Grand Prize có giải thưởng 1 triệu USD, do Liên minh AI Âu Lạc khởi xướng và FPT tài trợ, dự kiến trao ba năm liên tiếp từ 2026."
         },
         "en": {
           "title": "Vietnamese AI teams tackle operations from factory floor to services",
           "summary": "In the preliminary round of the Âu Lạc Grand Prize 2026, team ViCore uses images of good products as the reference to spot defects on a production line, including rare defects with no training images. Other teams showed solutions for robots, EV charging, IT operations and video archives.",
-          "body": "The preliminary round of the Âu Lạc Grand Prize 2026 brought together Vietnamese teams applying AI to concrete operational problems in manufacturing, energy, IT operations and media. For the computer vision community, the interesting part is how teams use cameras for quality inspection and robot guidance.\n\n## ViCore: finding defects by learning what good looks like\n\nViCore's example is a production line for measuring rulers, where products move at about 100 metres per minute. Defects vary in position and shape, and some rare defect types have almost no images to train a model on.\n\nInstead of teaching a model every defect type, the team uses images of products made correctly as the reference and flags regions that differ from it. This is the anomaly-detection approach common in industrial inspection, and it suits cases where defect data is scarce. The team also has a camera app that watches assembly and warns workers when a step is skipped or done out of order, and an image-recognition app that guides robots to pick, place and feed parts. ViCore's members are automation engineers who started from problems they met on the factory floor.\n\n## Other teams\n\n- 1Robot built its own software to coordinate robots from different makers, including a technique that localizes vehicles by matching camera images against a map.\n- Volterra forecasts charging demand, solar output and stored energy to allocate power at EV charging stations.\n- CloudThinker VibeOps uses AI agents that read monitoring data and suggest the likely cause of an incident; in some cases the team showed, the investigation took about 3 to 5 minutes. Engineers still decide how to fix it.\n- CMC Video Miner analyses images, speech and content in video to find footage from natural-language questions, and has been piloted with a TV station's archive.\n\nThe Âu Lạc Grand Prize carries a USD 1 million award. It was initiated by the Âu Lạc AI Alliance, is sponsored by FPT, and is planned for three consecutive years from 2026."
+          "body": "The preliminary round of the Âu Lạc Grand Prize 2026 brought together Vietnamese teams applying AI to concrete operational problems in manufacturing, energy, IT operations and media. For the computer vision community, the interesting part is how teams use cameras for quality inspection and robot guidance.\n\n## ViCore: finding defects by learning what good looks like\n\nViCore's example is a production line for measuring rulers, where products move at about 100 metres per minute. Defects vary in position and shape, and some rare defect types have almost no images to train a model on.\n\nInstead of teaching a model every defect type, the team uses images of products made correctly as the reference and flags regions that differ from it. This is the anomaly-detection approach common in industrial inspection, and it suits cases where defect data is scarce. The team also has a camera app that watches assembly and warns workers when a step is skipped or done out of order, and an image-recognition app that guides robots to pick, place and feed parts. ViCore's members are automation engineers who started from problems they met on the factory floor.\n\n{{figure:1}}\n\n## Other teams\n\n- 1Robot built its own software to coordinate robots from different makers, including a technique that localizes vehicles by matching camera images against a map.\n- Volterra forecasts charging demand, solar output and stored energy to allocate power at EV charging stations.\n- CloudThinker VibeOps uses AI agents that read monitoring data and suggest the likely cause of an incident; in some cases the team showed, the investigation took about 3 to 5 minutes. Engineers still decide how to fix it.\n- CMC Video Miner analyses images, speech and content in video to find footage from natural-language questions, and has been piloted with a TV station's archive.\n\n{{figure:2}}\n\n{{figure:3}}\n\n{{figure:4}}\n\nThe Âu Lạc Grand Prize carries a USD 1 million award. It was initiated by the Âu Lạc AI Alliance, is sponsored by FPT, and is planned for three consecutive years from 2026."
         }
       },
       "ai_assisted": true,
@@ -87,7 +87,49 @@
         "credit": "VnExpress",
         "credit_url": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
         "rights": "permission_pending"
-      }
+      },
+      "figures": [
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/22/c1-1792657429-4122-1792662850.png?w=1020&h=0&q=100&dpr=1&fit=crop&s=ZALm28FTOedhp113Dfgfaw",
+          "alt": "Dây chuyền sản xuất thước đo với vùng lỗi được đánh dấu",
+          "alt_en": "Ruler production line with a defect region highlighted",
+          "caption": "Tình huống phát hiện lỗi trên dây chuyền sản xuất thước đo mà đại diện ViCore nêu tại vòng sơ khảo Âu Lạc Grand Prize 2026.",
+          "caption_en": "A defect-detection case on a ruler production line that ViCore presented at the Âu Lạc Grand Prize 2026 preliminary round.",
+          "credit": "ViCore / VnExpress",
+          "credit_url": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/22/c2-1792657429-5767-1792662850.png?w=1020&h=0&q=100&dpr=1&fit=crop&s=dTSL8tseMbxEwcr6LQzYDw",
+          "alt": "Giao diện phần mềm điều phối robot của 1Robot",
+          "alt_en": "1Robot's robot coordination software",
+          "caption": "Phần mềm của 1Robot giao nhiệm vụ và theo dõi hoạt động của robot từ nhiều hãng khác nhau.",
+          "caption_en": "1Robot's software assigns tasks to and monitors robots from different makers.",
+          "credit": "1Robot / VnExpress",
+          "credit_url": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/22/c3-1792657430-5229-1792662850.png?w=1020&h=0&q=100&dpr=1&fit=crop&s=l_KlUKHPT2kx7-zFFGvaUw",
+          "alt": "Giao diện CloudThinker VibeOps phân tích sự cố",
+          "alt_en": "CloudThinker VibeOps incident analysis screen",
+          "caption": "Giao diện CloudThinker VibeOps gợi ý nguyên nhân và hướng xử lý sự cố từ dữ liệu giám sát.",
+          "caption_en": "CloudThinker VibeOps suggests the cause of an incident and how to fix it from monitoring data.",
+          "credit": "CloudThinker VibeOps / VnExpress",
+          "credit_url": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/22/c4-1792657430-7183-1792662850.png?w=1020&h=0&q=100&dpr=1&fit=crop&s=U4YiAGPOk5JliDZSnBf52g",
+          "alt": "Công cụ tìm kiếm video CMC Video Miner",
+          "alt_en": "The CMC Video Miner video search tool",
+          "caption": "Công cụ CMC Video Miner tìm đoạn tư liệu liên quan trong kho video từ câu hỏi của người dùng.",
+          "caption_en": "CMC Video Miner finds relevant footage in a video archive from a user's question.",
+          "credit": "CMC Video Miner / VnExpress",
+          "credit_url": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
+          "rights": "permission_pending"
+        }
+      ]
     },
     {
       "slug": "giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd",
@@ -96,12 +138,12 @@
         "vi": {
           "title": "Loạt giải pháp AI y tế, nông nghiệp 'Made in Vietnam' tranh giải triệu USD",
           "summary": "Pathology AI Lab phân tích ảnh tế bào học cổ tử cung để đánh dấu vùng nghi ngờ cho bác sĩ. EggVision chiếu ánh sáng qua trứng đang ấp để AI dự đoán giới tính phôi từ ngày thứ 4 mà không cần chọc thủng vỏ. Các đội tranh giải Âu Lạc Grand Prize 1 triệu USD.",
-          "body": "Năm đội AI Việt Nam ở vòng sơ khảo Âu Lạc Grand Prize mang đến giải pháp cho y tế, chăn nuôi, nghiên cứu y học cổ truyền và di sản văn hóa. Hai trong số đó dựa trực tiếp vào phân tích hình ảnh.\n\n## Pathology AI Lab: hỗ trợ đọc ảnh tế bào học cổ tử cung\n\nMột mẫu tế bào học cổ tử cung có thể chứa rất nhiều tế bào, khiến việc đọc mẫu tốn thời gian. Hệ thống của Pathology AI Lab đánh dấu những vùng nghi ngờ và mô tả các đặc điểm bất thường; bác sĩ đối chiếu gợi ý với ảnh gốc rồi mới kết luận. Dữ liệu đến từ các cơ sở y tế Việt Nam, có chuyên gia y khoa tham gia đánh giá và chuẩn hóa.\n\nNhóm nói rõ AI chỉ hỗ trợ tìm vùng bất thường, bác sĩ vẫn là người kết luận cuối cùng. Trước khi thương mại hóa, giải pháp cần được bệnh viện đánh giá độc lập, tích hợp vào quy trình khám chữa bệnh và hoàn tất thủ tục pháp lý.\n\n## EggVision: đoán giới tính phôi gà không cần chọc thủng vỏ\n\nEggVision chiếu ánh sáng qua trứng đang ấp và dùng AI phân tích tín hiệu thu được để dự đoán phôi trống hay mái từ khoảng ngày thứ 4. Trứng trống có thể được dừng ấp sớm, giảm số gà trống con phải loại sau khi nở và tiết kiệm một phần chi phí ấp. Trứng dừng ấp vẫn cần được xử lý.\n\n## Các đội khác\n\n- Brain-Life làm cả thiết bị đeo đầu đo điện não (EEG) lẫn nền tảng phân tích để ước lượng mức tập trung và mệt mỏi, hướng tới tài xế đường dài. Nhóm nhấn mạnh chỉ số AI ước lượng không phải chẩn đoán sức khỏe tinh thần.\n- Bio AI dùng công cụ tính toán để sàng lọc giả thuyết về hoạt chất trong bài thuốc cổ truyền trước khi làm thí nghiệm.\n- OnFlow Vietnam chuyển các bản quét 3D dung lượng lớn của hiện vật, di tích thành mô hình nhẹ hơn, ví dụ mô hình số hiện trạng Thành cổ Quảng Trị.\n\nBài gốc không công bố độ chính xác hay kết quả thử nghiệm lâm sàng của các giải pháp; nhiều dự án vẫn ở giai đoạn thử nghiệm."
+          "body": "Năm đội AI Việt Nam ở vòng sơ khảo Âu Lạc Grand Prize mang đến giải pháp cho y tế, chăn nuôi, nghiên cứu y học cổ truyền và di sản văn hóa. Hai trong số đó dựa trực tiếp vào phân tích hình ảnh.\n\n## Pathology AI Lab: hỗ trợ đọc ảnh tế bào học cổ tử cung\n\nMột mẫu tế bào học cổ tử cung có thể chứa rất nhiều tế bào, khiến việc đọc mẫu tốn thời gian. Hệ thống của Pathology AI Lab đánh dấu những vùng nghi ngờ và mô tả các đặc điểm bất thường; bác sĩ đối chiếu gợi ý với ảnh gốc rồi mới kết luận. Dữ liệu đến từ các cơ sở y tế Việt Nam, có chuyên gia y khoa tham gia đánh giá và chuẩn hóa.\n\n{{figure:3}}\n\nNhóm nói rõ AI chỉ hỗ trợ tìm vùng bất thường, bác sĩ vẫn là người kết luận cuối cùng. Trước khi thương mại hóa, giải pháp cần được bệnh viện đánh giá độc lập, tích hợp vào quy trình khám chữa bệnh và hoàn tất thủ tục pháp lý.\n\n## EggVision: đoán giới tính phôi gà không cần chọc thủng vỏ\n\nEggVision chiếu ánh sáng qua trứng đang ấp và dùng AI phân tích tín hiệu thu được để dự đoán phôi trống hay mái từ khoảng ngày thứ 4. Trứng trống có thể được dừng ấp sớm, giảm số gà trống con phải loại sau khi nở và tiết kiệm một phần chi phí ấp. Trứng dừng ấp vẫn cần được xử lý.\n\n{{figure:1}}\n\n## Các đội khác\n\n- Brain-Life làm cả thiết bị đeo đầu đo điện não (EEG) lẫn nền tảng phân tích để ước lượng mức tập trung và mệt mỏi, hướng tới tài xế đường dài. Nhóm nhấn mạnh chỉ số AI ước lượng không phải chẩn đoán sức khỏe tinh thần.\n- Bio AI dùng công cụ tính toán để sàng lọc giả thuyết về hoạt chất trong bài thuốc cổ truyền trước khi làm thí nghiệm.\n- OnFlow Vietnam chuyển các bản quét 3D dung lượng lớn của hiện vật, di tích thành mô hình nhẹ hơn, ví dụ mô hình số hiện trạng Thành cổ Quảng Trị.\n\n{{figure:2}}\n\n{{figure:4}}\n\nBài gốc không công bố độ chính xác hay kết quả thử nghiệm lâm sàng của các giải pháp; nhiều dự án vẫn ở giai đoạn thử nghiệm."
         },
         "en": {
           "title": "Vietnamese AI for healthcare and agriculture competes for a USD 1 million prize",
           "summary": "Pathology AI Lab analyses cervical cytology images and marks suspicious areas for doctors. EggVision shines light through incubating eggs so AI can predict embryo sex from day 4 without piercing the shell. The teams compete for the USD 1 million Âu Lạc Grand Prize.",
-          "body": "Five Vietnamese AI teams in the preliminary round of the Âu Lạc Grand Prize presented solutions for healthcare, poultry farming, traditional medicine research and cultural heritage. Two of them rely directly on image analysis.\n\n## Pathology AI Lab: helping doctors read cervical cytology\n\nA single cervical cytology sample can contain a great many cells, so reading it takes time. Pathology AI Lab's system highlights suspicious areas and describes abnormal features; the doctor compares the suggestions with the original images before reaching a conclusion. The data comes from Vietnamese medical facilities, with medical experts helping to evaluate and standardise it.\n\nThe team is clear that the AI only helps find abnormal regions and the doctor makes the final call. Before commercialisation, the solution needs independent evaluation by hospitals, integration into clinical workflows and legal approval.\n\n## EggVision: sexing chick embryos without piercing the shell\n\nEggVision shines light through incubating eggs and uses AI to analyse the signal and predict whether the embryo is male or female from around day 4. Male eggs can then be removed early, which means fewer male chicks culled after hatching and some savings on incubation. Removed eggs still have to be disposed of.\n\n## Other teams\n\n- Brain-Life builds both an EEG headset and the analysis platform to estimate focus and fatigue, aimed at long-distance drivers. The team stresses that the AI estimates are not mental health diagnoses.\n- Bio AI uses computational tools to screen hypotheses about active compounds in traditional remedies before costly experiments.\n- OnFlow Vietnam turns large 3D scans of artefacts and heritage sites into lighter models, such as a digital model of the Quảng Trị Citadel as it stands today.\n\nThe original article reports no accuracy figures or clinical trial results; several projects are still in pilot stages."
+          "body": "Five Vietnamese AI teams in the preliminary round of the Âu Lạc Grand Prize presented solutions for healthcare, poultry farming, traditional medicine research and cultural heritage. Two of them rely directly on image analysis.\n\n## Pathology AI Lab: helping doctors read cervical cytology\n\nA single cervical cytology sample can contain a great many cells, so reading it takes time. Pathology AI Lab's system highlights suspicious areas and describes abnormal features; the doctor compares the suggestions with the original images before reaching a conclusion. The data comes from Vietnamese medical facilities, with medical experts helping to evaluate and standardise it.\n\n{{figure:3}}\n\nThe team is clear that the AI only helps find abnormal regions and the doctor makes the final call. Before commercialisation, the solution needs independent evaluation by hospitals, integration into clinical workflows and legal approval.\n\n## EggVision: sexing chick embryos without piercing the shell\n\nEggVision shines light through incubating eggs and uses AI to analyse the signal and predict whether the embryo is male or female from around day 4. Male eggs can then be removed early, which means fewer male chicks culled after hatching and some savings on incubation. Removed eggs still have to be disposed of.\n\n{{figure:1}}\n\n## Other teams\n\n- Brain-Life builds both an EEG headset and the analysis platform to estimate focus and fatigue, aimed at long-distance drivers. The team stresses that the AI estimates are not mental health diagnoses.\n- Bio AI uses computational tools to screen hypotheses about active compounds in traditional remedies before costly experiments.\n- OnFlow Vietnam turns large 3D scans of artefacts and heritage sites into lighter models, such as a digital model of the Quảng Trị Citadel as it stands today.\n\n{{figure:2}}\n\n{{figure:4}}\n\nThe original article reports no accuracy figures or clinical trial results; several projects are still in pilot stages."
         }
       },
       "ai_assisted": true,
@@ -125,7 +167,49 @@
         "credit": "VnExpress",
         "credit_url": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
         "rights": "permission_pending"
-      }
+      },
+      "figures": [
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/22/b1-1792656780-1468-1792656960.png?w=1020&h=0&q=100&dpr=1&fit=crop&s=yWDCzcA4_Fy1JaicHMhsFg",
+          "alt": "Thiết bị EggVision chiếu sáng qua trứng đang ấp",
+          "alt_en": "EggVision's device shining light through incubating eggs",
+          "caption": "Thiết bị của EggVision chiếu ánh sáng qua trứng đang ấp để AI phân tích, dự đoán giới tính phôi.",
+          "caption_en": "EggVision's device shines light through incubating eggs so the AI can predict the embryo's sex.",
+          "credit": "EggVision / VnExpress",
+          "credit_url": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/22/b2-1792656780-6410-1792656960.jpg?w=1020&h=0&q=100&dpr=1&fit=crop&s=zdniuhQuKuPcM6SkV7Xt1w",
+          "alt": "Thiết bị đeo đầu đo điện não của Brain-Life",
+          "alt_en": "Brain-Life's EEG headset",
+          "caption": "Thiết bị đeo đầu của Brain-Life thu tín hiệu điện não để ước lượng mức độ tập trung, mệt mỏi của người dùng.",
+          "caption_en": "Brain-Life's headset records brain signals to estimate the wearer's focus and fatigue.",
+          "credit": "Brain-Life / VnExpress",
+          "credit_url": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/22/b3-1792656780-5548-1792656960.png?w=1020&h=0&q=100&dpr=1&fit=crop&s=tfSmoKgYWm4lJfxnZ5J5Mw",
+          "alt": "Giao diện hệ thống đọc ảnh tế bào học của Pathology AI Lab",
+          "alt_en": "Pathology AI Lab's cytology reading interface",
+          "caption": "Giao diện hệ thống của Pathology AI Lab kèm mô tả đặc điểm bất thường để bác sĩ đối chiếu.",
+          "caption_en": "Pathology AI Lab's interface, with descriptions of abnormal features for the doctor to check.",
+          "credit": "Pathology AI Lab / VnExpress",
+          "credit_url": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/22/b4-1792656781-2228-1792656960.png?w=1020&h=0&q=100&dpr=1&fit=crop&s=e_FDw428n1B8q_pJe29Bmw",
+          "alt": "Mô hình số Thành cổ Quảng Trị",
+          "alt_en": "Digital model of the Quảng Trị Citadel",
+          "caption": "Mô hình số hóa hiện trạng Thành cổ Quảng Trị do OnFlow Vietnam thực hiện.",
+          "caption_en": "A digital model of the Quảng Trị Citadel as it stands today, made by OnFlow Vietnam.",
+          "credit": "OnFlow Vietnam / VnExpress",
+          "credit_url": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
+          "rights": "permission_pending"
+        }
+      ]
     },
     {
       "slug": "trien-lam-quoc-phong-2026-dung-ai-nhan-dien",
@@ -134,12 +218,12 @@
         "vi": {
           "title": "Triển lãm Quốc phòng 2026 dùng AI nhận diện, chuẩn bị hai trực thăng cấp cứu",
           "summary": "Triển lãm Quốc phòng quốc tế Việt Nam 2026 (10-13/12, sân bay Gia Lâm) dùng hệ thống nhận diện khuôn mặt AI của Viettel đồng bộ với cổng kiểm soát. Khách đăng ký trực tuyến từ 15/11, nộp CCCD hoặc hộ chiếu kèm ảnh chân dung rõ mặt.",
-          "body": "Triển lãm Quốc phòng quốc tế Việt Nam 2026 diễn ra từ 10 đến 13/12 tại sân bay Gia Lâm, Hà Nội. Theo thông tin tại buổi họp báo của Bộ Quốc phòng sáng 20/10, Viettel được giao áp dụng công nghệ nhận diện khuôn mặt bằng AI để kiểm soát khách vào cửa.\n\n## Đăng ký và kiểm soát ra vào\n\n- Cổng đăng ký trực tuyến dự kiến mở từ 15/11.\n- Người đăng ký tải lên ảnh căn cước công dân hoặc hộ chiếu cùng một ảnh chân dung rõ mặt. Thông tin được đồng bộ tự động với hệ thống kiểm soát tại cổng.\n- Viettel bố trí thêm điểm đăng ký bổ sung dọc đường vào triển lãm cho người chưa kịp đăng ký trực tuyến.\n- Không giới hạn độ tuổi, nhưng mọi khách đều phải được xác thực danh tính; người chưa xác thực sẽ không được vào.\n- Cổng còn có thiết bị soi chiếu chất nổ, hóa chất độc và phóng xạ.\n\nKhách tham quan tự do vào ngày 12/12 (9h-17h) và 13/12 (9h-15h); ban tổ chức có thể đề xuất kéo dài thời gian nếu nhu cầu lớn.\n\n## Y tế và hậu cần\n\nHai trực thăng, mỗi chiếc có một kíp quân y, sẵn sàng cấp cứu và vận chuyển người bệnh. Các bệnh viện quân đội 108, 103, 354, 105 và bệnh viện dân sự được kết nối để hỗ trợ. Ban tổ chức cũng chuẩn bị 24 cây nước mát, điểm phục vụ nước và đồ ăn nhẹ, phương án phân luồng giao thông và bãi đỗ xe.\n\n## Quy định với drone\n\nPhóng viên chỉ được bay flycam khi có giấy phép và trong giới hạn độ cao, đồng thời phải đăng ký với đơn vị an ninh của triển lãm. Lực lượng tác chiến điện tử giám sát vùng trời và sẽ buộc hạ cánh thiết bị bay không phép.\n\nVới người làm thị giác máy tính, đây là một ví dụ triển khai nhận diện khuôn mặt quy mô lớn tại sự kiện công cộng, kéo theo các câu hỏi về độ chính xác, tốc độ xử lý ở cổng và bảo vệ dữ liệu sinh trắc học của khách."
+          "body": "Triển lãm Quốc phòng quốc tế Việt Nam 2026 diễn ra từ 10 đến 13/12 tại sân bay Gia Lâm, Hà Nội. Theo thông tin tại buổi họp báo của Bộ Quốc phòng sáng 20/10, Viettel được giao áp dụng công nghệ nhận diện khuôn mặt bằng AI để kiểm soát khách vào cửa.\n\n{{figure:1}}\n\n## Đăng ký và kiểm soát ra vào\n\n- Cổng đăng ký trực tuyến dự kiến mở từ 15/11.\n- Người đăng ký tải lên ảnh căn cước công dân hoặc hộ chiếu cùng một ảnh chân dung rõ mặt. Thông tin được đồng bộ tự động với hệ thống kiểm soát tại cổng.\n- Viettel bố trí thêm điểm đăng ký bổ sung dọc đường vào triển lãm cho người chưa kịp đăng ký trực tuyến.\n- Không giới hạn độ tuổi, nhưng mọi khách đều phải được xác thực danh tính; người chưa xác thực sẽ không được vào.\n- Cổng còn có thiết bị soi chiếu chất nổ, hóa chất độc và phóng xạ.\n\nKhách tham quan tự do vào ngày 12/12 (9h-17h) và 13/12 (9h-15h); ban tổ chức có thể đề xuất kéo dài thời gian nếu nhu cầu lớn.\n\n{{figure:2}}\n\n## Y tế và hậu cần\n\nHai trực thăng, mỗi chiếc có một kíp quân y, sẵn sàng cấp cứu và vận chuyển người bệnh. Các bệnh viện quân đội 108, 103, 354, 105 và bệnh viện dân sự được kết nối để hỗ trợ. Ban tổ chức cũng chuẩn bị 24 cây nước mát, điểm phục vụ nước và đồ ăn nhẹ, phương án phân luồng giao thông và bãi đỗ xe.\n\n{{figure:3}}\n\n## Quy định với drone\n\nPhóng viên chỉ được bay flycam khi có giấy phép và trong giới hạn độ cao, đồng thời phải đăng ký với đơn vị an ninh của triển lãm. Lực lượng tác chiến điện tử giám sát vùng trời và sẽ buộc hạ cánh thiết bị bay không phép.\n\nVới người làm thị giác máy tính, đây là một ví dụ triển khai nhận diện khuôn mặt quy mô lớn tại sự kiện công cộng, kéo theo các câu hỏi về độ chính xác, tốc độ xử lý ở cổng và bảo vệ dữ liệu sinh trắc học của khách."
         },
         "en": {
           "title": "Vietnam Defence Expo 2026 to use AI face recognition and keep two medevac helicopters on standby",
           "summary": "The Vietnam International Defence Exhibition 2026 (10-13 December, Gia Lâm airport) will use Viettel's AI face recognition linked to the entry gates. Visitors register online from 15 November with an ID card or passport and a clear face photo.",
-          "body": "The Vietnam International Defence Exhibition 2026 runs from 10 to 13 December at Gia Lâm airport in Hanoi. At a Ministry of National Defence press conference on 20 October, officials said Viettel has been assigned to use AI face recognition to control visitor entry.\n\n## Registration and access control\n\n- Online registration is expected to open on 15 November.\n- Registrants upload an ID card or passport image and a clear face photo. The data syncs automatically with the gate control system.\n- Viettel will set up extra registration points along the road to the exhibition for people who miss the online window.\n- There is no age limit, but every visitor must be identity-verified; unverified people will not be admitted.\n- Gates also screen for explosives, toxic chemicals and radiation.\n\nPublic visiting hours are 9:00-17:00 on 12 December and 9:00-15:00 on 13 December; organisers may propose longer hours if demand is high.\n\n## Medical and logistics\n\nTwo helicopters, each with a military medical team, will be ready for emergency evacuation. Military hospitals 108, 103, 354 and 105 and civilian hospitals are linked to support visitors. Organisers also plan 24 water coolers, water and light food points, traffic diversion and parking.\n\n## Drone rules\n\nJournalists may fly drones only with a permit and within height limits, and must register them with the exhibition's security unit. Electronic warfare units will monitor the airspace and force unpermitted drones to land.\n\nFor computer vision practitioners, this is an example of large-scale face recognition at a public event, which raises questions about accuracy, processing speed at the gates and the protection of visitors' biometric data."
+          "body": "The Vietnam International Defence Exhibition 2026 runs from 10 to 13 December at Gia Lâm airport in Hanoi. At a Ministry of National Defence press conference on 20 October, officials said Viettel has been assigned to use AI face recognition to control visitor entry.\n\n{{figure:1}}\n\n## Registration and access control\n\n- Online registration is expected to open on 15 November.\n- Registrants upload an ID card or passport image and a clear face photo. The data syncs automatically with the gate control system.\n- Viettel will set up extra registration points along the road to the exhibition for people who miss the online window.\n- There is no age limit, but every visitor must be identity-verified; unverified people will not be admitted.\n- Gates also screen for explosives, toxic chemicals and radiation.\n\nPublic visiting hours are 9:00-17:00 on 12 December and 9:00-15:00 on 13 December; organisers may propose longer hours if demand is high.\n\n{{figure:2}}\n\n## Medical and logistics\n\nTwo helicopters, each with a military medical team, will be ready for emergency evacuation. Military hospitals 108, 103, 354 and 105 and civilian hospitals are linked to support visitors. Organisers also plan 24 water coolers, water and light food points, traffic diversion and parking.\n\n{{figure:3}}\n\n## Drone rules\n\nJournalists may fly drones only with a permit and within height limits, and must register them with the exhibition's security unit. Electronic warfare units will monitor the airspace and force unpermitted drones to land.\n\nFor computer vision practitioners, this is an example of large-scale face recognition at a public event, which raises questions about accuracy, processing speed at the gates and the protection of visitors' biometric data."
         }
       },
       "ai_assisted": true,
@@ -163,7 +247,37 @@
         "credit": "CafeF",
         "credit_url": "https://cafef.vn/trien-lam-quoc-phong-2026-dung-ai-nhan-dien-chuan-bi-hai-truc-thang-cap-cuu-188261020155528727.chn",
         "rights": "permission_pending"
-      }
+      },
+      "figures": [
+        {
+          "url": "https://cafefcdn.com/thumb_w/640/203337114487263232/2026/10/20/avatar1792486510083-17924865105351281344456.webp",
+          "alt": "Buổi họp báo về Triển lãm Quốc phòng quốc tế Việt Nam 2026",
+          "alt_en": "Press conference on the Vietnam International Defence Exhibition 2026",
+          "credit": "CafeF",
+          "credit_url": "https://cafef.vn/trien-lam-quoc-phong-2026-dung-ai-nhan-dien-chuan-bi-hai-truc-thang-cap-cuu-188261020155528727.chn",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://cdn.tienphong.vn/images/88VvvRdbKy4Mt04Tu8cdORbY6jnNTD8exf7RQPbboqbFPoe5mdXldoEoeMA-0frW/tp_bqp-11.jpg.avif",
+          "alt": "Thiếu tướng Lê Văn Đãng phát biểu tại họp báo",
+          "alt_en": "Major General Lê Văn Đãng speaking at the press conference",
+          "caption": "Thiếu tướng Lê Văn Đãng thông tin về cách đăng ký tham quan triển lãm.",
+          "caption_en": "Major General Lê Văn Đãng explains how to register to visit the exhibition.",
+          "credit": "Nguyễn Minh / Tiền Phong",
+          "credit_url": "https://cafef.vn/trien-lam-quoc-phong-2026-dung-ai-nhan-dien-chuan-bi-hai-truc-thang-cap-cuu-188261020155528727.chn",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://cdn.tienphong.vn/images/88VvvRdbKy4Mt04Tu8cdORbY6jnNTD8exf7RQPbboqb_S009_tg8qVnOFkBsHY2y/tp_bqp-14.jpg.avif",
+          "alt": "Thiếu tướng Đinh Công Phương phát biểu tại họp báo",
+          "alt_en": "Major General Đinh Công Phương speaking at the press conference",
+          "caption": "Thiếu tướng Đinh Công Phương thông tin với báo chí về phương án bảo đảm hậu cần tại triển lãm.",
+          "caption_en": "Major General Đinh Công Phương briefs the press on logistics plans for the exhibition.",
+          "credit": "Nguyễn Minh / Tiền Phong",
+          "credit_url": "https://cafef.vn/trien-lam-quoc-phong-2026-dung-ai-nhan-dien-chuan-bi-hai-truc-thang-cap-cuu-188261020155528727.chn",
+          "rights": "permission_pending"
+        }
+      ]
     },
     {
       "slug": "ai-dau-voi-con-nguoi-trong-cuoc-dua-drone-toc-do-cao",
@@ -318,12 +432,12 @@
         "vi": {
           "title": "NVIDIA mở rộng dòng Nemotron với mô hình Super VL và Bolt, chạy từ trung tâm dữ liệu tới máy bàn",
           "summary": "NVIDIA phát hành Nemotron 3.5 Super VL, mô hình thị giác-ngôn ngữ 120 tỷ tham số với trọng số, dữ liệu và công thức huấn luyện mở, mạnh về OCR, bảng, biểu đồ và tài liệu. Kèm hai mô hình Bolt cho thiết bị biên.",
-          "body": "NVIDIA bổ sung ba mô hình vào họ Nemotron 3.5: Super VL cho các tác tử AI chuyên biệt, và hai mô hình Bolt chạy cục bộ trên máy tính cá nhân và thiết bị biên.\n\n## Nemotron 3.5 Super VL\n\n- Mô hình mở 120 tỷ tham số, gộp xử lý văn bản và hình ảnh trong một mô hình.\n- Thế mạnh về thị giác: OCR, bảng, biểu đồ và thông tin có cấu trúc trong tài liệu dạng ảnh; đọc được trang web và PDF, trích xuất chữ và đọc đồ thị.\n- Theo NVIDIA, độ chính xác trên các tác vụ tác tử đa phương thức tương đương mô hình suy luận lớn nhất của hãng với khoảng một phần năm số tham số.\n- Huấn luyện trên khoảng 26 nghìn tỷ token; giai đoạn hậu huấn luyện dùng khoảng 3,8 triệu mẫu và học tăng cường trên hàng chục môi trường.\n- Phát hành kèm trọng số, bộ dữ liệu và công thức huấn luyện mở; có trên Hugging Face, OpenRouter, ModelScope và dưới dạng NVIDIA NIM.\n- Chạy được trên Jetson, DGX Spark, DGX Station, máy trạm RTX PRO, trung tâm dữ liệu và đám mây.\n\n## Nemotron 3.5 Bolt\n\n- Bolt 74B-A9B 24GB dùng lượng tử hóa 2-bit gốc để vừa trong 24 GB bộ nhớ, phục vụ tác tử cục bộ cho nghiên cứu web, viết và gỡ lỗi mã; hỗ trợ llama.cpp, Ollama, LM Studio, Unsloth và vLLM.\n- Bolt E4B 4GB nhắm tới trợ lý giọng nói, nhân vật tương tác và giao diện nhúng, chạy trên GeForce RTX và Jetson.\n\nVới người làm thị giác máy tính, điểm đáng chú ý là một mô hình thị giác-ngôn ngữ cỡ lớn công bố cả dữ liệu và công thức huấn luyện, có thể tinh chỉnh bằng NeMo cho bài toán đọc tài liệu và phân tích ảnh trong doanh nghiệp. Các con số so sánh hiệu năng là do NVIDIA công bố."
+          "body": "NVIDIA bổ sung ba mô hình vào họ Nemotron 3.5: Super VL cho các tác tử AI chuyên biệt, và hai mô hình Bolt chạy cục bộ trên máy tính cá nhân và thiết bị biên.\n\n## Nemotron 3.5 Super VL\n\n- Mô hình mở 120 tỷ tham số, gộp xử lý văn bản và hình ảnh trong một mô hình.\n- Thế mạnh về thị giác: OCR, bảng, biểu đồ và thông tin có cấu trúc trong tài liệu dạng ảnh; đọc được trang web và PDF, trích xuất chữ và đọc đồ thị.\n- Theo NVIDIA, độ chính xác trên các tác vụ tác tử đa phương thức tương đương mô hình suy luận lớn nhất của hãng với khoảng một phần năm số tham số.\n- Huấn luyện trên khoảng 26 nghìn tỷ token; giai đoạn hậu huấn luyện dùng khoảng 3,8 triệu mẫu và học tăng cường trên hàng chục môi trường.\n- Phát hành kèm trọng số, bộ dữ liệu và công thức huấn luyện mở; có trên Hugging Face, OpenRouter, ModelScope và dưới dạng NVIDIA NIM.\n- Chạy được trên Jetson, DGX Spark, DGX Station, máy trạm RTX PRO, trung tâm dữ liệu và đám mây.\n\n{{figure:1}}\n\n{{figure:2}}\n\n{{figure:4}}\n\n## Nemotron 3.5 Bolt\n\n- Bolt 74B-A9B 24GB dùng lượng tử hóa 2-bit gốc để vừa trong 24 GB bộ nhớ, phục vụ tác tử cục bộ cho nghiên cứu web, viết và gỡ lỗi mã; hỗ trợ llama.cpp, Ollama, LM Studio, Unsloth và vLLM.\n- Bolt E4B 4GB nhắm tới trợ lý giọng nói, nhân vật tương tác và giao diện nhúng, chạy trên GeForce RTX và Jetson.\n\n{{figure:3}}\n\nVới người làm thị giác máy tính, điểm đáng chú ý là một mô hình thị giác-ngôn ngữ cỡ lớn công bố cả dữ liệu và công thức huấn luyện, có thể tinh chỉnh bằng NeMo cho bài toán đọc tài liệu và phân tích ảnh trong doanh nghiệp. Các con số so sánh hiệu năng là do NVIDIA công bố."
         },
         "en": {
           "title": "Open From Data Center to Desktop: NVIDIA Expands Nemotron Family with Highest Efficiency Super VL and Bolt Models",
           "summary": "NVIDIA released Nemotron 3.5 Super VL, a 120-billion-parameter vision-language model with open weights, data and training recipes, strong at OCR, tables, charts and documents, plus two Bolt models for edge devices.",
-          "body": "NVIDIA added three models to the Nemotron 3.5 family: Super VL for specialised AI agents, and two Bolt models that run locally on PCs and edge devices.\n\n## Nemotron 3.5 Super VL\n\n- An open 120-billion-parameter model that handles text and images in one model.\n- Vision strengths: OCR, tables, charts and structured information in visual documents; it can read web pages and PDFs, extract text and read graphs.\n- NVIDIA says its accuracy on multimodal agent tasks is comparable to its largest reasoning model at about one-fifth of the parameters.\n- Trained on about 26 trillion tokens; post-training used about 3.8 million samples and reinforcement learning across dozens of environments.\n- Released with open weights, datasets and training recipes; available on Hugging Face, OpenRouter, ModelScope and as NVIDIA NIM.\n- Runs on Jetson, DGX Spark, DGX Station, RTX PRO workstations, data centres and the cloud.\n\n## Nemotron 3.5 Bolt\n\n- Bolt 74B-A9B 24GB uses native 2-bit quantisation to fit in 24 GB of memory, for local agents doing web research, writing and code debugging; supported by llama.cpp, Ollama, LM Studio, Unsloth and vLLM.\n- Bolt E4B 4GB targets voice assistants, interactive characters and embedded interfaces on GeForce RTX and Jetson.\n\nFor computer vision practitioners, the notable part is a large vision-language model released with its data and training recipe, which can be fine-tuned with NeMo for document reading and image analysis in business settings. Performance comparisons are NVIDIA's own."
+          "body": "NVIDIA added three models to the Nemotron 3.5 family: Super VL for specialised AI agents, and two Bolt models that run locally on PCs and edge devices.\n\n## Nemotron 3.5 Super VL\n\n- An open 120-billion-parameter model that handles text and images in one model.\n- Vision strengths: OCR, tables, charts and structured information in visual documents; it can read web pages and PDFs, extract text and read graphs.\n- NVIDIA says its accuracy on multimodal agent tasks is comparable to its largest reasoning model at about one-fifth of the parameters.\n- Trained on about 26 trillion tokens; post-training used about 3.8 million samples and reinforcement learning across dozens of environments.\n- Released with open weights, datasets and training recipes; available on Hugging Face, OpenRouter, ModelScope and as NVIDIA NIM.\n- Runs on Jetson, DGX Spark, DGX Station, RTX PRO workstations, data centres and the cloud.\n\n{{figure:1}}\n\n{{figure:2}}\n\n{{figure:4}}\n\n## Nemotron 3.5 Bolt\n\n- Bolt 74B-A9B 24GB uses native 2-bit quantisation to fit in 24 GB of memory, for local agents doing web research, writing and code debugging; supported by llama.cpp, Ollama, LM Studio, Unsloth and vLLM.\n- Bolt E4B 4GB targets voice assistants, interactive characters and embedded interfaces on GeForce RTX and Jetson.\n\n{{figure:3}}\n\nFor computer vision practitioners, the notable part is a large vision-language model released with its data and training recipe, which can be fine-tuned with NeMo for document reading and image analysis in business settings. Performance comparisons are NVIDIA's own."
         }
       },
       "ai_assisted": true,
@@ -354,6 +468,48 @@
         "credit_url": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
         "rights": "permission_pending"
       },
+      "figures": [
+        {
+          "url": "https://blogs.nvidia.com/wp-content/uploads/2026/10/SECOND-Artificial-Analysis-Index-1536x653.png",
+          "alt": "Biểu đồ chỉ số Artificial Analysis của Nemotron 3.5 Super VL",
+          "alt_en": "Artificial Analysis index chart for Nemotron 3.5 Super VL",
+          "caption": "Nemotron 3.5 Super VL đạt mức trí tuệ hàng đầu trong nhóm cùng cỡ cho các luồng tác tử khối lượng lớn (số liệu của NVIDIA).",
+          "caption_en": "Nemotron 3.5 Super VL delivers frontier-level intelligence in its class for high-volume agentic workflows (NVIDIA's figures).",
+          "credit": "NVIDIA",
+          "credit_url": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://blogs.nvidia.com/wp-content/uploads/2026/10/THIRD-Intelligence-Index-Output-Latest-1536x719.jpeg",
+          "alt": "Biểu đồ so sánh tốc độ sinh token và chỉ số trí tuệ",
+          "alt_en": "Chart comparing output speed and intelligence index",
+          "caption": "Thông lượng nhanh tới 5 lần trên chỉ số Artificial Analysis Intelligence Index (số liệu của NVIDIA).",
+          "caption_en": "Up to 5x faster throughput on the Artificial Analysis Intelligence Index (NVIDIA's figures).",
+          "credit": "NVIDIA",
+          "credit_url": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://blogs.nvidia.com/wp-content/uploads/2026/10/GDPVal_TPS_v3-960x661.png",
+          "alt": "Biểu đồ GDPval và tốc độ token của Nemotron 3.5 Bolt",
+          "alt_en": "GDPval and tokens-per-second chart for Nemotron 3.5 Bolt",
+          "caption": "Nemotron 3.5 Bolt trên GDPval so với tốc độ sinh token (số liệu của NVIDIA).",
+          "caption_en": "Nemotron 3.5 Bolt on GDPval against tokens per second (NVIDIA's figures).",
+          "credit": "NVIDIA",
+          "credit_url": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://blogs.nvidia.com/wp-content/uploads/2026/10/LAST-post-training-delivers-leading-accuracy--960x540.png",
+          "alt": "Biểu đồ độ chính xác sau hậu huấn luyện",
+          "alt_en": "Post-training accuracy chart",
+          "caption": "Hậu huấn luyện giúp mô hình đạt độ chính xác dẫn đầu (số liệu của NVIDIA).",
+          "caption_en": "Post-training delivers leading accuracy (NVIDIA's figures).",
+          "credit": "NVIDIA",
+          "credit_url": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
+          "rights": "permission_pending"
+        }
+      ],
       "links": [
         {
           "kind": "model",

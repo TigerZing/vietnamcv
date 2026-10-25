@@ -56,3 +56,12 @@ def test_unsupported_formats_are_rejected() -> None:
     Image.new("RGB", (10, 10)).save(buffer, format="BMP")
     with pytest.raises(DomainValidationError):
         normalize(buffer.getvalue())
+
+
+def test_avif_is_accepted() -> None:
+    # Some Vietnamese newspapers serve article photos only as AVIF.
+    buffer = io.BytesIO()
+    Image.new("RGB", (32, 24), (10, 20, 30)).save(buffer, format="AVIF")
+    image = normalize(buffer.getvalue())
+    assert image.data[8:12] == b"WEBP"
+    assert (image.width, image.height) == (32, 24)

@@ -334,7 +334,7 @@ export interface components {
       ai_assisted: boolean;
       /**
        * Body
-       * @description Post text: paragraphs split by blank lines, "## " headings, "- " items
+       * @description Post text: paragraphs split by blank lines, "## " headings, "- " items, and "{{figure:N}}" lines placing figures[N-1]
        */
       body: string | null;
       category: components["schemas"]["NewsCategory"];
@@ -347,6 +347,11 @@ export interface components {
        * Format: date-time
        */
       fetched_at: string;
+      /**
+       * Figures
+       * @description Images from inside the source article, in order
+       */
+      figures: components["schemas"]["Image"][];
       /**
        * Id
        * Format: uuid

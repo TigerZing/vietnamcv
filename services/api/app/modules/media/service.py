@@ -23,7 +23,7 @@ MAX_PIXELS = 40_000_000
 # Stored images fit in this box; wide enough for a full-width article image.
 MAX_EDGE = 1600
 WEBP_QUALITY = 82
-ACCEPTED_FORMATS = frozenset({"JPEG", "PNG", "WEBP", "GIF"})
+ACCEPTED_FORMATS = frozenset({"JPEG", "PNG", "WEBP", "GIF", "AVIF"})
 USER_AGENT = "VietnamCV-media/0.1 (+https://github.com/TigerZing/vietnamcv)"
 
 

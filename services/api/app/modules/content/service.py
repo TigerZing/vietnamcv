@@ -40,6 +40,9 @@ class Illustration:
     credit: str
     credit_url: str | None
     rights: ImageRights
+    alt_text_en: str | None = None
+    caption_en: str | None = None
+    origin: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -185,13 +188,20 @@ async def set_illustration(
             position=0,
         )
         session.add(row)
-    row.media_id = illustration.media_id
-    row.alt_text = illustration.alt_text
-    row.caption = illustration.caption
-    row.credit = illustration.credit
-    row.credit_url = illustration.credit_url
-    row.rights = illustration.rights
+    _apply(row, illustration)
     return row
+
+
+def _apply(row: ContentMedia, image: Illustration) -> None:
+    row.media_id = image.media_id
+    row.alt_text = image.alt_text
+    row.caption = image.caption
+    row.alt_text_en = image.alt_text_en
+    row.caption_en = image.caption_en
+    row.credit = image.credit
+    row.credit_url = image.credit_url
+    row.rights = image.rights
+    row.origin = image.origin
 
 
 async def remove_illustration(session: AsyncSession, content: Content) -> None:
@@ -217,6 +227,46 @@ async def illustrations(
         statement = statement.where(ContentMedia.rights.in_(CLEARED_RIGHTS))
     rows = (await session.scalars(statement)).all()
     return {row.content_id: row for row in rows}
+
+
+async def get_figures(session: AsyncSession, content_id: uuid.UUID) -> list[ContentMedia]:
+    rows = await session.scalars(
+        select(ContentMedia)
+        .where(ContentMedia.content_id == content_id, ContentMedia.role == MediaRole.FIGURE)
+        .order_by(ContentMedia.position)
+    )
+    return list(rows)
+
+
+async def replace_figures(
+    session: AsyncSession, content: Content, figures: Sequence[Illustration]
+) -> None:
+    """Make the in-article images of ``content`` exactly ``figures``, in this order."""
+    await session.execute(
+        delete(ContentMedia).where(
+            ContentMedia.content_id == content.id, ContentMedia.role == MediaRole.FIGURE
+        )
+    )
+    for position, figure in enumerate(figures):
+        row = ContentMedia(
+            id=uuid.uuid4(), content_id=content.id, role=MediaRole.FIGURE, position=position
+        )
+        _apply(row, figure)
+        session.add(row)
+
+
+async def figures(
+    session: AsyncSession, content_id: uuid.UUID, *, allow_uncleared: bool
+) -> list[ContentMedia]:
+    """In-article images that may be shown under the current rights policy, in order."""
+    statement = (
+        select(ContentMedia)
+        .where(ContentMedia.content_id == content_id, ContentMedia.role == MediaRole.FIGURE)
+        .order_by(ContentMedia.position)
+    )
+    if not allow_uncleared:
+        statement = statement.where(ContentMedia.rights.in_(CLEARED_RIGHTS))
+    return list(await session.scalars(statement))
 
 
 async def media_is_public(

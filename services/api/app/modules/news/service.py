@@ -82,7 +82,7 @@ async def list_news(
     ids = [content.id for content, _ in page]
     sources = await repository.primary_sources(session, ids)
     counts = await comments.count_published(session, ids)
-    images = await _images(session, ids, allow_uncleared=allow_uncleared_images)
+    images = await _images(session, ids, language=language, allow_uncleared=allow_uncleared_images)
     texts = await content_service.localized_texts(session, ids, language)
     items = [
         _summary(
@@ -116,7 +116,13 @@ async def get_news(
     content, item = row
     link, source = (await repository.primary_sources(session, [content.id]))[content.id]
     counts = await comments.count_published(session, [content.id])
-    images = await _images(session, [content.id], allow_uncleared=allow_uncleared_images)
+    images = await _images(
+        session, [content.id], language=language, allow_uncleared=allow_uncleared_images
+    )
+    figure_uses = await content_service.figures(
+        session, content.id, allow_uncleared=allow_uncleared_images
+    )
+    figure_assets = await media.get_many(session, [use.media_id for use in figure_uses])
     text = (await content_service.localized_texts(session, [content.id], language)).get(content.id)
     summary = _summary(
         content,
@@ -131,6 +137,11 @@ async def get_news(
     return NewsDetail(
         **summary.model_dump(),
         body=text.body if text is not None else None,
+        figures=[
+            _image(use, figure_assets[use.media_id], language)
+            for use in figure_uses
+            if use.media_id in figure_assets
+        ],
         links=[Link(kind=LinkKind(row.kind), label=row.label, url=row.url) for row in links],
         original_language=item.original_language,
         editor_note=item.editor_note,
@@ -139,27 +150,32 @@ async def get_news(
 
 
 async def _images(
-    session: AsyncSession, content_ids: list[uuid.UUID], *, allow_uncleared: bool
+    session: AsyncSession,
+    content_ids: list[uuid.UUID],
+    *,
+    language: TextLanguage,
+    allow_uncleared: bool,
 ) -> dict[uuid.UUID, Image]:
     uses = await content_service.illustrations(
         session, content_ids, allow_uncleared=allow_uncleared
     )
     assets = await media.get_many(session, [use.media_id for use in uses.values()])
     return {
-        content_id: _image(use, assets[use.media_id])
+        content_id: _image(use, assets[use.media_id], language)
         for content_id, use in uses.items()
         if use.media_id in assets
     }
 
 
-def _image(use: ContentMedia, asset: MediaAsset) -> Image:
+def _image(use: ContentMedia, asset: MediaAsset, language: TextLanguage) -> Image:
+    english = language == TextLanguage.EN
     return Image(
         id=asset.id,
         url=MEDIA_PATH.format(id=asset.id),
         width=asset.width,
         height=asset.height,
-        alt=use.alt_text,
-        caption=use.caption,
+        alt=(use.alt_text_en if english and use.alt_text_en else use.alt_text),
+        caption=(use.caption_en if english and use.caption_en else use.caption),
         credit=use.credit,
         credit_url=use.credit_url,
         rights=ImageRights(use.rights),
@@ -305,6 +321,7 @@ async def import_item(
         ],
     )
     await _import_image(session, content, entry, load_image)
+    await _import_figures(session, content, entry, load_image)
 
     await content_service.publish(session, content, actor_subject=CURATED_IMPORT_ACTOR)
     return outcome
@@ -322,10 +339,8 @@ async def _import_image(
         return
     current = await content_service.get_illustration(session, content.id)
     media_id: uuid.UUID | None = None
-    if current is not None:
-        asset = await media.get(session, current.media_id)
-        if asset is not None and asset.origin == spec.origin:
-            media_id = asset.id
+    if current is not None and await _same_origin(session, current, spec.origin):
+        media_id = current.media_id
     if media_id is None and load_image is not None:
         try:
             raw = await load_image(spec)
@@ -336,17 +351,61 @@ async def _import_image(
             )
     if media_id is None:
         return  # keep the earlier image, if any, with its own credit
-    await content_service.set_illustration(
-        session,
-        content,
-        content_service.Illustration(
-            media_id=media_id,
-            alt_text=spec.alt,
-            caption=spec.caption,
-            credit=spec.credit,
-            credit_url=str(spec.credit_url) if spec.credit_url else None,
-            rights=spec.rights,
-        ),
+    await content_service.set_illustration(session, content, _illustration(spec, media_id))
+
+
+async def _import_figures(
+    session: AsyncSession,
+    content: Content,
+    entry: CuratedNewsItem,
+    load_image: ImageLoader | None,
+) -> None:
+    """Store the in-article images. Known origins are not downloaded again; a figure that
+    fails to load is left out of this run and retried on the next one."""
+    known: dict[str, uuid.UUID] = {}
+    current = await content_service.get_figures(session, content.id)
+    assets = await media.get_many(session, [row.media_id for row in current])
+    for row in current:
+        origin = row.origin or (assets[row.media_id].origin if row.media_id in assets else None)
+        if origin is not None:
+            known[origin] = row.media_id
+    resolved: list[content_service.Illustration] = []
+    for spec in entry.figures:
+        media_id = known.get(spec.origin)
+        if media_id is None and load_image is not None:
+            try:
+                raw = await load_image(spec)
+                media_id = (await media.store(session, raw, origin=spec.origin)).id
+            except (httpx.HTTPError, DomainValidationError, OSError) as exc:
+                logger.warning(
+                    "news_figure_not_loaded",
+                    slug=entry.slug,
+                    origin=spec.origin,
+                    error=str(exc),
+                )
+        if media_id is not None:
+            resolved.append(_illustration(spec, media_id))
+    await content_service.replace_figures(session, content, resolved)
+
+
+async def _same_origin(session: AsyncSession, row: ContentMedia, origin: str) -> bool:
+    if row.origin is not None:
+        return row.origin == origin
+    asset = await media.get(session, row.media_id)  # rows stored before 0004
+    return asset is not None and asset.origin == origin
+
+
+def _illustration(spec: CuratedImage, media_id: uuid.UUID) -> content_service.Illustration:
+    return content_service.Illustration(
+        media_id=media_id,
+        alt_text=spec.alt,
+        caption=spec.caption,
+        alt_text_en=spec.alt_en,
+        caption_en=spec.caption_en,
+        credit=spec.credit,
+        credit_url=str(spec.credit_url) if spec.credit_url else None,
+        rights=spec.rights,
+        origin=spec.origin,
     )
 
 

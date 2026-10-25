@@ -24,4 +24,15 @@ describe("parseArticleBody", () => {
     expect(parseArticleBody("\r\n\r\n")).toEqual([]);
     expect(parseArticleBody("A\r\n\r\nB")).toHaveLength(2);
   });
+
+  it("places figures given on their own line", () => {
+    expect(
+      parseArticleBody("A\n\n{{figure:2}}\n\nB {{figure:1}}\n\n{{figure:0}}"),
+    ).toEqual([
+      { kind: "paragraph", text: "A" },
+      { kind: "figure", index: 2 },
+      { kind: "paragraph", text: "B {{figure:1}}" },
+      { kind: "paragraph", text: "{{figure:0}}" },
+    ]);
+  });
 });

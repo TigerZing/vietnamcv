@@ -4,12 +4,21 @@ import { useTranslations } from "next-intl";
 import type { NewsSummary } from "@/lib/news";
 import { mediaSrc } from "@/lib/media";
 
-type StoredImage = NonNullable<NewsSummary["image"]>;
+export type StoredImage = NonNullable<NewsSummary["image"]>;
 
-export function ArticleImage({ image }: { image: StoredImage }) {
+/** The lead image (loaded first) or, with `inline`, an image inside the post text. */
+export function ArticleImage({
+  image,
+  inline = false,
+}: {
+  image: StoredImage;
+  inline?: boolean;
+}) {
   const t = useTranslations("News");
   return (
-    <figure className="flex flex-col gap-2">
+    <figure
+      className={inline ? "my-2 flex flex-col gap-2" : "flex flex-col gap-2"}
+    >
       <div className="overflow-hidden rounded-xl border border-border bg-surface-muted">
         <Image
           src={mediaSrc(image.id)}
@@ -17,7 +26,7 @@ export function ArticleImage({ image }: { image: StoredImage }) {
           width={image.width}
           height={image.height}
           unoptimized
-          priority
+          priority={!inline}
           sizes="(min-width: 768px) 768px, 100vw"
           className="h-auto w-full"
         />
