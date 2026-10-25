@@ -1,0 +1,139 @@
+# Local development stack: `make dev` (or `docker compose -f infra/compose/compose.yaml up`).
+name: vietnamcv
+
+x-api-env: &api-env
+  APP_ENV: ${APP_ENV:-local}
+  DATABASE_URL: postgresql+psycopg://vietnamcv:${POSTGRES_PASSWORD:-vietnamcv}@postgres:5432/vietnamcv
+  REDIS_URL: redis://redis:6379/0
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+  LOG_JSON: ${LOG_JSON:-false}
+  CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
+  DEV_AUTH_ENABLED: ${DEV_AUTH_ENABLED:-true}
+
+x-api-image: &api-image
+  image: vietnamcv-api:local
+  build:
+    context: ../..
+    dockerfile: infra/docker/api.Dockerfile
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: vietnamcv
+      POSTGRES_USER: vietnamcv
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vietnamcv}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vietnamcv -d vietnamcv"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    <<: *api-image
+    command: ["alembic", "upgrade", "head"]
+    environment: *api-env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    <<: *api-image
+    environment: *api-env
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  worker:
+    <<: *api-image
+    command:
+      [
+        "celery",
+        "-A",
+        "app.worker.celery_app",
+        "worker",
+        "-Q",
+        "default,fetch,enrich,publish",
+        "--concurrency",
+        "2",
+        "--loglevel",
+        "INFO",
+      ]
+    environment: *api-env
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "celery -A app.worker.celery_app inspect ping -d celery@$$HOSTNAME --timeout 5",
+        ]
+      interval: 30s
+      timeout: 15s
+      start_period: 20s
+      retries: 3
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  beat:
+    <<: *api-image
+    # Exactly one beat replica; RedBeat's Redis lock also blocks an accidental second one.
+    command:
+      ["celery", "-A", "app.worker.celery_app", "beat", "--loglevel", "INFO"]
+    environment: *api-env
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'python -c "import redis,sys; r=redis.Redis.from_url(''redis://redis:6379/0''); sys.exit(0 if r.exists(''redbeat::lock'') else 1)"',
+        ]
+      interval: 30s
+      timeout: 10s
+      start_period: 20s
+      retries: 3
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  web:
+    image: vietnamcv-web:local
+    build:
+      context: ../..
+      dockerfile: infra/docker/web.Dockerfile
+    environment:
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      API_INTERNAL_URL: http://api:8000
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  redis-data:
