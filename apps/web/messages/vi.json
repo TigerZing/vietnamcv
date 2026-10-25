@@ -27,6 +27,10 @@
     "vi": "Tiếng Việt",
     "en": "English"
   },
+  "Theme": {
+    "toLight": "Chuyển sang giao diện sáng",
+    "toDark": "Chuyển sang giao diện tối"
+  },
   "Home": {
     "title": "Khám phá Thị giác máy tính, bằng tiếng Việt",
     "lead": "VietnamCV tổng hợp bài báo, mã nguồn mở và tin tức về Computer Vision, kèm nguồn gốc rõ ràng và tóm tắt tiếng Việt.",

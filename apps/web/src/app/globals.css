@@ -1,11 +1,16 @@
 @import "tailwindcss";
 
+/* `dark:` follows the theme chosen in the header (data-theme on <html>), not the OS. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /*
  * Design tokens (specs/08-UI-UX.md): editorial-tech, neutral surfaces, restrained
  * blue/teal accent. Colours are OKLCH so light and dark themes keep equal contrast.
- * Text/background pairs meet WCAG AA (4.5:1) in both themes.
+ * Text/background pairs meet WCAG AA (4.5:1) in both themes. Dark is the default
+ * theme (set on <html> by the layout); the header toggle switches and saves it.
  */
 :root {
+  color-scheme: light;
   --background: oklch(0.985 0.002 247);
   --foreground: oklch(0.21 0.02 257);
   --surface: oklch(1 0 0);
@@ -19,20 +24,19 @@
   --danger: oklch(0.52 0.19 27);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: oklch(0.17 0.015 257);
-    --foreground: oklch(0.95 0.005 247);
-    --surface: oklch(0.21 0.017 257);
-    --surface-muted: oklch(0.25 0.018 257);
-    --muted-foreground: oklch(0.75 0.015 257);
-    --border: oklch(0.32 0.02 257);
-    --accent: oklch(0.75 0.11 205);
-    --accent-foreground: oklch(0.17 0.015 257);
-    --accent-soft: oklch(0.3 0.05 215);
-    --ring: oklch(0.78 0.11 205);
-    --danger: oklch(0.7 0.16 27);
-  }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: oklch(0.17 0.015 257);
+  --foreground: oklch(0.95 0.005 247);
+  --surface: oklch(0.21 0.017 257);
+  --surface-muted: oklch(0.25 0.018 257);
+  --muted-foreground: oklch(0.75 0.015 257);
+  --border: oklch(0.32 0.02 257);
+  --accent: oklch(0.75 0.11 205);
+  --accent-foreground: oklch(0.17 0.015 257);
+  --accent-soft: oklch(0.3 0.05 215);
+  --ring: oklch(0.78 0.11 205);
+  --danger: oklch(0.7 0.16 27);
 }
 
 @theme inline {

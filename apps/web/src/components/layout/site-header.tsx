@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Suspense } from "react";
 
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Link } from "@/i18n/navigation";
 
 import { LocaleSwitcher, LocaleSwitcherView } from "./locale-switcher";
@@ -33,6 +34,7 @@ export function SiteHeader() {
           <Suspense fallback={<LocaleSwitcherView pathname="/" />}>
             <LocaleSwitcher />
           </Suspense>
+          <ThemeToggle />
           <MobileNav />
         </div>
       </div>
