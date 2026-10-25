@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (specs/08-UI-UX.md): editorial-tech, neutral surfaces, restrained
+ * blue/teal accent. Colours are OKLCH so light and dark themes keep equal contrast.
+ * Text/background pairs meet WCAG AA (4.5:1) in both themes.
+ */
+:root {
+  --background: oklch(0.985 0.002 247);
+  --foreground: oklch(0.21 0.02 257);
+  --surface: oklch(1 0 0);
+  --surface-muted: oklch(0.965 0.004 247);
+  --muted-foreground: oklch(0.45 0.02 257);
+  --border: oklch(0.91 0.006 247);
+  --accent: oklch(0.5 0.12 220);
+  --accent-foreground: oklch(0.99 0 0);
+  --accent-soft: oklch(0.95 0.03 210);
+  --ring: oklch(0.55 0.13 220);
+  --danger: oklch(0.52 0.19 27);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: oklch(0.17 0.015 257);
+    --foreground: oklch(0.95 0.005 247);
+    --surface: oklch(0.21 0.017 257);
+    --surface-muted: oklch(0.25 0.018 257);
+    --muted-foreground: oklch(0.75 0.015 257);
+    --border: oklch(0.32 0.02 257);
+    --accent: oklch(0.75 0.11 205);
+    --accent-foreground: oklch(0.17 0.015 257);
+    --accent-soft: oklch(0.3 0.05 215);
+    --ring: oklch(0.78 0.11 205);
+    --danger: oklch(0.7 0.16 27);
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-ring: var(--ring);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-be-vietnam-pro), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  /* Visible focus for keyboard users on every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}

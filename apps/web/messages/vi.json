@@ -1,0 +1,53 @@
+{
+  "Metadata": {
+    "title": "VietnamCV",
+    "titleTemplate": "%s · VietnamCV",
+    "description": "Cộng đồng và kho tri thức Thị giác máy tính (Computer Vision) cho người Việt: bài báo, mã nguồn mở, tin tức và lộ trình học."
+  },
+  "Common": {
+    "skipToContent": "Chuyển đến nội dung chính",
+    "siteName": "VietnamCV",
+    "tagline": "Thị giác máy tính cho cộng đồng Việt Nam",
+    "retry": "Thử lại",
+    "backHome": "Về trang chủ"
+  },
+  "Nav": {
+    "label": "Điều hướng chính",
+    "discover": "Khám phá",
+    "papers": "Bài báo",
+    "openSource": "Mã nguồn mở",
+    "news": "Tin tức",
+    "tasks": "Chủ đề",
+    "search": "Tìm kiếm",
+    "openMenu": "Mở menu",
+    "closeMenu": "Đóng menu"
+  },
+  "LocaleSwitcher": {
+    "label": "Ngôn ngữ",
+    "vi": "Tiếng Việt",
+    "en": "English"
+  },
+  "Home": {
+    "title": "Khám phá Thị giác máy tính, bằng tiếng Việt",
+    "lead": "VietnamCV tổng hợp bài báo, mã nguồn mở và tin tức về Computer Vision, kèm nguồn gốc rõ ràng và tóm tắt tiếng Việt.",
+    "emptyTitle": "Nội dung đang được chuẩn bị",
+    "emptyBody": "Chúng tôi đang xây dựng nền tảng. Bài báo, kho mã nguồn và tin tức đầu tiên sẽ xuất hiện tại đây sau khi được kiểm duyệt."
+  },
+  "ComingSoon": {
+    "title": "Sắp ra mắt",
+    "body": "Trang này đang được phát triển và sẽ có nội dung trong các bản cập nhật tới."
+  },
+  "Footer": {
+    "about": "VietnamCV là dự án cộng đồng về Thị giác máy tính.",
+    "attribution": "Nội dung bên ngoài luôn dẫn về nguồn gốc."
+  },
+  "Errors": {
+    "notFoundTitle": "Không tìm thấy trang",
+    "notFoundBody": "Trang bạn tìm không tồn tại hoặc đã được chuyển đi.",
+    "errorTitle": "Đã xảy ra lỗi",
+    "errorBody": "Không thể tải nội dung lúc này. Vui lòng thử lại sau ít phút."
+  },
+  "Loading": {
+    "label": "Đang tải nội dung"
+  }
+}
