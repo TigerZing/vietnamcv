@@ -12,6 +12,7 @@ from app.modules.audit.models import AuditEvent
 from app.modules.content.models import Content
 from app.modules.news.schemas import CuratedNewsFile
 from tests.conftest import ClientFactory
+from tests.media_helpers import FakeImageServer
 
 pytestmark = pytest.mark.integration
 
@@ -22,7 +23,7 @@ FIXTURE = Path(__file__).resolve().parents[1] / "fixtures" / "news_small.json"
 async def client(
     clean_database: str, integration_settings: Settings, client_for: ClientFactory
 ) -> AsyncClient:
-    await seed([FIXTURE], clean_database)
+    await seed([FIXTURE], clean_database, client=FakeImageServer().client())
     return await client_for(create_app(integration_settings))
 
 
@@ -94,7 +95,7 @@ async def test_unpublished_content_is_hidden(client: AsyncClient, clean_database
 
 async def test_import_is_idempotent_and_audited(client: AsyncClient, clean_database: str) -> None:
     before = (await client.get("/api/v1/news/newest-post")).json()
-    totals = await seed([FIXTURE], clean_database)
+    totals = await seed([FIXTURE], clean_database, client=FakeImageServer().client())
     assert totals == {"created": 0, "updated": 3}
     after = (await client.get("/api/v1/news/newest-post")).json()
     assert after["published_at"] == before["published_at"]
@@ -113,5 +114,7 @@ async def test_committed_seed_files_import(clean_database: str) -> None:
     expected = sum(
         len(CuratedNewsFile.model_validate_json(path.read_bytes()).items) for path in files
     )
-    totals = await seed(files, clean_database)
+    server = FakeImageServer()
+    totals = await seed(files, clean_database, client=server.client())
     assert totals["created"] == expected
+    assert server.requests, "expected the committed posts to have downloadable images"

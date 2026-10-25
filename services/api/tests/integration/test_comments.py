@@ -15,6 +15,7 @@ from app.modules.comments.models import Comment
 from app.modules.identity.models import User
 from tests.conftest import ClientFactory
 from tests.google_tokens import FakeGoogle
+from tests.media_helpers import FakeImageServer
 
 pytestmark = pytest.mark.integration
 
@@ -34,7 +35,7 @@ async def client(
     client_for: ClientFactory,
     google: FakeGoogle,
 ) -> AsyncClient:
-    await seed([FIXTURE], clean_database)
+    await seed([FIXTURE], clean_database, client=FakeImageServer().client())
     app = create_app(integration_settings)
     app.state.id_token_verifier = google.verifier
     return await client_for(app)

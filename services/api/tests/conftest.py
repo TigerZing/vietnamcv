@@ -111,6 +111,10 @@ def integration_settings(migrated_database_url: str, redis_url: str) -> Settings
 
 
 CONTENT_TABLES = (
+    "content_translations",
+    "content_links",
+    "content_media",
+    "media_assets",
     "comments",
     "users",
     "news_items",

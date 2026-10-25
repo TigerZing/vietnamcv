@@ -3,33 +3,53 @@
 from __future__ import annotations
 
 import uuid
+from collections.abc import Awaitable, Callable
 from datetime import UTC, date, datetime, time
 from enum import StrEnum
 
+import httpx
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.errors import ConflictError, NotFoundError
+from app.core.errors import ConflictError, DomainValidationError, NotFoundError
+from app.core.logging import get_logger
 from app.core.pagination import KeysetCursor
 from app.modules.comments import service as comments
 from app.modules.content import service as content_service
 from app.modules.content.models import (
     Content,
+    ContentMedia,
     ContentSource,
+    ContentTranslation,
     ContentType,
     DatePrecision,
+    ImageRights,
+    LinkKind,
     Source,
+    TextLanguage,
 )
+from app.modules.media import service as media
+from app.modules.media.models import MediaAsset
 from app.modules.news import repository
 from app.modules.news.models import NewsCategory, NewsItem, NewsRegion
 from app.modules.news.schemas import (
+    CuratedImage,
     CuratedNewsFile,
     CuratedNewsItem,
+    Image,
+    Link,
     NewsDetail,
     NewsPage,
     NewsSummary,
     SourceRef,
     Video,
 )
+
+logger = get_logger(__name__)
+
+# Loads the bytes of a curated image (download or local file). Injected so tests never
+# reach the network.
+ImageLoader = Callable[[CuratedImage], Awaitable[bytes]]
+MEDIA_PATH = "/api/v1/media/{id}"
 
 CURATED_IMPORT_ACTOR = "system:curated-news-import"
 # Editors approved each row in the news sheet, so imported sources are human-curated.
@@ -48,6 +68,8 @@ async def list_news(
     cursor: str | None,
     category: NewsCategory | None = None,
     region: NewsRegion | None = None,
+    language: TextLanguage = TextLanguage.VI,
+    allow_uncleared_images: bool = False,
 ) -> NewsPage:
     rows = await repository.list_published(
         session,
@@ -60,8 +82,17 @@ async def list_news(
     ids = [content.id for content, _ in page]
     sources = await repository.primary_sources(session, ids)
     counts = await comments.count_published(session, ids)
+    images = await _images(session, ids, allow_uncleared=allow_uncleared_images)
+    texts = await content_service.localized_texts(session, ids, language)
     items = [
-        _summary(content, item, *sources[content.id], counts.get(content.id, 0))
+        _summary(
+            content,
+            item,
+            *sources[content.id],
+            text=texts.get(content.id),
+            comment_count=counts.get(content.id, 0),
+            image=images.get(content.id),
+        )
         for content, item in page
     ]
     next_cursor = None
@@ -72,24 +103,78 @@ async def list_news(
     return NewsPage(items=items, next_cursor=next_cursor)
 
 
-async def get_news(session: AsyncSession, slug: str) -> NewsDetail:
+async def get_news(
+    session: AsyncSession,
+    slug: str,
+    *,
+    language: TextLanguage = TextLanguage.VI,
+    allow_uncleared_images: bool = False,
+) -> NewsDetail:
     row = await repository.get_published_by_slug(session, slug)
     if row is None:
         raise NotFoundError("News post not found", details={"slug": slug})
     content, item = row
     link, source = (await repository.primary_sources(session, [content.id]))[content.id]
     counts = await comments.count_published(session, [content.id])
-    summary = _summary(content, item, link, source, counts.get(content.id, 0))
+    images = await _images(session, [content.id], allow_uncleared=allow_uncleared_images)
+    text = (await content_service.localized_texts(session, [content.id], language)).get(content.id)
+    summary = _summary(
+        content,
+        item,
+        link,
+        source,
+        text=text,
+        comment_count=counts.get(content.id, 0),
+        image=images.get(content.id),
+    )
+    links = await content_service.get_links(session, content.id)
     return NewsDetail(
         **summary.model_dump(),
+        body=text.body if text is not None else None,
+        links=[Link(kind=LinkKind(row.kind), label=row.label, url=row.url) for row in links],
         original_language=item.original_language,
         editor_note=item.editor_note,
         fetched_at=link.fetched_at,
     )
 
 
+async def _images(
+    session: AsyncSession, content_ids: list[uuid.UUID], *, allow_uncleared: bool
+) -> dict[uuid.UUID, Image]:
+    uses = await content_service.illustrations(
+        session, content_ids, allow_uncleared=allow_uncleared
+    )
+    assets = await media.get_many(session, [use.media_id for use in uses.values()])
+    return {
+        content_id: _image(use, assets[use.media_id])
+        for content_id, use in uses.items()
+        if use.media_id in assets
+    }
+
+
+def _image(use: ContentMedia, asset: MediaAsset) -> Image:
+    return Image(
+        id=asset.id,
+        url=MEDIA_PATH.format(id=asset.id),
+        width=asset.width,
+        height=asset.height,
+        alt=use.alt_text,
+        caption=use.caption,
+        credit=use.credit,
+        credit_url=use.credit_url,
+        rights=ImageRights(use.rights),
+    )
+
+
 def _summary(
-    content: Content, item: NewsItem, link: ContentSource, source: Source, comment_count: int
+    content: Content,
+    item: NewsItem,
+    link: ContentSource,
+    source: Source,
+    *,
+    text: ContentTranslation | None,
+    comment_count: int,
+    image: Image | None,
 ) -> NewsSummary:
     assert content.published_at is not None  # noqa: S101 - only published rows reach here
     video = (
@@ -100,9 +185,10 @@ def _summary(
     return NewsSummary(
         id=content.id,
         slug=content.slug,
-        title=content.title,
-        summary=content.summary,
-        language=content.language,
+        title=text.title if text is not None else content.title,
+        original_title=content.title,
+        summary=text.summary if text is not None else content.summary,
+        language=TextLanguage(text.language) if text is not None else TextLanguage.VI,
         category=NewsCategory(item.category),
         region=NewsRegion(item.region),
         keywords=list(item.keywords),
@@ -114,6 +200,8 @@ def _summary(
             published_precision=DatePrecision(link.source_published_precision),
         ),
         video=video,
+        image=image,
+        ai_assisted=item.ai_assisted,
         comment_count=comment_count,
     )
 
@@ -137,12 +225,18 @@ async def import_sources(session: AsyncSession, data: CuratedNewsFile) -> dict[s
 
 
 async def import_item(
-    session: AsyncSession, entry: CuratedNewsItem, sources: dict[str, Source]
+    session: AsyncSession,
+    entry: CuratedNewsItem,
+    sources: dict[str, Source],
+    *,
+    load_image: ImageLoader | None = None,
 ) -> ImportOutcome:
     """Create or update one approved news post and publish it. Idempotent.
 
     Identity is the provenance key ``(source, external_id)``; re-running the import
-    updates text and metadata but never changes ``published_at``.
+    updates text and metadata but never changes ``published_at``. The image is loaded
+    only when the post has none from the same origin yet; a failed load keeps the post
+    (and any earlier image) and is retried on the next run.
     """
     source = sources.get(entry.source)
     if source is None:
@@ -174,8 +268,8 @@ async def import_item(
         outcome = ImportOutcome.CREATED
 
     content.title = entry.title
-    content.summary = entry.summary
-    content.language = "vi"  # the post text is the editor's Vietnamese summary
+    content.summary = entry.text[TextLanguage.VI].summary
+    content.language = TextLanguage.VI  # VietnamCV's text is written in Vietnamese first
 
     item = await repository.get_news_item(session, content.id)
     if item is None:
@@ -189,9 +283,71 @@ async def import_item(
     item.video_provider = entry.video.provider if entry.video else None
     item.video_id = entry.video.id if entry.video else None
     item.video_title = entry.video.title if entry.video else None
+    item.ai_assisted = entry.ai_assisted
+
+    await session.flush()
+    await content_service.replace_translations(
+        session,
+        content,
+        {
+            language: content_service.TextData(
+                title=text.title, summary=text.summary, body=text.body
+            )
+            for language, text in entry.text.items()
+        },
+    )
+    await content_service.replace_links(
+        session,
+        content,
+        [
+            content_service.LinkData(kind=link.kind, label=link.label, url=str(link.url))
+            for link in entry.links
+        ],
+    )
+    await _import_image(session, content, entry, load_image)
 
     await content_service.publish(session, content, actor_subject=CURATED_IMPORT_ACTOR)
     return outcome
+
+
+async def _import_image(
+    session: AsyncSession,
+    content: Content,
+    entry: CuratedNewsItem,
+    load_image: ImageLoader | None,
+) -> None:
+    spec = entry.image
+    if spec is None:
+        await content_service.remove_illustration(session, content)
+        return
+    current = await content_service.get_illustration(session, content.id)
+    media_id: uuid.UUID | None = None
+    if current is not None:
+        asset = await media.get(session, current.media_id)
+        if asset is not None and asset.origin == spec.origin:
+            media_id = asset.id
+    if media_id is None and load_image is not None:
+        try:
+            raw = await load_image(spec)
+            media_id = (await media.store(session, raw, origin=spec.origin)).id
+        except (httpx.HTTPError, DomainValidationError, OSError) as exc:
+            logger.warning(
+                "news_image_not_loaded", slug=entry.slug, origin=spec.origin, error=str(exc)
+            )
+    if media_id is None:
+        return  # keep the earlier image, if any, with its own credit
+    await content_service.set_illustration(
+        session,
+        content,
+        content_service.Illustration(
+            media_id=media_id,
+            alt_text=spec.alt,
+            caption=spec.caption,
+            credit=spec.credit,
+            credit_url=str(spec.credit_url) if spec.credit_url else None,
+            rights=spec.rights,
+        ),
+    )
 
 
 def _midnight_utc(day: date) -> datetime:

@@ -1,5 +1,5 @@
 {
-  "description": "Rows approved (Duyệt) in the news sheet 'Tin tức CV 2026-10-25', exported 2026-10-25. Videos are optional and chosen by the editor; the post text is the editor's Vietnamese summary, never the full article.",
+  "description": "Rows approved (Duyệt) in the news sheet 'Tin tức CV 2026-10-25', exported 2026-10-25. Post text (Vietnamese and English) is written by VietnamCV from each source with AI assistance, never the full article. Images given by url are the source's own lead image, shown with credit; their rights stay permission_pending until the owner agrees (ADR-010). Images given by file are VietnamCV's own illustrations.",
   "sources": [
     {
       "code": "vnexpress",
@@ -54,7 +54,19 @@
     {
       "slug": "ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu",
       "title": "AI Việt giải bài toán vận hành từ sản xuất đến dịch vụ",
-      "summary": "Ở vòng sơ khảo Âu Lạc Grand Prize 2026, đội ViCore dùng ảnh camera trên dây chuyền sản xuất thước đo, lấy ảnh sản phẩm đạt chuẩn làm mẫu để tìm vùng bất thường. Cách này phát hiện được cả lỗi hiếm mà nhà máy chưa có đủ ảnh để huấn luyện. Đội CMC Video Miner tìm đoạn video tư liệu bằng câu hỏi ngôn ngữ tự nhiên.",
+      "text": {
+        "vi": {
+          "title": "AI Việt giải bài toán vận hành từ sản xuất đến dịch vụ",
+          "summary": "Ở vòng sơ khảo Âu Lạc Grand Prize 2026, đội ViCore dùng ảnh sản phẩm đạt chuẩn làm mẫu để phát hiện lỗi trên dây chuyền, kể cả lỗi hiếm chưa có ảnh huấn luyện. Nhiều đội khác mang đến giải pháp cho robot, trạm sạc xe điện, vận hành hệ thống IT và kho lưu trữ video.",
+          "body": "Vòng sơ khảo giải Âu Lạc Grand Prize 2026 quy tụ nhiều đội Việt Nam mang AI vào các bài toán vận hành cụ thể trong sản xuất, năng lượng, vận hành hệ thống công nghệ thông tin và truyền thông. Phần đáng chú ý với cộng đồng thị giác máy tính là cách các đội dùng camera để kiểm tra chất lượng và điều khiển robot.\n\n## ViCore: tìm lỗi bằng cách học sản phẩm đạt chuẩn\n\nBài toán ViCore chọn là dây chuyền sản xuất thước đo, nơi sản phẩm chạy với tốc độ khoảng 100 mét mỗi phút. Lỗi xuất hiện ở nhiều vị trí, với nhiều hình dạng, và có những loại lỗi hiếm mà nhà máy gần như không có ảnh để huấn luyện mô hình.\n\nThay vì dạy mô hình nhận từng loại lỗi, nhóm lấy ảnh các sản phẩm đạt chuẩn làm mẫu, rồi đánh dấu những vùng khác thường so với mẫu. Đây là hướng phát hiện bất thường (anomaly detection) quen thuộc trong kiểm tra công nghiệp, phù hợp khi dữ liệu lỗi khan hiếm. Đội cũng có ứng dụng theo dõi thao tác lắp ráp qua camera để cảnh báo khi công nhân bỏ sót hoặc làm sai thứ tự một bước, và ứng dụng nhận diện hình ảnh hướng dẫn robot gắp, đặt và cấp phôi. Thành viên ViCore là kỹ sư tự động hóa, xuất phát từ chính những vấn đề gặp ở xưởng.\n\n## Các đội khác\n\n- 1Robot tự phát triển phần mềm điều phối robot của nhiều hãng, trong đó có kỹ thuật định vị xe bằng cách đối chiếu ảnh camera với bản đồ.\n- Volterra dự báo nhu cầu sạc, điện mặt trời và năng lượng lưu trữ để phân bổ công suất cho trạm sạc xe điện.\n- CloudThinker VibeOps dùng tác tử AI đọc dữ liệu giám sát và gợi ý nguyên nhân sự cố; trong một số trường hợp đội trình diễn, bước điều tra mất khoảng 3 đến 5 phút. Kỹ sư vẫn là người quyết định cách xử lý.\n- CMC Video Miner phân tích hình ảnh, lời nói và nội dung video để tìm đoạn tư liệu theo câu hỏi bằng ngôn ngữ tự nhiên, đã thử nghiệm với kho lưu trữ của một đài truyền hình.\n\nÂu Lạc Grand Prize có giải thưởng 1 triệu USD, do Liên minh AI Âu Lạc khởi xướng và FPT tài trợ, dự kiến trao ba năm liên tiếp từ 2026."
+        },
+        "en": {
+          "title": "Vietnamese AI teams tackle operations from factory floor to services",
+          "summary": "In the preliminary round of the Âu Lạc Grand Prize 2026, team ViCore uses images of good products as the reference to spot defects on a production line, including rare defects with no training images. Other teams showed solutions for robots, EV charging, IT operations and video archives.",
+          "body": "The preliminary round of the Âu Lạc Grand Prize 2026 brought together Vietnamese teams applying AI to concrete operational problems in manufacturing, energy, IT operations and media. For the computer vision community, the interesting part is how teams use cameras for quality inspection and robot guidance.\n\n## ViCore: finding defects by learning what good looks like\n\nViCore's example is a production line for measuring rulers, where products move at about 100 metres per minute. Defects vary in position and shape, and some rare defect types have almost no images to train a model on.\n\nInstead of teaching a model every defect type, the team uses images of products made correctly as the reference and flags regions that differ from it. This is the anomaly-detection approach common in industrial inspection, and it suits cases where defect data is scarce. The team also has a camera app that watches assembly and warns workers when a step is skipped or done out of order, and an image-recognition app that guides robots to pick, place and feed parts. ViCore's members are automation engineers who started from problems they met on the factory floor.\n\n## Other teams\n\n- 1Robot built its own software to coordinate robots from different makers, including a technique that localizes vehicles by matching camera images against a map.\n- Volterra forecasts charging demand, solar output and stored energy to allocate power at EV charging stations.\n- CloudThinker VibeOps uses AI agents that read monitoring data and suggest the likely cause of an incident; in some cases the team showed, the investigation took about 3 to 5 minutes. Engineers still decide how to fix it.\n- CMC Video Miner analyses images, speech and content in video to find footage from natural-language questions, and has been piloted with a TV station's archive.\n\nThe Âu Lạc Grand Prize carries a USD 1 million award. It was initiated by the Âu Lạc AI Alliance, is sponsored by FPT, and is planned for three consecutive years from 2026."
+        }
+      },
+      "ai_assisted": true,
       "source": "vnexpress",
       "external_id": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
       "url": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
@@ -68,12 +80,31 @@
         "phát hiện bất thường",
         "Âu Lạc Grand Prize"
       ],
-      "original_language": "vi"
+      "original_language": "vi",
+      "image": {
+        "url": "https://i2-vnexpress.vnecdn.net/2026/10/22/c1-1792657598-2873-1792662850.png?w=1200&h=675&q=100&dpr=1&fit=crop&s=uBJYZZcS5LMsdAmSDV4VaA",
+        "alt": "Ảnh minh họa bài viết về các đội AI Việt Nam tại vòng sơ khảo Âu Lạc Grand Prize 2026",
+        "credit": "VnExpress",
+        "credit_url": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
+        "rights": "permission_pending"
+      }
     },
     {
       "slug": "giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd",
       "title": "Loạt giải pháp AI y tế, nông nghiệp 'Made in Vietnam' tranh giải triệu USD",
-      "summary": "Pathology AI Lab phân tích ảnh tế bào học cổ tử cung, đánh dấu vùng nghi ngờ để bác sĩ kiểm tra và kết luận. EggVision phân tích tín hiệu ánh sáng xuyên qua trứng để dự đoán giới tính phôi từ khoảng ngày thứ 4 mà không cần chọc thủng trứng. Các đội tranh giải Âu Lạc Grand Prize (1 triệu USD, FPT tài trợ).",
+      "text": {
+        "vi": {
+          "title": "Loạt giải pháp AI y tế, nông nghiệp 'Made in Vietnam' tranh giải triệu USD",
+          "summary": "Pathology AI Lab phân tích ảnh tế bào học cổ tử cung để đánh dấu vùng nghi ngờ cho bác sĩ. EggVision chiếu ánh sáng qua trứng đang ấp để AI dự đoán giới tính phôi từ ngày thứ 4 mà không cần chọc thủng vỏ. Các đội tranh giải Âu Lạc Grand Prize 1 triệu USD.",
+          "body": "Năm đội AI Việt Nam ở vòng sơ khảo Âu Lạc Grand Prize mang đến giải pháp cho y tế, chăn nuôi, nghiên cứu y học cổ truyền và di sản văn hóa. Hai trong số đó dựa trực tiếp vào phân tích hình ảnh.\n\n## Pathology AI Lab: hỗ trợ đọc ảnh tế bào học cổ tử cung\n\nMột mẫu tế bào học cổ tử cung có thể chứa rất nhiều tế bào, khiến việc đọc mẫu tốn thời gian. Hệ thống của Pathology AI Lab đánh dấu những vùng nghi ngờ và mô tả các đặc điểm bất thường; bác sĩ đối chiếu gợi ý với ảnh gốc rồi mới kết luận. Dữ liệu đến từ các cơ sở y tế Việt Nam, có chuyên gia y khoa tham gia đánh giá và chuẩn hóa.\n\nNhóm nói rõ AI chỉ hỗ trợ tìm vùng bất thường, bác sĩ vẫn là người kết luận cuối cùng. Trước khi thương mại hóa, giải pháp cần được bệnh viện đánh giá độc lập, tích hợp vào quy trình khám chữa bệnh và hoàn tất thủ tục pháp lý.\n\n## EggVision: đoán giới tính phôi gà không cần chọc thủng vỏ\n\nEggVision chiếu ánh sáng qua trứng đang ấp và dùng AI phân tích tín hiệu thu được để dự đoán phôi trống hay mái từ khoảng ngày thứ 4. Trứng trống có thể được dừng ấp sớm, giảm số gà trống con phải loại sau khi nở và tiết kiệm một phần chi phí ấp. Trứng dừng ấp vẫn cần được xử lý.\n\n## Các đội khác\n\n- Brain-Life làm cả thiết bị đeo đầu đo điện não (EEG) lẫn nền tảng phân tích để ước lượng mức tập trung và mệt mỏi, hướng tới tài xế đường dài. Nhóm nhấn mạnh chỉ số AI ước lượng không phải chẩn đoán sức khỏe tinh thần.\n- Bio AI dùng công cụ tính toán để sàng lọc giả thuyết về hoạt chất trong bài thuốc cổ truyền trước khi làm thí nghiệm.\n- OnFlow Vietnam chuyển các bản quét 3D dung lượng lớn của hiện vật, di tích thành mô hình nhẹ hơn, ví dụ mô hình số hiện trạng Thành cổ Quảng Trị.\n\nBài gốc không công bố độ chính xác hay kết quả thử nghiệm lâm sàng của các giải pháp; nhiều dự án vẫn ở giai đoạn thử nghiệm."
+        },
+        "en": {
+          "title": "Vietnamese AI for healthcare and agriculture competes for a USD 1 million prize",
+          "summary": "Pathology AI Lab analyses cervical cytology images and marks suspicious areas for doctors. EggVision shines light through incubating eggs so AI can predict embryo sex from day 4 without piercing the shell. The teams compete for the USD 1 million Âu Lạc Grand Prize.",
+          "body": "Five Vietnamese AI teams in the preliminary round of the Âu Lạc Grand Prize presented solutions for healthcare, poultry farming, traditional medicine research and cultural heritage. Two of them rely directly on image analysis.\n\n## Pathology AI Lab: helping doctors read cervical cytology\n\nA single cervical cytology sample can contain a great many cells, so reading it takes time. Pathology AI Lab's system highlights suspicious areas and describes abnormal features; the doctor compares the suggestions with the original images before reaching a conclusion. The data comes from Vietnamese medical facilities, with medical experts helping to evaluate and standardise it.\n\nThe team is clear that the AI only helps find abnormal regions and the doctor makes the final call. Before commercialisation, the solution needs independent evaluation by hospitals, integration into clinical workflows and legal approval.\n\n## EggVision: sexing chick embryos without piercing the shell\n\nEggVision shines light through incubating eggs and uses AI to analyse the signal and predict whether the embryo is male or female from around day 4. Male eggs can then be removed early, which means fewer male chicks culled after hatching and some savings on incubation. Removed eggs still have to be disposed of.\n\n## Other teams\n\n- Brain-Life builds both an EEG headset and the analysis platform to estimate focus and fatigue, aimed at long-distance drivers. The team stresses that the AI estimates are not mental health diagnoses.\n- Bio AI uses computational tools to screen hypotheses about active compounds in traditional remedies before costly experiments.\n- OnFlow Vietnam turns large 3D scans of artefacts and heritage sites into lighter models, such as a digital model of the Quảng Trị Citadel as it stands today.\n\nThe original article reports no accuracy figures or clinical trial results; several projects are still in pilot stages."
+        }
+      },
+      "ai_assisted": true,
       "source": "vnexpress",
       "external_id": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
       "url": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
@@ -87,12 +118,31 @@
         "sàng lọc ung thư cổ tử cung",
         "soi trứng"
       ],
-      "original_language": "vi"
+      "original_language": "vi",
+      "image": {
+        "url": "https://i2-vnexpress.vnecdn.net/2026/10/22/b4-1792656946-3333-1792656960.png?w=1200&h=675&q=100&dpr=1&fit=crop&s=ZtlY48DqRrJE2GrQLiGDXQ",
+        "alt": "Ảnh minh họa bài viết về các giải pháp AI y tế và nông nghiệp tại Âu Lạc Grand Prize",
+        "credit": "VnExpress",
+        "credit_url": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
+        "rights": "permission_pending"
+      }
     },
     {
       "slug": "trien-lam-quoc-phong-2026-dung-ai-nhan-dien",
       "title": "Triển lãm Quốc phòng 2026 dùng AI nhận diện, chuẩn bị hai trực thăng cấp cứu",
-      "summary": "Triển lãm Quốc phòng quốc tế Việt Nam 2026 (10-13/12, sân bay Gia Lâm) dùng hệ thống nhận diện khuôn mặt AI của Viettel đồng bộ với cổng kiểm soát. Khách đăng ký trực tuyến từ 15/11, nộp CCCD hoặc hộ chiếu kèm ảnh chân dung rõ mặt.",
+      "text": {
+        "vi": {
+          "title": "Triển lãm Quốc phòng 2026 dùng AI nhận diện, chuẩn bị hai trực thăng cấp cứu",
+          "summary": "Triển lãm Quốc phòng quốc tế Việt Nam 2026 (10-13/12, sân bay Gia Lâm) dùng hệ thống nhận diện khuôn mặt AI của Viettel đồng bộ với cổng kiểm soát. Khách đăng ký trực tuyến từ 15/11, nộp CCCD hoặc hộ chiếu kèm ảnh chân dung rõ mặt.",
+          "body": "Triển lãm Quốc phòng quốc tế Việt Nam 2026 diễn ra từ 10 đến 13/12 tại sân bay Gia Lâm, Hà Nội. Theo thông tin tại buổi họp báo của Bộ Quốc phòng sáng 20/10, Viettel được giao áp dụng công nghệ nhận diện khuôn mặt bằng AI để kiểm soát khách vào cửa.\n\n## Đăng ký và kiểm soát ra vào\n\n- Cổng đăng ký trực tuyến dự kiến mở từ 15/11.\n- Người đăng ký tải lên ảnh căn cước công dân hoặc hộ chiếu cùng một ảnh chân dung rõ mặt. Thông tin được đồng bộ tự động với hệ thống kiểm soát tại cổng.\n- Viettel bố trí thêm điểm đăng ký bổ sung dọc đường vào triển lãm cho người chưa kịp đăng ký trực tuyến.\n- Không giới hạn độ tuổi, nhưng mọi khách đều phải được xác thực danh tính; người chưa xác thực sẽ không được vào.\n- Cổng còn có thiết bị soi chiếu chất nổ, hóa chất độc và phóng xạ.\n\nKhách tham quan tự do vào ngày 12/12 (9h-17h) và 13/12 (9h-15h); ban tổ chức có thể đề xuất kéo dài thời gian nếu nhu cầu lớn.\n\n## Y tế và hậu cần\n\nHai trực thăng, mỗi chiếc có một kíp quân y, sẵn sàng cấp cứu và vận chuyển người bệnh. Các bệnh viện quân đội 108, 103, 354, 105 và bệnh viện dân sự được kết nối để hỗ trợ. Ban tổ chức cũng chuẩn bị 24 cây nước mát, điểm phục vụ nước và đồ ăn nhẹ, phương án phân luồng giao thông và bãi đỗ xe.\n\n## Quy định với drone\n\nPhóng viên chỉ được bay flycam khi có giấy phép và trong giới hạn độ cao, đồng thời phải đăng ký với đơn vị an ninh của triển lãm. Lực lượng tác chiến điện tử giám sát vùng trời và sẽ buộc hạ cánh thiết bị bay không phép.\n\nVới người làm thị giác máy tính, đây là một ví dụ triển khai nhận diện khuôn mặt quy mô lớn tại sự kiện công cộng, kéo theo các câu hỏi về độ chính xác, tốc độ xử lý ở cổng và bảo vệ dữ liệu sinh trắc học của khách."
+        },
+        "en": {
+          "title": "Vietnam Defence Expo 2026 to use AI face recognition and keep two medevac helicopters on standby",
+          "summary": "The Vietnam International Defence Exhibition 2026 (10-13 December, Gia Lâm airport) will use Viettel's AI face recognition linked to the entry gates. Visitors register online from 15 November with an ID card or passport and a clear face photo.",
+          "body": "The Vietnam International Defence Exhibition 2026 runs from 10 to 13 December at Gia Lâm airport in Hanoi. At a Ministry of National Defence press conference on 20 October, officials said Viettel has been assigned to use AI face recognition to control visitor entry.\n\n## Registration and access control\n\n- Online registration is expected to open on 15 November.\n- Registrants upload an ID card or passport image and a clear face photo. The data syncs automatically with the gate control system.\n- Viettel will set up extra registration points along the road to the exhibition for people who miss the online window.\n- There is no age limit, but every visitor must be identity-verified; unverified people will not be admitted.\n- Gates also screen for explosives, toxic chemicals and radiation.\n\nPublic visiting hours are 9:00-17:00 on 12 December and 9:00-15:00 on 13 December; organisers may propose longer hours if demand is high.\n\n## Medical and logistics\n\nTwo helicopters, each with a military medical team, will be ready for emergency evacuation. Military hospitals 108, 103, 354 and 105 and civilian hospitals are linked to support visitors. Organisers also plan 24 water coolers, water and light food points, traffic diversion and parking.\n\n## Drone rules\n\nJournalists may fly drones only with a permit and within height limits, and must register them with the exhibition's security unit. Electronic warfare units will monitor the airspace and force unpermitted drones to land.\n\nFor computer vision practitioners, this is an example of large-scale face recognition at a public event, which raises questions about accuracy, processing speed at the gates and the protection of visitors' biometric data."
+        }
+      },
+      "ai_assisted": true,
       "source": "cafef",
       "external_id": "https://cafef.vn/trien-lam-quoc-phong-2026-dung-ai-nhan-dien-chuan-bi-hai-truc-thang-cap-cuu-188261020155528727.chn",
       "url": "https://cafef.vn/trien-lam-quoc-phong-2026-dung-ai-nhan-dien-chuan-bi-hai-truc-thang-cap-cuu-188261020155528727.chn",
@@ -106,12 +156,31 @@
         "Viettel",
         "kiểm soát ra vào"
       ],
-      "original_language": "vi"
+      "original_language": "vi",
+      "image": {
+        "url": "https://cafefcdn.com/thumb_w/1200/203337114487263232/2026/10/20/avatar1792486511333-17924865117121074976419.webp",
+        "alt": "Ảnh minh họa bài viết về Triển lãm Quốc phòng quốc tế Việt Nam 2026",
+        "credit": "CafeF",
+        "credit_url": "https://cafef.vn/trien-lam-quoc-phong-2026-dung-ai-nhan-dien-chuan-bi-hai-truc-thang-cap-cuu-188261020155528727.chn",
+        "rights": "permission_pending"
+      }
     },
     {
       "slug": "ai-dau-voi-con-nguoi-trong-cuoc-dua-drone-toc-do-cao",
       "title": "AI đấu với con người trong cuộc đua drone tốc độ cao",
-      "summary": "Drone do AI điều khiển tự học bay và hoàn thành đường đua ở tốc độ trên 96 km/h, vượt qua các phi công hàng đầu.",
+      "text": {
+        "vi": {
+          "title": "AI đấu với con người trong cuộc đua drone tốc độ cao",
+          "summary": "Hệ thống MonoRace của Đại học Công nghệ Delft chỉ dùng một camera và cảm biến quán tính, tự học bay trong mô phỏng rồi thắng ba nhà vô địch thế giới trên đường đua drone, với tốc độ tối đa khoảng 102 km/h.",
+          "body": "Nhóm Micro Air Vehicle Lab (MAVLab) thuộc Đại học Công nghệ Delft (Hà Lan) công bố trên tạp chí Science Robotics hệ thống MonoRace, một drone đua do mạng nơ-ron điều khiển hoàn toàn trên máy bay.\n\n## Chỉ một camera và một cảm biến quán tính\n\nDrone bốn cánh nặng 966 g, kích thước khoảng 30 x 28 x 10 cm. Nó chỉ có một camera hướng về phía trước và một cảm biến quán tính (IMU) đo gia tốc và chuyển động quay. Hệ thống không dùng GPS, không dùng camera kép, không dùng hệ thống bắt chuyển động bên ngoài và không cần bản đồ đường đua nạp sẵn. Toàn bộ tính toán chạy trên một máy tính nhỏ gắn trên drone.\n\nMạng nơ-ron nhận diện các cổng đua, ước lượng vị trí và chuyển động của drone, rồi gửi lệnh tới bốn động cơ 500 lần mỗi giây.\n\n## Học bằng thử và sai trong mô phỏng\n\nMonoRace được huấn luyện bằng học tăng cường (reinforcement learning), bắt đầu từ con số không và trải qua hàng triệu lần thử trong mô phỏng: đầu tiên học tránh va chạm và tới được cổng đầu tiên, sau đó bay xa hơn và nhanh hơn. Để mô hình chịu được khác biệt ngoài đời thật, nhóm thay đổi ngẫu nhiên khối lượng, điện áp, lực cản, nhiễu cảm biến và tình trạng cánh quạt. Nhờ vậy mạng không bị gắn với một chiếc drone cụ thể.\n\n## Kết quả\n\nTại giải đua drone tự hành Abu Dhabi tháng 11/2025, MonoRace thắng thời gian của ba phi công từng vô địch thế giới. Drone hoàn thành hai vòng đường đua 11 cổng trong 16,56 giây, tốc độ tối đa khoảng 102 km/h.\n\nNăm 2022, hệ thống Swift của Đại học Zurich cũng từng thắng phi công vô địch, nhưng trên đường đua trong nhà khoảng 25 x 25 m và bị ảnh hưởng khi ánh sáng thay đổi. Nhóm Delft cho rằng MonoRace có thể dùng để huấn luyện phi công, và cách tiếp cận này có thể tối ưu cho an toàn hay tiết kiệm năng lượng thay vì chỉ tốc độ."
+        },
+        "en": {
+          "title": "AI takes on human pilots in high-speed drone racing",
+          "summary": "TU Delft's MonoRace uses a single camera and an inertial sensor, learned to fly in simulation, and beat three world-champion pilots on a drone racing track, reaching a top speed of about 102 km/h.",
+          "body": "The Micro Air Vehicle Lab (MAVLab) at Delft University of Technology in the Netherlands described MonoRace in Science Robotics: a racing drone flown entirely by a neural network running on board.\n\n## One camera and one inertial sensor\n\nThe quadcopter weighs 966 g and measures about 30 x 28 x 10 cm. It has a single forward-facing camera and an inertial measurement unit (IMU) that measures acceleration and rotation. It uses no GPS, no stereo cameras, no external motion capture and no pre-loaded map of the course. All computation runs on a small onboard computer.\n\nThe neural network detects the race gates, estimates the drone's position and motion, and sends commands to the four motors 500 times per second.\n\n## Learning by trial and error in simulation\n\nMonoRace was trained with reinforcement learning, starting from scratch and running millions of attempts in simulation: first learning to avoid crashes and reach the first gate, then to fly further and faster. To cope with real-world variation, the team randomised mass, voltage, drag, sensor noise and propeller condition, so the network is not tied to one particular drone.\n\n## Results\n\nAt the Abu Dhabi autonomous drone race in November 2025, MonoRace beat the times of three former world-champion pilots. It completed two laps of an 11-gate course in 16.56 seconds, with a top speed of about 102 km/h.\n\nIn 2022, the University of Zurich's Swift system also beat champion pilots, but on an indoor course of about 25 x 25 m, and its performance suffered when the lighting changed. The Delft team says MonoRace could help train pilots, and that the approach could optimise for safety or energy use rather than speed alone."
+        }
+      },
+      "ai_assisted": true,
       "source": "vnexpress",
       "external_id": "https://vnexpress.net/ai-dau-voi-con-nguoi-trong-cuoc-dua-drone-toc-do-cao-5134728.html",
       "url": "https://vnexpress.net/ai-dau-voi-con-nguoi-trong-cuoc-dua-drone-toc-do-cao-5134728.html",
@@ -130,12 +199,31 @@
         "provider": "youtube",
         "id": "dgz8oHogMNE",
         "title": "AI Drone Defeats World Champion Drone Pilots"
+      },
+      "image": {
+        "url": "https://i2-vnexpress.vnecdn.net/2026/10/20/VNEDrone-1792488038-3893-1792488472.jpg?w=1200&h=675&q=100&dpr=1&fit=crop&s=UgU6hS_ikrtNUjsFFO5aTQ",
+        "alt": "Drone đua tốc độ cao do AI điều khiển",
+        "credit": "VnExpress",
+        "credit_url": "https://vnexpress.net/ai-dau-voi-con-nguoi-trong-cuoc-dua-drone-toc-do-cao-5134728.html",
+        "rights": "permission_pending"
       }
     },
     {
       "slug": "global-computer-vision-market-forecast-2026-2030",
       "title": "Global Computer Vision Market Size, Share, Trends, and Forecast 2026-2030",
-      "summary": "Thị trường thị giác máy tính toàn cầu dự kiến tăng thêm 26,13 tỷ USD giai đoạn 2025-2030, tốc độ tăng trưởng kép 16,9%/năm. Động lực chính là giám sát an ninh, hệ thống tự hành trong sản xuất và logistics, và ảnh y tế. Thách thức gồm quyền riêng tư, chi phí hạ tầng và thiên lệch dữ liệu.",
+      "text": {
+        "vi": {
+          "title": "Thị trường thị giác máy tính toàn cầu 2026-2030: dự báo tăng thêm 26,13 tỷ USD",
+          "summary": "Báo cáo của Research and Markets dự báo thị trường thị giác máy tính toàn cầu tăng thêm 26,13 tỷ USD giai đoạn 2025-2030, tốc độ tăng trưởng kép 16,9%/năm. Động lực chính là giám sát an ninh, hệ thống tự hành trong sản xuất và logistics, và ảnh y tế.",
+          "body": "Research and Markets phát hành báo cáo \"Global Computer Vision Market 2026-2030\", phân tích khoảng 25 nhà cung cấp với dữ liệu lịch sử 2020-2024 và dự báo 2025-2030.\n\n## Con số chính\n\n- Thị trường dự kiến tăng thêm 26,13 tỷ USD trong giai đoạn 2025-2030.\n- Tốc độ tăng trưởng kép (CAGR) 16,9% mỗi năm.\n- Thông cáo chỉ nêu mức tăng, không nêu tổng quy mô thị trường năm 2025 hay 2030.\n\n## Động lực tăng trưởng\n\n- Đầu tư vào hạ tầng giám sát và an ninh thông minh.\n- Tích hợp hệ thống tự hành trong sản xuất và logistics.\n- Tiến bộ của ảnh y tế và chẩn đoán có hỗ trợ AI.\n\n## Cơ hội và thách thức\n\nBáo cáo xem xử lý hình ảnh tại biên (edge) nhờ mạng 5G, dữ liệu tổng hợp (synthetic data) cùng AI tạo sinh để tinh chỉnh mô hình, và hệ thống đa phương thức là các cơ hội lớn. Ở chiều ngược lại là lo ngại về quyền riêng tư và khung pháp lý chặt chẽ, chi phí hạ tầng và độ phức tạp khi tích hợp, cùng thiên lệch thuật toán và sự khan hiếm dữ liệu huấn luyện đa dạng.\n\nThị trường được chia theo thành phần (phần cứng, phần mềm, dịch vụ), cách triển khai (tại chỗ, đám mây, kết hợp) và ngành sử dụng (sản xuất, ô tô, y tế, bán lẻ và thương mại điện tử). Các doanh nghiệp được nêu tên gồm NVIDIA, Intel, Qualcomm, Google, Microsoft, Amazon, Cognex, Keyence, Basler, Sony Semiconductor Solutions, SenseTime và nhiều hãng khác.\n\nĐây là số liệu từ một báo cáo thương mại; các con số dự báo phụ thuộc vào phương pháp của đơn vị phát hành và nên được đối chiếu với các nguồn khác trước khi trích dẫn."
+        },
+        "en": {
+          "title": "Global Computer Vision Market Size, Share, Trends, and Forecast 2026-2030",
+          "summary": "A Research and Markets report forecasts the global computer vision market to grow by USD 26.13 billion over 2025-2030, a compound annual growth rate of 16.9%. The main drivers are security surveillance, autonomous systems in manufacturing and logistics, and medical imaging.",
+          "body": "Research and Markets has released \"Global Computer Vision Market 2026-2030\", covering about 25 vendors, with historical data for 2020-2024 and forecasts for 2025-2030.\n\n## Key figures\n\n- The market is forecast to grow by USD 26.13 billion over 2025-2030.\n- Compound annual growth rate (CAGR) of 16.9%.\n- The release gives only the increment, not the total market size in 2025 or 2030.\n\n## Growth drivers\n\n- Investment in intelligent surveillance and security infrastructure.\n- Integration of autonomous systems in manufacturing and logistics.\n- Advances in medical imaging and AI-assisted diagnostics.\n\n## Opportunities and challenges\n\nThe report names 5G-enabled edge processing, synthetic data with generative AI for model refinement, and multimodal systems as major opportunities. On the other side are privacy concerns and strict regulation, infrastructure cost and integration complexity, and algorithmic bias with a shortage of diverse training data.\n\nThe market is segmented by component (hardware, software, services), deployment (on-premises, cloud, hybrid) and end user (manufacturing, automotive, healthcare, retail and e-commerce). Named vendors include NVIDIA, Intel, Qualcomm, Google, Microsoft, Amazon, Cognex, Keyence, Basler, Sony Semiconductor Solutions, SenseTime and others.\n\nThese figures come from a commercial report; forecasts depend on the publisher's methodology and should be checked against other sources before being quoted."
+        }
+      },
+      "ai_assisted": true,
       "source": "globenewswire",
       "external_id": "https://www.globenewswire.com/news-release/2026/10/23/3387357/28124/en/global-computer-vision-market-size-share-trends-and-forecast-2026-2030-edge-ai-autonomous-systems-and-medical-imaging-drive-16-9-cagr-and-26-13-billion-growth.html",
       "url": "https://www.globenewswire.com/news-release/2026/10/23/3387357/28124/en/global-computer-vision-market-size-share-trends-and-forecast-2026-2030-edge-ai-autonomous-systems-and-medical-imaging-drive-16-9-cagr-and-26-13-billion-growth.html",
@@ -149,12 +237,30 @@
         "edge AI",
         "ảnh y tế"
       ],
-      "original_language": "en"
+      "original_language": "en",
+      "image": {
+        "file": "images/cv-market-forecast.png",
+        "alt": "Minh họa biểu đồ cột tăng trưởng thị trường thị giác máy tính",
+        "credit": "VietnamCV",
+        "rights": "own"
+      }
     },
     {
       "slug": "nvidia-isaac-platform-reference-humanoid",
       "title": "NVIDIA Advances Isaac Platform for General-Purpose Robotics with New Reference Humanoid, Frameworks, Simulation Pipelines and Data",
-      "summary": "NVIDIA công bố Isaac Lab 3.0 (bản chính thức), Isaac OS mã nguồn mở và robot hình người tham chiếu Agile ONE SN có camera ở đầu và cổ tay, lidar, chạy Jetson Thor (dự kiến đầu 2027). Kèm bộ dữ liệu Human 1M gồm video ba góc nhìn đồng bộ và theo dõi bàn tay 3D trên Hugging Face.",
+      "text": {
+        "vi": {
+          "title": "NVIDIA mở rộng nền tảng Isaac với robot hình người tham chiếu, framework, quy trình mô phỏng và dữ liệu mới",
+          "summary": "NVIDIA công bố Isaac Lab 3.0 bản chính thức, Isaac OS mã nguồn mở và robot hình người tham chiếu Agile ONE SN có camera ở đầu và cổ tay, lidar, chạy Jetson Thor (dự kiến đầu 2027). Kèm bộ dữ liệu Human 1M gồm video ba góc nhìn đồng bộ và theo dõi bàn tay 3D trên Hugging Face.",
+          "body": "Tại GTC Berlin ngày 22/10, NVIDIA công bố loạt bổ sung cho nền tảng robot Isaac, từ phần cứng tham chiếu tới công cụ mô phỏng và dữ liệu huấn luyện.\n\n## Robot hình người tham chiếu Agile ONE SN\n\nAgile ONE SN do Agile Robots phát triển, xây trên mô hình nền tảng Isaac GR00T và chạy NVIDIA Jetson Thor (2.070 teraflops FP4, 128 GB bộ nhớ hợp nhất). Robot cao 1,40 m, nặng 40 kg, có 31 bậc tự do, mỗi tay mang được 3 kg, với hai bàn tay năm ngón WUJI Hand 2 có cảm biến xúc giác. Về thị giác, robot có camera ở đầu và cổ tay, lidar và cảm biến quán tính. Sản phẩm dự kiến có từ đầu năm 2027, nhắm tới các nhóm nghiên cứu robot hình người; Đại học Stanford và ETH Zurich đã bày tỏ quan tâm.\n\n## Công cụ và dữ liệu\n\n- Isaac Lab 3.0 chính thức phát hành: framework mã nguồn mở để huấn luyện chính sách điều khiển robot từ máy bàn tới trung tâm dữ liệu, hỗ trợ nhiều GPU và hai engine vật lý Newton và PhysX.\n- Isaac OS: môi trường chạy mã nguồn mở xây trên Holoscan, kết nối AI, cảm biến, điều khiển và phần cứng robot với hiệu năng thời gian thực.\n- Human 1M: bộ dữ liệu hoạt động của con người với video ba góc nhìn đồng bộ và theo dõi bàn tay 3D, đăng trên Hugging Face. Đây là loại dữ liệu hữu ích cho bài toán học thao tác từ quan sát con người.\n- Thư viện SimReady Central với hơn 2.000 tài sản mô phỏng robot và nhà máy trên Hugging Face, có đóng góp của FANUC, Franka Robotics, Universal Robots, LG Electronics và nhiều hãng khác.\n- Ba quy trình tham chiếu mã nguồn mở cho DGX Station, trong đó có tinh chỉnh GR00T 1.7 bằng học tăng cường.\n\nNVIDIA cũng giới thiệu nền tảng an toàn Halos cho robot và xe tự hành, cùng nhiều đối tác châu Âu như ABB, KUKA và NEURA Robotics. Theo NVIDIA, một số sản phẩm vẫn đang phát triển và thời điểm ra mắt có thể thay đổi."
+        },
+        "en": {
+          "title": "NVIDIA Advances Isaac Platform for General-Purpose Robotics with New Reference Humanoid, Frameworks, Simulation Pipelines and Data",
+          "summary": "NVIDIA announced Isaac Lab 3.0 general availability, the open-source Isaac OS and the Agile ONE SN reference humanoid with head and wrist cameras, lidar and Jetson Thor (expected early 2027), plus the Human 1M dataset of synchronised three-view video with 3D hand tracking on Hugging Face.",
+          "body": "At GTC Berlin on 22 October, NVIDIA announced a set of additions to its Isaac robotics platform, from reference hardware to simulation tools and training data.\n\n## Agile ONE SN reference humanoid\n\nAgile ONE SN is built by Agile Robots on the Isaac GR00T foundation model and runs NVIDIA Jetson Thor (2,070 FP4 teraflops, 128 GB unified memory). It stands 1.40 m tall, weighs 40 kg, has 31 degrees of freedom and a 3 kg payload per arm, with two five-finger WUJI Hand 2 hands with tactile sensing. For perception it has head and wrist cameras, lidar and inertial sensors. It is expected in early 2027 and targets humanoid research groups; Stanford University and ETH Zurich have expressed interest.\n\n## Tools and data\n\n- Isaac Lab 3.0 is generally available: an open-source framework for training robot control policies from desktop to data centre, with multi-GPU support and the Newton and PhysX physics engines.\n- Isaac OS: an open-source runtime built on Holoscan that connects AI, sensors, controls and robot hardware with real-time performance.\n- Human 1M: a dataset of human activities with synchronised three-view video and 3D hand tracking, on Hugging Face. This kind of data is useful for learning manipulation from human demonstrations.\n- The SimReady Central library of more than 2,000 simulation-ready robot and factory assets on Hugging Face, with contributions from FANUC, Franka Robotics, Universal Robots, LG Electronics and others.\n- Three open-source reference workflows for DGX Station, including refining GR00T 1.7 with reinforcement learning.\n\nNVIDIA also presented its Halos safety platform for robots and autonomous vehicles, along with European partners such as ABB, KUKA and NEURA Robotics. NVIDIA notes that some products are still in development and timing may change."
+        }
+      },
+      "ai_assisted": true,
       "source": "edge-ai-vision",
       "external_id": "https://www.edge-ai-vision.com/2026/10/nvidia-advances-isaac-platform-for-general-purpose-robotics-with-new-reference-humanoid-frameworks-simulation-pipelines-and-data/",
       "url": "https://www.edge-ai-vision.com/2026/10/nvidia-advances-isaac-platform-for-general-purpose-robotics-with-new-reference-humanoid-frameworks-simulation-pipelines-and-data/",
@@ -174,12 +280,53 @@
         "provider": "youtube",
         "id": "EaUlCfDYzxk",
         "title": "NVIDIA Isaac Lab 3.0: The Ultimate Virtual Gym for AI Robots"
-      }
+      },
+      "image": {
+        "url": "https://www.edge-ai-vision.com/wp-content/uploads/2026/10/nvidia-isaac-platform.jpeg",
+        "alt": "Ảnh giới thiệu nền tảng robot NVIDIA Isaac",
+        "credit": "NVIDIA / Edge AI and Vision Alliance",
+        "credit_url": "https://www.edge-ai-vision.com/2026/10/nvidia-advances-isaac-platform-for-general-purpose-robotics-with-new-reference-humanoid-frameworks-simulation-pipelines-and-data/",
+        "rights": "permission_pending"
+      },
+      "links": [
+        {
+          "kind": "official",
+          "label": "Agile Robots: Agile ONE SN",
+          "url": "https://www.agile-robots.com/en/news/detail/agile-robots-launches-agile-one-sn/"
+        },
+        {
+          "kind": "official",
+          "label": "NVIDIA Isaac",
+          "url": "https://developer.nvidia.com/isaac"
+        },
+        {
+          "kind": "dataset",
+          "label": "Hugging Face: SimReady Central",
+          "url": "https://huggingface.co/blog/nvidia/simready-central-assets-robotics-ai-factories"
+        },
+        {
+          "kind": "code",
+          "label": "GitHub: nvidia-isaac/isaac-rlpt (GR00T 1.7 RL)",
+          "url": "https://github.com/nvidia-isaac/isaac-rlpt"
+        }
+      ]
     },
     {
       "slug": "nvidia-nemotron-3-5-super-vl-bolt",
       "title": "Open From Data Center to Desktop: NVIDIA Expands Nemotron Family with Highest Efficiency Super VL and Bolt Models",
-      "summary": "NVIDIA phát hành Nemotron 3.5 Super VL, mô hình thị giác-ngôn ngữ 120 tỷ tham số với trọng số, dữ liệu và công thức huấn luyện mở. Mạnh về OCR, bảng, biểu đồ và tài liệu, dành cho tác tử AI. Có trên Hugging Face, OpenRouter và NVIDIA NIM, chạy được từ Jetson đến trung tâm dữ liệu.",
+      "text": {
+        "vi": {
+          "title": "NVIDIA mở rộng dòng Nemotron với mô hình Super VL và Bolt, chạy từ trung tâm dữ liệu tới máy bàn",
+          "summary": "NVIDIA phát hành Nemotron 3.5 Super VL, mô hình thị giác-ngôn ngữ 120 tỷ tham số với trọng số, dữ liệu và công thức huấn luyện mở, mạnh về OCR, bảng, biểu đồ và tài liệu. Kèm hai mô hình Bolt cho thiết bị biên.",
+          "body": "NVIDIA bổ sung ba mô hình vào họ Nemotron 3.5: Super VL cho các tác tử AI chuyên biệt, và hai mô hình Bolt chạy cục bộ trên máy tính cá nhân và thiết bị biên.\n\n## Nemotron 3.5 Super VL\n\n- Mô hình mở 120 tỷ tham số, gộp xử lý văn bản và hình ảnh trong một mô hình.\n- Thế mạnh về thị giác: OCR, bảng, biểu đồ và thông tin có cấu trúc trong tài liệu dạng ảnh; đọc được trang web và PDF, trích xuất chữ và đọc đồ thị.\n- Theo NVIDIA, độ chính xác trên các tác vụ tác tử đa phương thức tương đương mô hình suy luận lớn nhất của hãng với khoảng một phần năm số tham số.\n- Huấn luyện trên khoảng 26 nghìn tỷ token; giai đoạn hậu huấn luyện dùng khoảng 3,8 triệu mẫu và học tăng cường trên hàng chục môi trường.\n- Phát hành kèm trọng số, bộ dữ liệu và công thức huấn luyện mở; có trên Hugging Face, OpenRouter, ModelScope và dưới dạng NVIDIA NIM.\n- Chạy được trên Jetson, DGX Spark, DGX Station, máy trạm RTX PRO, trung tâm dữ liệu và đám mây.\n\n## Nemotron 3.5 Bolt\n\n- Bolt 74B-A9B 24GB dùng lượng tử hóa 2-bit gốc để vừa trong 24 GB bộ nhớ, phục vụ tác tử cục bộ cho nghiên cứu web, viết và gỡ lỗi mã; hỗ trợ llama.cpp, Ollama, LM Studio, Unsloth và vLLM.\n- Bolt E4B 4GB nhắm tới trợ lý giọng nói, nhân vật tương tác và giao diện nhúng, chạy trên GeForce RTX và Jetson.\n\nVới người làm thị giác máy tính, điểm đáng chú ý là một mô hình thị giác-ngôn ngữ cỡ lớn công bố cả dữ liệu và công thức huấn luyện, có thể tinh chỉnh bằng NeMo cho bài toán đọc tài liệu và phân tích ảnh trong doanh nghiệp. Các con số so sánh hiệu năng là do NVIDIA công bố."
+        },
+        "en": {
+          "title": "Open From Data Center to Desktop: NVIDIA Expands Nemotron Family with Highest Efficiency Super VL and Bolt Models",
+          "summary": "NVIDIA released Nemotron 3.5 Super VL, a 120-billion-parameter vision-language model with open weights, data and training recipes, strong at OCR, tables, charts and documents, plus two Bolt models for edge devices.",
+          "body": "NVIDIA added three models to the Nemotron 3.5 family: Super VL for specialised AI agents, and two Bolt models that run locally on PCs and edge devices.\n\n## Nemotron 3.5 Super VL\n\n- An open 120-billion-parameter model that handles text and images in one model.\n- Vision strengths: OCR, tables, charts and structured information in visual documents; it can read web pages and PDFs, extract text and read graphs.\n- NVIDIA says its accuracy on multimodal agent tasks is comparable to its largest reasoning model at about one-fifth of the parameters.\n- Trained on about 26 trillion tokens; post-training used about 3.8 million samples and reinforcement learning across dozens of environments.\n- Released with open weights, datasets and training recipes; available on Hugging Face, OpenRouter, ModelScope and as NVIDIA NIM.\n- Runs on Jetson, DGX Spark, DGX Station, RTX PRO workstations, data centres and the cloud.\n\n## Nemotron 3.5 Bolt\n\n- Bolt 74B-A9B 24GB uses native 2-bit quantisation to fit in 24 GB of memory, for local agents doing web research, writing and code debugging; supported by llama.cpp, Ollama, LM Studio, Unsloth and vLLM.\n- Bolt E4B 4GB targets voice assistants, interactive characters and embedded interfaces on GeForce RTX and Jetson.\n\nFor computer vision practitioners, the notable part is a large vision-language model released with its data and training recipe, which can be fine-tuned with NeMo for document reading and image analysis in business settings. Performance comparisons are NVIDIA's own."
+        }
+      },
+      "ai_assisted": true,
       "source": "edge-ai-vision",
       "external_id": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
       "url": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
@@ -199,12 +346,53 @@
         "provider": "youtube",
         "id": "hfUUT7gZz-0",
         "title": "Introducing NVIDIA Nemotron 3.5 Super VL"
-      }
+      },
+      "image": {
+        "url": "https://www.edge-ai-vision.com/wp-content/uploads/2026/10/FIRST-agentic-ai-nemotron-3.5-super-vl-blog-1920x1080-5783765.jpeg",
+        "alt": "Ảnh giới thiệu mô hình NVIDIA Nemotron 3.5 Super VL",
+        "credit": "NVIDIA / Edge AI and Vision Alliance",
+        "credit_url": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
+        "rights": "permission_pending"
+      },
+      "links": [
+        {
+          "kind": "model",
+          "label": "Hugging Face: Nemotron 3.5 Super VL",
+          "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4"
+        },
+        {
+          "kind": "model",
+          "label": "Hugging Face: Nemotron 3.5 Bolt 24GB",
+          "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-74B-A9B-24GB"
+        },
+        {
+          "kind": "official",
+          "label": "NVIDIA Technical Blog: Nemotron 3.5 Super VL",
+          "url": "https://developer.nvidia.com/blog/nvidia-nemotron-3-5-super-vl-powers-specialized-agents-with-multimodal-reasoning/"
+        },
+        {
+          "kind": "dataset",
+          "label": "Hugging Face: Nemotron post-training datasets",
+          "url": "https://huggingface.co/collections/nvidia/nemotron-post-training-v3"
+        }
+      ]
     },
     {
       "slug": "synaptics-astra-sr200-edge-ai-mcu",
       "title": "Synaptics Astra SR200 Series Redefines Edge AI with Vision, Voice and Display on a Single MCU with High-Density Custom DRAM",
-      "summary": "Dòng vi điều khiển Astra SR200 của Synaptics kết hợp Cortex-M85 và Cortex-M52, NPU Torq tới 400 GOPS và tối đa 256MB DRAM. Bản SR230 hỗ trợ một luồng thị giác, SR250 hỗ trợ hai luồng thị giác và hiển thị, nhắm tới camera kết nối và thị giác công nghiệp.",
+      "text": {
+        "vi": {
+          "title": "Synaptics Astra SR200: thị giác, giọng nói và hiển thị trên một vi điều khiển với DRAM tích hợp",
+          "summary": "Dòng vi điều khiển Astra SR200 của Synaptics kết hợp Cortex-M85 và Cortex-M52, NPU Torq tới 400 GOPS và tối đa 256 MB DRAM. Bản SR230 hỗ trợ một luồng thị giác, SR250 hai luồng thị giác và hiển thị, nhắm tới camera kết nối và thị giác công nghiệp.",
+          "body": "Synaptics công bố ngày 20/10 dòng vi điều khiển (MCU) Astra SR200 cho AI tại biên, gộp thị giác, giọng nói và hiển thị trong một chip, nhắm tới thiết bị đeo, cảm biến chạy pin, camera kết nối và hệ thống thị giác công nghiệp.\n\n## Ba phiên bản tương thích chân\n\n- SR210: 200 GOPS, cho giọng nói và cảm biến luôn bật, tối ưu điện năng.\n- SR230: 300 GOPS, thêm một luồng thị giác, hiển thị và âm thanh tùy chọn.\n- SR250: 400 GOPS, hai luồng thị giác và hiển thị, cho ứng dụng cao cấp.\n\nCác bản công nghiệp có thêm Ethernet 1 Gb hỗ trợ IEEE 1588 TSN và hai giao tiếp CAN-FD. Cả ba dùng chung bộ công cụ phát triển (SDK).\n\n## Kiến trúc\n\n- Lõi Arm Cortex-M85 tới 800 MHz cho điều khiển và đa phương tiện, ghép với Cortex-M52 cho xử lý cảm biến luôn bật và suy luận năng lượng thấp. Synaptics gọi đây là lần đầu tiên hai lõi này được ghép cặp.\n- NPU Torq tới 400 GOPS chạy được cả mạng CNN và transformer, xây trên Coral NPU của Google Research, dùng trình biên dịch mã nguồn mở MLIR/IREE.\n- Tối đa 8 MB SRAM và 256 MB DRAM băng thông cao tích hợp, nên thiết kế không cần bộ nhớ ngoài.\n- Hỗ trợ Zephyr RTOS, khối bảo mật phần cứng với mục tiêu chứng nhận PSA Level 3 và CC EAL4+.\n\nVới camera thông minh, việc có DRAM lớn ngay trên MCU giúp chạy mô hình thị giác lớn hơn mà không cần bộ xử lý ứng dụng riêng. Thông cáo chưa nêu giá, mức tiêu thụ điện hay thời điểm có hàng mẫu."
+        },
+        "en": {
+          "title": "Synaptics Astra SR200 Series Redefines Edge AI with Vision, Voice and Display on a Single MCU with High-Density Custom DRAM",
+          "summary": "Synaptics' Astra SR200 microcontrollers pair a Cortex-M85 with a Cortex-M52, a Torq NPU of up to 400 GOPS and up to 256 MB of DRAM. The SR230 supports one vision stream and the SR250 two vision streams plus display, aimed at connected cameras and industrial vision.",
+          "body": "On 20 October Synaptics announced the Astra SR200 series of edge-AI microcontrollers (MCUs), combining vision, voice and display on one chip for wearables, battery-powered sensors, connected cameras and industrial vision systems.\n\n## Three pin-compatible tiers\n\n- SR210: 200 GOPS, for power-optimised always-on voice and sensing.\n- SR230: 300 GOPS, adds one vision path, display and optional audio.\n- SR250: 400 GOPS, dual vision and display paths for demanding applications.\n\nIndustrial variants add 1 Gb Ethernet with IEEE 1588 TSN and two CAN-FD interfaces. All three share one SDK.\n\n## Architecture\n\n- An Arm Cortex-M85 at up to 800 MHz for control and multimedia, paired with a Cortex-M52 for always-on sensor fusion and low-power inference. Synaptics calls this the first such pairing.\n- A Torq NPU of up to 400 GOPS that runs both CNNs and transformers, built on Google Research's Coral NPU and using the open-source MLIR/IREE compiler.\n- Up to 8 MB of SRAM and up to 256 MB of integrated high-bandwidth DRAM, removing the need for external memory.\n- Zephyr RTOS support and a hardware security engine targeting PSA Level 3 and CC EAL4+.\n\nFor smart cameras, large DRAM on the MCU itself means bigger vision models can run without a separate application processor. The announcement does not give pricing, power figures or sampling dates."
+        }
+      },
+      "ai_assisted": true,
       "source": "edge-ai-vision",
       "external_id": "https://www.edge-ai-vision.com/2026/10/synaptics-astra-sr200-series-redefines-edge-ai-with-vision-voice-and-display-on-a-single-mcu-with-high-density-custom-dram/",
       "url": "https://www.edge-ai-vision.com/2026/10/synaptics-astra-sr200-series-redefines-edge-ai-with-vision-voice-and-display-on-a-single-mcu-with-high-density-custom-dram/",
@@ -223,12 +411,31 @@
         "provider": "youtube",
         "id": "lyvWKHxPMo8",
         "title": "Hot Stuff: Synaptics Astra SR-Series MCU for Edge AI"
+      },
+      "image": {
+        "url": "https://www.edge-ai-vision.com/wp-content/uploads/2026/10/Astra-gold-SR200-Series-Left-1-1024x926.png",
+        "alt": "Chip vi điều khiển Synaptics Astra SR200",
+        "credit": "Synaptics / Edge AI and Vision Alliance",
+        "credit_url": "https://www.edge-ai-vision.com/2026/10/synaptics-astra-sr200-series-redefines-edge-ai-with-vision-voice-and-display-on-a-single-mcu-with-high-density-custom-dram/",
+        "rights": "permission_pending"
       }
     },
     {
       "slug": "mit-symmetry-ai-prenatal-diagnosis",
       "title": "Why teaching AI about symmetry could make prenatal diagnosis more reliable",
-      "summary": "MIT, Bệnh viện Nhi Boston và Inria xây dựng E(3)-Pose, mô hình học sâu đưa tính đối xứng trái-phải của đầu thai nhi vào kiến trúc để theo dõi chuyển động khi chụp MRI. Mục tiêu là giảm lát cắt lệch, giúp phát hiện bất thường não sớm hơn và tránh phải chụp lại.",
+      "text": {
+        "vi": {
+          "title": "Dạy AI về tính đối xứng có thể giúp chẩn đoán trước sinh đáng tin cậy hơn",
+          "summary": "MIT, Bệnh viện Nhi Boston và Inria xây dựng E(3)-Pose, mô hình học sâu đưa tính đối xứng trái-phải của đầu thai nhi vào kiến trúc để theo dõi chuyển động khi chụp MRI, nhằm giảm lát cắt lệch, phát hiện bất thường não sớm hơn và tránh phải chụp lại.",
+          "body": "Ảnh MRI thai nhi là chuỗi lát cắt 2D được ghép thành ảnh 3D độ phân giải cao của đầu. Khi thai nhi cử động, mỗi lát có thể bị chụp ở một góc khác nhau, tạo ra khoảng trống và hướng cắt bất thường khiến bác sĩ có thể bỏ sót hoặc chẩn đoán sai bệnh lý não. Lần chụp kéo dài cũng gây khó chịu cho thai phụ.\n\n## E(3)-Pose: đưa vật lý vào kiến trúc mạng\n\nNhóm nghiên cứu của MIT, Bệnh viện Nhi Boston và Inria phát triển E(3)-Pose, một mô hình học sâu theo dõi tư thế đầu thai nhi trong lúc chụp để máy có thể thu được ảnh độ phân giải cao cho bác sĩ đọc. Điểm khác biệt là tính đối xứng trái-phải của đầu thai nhi được đưa thẳng vào kiến trúc mạng (equivariant) thay vì để mô hình tự học từ dữ liệu. Ràng buộc này giúp mô hình xác định hướng của não ổn định hơn.\n\nMô hình đã được cài đặt và chạy trực tiếp trên máy MRI, việc mà nhóm cho biết khó hơn nhiều so với huấn luyện trên GPU. Bài báo \"Equivariant symmetry-aware head pose estimation for fetal MRI\" được trình bày tại ECCV 2026; tác giả chính là nghiên cứu sinh Ramya Muthukrishnan trong nhóm của giáo sư Polina Golland.\n\n## Hạn chế và bước tiếp theo\n\n- Bài viết của MIT không nêu số liệu định lượng hay so sánh với phương pháp khác.\n- Mô hình chủ yếu được huấn luyện trên thai nhi ở ba tháng cuối. Nhóm muốn mở rộng cho thai nhi ở ba tháng giữa hoặc sớm hơn, giai đoạn thai cử động nhiều hơn nhưng phát hiện bất thường sớm sẽ dễ can thiệp hơn.\n- Cách tiếp cận có thể áp dụng cho việc chụp các bộ phận khó chụp khác, hoặc cho xe tự hành, nơi cần theo dõi vật thể 3D từ dữ liệu cảm biến nhiễu."
+        },
+        "en": {
+          "title": "Why teaching AI about symmetry could make prenatal diagnosis more reliable",
+          "summary": "MIT, Boston Children's Hospital and Inria built E(3)-Pose, a deep learning model that builds the left-right symmetry of the fetal head into its architecture to track motion during MRI, aiming to reduce misaligned slices, catch brain anomalies earlier and avoid repeat scans.",
+          "body": "A fetal MRI is a series of 2D slices stacked into a high-resolution 3D image of the head. When the fetus moves, each slice can come from a different angle, leaving gaps and odd slice orientations that can make a radiologist miss or misdiagnose a brain condition. Long scans are also uncomfortable for patients.\n\n## E(3)-Pose: building physics into the network\n\nResearchers at MIT, Boston Children's Hospital and Inria developed E(3)-Pose, a deep learning model that tracks the fetal head's pose during the scan so the scanner can capture a high-resolution image for review. What sets it apart is that the left-right symmetry of the fetal head is built directly into the network architecture (equivariance) rather than learned from data. This constraint helps the model determine the brain's orientation more reliably.\n\nThe model was implemented and run on an MRI scanner, which the team found much harder than training on a GPU. The paper, \"Equivariant symmetry-aware head pose estimation for fetal MRI\", was presented at ECCV 2026; first author is PhD student Ramya Muthukrishnan in Professor Polina Golland's group.\n\n## Limitations and next steps\n\n- MIT's article reports no quantitative results or comparisons with other methods.\n- The model is trained mainly on third-trimester fetuses. The team wants to extend it to the second trimester or earlier, when fetuses move more but earlier detection makes intervention easier.\n- The approach could help image other hard-to-image anatomy, or autonomous driving, where 3D objects must be tracked from noisy sensor data."
+        }
+      },
+      "ai_assisted": true,
       "source": "mit-news",
       "external_id": "https://news.mit.edu/2026/teaching-ai-about-symmetry-could-make-prenatal-diagnosis-more-reliable-1019",
       "url": "https://news.mit.edu/2026/teaching-ai-about-symmetry-could-make-prenatal-diagnosis-more-reliable-1019",
@@ -243,12 +450,38 @@
         "theo dõi tư thế"
       ],
       "original_language": "en",
-      "editor_note": "Bài không nêu số liệu định lượng"
+      "editor_note": "Bài không nêu số liệu định lượng",
+      "image": {
+        "url": "https://news.mit.edu/sites/default/files/images/202609/mit-jameel-clinic-fetal-brain.jpg",
+        "alt": "Ảnh MRI não thai nhi ở mặt cắt dọc, vùng não được viền vàng",
+        "credit": "MIT Jameel Clinic và nhóm nghiên cứu",
+        "credit_url": "https://news.mit.edu/2026/teaching-ai-about-symmetry-could-make-prenatal-diagnosis-more-reliable-1019",
+        "rights": "permission_pending"
+      },
+      "links": [
+        {
+          "kind": "paper",
+          "label": "arXiv:2512.04890 Equivariant symmetry-aware head pose estimation for fetal MRI",
+          "url": "https://arxiv.org/abs/2512.04890"
+        }
+      ]
     },
     {
       "slug": "eyepop-ai-whitepaper-35-vision-platforms",
       "title": "EyePop.ai Releases Whitepaper Comparing 35 AI Vision Platforms",
-      "summary": "Sách trắng của EyePop.ai đánh giá 35 nền tảng AI thị giác theo khoảng 12 tiêu chí (cách xây ứng dụng, nơi chạy, người dùng, khả năng mở rộng). Nhận định chính: khi VLM mạnh lên, khó khăn lớn hơn nằm ở việc xây và vận hành ứng dụng ổn định.",
+      "text": {
+        "vi": {
+          "title": "EyePop.ai phát hành sách trắng so sánh 35 nền tảng AI thị giác",
+          "summary": "Sách trắng của EyePop.ai đánh giá 35 nền tảng AI thị giác theo 12 tiêu chí như cách xây ứng dụng, nơi chạy, ai dùng được và khả năng mở rộng. Nhận định chính: khi VLM mạnh lên, khó khăn lớn hơn nằm ở việc xây và vận hành ứng dụng ổn định.",
+          "body": "EyePop.ai phát hành miễn phí sách trắng \"2026: The Rise of AI Vision Platforms\", xem xét vai trò ngày càng lớn của các nền tảng phần mềm trong việc đưa ứng dụng thị giác máy tính vào vận hành thực tế.\n\n## Nội dung so sánh\n\n- 35 nền tảng AI thị giác, mỗi nền tảng được đánh giá theo 12 tiêu chí.\n- Các câu hỏi chính: ứng dụng được xây dựng thế nào, chạy ở đâu, ai có thể sử dụng, và có vận hành được ở quy mô lớn hay không.\n- Đối tượng đọc là lập trình viên, đơn vị tích hợp hệ thống và lãnh đạo doanh nghiệp đang chọn giải pháp.\n\n## Phương pháp\n\nEyePop.ai dùng một bộ tiêu chí chấm điểm cố định dựa trên bằng chứng công khai, ưu tiên tài liệu của chính nhà cung cấp. Tính năng không có trong tài liệu được coi là không có. Công ty công bố cả câu lệnh nghiên cứu để người đọc tự chạy lại xếp hạng hoặc kiểm tra bằng chứng. Bộ tài liệu gồm báo cáo hai phần, bảng xếp hạng và tóm tắt cho từng nhóm người đọc.\n\n## Nhận định chính\n\nTheo EyePop.ai, khi mô hình thị giác-ngôn ngữ (VLM) và các năng lực AI khác ngày càng mạnh, phần khó không còn nằm nhiều ở mô hình mà ở việc xây dựng và vận hành ứng dụng ổn định.\n\nCần lưu ý EyePop.ai cũng là một nhà cung cấp nền tảng AI thị giác, nên đây là tài liệu của một bên trong thị trường. Bài giới thiệu không nêu tên 35 nền tảng hay danh sách 12 tiêu chí; muốn xem chi tiết cần tải sách trắng."
+        },
+        "en": {
+          "title": "EyePop.ai Releases Whitepaper Comparing 35 AI Vision Platforms",
+          "summary": "EyePop.ai's whitepaper assesses 35 AI vision platforms on 12 attributes, such as how applications are built, where they run, who can use them and whether they scale. Its main point: as VLMs improve, the harder problem is building and running reliable applications.",
+          "body": "EyePop.ai has released a free whitepaper, \"2026: The Rise of AI Vision Platforms\", on the growing role of software platforms in getting computer vision applications into production.\n\n## What it compares\n\n- 35 AI vision platforms, each assessed on 12 attributes.\n- The key questions: how applications are built, where they run, who can use them, and whether they can operate at scale.\n- It is written for developers, system integrators and business leaders choosing a solution.\n\n## Method\n\nEyePop.ai uses a fixed scoring rubric based on public evidence, prioritising vendor documentation. Capabilities that are not documented are treated as absent. The company publishes its research prompt so readers can reproduce the rankings or check the evidence. The download includes a two-part report, benchmark rankings and summaries for different audiences.\n\n## Main point\n\nAccording to EyePop.ai, as vision-language models (VLMs) and other AI capabilities get stronger, the hard part moves away from the model and towards building and running reliable applications.\n\nNote that EyePop.ai is itself an AI vision platform vendor, so this is a document from a market participant. The announcement does not name the 35 platforms or list the 12 attributes; you need to download the whitepaper for the details."
+        }
+      },
+      "ai_assisted": true,
       "source": "edge-ai-vision",
       "external_id": "https://www.edge-ai-vision.com/2026/10/eyepop-ai-releases-whitepaper-comparing-35-ai-vision-platforms/",
       "url": "https://www.edge-ai-vision.com/2026/10/eyepop-ai-releases-whitepaper-comparing-35-ai-vision-platforms/",
@@ -261,12 +494,38 @@
         "nền tảng AI vision",
         "VLM"
       ],
-      "original_language": "en"
+      "original_language": "en",
+      "image": {
+        "url": "https://www.edge-ai-vision.com/wp-content/uploads/2026/10/6ac03bc3246c263b393e9d4a_white-paper-hero-p-1600.png",
+        "alt": "Ảnh bìa sách trắng 2026: The Rise of AI Vision Platforms của EyePop.ai",
+        "credit": "EyePop.ai / Edge AI and Vision Alliance",
+        "credit_url": "https://www.edge-ai-vision.com/2026/10/eyepop-ai-releases-whitepaper-comparing-35-ai-vision-platforms/",
+        "rights": "permission_pending"
+      },
+      "links": [
+        {
+          "kind": "official",
+          "label": "EyePop.ai: 2026 The Rise of AI Vision Platforms",
+          "url": "https://www.eyepop.ai/white-paper-2026-the-rise-of-ai-vision-platforms"
+        }
+      ]
     },
     {
       "slug": "eccv-2026-best-paper-heat-kernel-textures",
       "title": "Computer Vision News - October 2026: ECCV 2026 Best Paper (Heat Kernel Textures)",
-      "summary": "Giải Best Paper ECCV 2026 thuộc về Heat Kernel Textures (Imperial College London). Phương pháp thay UV mapping bằng heat kernel dị hướng đặt trực tiếp trên bề mặt lưới 3D, không dùng mạng nơ-ron và tốn ít bộ nhớ hơn phần lớn phương pháp so sánh.",
+      "text": {
+        "vi": {
+          "title": "Computer Vision News tháng 10/2026: Best Paper ECCV 2026 thuộc về Heat Kernel Textures",
+          "summary": "Giải Best Paper ECCV 2026 thuộc về Heat Kernel Textures của nhóm Imperial College London. Phương pháp thay UV mapping bằng heat kernel dị hướng đặt trực tiếp trên bề mặt lưới 3D, không dùng mạng nơ-ron và tốn ít bộ nhớ hơn phần lớn phương pháp so sánh.",
+          "body": "Số tháng 10/2026 của tạp chí Computer Vision News (RSIP Vision) giới thiệu bài báo đoạt giải Best Paper tại ECCV 2026: Heat Kernel Textures (HKTex) của Simone Foti, Caner Korkmaz, Tolga Birdal (Imperial College London) và Stefanos Zafeiriou.\n\n## Vấn đề với UV mapping\n\nĐể tô màu cho mô hình 3D, cách phổ biến là \"trải phẳng\" bề mặt lưới (mesh) lên một ảnh 2D, gọi là UV mapping. Cách này dễ gây đường nối, méo hình, lãng phí không gian texture và độ phân giải không đều trên bề mặt.\n\n## Ý tưởng của HKTex\n\nHKTex biểu diễn texture bằng các heat kernel dị hướng nằm ngay trên bề mặt lưới 3D. Có thể hình dung chúng là phiên bản \"trắc địa\" của các hàm Gauss: lan theo bề mặt thay vì lan trong không gian 3D xung quanh. Ý tưởng lấy cảm hứng từ Gaussian splatting, nhưng khắc phục điểm yếu là Gaussian splatting mang tính thể tích và không bám tự nhiên theo bề mặt.\n\nPhương pháp không có mạng nơ-ron nào được huấn luyện. Nó kết hợp heat kernel, tối ưu Riemann, đường trắc địa và kết xuất khả vi (differentiable rendering) để khôi phục màu bề mặt từ ảnh nhiều góc nhìn. Để chạy nhanh, nhóm tính trước phân rã riêng của toán tử Laplace-Beltrami dị hướng trên một lưới giá trị rồi nội suy, chỉ chọn các nguồn nhiệt gần nhất, và lấy mẫu từng điểm ảnh thay vì kết xuất cả ảnh.\n\n## Kết quả\n\n- Khi khớp texture UV có sẵn: chất lượng tái tạo cạnh tranh, dung lượng lưu trữ thấp hơn phần lớn phương pháp được thử.\n- Khi học từ ảnh nhiều góc nhìn: vượt các phương pháp dựa trên đỉnh lưới độ phân giải cao và phương pháp nơ-ron ở mọi chỉ số chất lượng ảnh được báo cáo, với dung lượng thấp hơn đáng kể.\n\nBài tạp chí không nêu con số cụ thể. Hướng phát triển tiếp theo là mở rộng cho độ nhám và phản xạ của bề mặt."
+        },
+        "en": {
+          "title": "Computer Vision News - October 2026: ECCV 2026 Best Paper (Heat Kernel Textures)",
+          "summary": "The ECCV 2026 Best Paper award went to Heat Kernel Textures from Imperial College London. The method replaces UV mapping with anisotropic heat kernels placed directly on the 3D mesh surface, uses no neural network and needs less storage than most compared methods.",
+          "body": "The October 2026 issue of Computer Vision News (RSIP Vision) features the ECCV 2026 Best Paper: Heat Kernel Textures (HKTex) by Simone Foti, Caner Korkmaz, Tolga Birdal (Imperial College London) and Stefanos Zafeiriou.\n\n## The trouble with UV mapping\n\nTo colour a 3D model, the usual approach is to unwrap the mesh surface onto a flat 2D image, called UV mapping. This tends to cause seams, distortion, wasted texture space and uneven resolution across the surface.\n\n## The HKTex idea\n\nHKTex represents texture with anisotropic heat kernels that live directly on the 3D mesh surface. Think of them as geodesic versions of Gaussians: they spread along the surface rather than through the surrounding 3D space. The idea is inspired by Gaussian splatting but addresses its weakness that splats are volumetric and do not naturally follow surfaces.\n\nThere is no trained neural network. The method combines heat kernels, Riemannian optimisation, geodesics and differentiable rendering to recover surface appearance from multi-view images. For speed, the team precomputes eigendecompositions of anisotropic Laplace-Beltrami operators on a grid of values and interpolates, keeps only the nearest heat sources, and samples individual pixels instead of rendering whole images.\n\n## Results\n\n- Fitting existing UV textures: competitive reconstruction quality with less storage than most tested methods.\n- Learning from multi-view images: better than high-resolution vertex-based and neural baselines on every reported image-quality metric, with substantially less storage.\n\nThe magazine article gives no specific numbers. Future work includes extending the representation to roughness and specular appearance."
+        }
+      },
+      "ai_assisted": true,
       "source": "rsip-vision",
       "external_id": "https://www.rsipvision.com/ComputerVisionNews-2026October/#eccv-2026-best-paper",
       "url": "https://www.rsipvision.com/ComputerVisionNews-2026October/",
@@ -286,12 +545,31 @@
         "provider": "youtube",
         "id": "FA0QSIK1tNU",
         "title": "ECCV 2026 [Long Oral]. Heat Kernel Textures: the Geodesic Gaussians That Do Not Splat"
+      },
+      "image": {
+        "url": "https://i.ytimg.com/vi/FA0QSIK1tNU/hqdefault.jpg",
+        "alt": "Ảnh đại diện video trình bày Heat Kernel Textures tại ECCV 2026",
+        "credit": "YouTube: ECCV 2026 Long Oral, Heat Kernel Textures",
+        "credit_url": "https://www.youtube.com/watch?v=FA0QSIK1tNU",
+        "rights": "permission_pending"
       }
     },
     {
       "slug": "feel-force-enhanced-egocentric-learning",
       "title": "Computer Vision News - October 2026: FEEL (Force-Enhanced Egocentric Learning)",
-      "summary": "Nhóm Đại học Maryland ghép găng tay cảm biến lực với kính Meta Aria để thu lực tác động phía sau hành động. Bộ dữ liệu giúp phát hiện tiếp xúc không cần gán nhãn thủ công và cải thiện nhận dạng hành động. Cùng số báo có MIMFlow (Đại học Nam Kinh), FID 2,50 trên ImageNet 256x256.",
+      "text": {
+        "vi": {
+          "title": "Computer Vision News tháng 10/2026: FEEL, học từ góc nhìn thứ nhất có thêm dữ liệu lực",
+          "summary": "Nhóm Đại học Maryland ghép găng tay cảm biến lực với kính Meta Aria để thu lực tác động phía sau hành động, giúp phát hiện tiếp xúc không cần gán nhãn thủ công và cải thiện nhận dạng hành động. Cùng số báo có MIMFlow (Đại học Nam Kinh), FID 2,50 trên ImageNet 256x256.",
+          "body": "Số tháng 10/2026 của Computer Vision News giới thiệu FEEL (Force-Enhanced Egocentric Learning), bài báo được chọn trình bày dạng long oral tại ECCV 2026 của Eadom Dessalene, người vừa bảo vệ tiến sĩ và tiếp tục làm nghiên cứu sau tiến sĩ với giáo sư Yiannis Aloimonos tại Đại học Maryland.\n\n## Thiết bị: găng tay đo lực và kính Meta Aria\n\nNhóm tự làm găng tay đo lực từ cảm biến rẻ tiền bán sẵn: mỗi đầu ngón tay một cảm biến và một cảm biến trải ngang lòng bàn tay. Găng tay được dùng cùng kính Meta Aria để ghi đồng thời video góc nhìn thứ nhất (egocentric) và lực mà bàn tay tác động lên đồ vật. Thu dữ liệu không dễ: găng tay hỏng vài lần và trục trặc trong lúc ghi, nhiều dữ liệu phải bỏ. Tác giả cho rằng găng tay độ phân giải cao hơn, đo được cả lực cắt sẽ tốt hơn.\n\n## Hai bài toán\n\n- Hiểu tiếp xúc: mô hình học khi nào bàn tay chạm vào vật và vật đó là gì.\n- Dự đoán lực như một nhiệm vụ tiền huấn luyện tự giám sát cho mô hình video.\n\n## Kết quả\n\n- Đạt kết quả tốt nhất (state-of-the-art) về phát hiện tiếp xúc theo thời gian trên nhiều bộ đánh giá mà không cần nhãn tiếp xúc gán tay.\n- Tiền huấn luyện bằng lực cải thiện nhận dạng hành động trên các bộ dữ liệu video quen thuộc.\n\nNghiên cứu tiếp theo, MotorSense, dùng vòng đeo đo điện cơ (EMG) ở hai cánh tay kết hợp với video.\n\n## Cùng số báo: MIMFlow\n\nMIMFlow của Yang Chen và giáo sư Limin Wang (Đại học Nam Kinh) kết hợp mô hình ảnh che mặt nạ (masked image modeling) với normalizing flow để sinh ảnh đầu-cuối. Bản MIMFlow-L đạt FID 2,50 trên ImageNet 256x256, tốt hơn một mô hình normalizing flow có kích thước tương đương, và độ chính xác linear probing 71,3%."
+        },
+        "en": {
+          "title": "Computer Vision News - October 2026: FEEL (Force-Enhanced Egocentric Learning)",
+          "summary": "A University of Maryland team paired force-sensing gloves with Meta Aria glasses to capture the forces behind actions, enabling contact detection without manual labels and better action recognition. The same issue covers MIMFlow (Nanjing University), with an FID of 2.50 on ImageNet 256x256.",
+          "body": "The October 2026 issue of Computer Vision News features FEEL (Force-Enhanced Egocentric Learning), selected for a long oral at ECCV 2026. Its author, Eadom Dessalene, recently defended his PhD and continues as a postdoc with Professor Yiannis Aloimonos at the University of Maryland.\n\n## Setup: force gloves and Meta Aria glasses\n\nThe team built force-sensing gloves from inexpensive off-the-shelf sensors: one on each fingertip and one across the palm. The gloves are worn with Meta Aria glasses to record first-person (egocentric) video together with the forces the hands apply to objects. Collecting data was hard: the gloves broke several times and malfunctioned during recording, and a lot of data had to be discarded. The author suggests higher-resolution gloves that also sense shear would work better.\n\n## Two tasks\n\n- Contact understanding: learning when a hand touches an object and which object it is.\n- Force prediction as a self-supervised pretraining task for video models.\n\n## Results\n\n- State-of-the-art temporal contact detection on several benchmarks without manually annotated contact labels.\n- Force-based pretraining improves action recognition on established video datasets.\n\nA follow-up project, MotorSense, uses EMG wristbands on both arms together with video.\n\n## Also in this issue: MIMFlow\n\nMIMFlow by Yang Chen and Professor Limin Wang (Nanjing University) combines masked image modelling with normalising flows for end-to-end image generation. MIMFlow-L reaches an FID of 2.50 on ImageNet 256x256, better than a similarly sized normalising-flow baseline, with 71.3% linear-probing accuracy."
+        }
+      },
+      "ai_assisted": true,
       "source": "rsip-vision",
       "external_id": "https://www.rsipvision.com/ComputerVisionNews-2026October/#feel",
       "url": "https://www.rsipvision.com/ComputerVisionNews-2026October/",
@@ -306,12 +584,31 @@
         "Meta Aria"
       ],
       "original_language": "en",
-      "editor_note": "Tạp chí số tháng 10, không có ngày cụ thể"
+      "editor_note": "Tạp chí số tháng 10, không có ngày cụ thể",
+      "image": {
+        "url": "https://www.rsipvision.com/ComputerVisionNews-2026October/files/assets/html/skin/images/fbThumb.jpg",
+        "alt": "Bìa tạp chí Computer Vision News số tháng 10/2026",
+        "credit": "Computer Vision News (RSIP Vision)",
+        "credit_url": "https://www.rsipvision.com/ComputerVisionNews-2026October/",
+        "rights": "permission_pending"
+      }
     },
     {
       "slug": "cv-conference-deadlines-2026-2027",
       "title": "CV Conference Deadlines 2026-2027: CVPR, ICCV",
-      "summary": "Hạn sắp tới: WACV 2027 nộp bản camera-ready 3/11/2026. CVPR 2027 (22-25/6/2027): đề xuất workshop 5/11, đăng ký bài 11/11, nộp toàn văn 17/11/2026. ICCV 2027 tại Hồng Kông, hạn nộp dự kiến đầu tháng 3/2027.",
+      "text": {
+        "vi": {
+          "title": "Hạn nộp bài các hội nghị thị giác máy tính 2026-2027: CVPR, ICCV và các hội nghị khác",
+          "summary": "Hạn gần nhất: WACV 2027 nộp bản camera-ready ngày 3/11/2026. CVPR 2027 (22-25/6/2027): đề xuất workshop 4/11, đăng ký bài 10/11, nộp toàn văn 16/11/2026 (giờ AoE, tức chiều hôm sau theo giờ Việt Nam). ICCV 2027 tại Hồng Kông, hạn nộp dự kiến đầu tháng 3/2027.",
+          "body": "Danh sách dưới đây tổng hợp các hạn nộp bài sắp tới cho người làm thị giác máy tính, theo trang theo dõi hạn hội nghị của Bibby truy cập ngày 25/10/2026.\n\n## Cách đọc giờ AoE\n\nNhiều hội nghị dùng giờ AoE (Anywhere on Earth, UTC-12). Hạn 23:59 AoE ngày X tương ứng 18:59 ngày X+1 theo giờ Việt Nam. Trang Bibby ghi chú CVPR có thể dùng giờ Thái Bình Dương, vì vậy hãy kiểm tra trên trang chính thức.\n\n## Hạn gần nhất\n\n- WACV 2027 (4-8/1/2027, Florida): nộp bản camera-ready ngày 3/11/2026.\n- CVPR 2027 (22-25/6/2027): đề xuất workshop 4/11, đăng ký bài 10/11, nộp toàn văn 16/11 và tài liệu bổ sung 23/11/2026.\n\n## Đầu năm 2027\n\n- ICME 2027: khoảng 16/12/2026 (ước tính).\n- MIDL 2027 (Porto, Bồ Đào Nha): khoảng 16/1/2027 (ước tính).\n- SIGGRAPH 2027: vòng 1 ngày 21/1/2027.\n- ICDAR 2027 (Kuala Lumpur): tóm tắt 1/2, toàn văn 21/2/2027.\n- ICIP 2027 (Singapore): khoảng 2/2/2027 (ước tính).\n- MICCAI 2027: khoảng 26/2/2027 (ước tính).\n- ICCV 2027 (2-8/10/2027, Hồng Kông): khoảng 6/3/2027, là ước tính cho tới khi có thông báo mời nộp bài chính thức.\n- ACM MM 2027: khoảng 9/4/2027 (ước tính).\n\nCác ngày ghi \"ước tính\" được suy ra từ lịch các năm trước. Trước khi nộp, hãy đối chiếu với trang chính thức của từng hội nghị."
+        },
+        "en": {
+          "title": "CV Conference Deadlines 2026-2027: CVPR, ICCV",
+          "summary": "Next up: WACV 2027 camera-ready on 3 November 2026. CVPR 2027 (22-25 June 2027): workshop proposals 4 November, paper registration 10 November, full papers 16 November 2026 (AoE). ICCV 2027 in Hong Kong has an estimated deadline in early March 2027.",
+          "body": "Below are upcoming submission deadlines for computer vision researchers, from Bibby's conference deadline tracker as accessed on 25 October 2026.\n\n## Reading AoE times\n\nMany conferences use AoE (Anywhere on Earth, UTC-12). A deadline of 23:59 AoE on day X is 18:59 on day X+1 in Vietnam. Bibby notes that CVPR may use Pacific time, so check the official site.\n\n## Coming up\n\n- WACV 2027 (4-8 January 2027, Florida): camera-ready due 3 November 2026.\n- CVPR 2027 (22-25 June 2027): workshop proposals 4 November, paper registration 10 November, full papers 16 November and supplementary material 23 November 2026.\n\n## Early 2027\n\n- ICME 2027: around 16 December 2026 (estimated).\n- MIDL 2027 (Porto, Portugal): around 16 January 2027 (estimated).\n- SIGGRAPH 2027: stage 1 on 21 January 2027.\n- ICDAR 2027 (Kuala Lumpur): abstracts 1 February, full papers 21 February 2027.\n- ICIP 2027 (Singapore): around 2 February 2027 (estimated).\n- MICCAI 2027: around 26 February 2027 (estimated).\n- ICCV 2027 (2-8 October 2027, Hong Kong): around 6 March 2027, an estimate until the official call for papers.\n- ACM MM 2027: around 9 April 2027 (estimated).\n\nDates marked \"estimated\" are projected from previous years. Always confirm on each conference's official site before submitting."
+        }
+      },
+      "ai_assisted": true,
       "source": "trybibby",
       "external_id": "https://trybibby.com/conference-deadlines/cv",
       "url": "https://trybibby.com/conference-deadlines/cv",
@@ -327,12 +624,30 @@
         "hạn nộp bài"
       ],
       "original_language": "en",
-      "editor_note": "Ngày đăng là ngày truy cập. Cần đối chiếu với trang chính thức của hội nghị"
+      "editor_note": "Ngày đăng là ngày truy cập. Cần đối chiếu với trang chính thức của hội nghị",
+      "image": {
+        "file": "images/cv-conference-deadlines.png",
+        "alt": "Minh họa lịch với các ngày hạn nộp bài được đánh dấu",
+        "credit": "VietnamCV",
+        "rights": "own"
+      }
     },
     {
       "slug": "computer-vision-jobs-vietnam-october-2026",
       "title": "198 computer vision Jobs in Vietnam, October 2026",
-      "summary": "Glassdoor ghi nhận 198 tin tuyển dụng computer vision tại Việt Nam trong tháng 10/2026.",
+      "text": {
+        "vi": {
+          "title": "198 việc làm computer vision tại Việt Nam, tháng 10/2026",
+          "summary": "Glassdoor ghi nhận 198 tin tuyển dụng computer vision tại Việt Nam trong tháng 10/2026.",
+          "body": "Theo tiêu đề trang kết quả tìm kiếm của Glassdoor, có 198 tin tuyển dụng liên quan tới computer vision tại Việt Nam trong tháng 10/2026.\n\n## Cần đọc con số này thế nào\n\n- Đây là số tin trên một trang tìm kiếm việc làm, không phải số vị trí tuyển dụng thực tế. Một vị trí có thể được đăng nhiều lần hoặc ở nhiều nơi, và nhiều công ty không đăng trên Glassdoor.\n- Kết quả tìm theo từ khóa \"computer vision\" có thể gồm cả những vị trí chỉ nhắc tới thị giác máy tính như một kỹ năng phụ.\n- VietnamCV không truy cập được trang để xem danh sách chi tiết theo công ty, thành phố hay mức lương, nên chưa thể phân tích sâu hơn.\n\n## Nếu bạn đang tìm việc\n\nKết hợp nhiều nguồn: trang tuyển dụng của doanh nghiệp, các trang việc làm trong nước, LinkedIn và cộng đồng AI Việt Nam. Các bài toán phổ biến trong tin tuyển dụng computer vision thường là kiểm tra lỗi công nghiệp, phân tích video, nhận diện khuôn mặt, đọc tài liệu (OCR) và ảnh y tế, đúng với những lĩnh vực xuất hiện trong các tin tức khác của tháng này.\n\nVietnamCV sẽ theo dõi số liệu theo từng tháng để thấy xu hướng thay vì một con số đơn lẻ."
+        },
+        "en": {
+          "title": "198 computer vision Jobs in Vietnam, October 2026",
+          "summary": "Glassdoor lists 198 computer vision job postings in Vietnam in October 2026.",
+          "body": "According to the title of Glassdoor's search results page, there were 198 computer vision job postings in Vietnam in October 2026.\n\n## How to read this number\n\n- It counts listings on one job site, not actual openings. A role may be posted more than once or in several places, and many companies do not post on Glassdoor.\n- A keyword search for \"computer vision\" can include roles that mention it only as a secondary skill.\n- VietnamCV could not open the page to see the breakdown by company, city or salary, so no deeper analysis is possible yet.\n\n## If you are looking for a job\n\nCombine several sources: company career pages, Vietnamese job boards, LinkedIn and Vietnamese AI communities. Common problems in computer vision postings are industrial defect inspection, video analytics, face recognition, document reading (OCR) and medical imaging, the same areas that appear in this month's other news.\n\nVietnamCV will track this figure month by month to show a trend rather than a single number."
+        }
+      },
+      "ai_assisted": true,
       "source": "glassdoor",
       "external_id": "https://www.glassdoor.com/Job/vietnam-computer-vision-jobs-SRCH_IL.0,7_IN251_KO8,23.htm",
       "url": "https://www.glassdoor.com/Job/vietnam-computer-vision-jobs-SRCH_IL.0,7_IN251_KO8,23.htm",
@@ -346,7 +661,13 @@
         "computer vision"
       ],
       "original_language": "en",
-      "editor_note": "Số liệu lấy từ tiêu đề kết quả tìm kiếm; trang không truy cập được để kiểm tra"
+      "editor_note": "Số liệu lấy từ tiêu đề kết quả tìm kiếm; trang không truy cập được để kiểm tra",
+      "image": {
+        "file": "images/cv-jobs-vietnam.png",
+        "alt": "Minh họa cặp tài liệu và biểu tượng camera cho tin tuyển dụng thị giác máy tính",
+        "credit": "VietnamCV",
+        "rights": "own"
+      }
     }
   ]
 }

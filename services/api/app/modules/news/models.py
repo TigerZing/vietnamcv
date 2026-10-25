@@ -5,7 +5,7 @@ from __future__ import annotations
 import uuid
 from enum import StrEnum
 
-from sqlalchemy import CheckConstraint, ForeignKey, String, Text, text
+from sqlalchemy import Boolean, CheckConstraint, ForeignKey, String, Text, text
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import Uuid
@@ -67,5 +67,7 @@ class NewsItem(Base):
     video_provider: Mapped[str | None] = mapped_column(String(16))
     video_id: Mapped[str | None] = mapped_column(String(32))
     video_title: Mapped[str | None] = mapped_column(String(300))
+    # The post text was drafted by an AI model from the source (ADR-005 label).
+    ai_assisted: Mapped[bool] = mapped_column(Boolean, nullable=False, server_default="false")
 
     content: Mapped[Content] = relationship(lazy="raise")

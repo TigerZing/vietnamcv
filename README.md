@@ -72,6 +72,13 @@ make worker      # Celery worker (optional)
 from the news sheet) and publishes them at <http://localhost:3000/vi/news>. The import is
 idempotent: edit a file and run `make seed-docker` (or `make seed` on the host) to update.
 
+Each post has Vietnamese and English text (switch with VI/EN), an image and the source
+with related links at the end. The list shows 15 posts, as a list (default) or as cards
+with 2-4 columns (`?view=grid&cols=3`). Source images are downloaded once by the import
+and stored in PostgreSQL; they are marked `permission_pending` and only show locally
+until the source agrees (ADR-010). If a download fails, the import logs
+`news_image_not_loaded` and retries on the next run.
+
 Comments can be posted anonymously, with a chosen name, or with a Google account.
 Google sign-in is off until you set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in
 `.env` (see ADR-009 for creating the OAuth client), then `make down && make dev`.
