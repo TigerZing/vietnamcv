@@ -1,4 +1,4 @@
-import { ArrowLeft, ExternalLink, Info, MapPin } from "lucide-react";
+import { ArrowLeft, Info, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
@@ -7,12 +7,16 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 import { CommentSection } from "@/components/comments/comment-section";
+import { ArticleBody } from "@/components/news/article-body";
+import { ArticleImage } from "@/components/news/article-image";
 import { CategoryBadge } from "@/components/news/category";
+import { PostSources } from "@/components/news/post-sources";
 import { SourceDate } from "@/components/news/source-date";
 import { VideoEmbed } from "@/components/news/video-embed";
 import { LoadingState } from "@/components/states/loading-state";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { mediaSrc } from "@/lib/media";
 import { getNews, type NewsDetail } from "@/lib/news";
 import { youtubeThumbnail } from "@/lib/youtube";
 
@@ -20,7 +24,7 @@ type Props = PageProps<"/[locale]/news/[slug]">;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
-  const post = await getNews(slug).catch(() => null);
+  const post = await getNews(slug, locale as Locale).catch(() => null);
   if (!post) return {};
   const path = `/${locale}/news/${slug}`;
   return {
@@ -36,16 +40,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.summary,
       url: path,
       publishedTime: post.published_at,
-      images: post.video ? [youtubeThumbnail(post.video.id)] : undefined,
+      images: post.image
+        ? [{ url: mediaSrc(post.image.id), alt: post.image.alt }]
+        : post.video
+          ? [youtubeThumbnail(post.video.id)]
+          : undefined,
     },
   };
 }
 
-function Article({ post }: { post: NewsDetail }) {
+function Article({ post, locale }: { post: NewsDetail; locale: Locale }) {
   const t = useTranslations("News");
-  const languageKey = (["vi", "en"] as const).find(
-    (code) => code === post.original_language,
-  );
 
   return (
     <article className="flex flex-col gap-6">
@@ -57,10 +62,13 @@ function Article({ post }: { post: NewsDetail }) {
             {t(`regions.${post.region}`)}
           </span>
         </div>
-        <h1 className="text-2xl leading-tight font-semibold tracking-tight text-balance sm:text-3xl">
+        <h1
+          lang={post.language}
+          className="text-2xl leading-tight font-semibold tracking-tight text-balance sm:text-3xl"
+        >
           {post.title}
         </h1>
-        {/* Provenance above the fold (specs/08-UI-UX.md). */}
+        {/* Provenance above the fold (specs/08-UI-UX.md); the link sits at the end. */}
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
           <span>
             {t("sourceLabel")}:{" "}
@@ -80,23 +88,26 @@ function Article({ post }: { post: NewsDetail }) {
               </span>
             </>
           ) : null}
-          <span aria-hidden>·</span>
-          <span>
-            {t("originalLanguage", {
-              language: t(`languages.${languageKey ?? "other"}`),
-            })}
-          </span>
         </p>
+        {post.language !== locale ? (
+          <p className="text-sm text-muted-foreground">{t("notTranslated")}</p>
+        ) : null}
       </header>
+
+      {post.image ? <ArticleImage image={post.image} /> : null}
+
+      <div lang={post.language} className="flex flex-col gap-5">
+        <p className="text-lg leading-relaxed font-medium">{post.summary}</p>
+        {post.body ? <ArticleBody body={post.body} /> : null}
+      </div>
 
       {post.video ? (
         <VideoEmbed id={post.video.id} title={post.video.title} />
       ) : null}
 
-      <div className="flex flex-col gap-4">
-        <p className="text-lg leading-relaxed">{post.summary}</p>
-        <p className="text-sm text-muted-foreground">{t("summaryNotice")}</p>
-      </div>
+      <p className="text-sm text-muted-foreground">
+        {post.ai_assisted ? t("aiNotice") : t("summaryNotice")}
+      </p>
 
       {post.editor_note ? (
         <aside className="flex gap-3 rounded-lg border border-border bg-surface-muted p-4 text-sm">
@@ -126,15 +137,7 @@ function Article({ post }: { post: NewsDetail }) {
         </div>
       ) : null}
 
-      <a
-        href={post.source.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex min-h-10 items-center justify-center gap-2 self-start rounded-md bg-accent px-4 text-sm font-medium text-accent-foreground hover:bg-accent/90"
-      >
-        {t("readOriginal", { source: post.source.name })}
-        <ExternalLink aria-hidden className="size-4" />
-      </a>
+      <PostSources post={post} />
     </article>
   );
 }
@@ -142,7 +145,7 @@ function Article({ post }: { post: NewsDetail }) {
 async function PostWithComments({ params, searchParams }: Props) {
   await connection();
   const [{ locale, slug }, query] = await Promise.all([params, searchParams]);
-  const post = await getNews(slug);
+  const post = await getNews(slug, locale as Locale);
   if (!post) notFound();
   const t = await getTranslations({
     locale: locale as Locale,
@@ -155,7 +158,7 @@ async function PostWithComments({ params, searchParams }: Props) {
 
   return (
     <>
-      <Article post={post} />
+      <Article post={post} locale={locale as Locale} />
       <section
         id="comments"
         aria-labelledby="comments-heading"

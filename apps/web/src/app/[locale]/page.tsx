@@ -1,18 +1,20 @@
 import { connection } from "next/server";
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 import { NewsCard } from "@/components/news/news-card";
 import { EmptyState } from "@/components/states/empty-state";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
 import { listNews } from "@/lib/news";
 
 async function LatestNews() {
   await connection();
   const t = await getTranslations();
-  const page = await listNews({ limit: 3 }).catch(() => null);
+  const locale = (await getLocale()) as Locale;
+  const page = await listNews({ lang: locale, limit: 3 }).catch(() => null);
   if (!page || page.items.length === 0) {
     return (
       <EmptyState

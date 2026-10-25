@@ -52,7 +52,7 @@
   },
   "News": {
     "title": "Tin tức Thị giác máy tính",
-    "lead": "Tin tức Computer Vision trong nước và quốc tế, được biên tập viên chọn lọc và tóm tắt bằng tiếng Việt. Mỗi bài đều dẫn về nguồn gốc.",
+    "lead": "Tin tức Computer Vision trong nước và quốc tế, được chọn lọc và viết lại bằng tiếng Việt. Mỗi bài đều dẫn về nguồn gốc.",
     "emptyTitle": "Chưa có tin tức",
     "emptyBody": "Tin tức đã được kiểm duyệt sẽ xuất hiện tại đây.",
     "loadMore": "Xem thêm tin",
@@ -67,7 +67,7 @@
       "other": "ngôn ngữ khác"
     },
     "editorNote": "Ghi chú của biên tập viên",
-    "summaryNotice": "Đây là bản tóm tắt tiếng Việt do biên tập viên VietnamCV viết, không phải toàn văn bài gốc.",
+    "summaryNotice": "Đây là bài tóm tắt do VietnamCV viết, không phải toàn văn bài gốc.",
     "keywords": "Từ khóa",
     "comments": "{count, plural, =0 {Chưa có bình luận} other {# bình luận}}",
     "hasVideo": "Có video",
@@ -94,7 +94,28 @@
       "jobs": "Việc làm"
     },
     "latestTitle": "Tin mới",
-    "seeAll": "Xem tất cả tin tức"
+    "seeAll": "Xem tất cả tin tức",
+    "aiNotice": "Bài viết do VietnamCV biên soạn từ nguồn với sự hỗ trợ của AI, không phải toàn văn bài gốc. Nếu thấy sai sót, hãy góp ý trong phần bình luận.",
+    "notTranslated": "Bài này chưa có bản dịch, đang hiển thị bản tiếng Việt.",
+    "imageCredit": "Ảnh:",
+    "sourcesTitle": "Nguồn và liên kết",
+    "originalTitle": "Tiêu đề gốc",
+    "relatedLinks": "Liên kết liên quan",
+    "linkKinds": {
+      "official": "Trang chính thức",
+      "paper": "Bài báo",
+      "code": "Mã nguồn",
+      "dataset": "Dữ liệu",
+      "model": "Mô hình",
+      "reference": "Tham khảo"
+    },
+    "view": {
+      "label": "Kiểu hiển thị",
+      "list": "Danh sách",
+      "grid": "Thẻ ảnh",
+      "columns": "Số cột",
+      "columnsOption": "{count} cột"
+    }
   },
   "Comments": {
     "title": "Bình luận",
