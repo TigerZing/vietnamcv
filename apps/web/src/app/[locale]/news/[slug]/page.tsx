@@ -98,7 +98,9 @@ function Article({ post, locale }: { post: NewsDetail; locale: Locale }) {
 
       <div lang={post.language} className="flex flex-col gap-5">
         <p className="text-lg leading-relaxed font-medium">{post.summary}</p>
-        {post.body ? <ArticleBody body={post.body} /> : null}
+        {post.body || post.figures.length > 0 ? (
+          <ArticleBody body={post.body ?? null} figures={post.figures} />
+        ) : null}
       </div>
 
       {post.video ? (

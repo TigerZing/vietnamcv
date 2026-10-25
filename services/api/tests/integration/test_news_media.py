@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from app.cli.seed_news import seed
 from app.core.config import Environment, Settings
 from app.main import create_app
-from app.modules.content.models import Content
+from app.modules.content.models import Content, ContentMedia
 from app.modules.media.models import MediaAsset
 from tests.conftest import ClientFactory, make_settings
 from tests.media_helpers import FakeImageServer
@@ -134,14 +134,15 @@ async def test_deployed_environments_hide_images_pending_permission(
 async def test_failed_download_is_retried_and_success_is_not_refetched(
     clean_database: str,
 ) -> None:
+    urls = ["https://images.example/newest.jpg", "https://images.example/fig-1.jpg"]
     broken = FakeImageServer(status=503)
     await seed([FIXTURE], clean_database, client=broken.client())
-    assert broken.requests == ["https://images.example/newest.jpg"]
+    assert broken.requests == urls
 
     working = FakeImageServer()
     await seed([FIXTURE], clean_database, client=working.client())
-    assert working.requests == ["https://images.example/newest.jpg"]
-    assert working.referers == ["https://news.example/newest"]
+    assert working.requests == urls
+    assert working.referers == ["https://news.example/newest"] * 2
 
     again = FakeImageServer()
     await seed([FIXTURE], clean_database, client=again.client())
@@ -171,3 +172,59 @@ async def test_identical_images_are_stored_once(clean_database: str) -> None:
         count = session.scalar(select(func.count()).select_from(MediaAsset))
     engine.dispose()
     assert count == 1
+
+
+async def test_figures_are_stored_in_order_and_localized(client: AsyncClient) -> None:
+    vi = (await client.get("/api/v1/news/newest-post")).json()
+    assert [(f["alt"], f["caption"], f["rights"]) for f in vi["figures"]] == [
+        ("Hình một", "Chú thích một", "permission_pending"),
+        ("Hình hai", None, "own"),
+    ]
+    assert "{{figure:2}}" in vi["body"]
+    en = (await client.get("/api/v1/news/newest-post", params={"lang": "en"})).json()
+    assert [(f["alt"], f["caption"]) for f in en["figures"]] == [
+        ("Hình một", "Caption one"),
+        ("Figure two", None),
+    ]
+    for figure in en["figures"]:
+        assert (await client.get(figure["url"])).status_code == 200
+    assert (await client.get("/api/v1/news/older-post")).json()["figures"] == []
+
+
+async def test_deployed_environments_hide_figures_pending_permission(
+    clean_database: str, redis_url: str, client_for: ClientFactory
+) -> None:
+    await seed([FIXTURE], clean_database, client=FakeImageServer().client())
+    staging = make_settings(
+        clean_database,
+        redis_url,
+        APP_ENV=Environment.STAGING,
+        dev_auth_enabled=False,
+        client_fingerprint_secret="staging-test-secret",
+    )
+    deployed = await client_for(create_app(staging))
+    figures = (await deployed.get("/api/v1/news/newest-post")).json()["figures"]
+    assert [figure["rights"] for figure in figures] == ["own"]
+
+
+async def test_failed_figure_is_left_out_then_added(clean_database: str) -> None:
+    await seed([FIXTURE], clean_database, client=FakeImageServer(status=404).client())
+    engine = create_engine(clean_database)
+    with Session(engine) as session:
+        roles = session.scalars(select(ContentMedia.role).order_by(ContentMedia.role)).all()
+    assert roles == ["figure", "illustration"]  # only the committed files loaded
+
+    server = FakeImageServer()
+    await seed([FIXTURE], clean_database, client=server.client())
+    assert sorted(server.requests) == [
+        "https://images.example/fig-1.jpg",
+        "https://images.example/newest.jpg",
+    ]
+    with Session(engine) as session:
+        positions = session.scalars(
+            select(ContentMedia.position)
+            .where(ContentMedia.role == "figure")
+            .order_by(ContentMedia.position)
+        ).all()
+    engine.dispose()
+    assert positions == [0, 1]

@@ -62,7 +62,10 @@ class TextLanguage(StrEnum):
 
 
 class MediaRole(StrEnum):
+    # The lead image, shown on cards and at the top of the post (position 0 only).
     ILLUSTRATION = "illustration"
+    # Images from inside the source article, shown in the post text in position order.
+    FIGURE = "figure"
 
 
 class LinkKind(StrEnum):
@@ -173,11 +176,17 @@ class ContentMedia(UUIDPrimaryKeyMixin, Base):
     position: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
     alt_text: Mapped[str] = mapped_column(String(500), nullable=False)
     caption: Mapped[str | None] = mapped_column(Text)
+    # English alt text and caption; Vietnamese is used when they are missing.
+    alt_text_en: Mapped[str | None] = mapped_column(String(500))
+    caption_en: Mapped[str | None] = mapped_column(Text)
     # Who made the image, as shown under it (for example "Ảnh: VnExpress").
     credit: Mapped[str] = mapped_column(String(300), nullable=False)
     # Page the image was taken from, linked from the credit.
     credit_url: Mapped[str | None] = mapped_column(String(2000))
     rights: Mapped[str] = mapped_column(String(32), nullable=False)
+    # Where this use's file came from (URL or "file:<path>"). Identical files share one
+    # media asset, so the asset's own origin can name a different use.
+    origin: Mapped[str | None] = mapped_column(String(2000))
 
 
 class ContentLink(UUIDPrimaryKeyMixin, Base):

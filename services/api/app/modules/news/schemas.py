@@ -69,8 +69,12 @@ class NewsSummary(BaseModel):
 
 class NewsDetail(NewsSummary):
     body: str | None = Field(
-        description='Post text: paragraphs split by blank lines, "## " headings, "- " items'
+        description=(
+            'Post text: paragraphs split by blank lines, "## " headings, "- " items, and '
+            '"{{figure:N}}" lines placing figures[N-1]'
+        )
     )
+    figures: list[Image] = Field(description="Images from inside the source article, in order")
     links: list[Link]
     original_language: str
     editor_note: str | None
@@ -103,7 +107,7 @@ class CuratedVideo(BaseModel):
 
 
 class CuratedImage(BaseModel):
-    """The lead image: a URL the import downloads, or a file next to the fixture."""
+    """An image: a URL the import downloads, or a file next to the fixture."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -111,6 +115,8 @@ class CuratedImage(BaseModel):
     file: str | None = Field(default=None, pattern=r"^[a-z0-9][a-z0-9/_-]*\.(png|jpg|webp)$")
     alt: str = Field(min_length=1, max_length=500)
     caption: str | None = None
+    alt_en: str | None = Field(default=None, min_length=1, max_length=500)
+    caption_en: str | None = None
     credit: str = Field(min_length=1, max_length=300)
     credit_url: HttpUrl | None = None
     rights: ImageRights
@@ -166,6 +172,9 @@ class CuratedNewsItem(BaseModel):
     editor_note: str | None = None
     video: CuratedVideo | None = None
     image: CuratedImage | None = None
+    # Images from inside the source article, in reading order. A body line
+    # "{{figure:N}}" places figure N (from 1) there; unplaced figures follow the text.
+    figures: list[CuratedImage] = Field(default_factory=list, max_length=30)
     links: list[CuratedLink] = Field(default_factory=list)
 
     @model_validator(mode="after")

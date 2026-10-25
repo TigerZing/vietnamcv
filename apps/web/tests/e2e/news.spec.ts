@@ -97,6 +97,32 @@ test.describe("news", () => {
     await expect(page.getByText("Ý thứ hai")).toBeVisible();
     await expect(page.getByText(/sự hỗ trợ của AI/)).toBeVisible();
 
+    // The in-article image sits where the text places it, with its own caption and credit.
+    const figure = page.locator("figure", {
+      has: page.getByRole("img", { name: "Hình trong bài mẫu" }),
+    });
+    await expect(figure).toBeVisible();
+    await expect(figure).toContainText("Chú thích hình trong bài");
+    await expect(
+      figure.getByRole("link", { name: "Demo Lab" }),
+    ).toHaveAttribute("href", "https://example.com/demo-video-post");
+    const [opening, figureTop, heading] = await page.evaluate(() => {
+      const top = (node: Element | null | undefined) =>
+        node?.getBoundingClientRect().top ?? -1;
+      const article = document.querySelector("article");
+      const byText = (text: string) =>
+        [...(article?.querySelectorAll("p, h2") ?? [])].find(
+          (node) => node.textContent === text,
+        );
+      return [
+        top(byText("Đoạn mở đầu của bài mẫu.")),
+        top(document.querySelector('img[alt="Hình trong bài mẫu"]')),
+        top(byText("Điểm chính")),
+      ] as const;
+    });
+    expect(opening).toBeLessThan(figureTop);
+    expect(figureTop).toBeLessThan(heading);
+
     const sources = page.getByRole("region", { name: "Nguồn và liên kết" });
     await expect(
       sources.getByRole("link", { name: /Demo paper/ }),

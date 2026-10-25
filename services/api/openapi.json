@@ -450,7 +450,7 @@
                 "type": "null"
               }
             ],
-            "description": "Post text: paragraphs split by blank lines, \"## \" headings, \"- \" items",
+            "description": "Post text: paragraphs split by blank lines, \"## \" headings, \"- \" items, and \"{{figure:N}}\" lines placing figures[N-1]",
             "title": "Body"
           },
           "category": {
@@ -475,6 +475,14 @@
             "format": "date-time",
             "title": "Fetched At",
             "type": "string"
+          },
+          "figures": {
+            "description": "Images from inside the source article, in order",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            },
+            "title": "Figures",
+            "type": "array"
           },
           "id": {
             "format": "uuid",
@@ -570,6 +578,7 @@
           "ai_assisted",
           "comment_count",
           "body",
+          "figures",
           "links",
           "original_language",
           "editor_note",

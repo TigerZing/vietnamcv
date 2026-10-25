@@ -31,6 +31,19 @@ image and is retried on the next import. Bytes are served at `GET /api/v1/media/
 (immutable cache, `nosniff`, `default-src 'none'`) and proxied by the web app at
 `/api/media/{id}`. Only images used by published content are served.
 
+**Images inside the article.** Besides the lead image (`role = 'illustration'`), a post
+can keep the images from inside the source article as `role = 'figure'`, ordered by
+`position`, with the same credit and rights rules. A body line `{{figure:N}}` (alone on its
+line, 1-based) places figure N; figures the text does not place follow the text, and a
+placeholder whose figure is hidden or missing shows nothing. Figures carry English alt
+text and caption (`alt_text_en`, `caption_en`), used for `?lang=en` when present.
+`content_media.origin` records which URL each use came from, because identical files share
+one asset; the import uses it to skip downloads it already has. A figure that fails to
+download is left out and retried on the next import. AVIF is accepted as input (some
+Vietnamese newspapers serve photos only as AVIF) and stored as WebP like the rest. Images
+that exist only as whole magazine pages are not taken, since a page copies the
+publication's layout and text.
+
 **Rights.** `rights` is `own` (made by VietnamCV), `licensed` (permission or licence) or
 `permission_pending` (the source's image, credited, permission not yet given). In
 staging and production, `permission_pending` images are hidden from the API and the media
@@ -48,4 +61,5 @@ model) shown with the source at the end of the post.
   move them to object storage (ADR-007) when volume grows. Only `media/service.py`
   changes.
 - The curated import needs outbound HTTPS to the image hosts.
-- Keywords, captions and alt text are stored in Vietnamese only for now.
+- Keywords are stored in Vietnamese only for now; image alt text and captions also have
+  optional English versions.

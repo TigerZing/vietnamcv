@@ -90,7 +90,7 @@
         "vi": {
           "title": "Tiêu đề Newest post",
           "summary": "Tóm tắt bài mới nhất.",
-          "body": "Đoạn một.\n\n## Mục\n\n- Ý một\n- Ý hai"
+          "body": "Đoạn một.\n\n{{figure:2}}\n\nĐoạn hai."
         },
         "en": {
           "title": "Newest post (EN)",
@@ -116,7 +116,25 @@
         "credit": "Demo News",
         "credit_url": "https://news.example/newest",
         "rights": "permission_pending"
-      }
+      },
+      "figures": [
+        {
+          "url": "https://images.example/fig-1.jpg",
+          "alt": "Hình một",
+          "caption": "Chú thích một",
+          "caption_en": "Caption one",
+          "credit": "Demo News",
+          "credit_url": "https://news.example/newest",
+          "rights": "permission_pending"
+        },
+        {
+          "file": "images/demo.png",
+          "alt": "Hình hai",
+          "alt_en": "Figure two",
+          "credit": "VietnamCV",
+          "rights": "own"
+        }
+      ]
     }
   ]
 }

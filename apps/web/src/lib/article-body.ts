@@ -3,11 +3,16 @@
 export type BodyBlock =
   | { kind: "heading"; text: string }
   | { kind: "list"; items: string[] }
-  | { kind: "paragraph"; text: string };
+  | { kind: "paragraph"; text: string }
+  // An in-article image: figure number `index` (1-based) of the post.
+  | { kind: "figure"; index: number };
+
+const FIGURE = /^\{\{figure:([1-9]\d{0,2})\}\}$/;
 
 /**
  * Splits post text into blocks. The format is deliberately small and never produces
- * HTML: paragraphs separated by blank lines, "## " headings and "- " list items.
+ * HTML: paragraphs separated by blank lines, "## " headings, "- " list items and
+ * "{{figure:N}}" lines that place the post's Nth image.
  */
 export function parseArticleBody(body: string): BodyBlock[] {
   const blocks: BodyBlock[] = [];
@@ -18,7 +23,10 @@ export function parseArticleBody(body: string): BodyBlock[] {
       .filter(Boolean);
     const [first] = lines;
     if (first === undefined) continue;
-    if (lines.length === 1 && first.startsWith("## ")) {
+    const figure = lines.length === 1 ? FIGURE.exec(first) : null;
+    if (figure) {
+      blocks.push({ kind: "figure", index: Number(figure[1]) });
+    } else if (lines.length === 1 && first.startsWith("## ")) {
       blocks.push({ kind: "heading", text: first.slice(3).trim() });
     } else if (lines.every((line) => line.startsWith("- "))) {
       blocks.push({
