@@ -77,3 +77,9 @@ def test_fingerprint_secret_required_in_deployed_environments(
         load_settings()
     env.setenv("CLIENT_FINGERPRINT_SECRET", "a-real-secret")
     assert load_settings().environment.is_deployed
+
+
+def test_google_client_id_shares_the_web_variable(env: pytest.MonkeyPatch) -> None:
+    assert load_settings().google_oauth_client_id is None
+    env.setenv("GOOGLE_CLIENT_ID", "abc.apps.googleusercontent.com")
+    assert load_settings().google_oauth_client_id == "abc.apps.googleusercontent.com"

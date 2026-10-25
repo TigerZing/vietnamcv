@@ -9,6 +9,8 @@ x-api-env: &api-env
   LOG_JSON: ${LOG_JSON:-false}
   CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:3000}
   DEV_AUTH_ENABLED: ${DEV_AUTH_ENABLED:-true}
+  GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+  CLIENT_FINGERPRINT_SECRET: ${CLIENT_FINGERPRINT_SECRET:-local-only-fingerprint-secret}
 
 x-api-image: &api-image
   image: vietnamcv-api:local
@@ -55,13 +57,27 @@ services:
         condition: service_healthy
     restart: "no"
 
+  # Imports the editor-approved news in services/api/seed/news (idempotent).
+  seed:
+    <<: *api-image
+    command: ["python", "-m", "app.cli.seed_news"]
+    environment: *api-env
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: "no"
+
   api:
     <<: *api-image
-    environment: *api-env
+    environment:
+      <<: *api-env
+      # Trust X-Forwarded-For from the web container so rate limits see visitor IPs.
+      # Local only: in production list just the web/proxy addresses.
+      FORWARDED_ALLOW_IPS: "*"
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:
-      migrate:
+      seed:
         condition: service_completed_successfully
       redis:
         condition: service_healthy
@@ -128,6 +144,8 @@ services:
     environment:
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
       API_INTERNAL_URL: http://api:8000
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
     ports:
       - "127.0.0.1:3000:3000"
     depends_on:

@@ -49,5 +49,96 @@
   },
   "Loading": {
     "label": "Loading content"
+  },
+  "News": {
+    "title": "Computer Vision news",
+    "lead": "Computer Vision news from Vietnam and around the world, selected by editors and summarised in Vietnamese. Every post links to its source.",
+    "emptyTitle": "No news yet",
+    "emptyBody": "Reviewed news will appear here.",
+    "loadMore": "More news",
+    "backToList": "All news",
+    "readOriginal": "Read the original on {source}",
+    "sourceLabel": "Source",
+    "sourcePublished": "Originally published",
+    "originalLanguage": "Original in {language}",
+    "languages": {
+      "vi": "Vietnamese",
+      "en": "English",
+      "other": "another language"
+    },
+    "editorNote": "Editor's note",
+    "summaryNotice": "This is a Vietnamese summary written by VietnamCV editors, not the full original article.",
+    "keywords": "Keywords",
+    "comments": "{count, plural, =0 {No comments} one {# comment} other {# comments}}",
+    "hasVideo": "Video",
+    "video": {
+      "play": "Play video: {title}",
+      "fallbackTitle": "Related video",
+      "provider": "Video from YouTube. Playing it may let YouTube set cookies."
+    },
+    "regions": {
+      "vietnam": "Vietnam",
+      "international": "International"
+    },
+    "categories": {
+      "industrial": "Industrial applications",
+      "medical-imaging": "Medical imaging",
+      "public-sector": "Public sector",
+      "robotics": "Robotics & autonomy",
+      "market": "Market",
+      "models-open-source": "Models & open source",
+      "edge-hardware": "Hardware & edge AI",
+      "research": "Research",
+      "datasets": "Datasets",
+      "events": "Events & competitions",
+      "jobs": "Jobs"
+    },
+    "latestTitle": "Latest news",
+    "seeAll": "See all news"
+  },
+  "Comments": {
+    "title": "Comments",
+    "empty": "No comments yet. Be the first to share your thoughts.",
+    "loadOlder": "Show older comments",
+    "loadError": "Comments could not be loaded. Please try again later.",
+    "anonymous": "Anonymous",
+    "guestBadge": "Guest",
+    "verifiedBadge": "Verified with Google",
+    "member": "Member",
+    "postAs": "Comment as",
+    "modes": {
+      "anonymous": "Anonymous",
+      "guest": "Choose a name",
+      "account": "Google account"
+    },
+    "modeHints": {
+      "anonymous": "Your comment shows no name.",
+      "guest": "A name you choose; it is not verified.",
+      "account": "Shows your Google name and picture.",
+      "accountDisabled": "Google sign-in is not enabled on this site."
+    },
+    "nameLabel": "Display name",
+    "namePlaceholder": "For example: Minh Anh",
+    "bodyLabel": "Comment",
+    "bodyPlaceholder": "Share your thoughts, experience or questions…",
+    "counter": "{count}/{max} characters",
+    "honeypot": "Leave this field empty",
+    "submit": "Post comment",
+    "submitting": "Posting…",
+    "signIn": "Sign in with Google",
+    "signOut": "Sign out",
+    "signedInAs": "Signed in as {name}",
+    "signInFailed": "Google sign-in did not complete. Please try again.",
+    "rules": "Anonymous or guest comments containing links wait for moderation. Please be respectful.",
+    "result": {
+      "published": "Your comment is posted.",
+      "pending": "Your comment was received and is waiting for moderation because it contains a link.",
+      "rateLimited": "You are commenting too quickly. Please try again in {minutes, plural, one {# minute} other {# minutes}}.",
+      "duplicate": "You just posted this comment.",
+      "reservedName": "This name is reserved. Please choose another.",
+      "invalid": "Comments need 2 to 2000 characters; display names 2 to 40.",
+      "signInRequired": "Your Google session has expired. Please sign in again.",
+      "error": "Your comment could not be posted. Please try again later."
+    }
   }
 }

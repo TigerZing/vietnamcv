@@ -64,7 +64,7 @@ class Settings(BaseSettings):
 
     # Google sign-in (ADR-009). The API only verifies ID tokens, so it needs the OAuth client
     # ID (the token audience) and never the client secret. Unset disables Google sign-in.
-    google_oauth_client_id: str | None = None
+    google_oauth_client_id: str | None = Field(default=None, validation_alias="GOOGLE_CLIENT_ID")
 
     # Keys the HMAC that turns client IP addresses into rate-limit and abuse fingerprints,
     # so raw IPs are never stored. Must be a real secret outside local/test.

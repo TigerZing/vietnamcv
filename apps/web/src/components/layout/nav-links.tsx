@@ -7,15 +7,25 @@ import { cn } from "@/lib/utils";
 
 import { NAV_ITEMS } from "./nav-items";
 
-export function NavLinks({
-  orientation = "horizontal",
-  onNavigate,
-}: {
+type NavLinksProps = {
   orientation?: "horizontal" | "vertical";
   onNavigate?: () => void;
-}) {
+};
+
+export function NavLinks(props: NavLinksProps) {
+  return <NavLinksView {...props} pathname={usePathname()} />;
+}
+
+/**
+ * The links without reading the URL. Routes with request-time params (news posts) render
+ * this as the static-shell fallback, then stream in the version with the active link.
+ */
+export function NavLinksView({
+  orientation = "horizontal",
+  onNavigate,
+  pathname,
+}: NavLinksProps & { pathname: string | null }) {
   const t = useTranslations("Nav");
-  const pathname = usePathname();
 
   return (
     <ul
@@ -26,7 +36,8 @@ export function NavLinks({
     >
       {NAV_ITEMS.map((item) => {
         const active =
-          pathname === item.href || pathname.startsWith(`${item.href}/`);
+          pathname !== null &&
+          (pathname === item.href || pathname.startsWith(`${item.href}/`));
         return (
           <li key={item.href}>
             <Link
