@@ -239,15 +239,15 @@ async def get_figures(session: AsyncSession, content_id: uuid.UUID) -> list[Cont
 
 
 async def replace_figures(
-    session: AsyncSession, content: Content, figures: Sequence[Illustration]
+    session: AsyncSession, content: Content, figures: Sequence[tuple[int, Illustration]]
 ) -> None:
-    """Make the in-article images of ``content`` exactly ``figures``, in this order."""
+    """Make the in-article images of ``content`` exactly ``figures`` (position, image)."""
     await session.execute(
         delete(ContentMedia).where(
             ContentMedia.content_id == content.id, ContentMedia.role == MediaRole.FIGURE
         )
     )
-    for position, figure in enumerate(figures):
+    for position, figure in figures:
         row = ContentMedia(
             id=uuid.uuid4(), content_id=content.id, role=MediaRole.FIGURE, position=position
         )
