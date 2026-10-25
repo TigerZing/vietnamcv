@@ -3,9 +3,20 @@
 from __future__ import annotations
 
 import uuid
+from datetime import datetime
 from enum import StrEnum
 
-from sqlalchemy import Boolean, CheckConstraint, ForeignKey, String, Text, text
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    DateTime,
+    ForeignKey,
+    Index,
+    String,
+    Text,
+    func,
+    text,
+)
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.types import Uuid
@@ -51,6 +62,10 @@ class NewsItem(Base):
             "video_provider IS NULL OR " + _in("video_provider", VideoProvider),
             name="video_provider",
         ),
+        # Feed query: ORDER BY dated_at DESC, content_id DESC, optionally by region.
+        Index("ix_news_items_feed", "dated_at", "content_id"),
+        Index("ix_news_items_region_feed", "region", "dated_at", "content_id"),
+        Index("ix_news_items_tags", "tags", postgresql_using="gin"),
     )
 
     content_id: Mapped[uuid.UUID] = mapped_column(
@@ -60,6 +75,14 @@ class NewsItem(Base):
     category: Mapped[str] = mapped_column(String(32), nullable=False)
     keywords: Mapped[list[str]] = mapped_column(
         ARRAY(String(100)), nullable=False, server_default=text("'{}'::character varying[]")
+    )
+    # Technology hashtags shown as "#Tag" and used to filter the feed (for example "VLM").
+    tags: Mapped[list[str]] = mapped_column(
+        ARRAY(String(40)), nullable=False, server_default=text("'{}'::character varying[]")
+    )
+    # When the news happened: the source's date. The feed is ordered by it, newest first.
+    dated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, server_default=func.now()
     )
     original_language: Mapped[str] = mapped_column(String(8), nullable=False)
     # Editor's caveat shown with the post (for example "dates not verified").

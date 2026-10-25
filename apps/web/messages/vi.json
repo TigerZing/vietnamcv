@@ -81,7 +81,7 @@
       "provider": "Video từ YouTube. Khi phát, YouTube có thể đặt cookie."
     },
     "regions": {
-      "vietnam": "Việt Nam",
+      "vietnam": "Trong nước",
       "international": "Quốc tế"
     },
     "categories": {
@@ -119,7 +119,24 @@
       "grid": "Thẻ ảnh",
       "columns": "Số cột",
       "columnsOption": "{count} cột"
-    }
+    },
+    "filters": {
+      "regionsLabel": "Khu vực",
+      "all": "Tất cả",
+      "tagsLabel": "Công nghệ",
+      "clear": "Bỏ lọc",
+      "activeTag": "Đang lọc theo {tag}",
+      "tagCount": "{count, plural, other {# bài}}",
+      "emptyTitle": "Không có bài nào khớp bộ lọc",
+      "emptyBody": "Thử chọn khu vực khác hoặc bỏ hashtag đang lọc."
+    },
+    "time": {
+      "today": "Hôm nay",
+      "yesterday": "Hôm qua",
+      "daysAgo": "{count} ngày trước",
+      "new": "Mới"
+    },
+    "tags": "Hashtag công nghệ"
   },
   "Comments": {
     "title": "Bình luận",

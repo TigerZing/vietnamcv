@@ -36,6 +36,9 @@
       "keywords": [
         "kiểm tra lỗi"
       ],
+      "tags": [
+        "AnomalyDetection"
+      ],
       "original_language": "vi",
       "editor_note": "Chỉ có tháng, không có ngày."
     },
@@ -58,6 +61,9 @@
       "region": "international",
       "category": "research",
       "keywords": [],
+      "tags": [
+        "VLM"
+      ],
       "original_language": "en",
       "video": {
         "provider": "youtube",
@@ -107,6 +113,10 @@
       "category": "robotics",
       "keywords": [
         "drone"
+      ],
+      "tags": [
+        "Drone",
+        "VLM"
       ],
       "original_language": "en",
       "image": {

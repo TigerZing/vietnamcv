@@ -80,6 +80,12 @@
         "phát hiện bất thường",
         "Âu Lạc Grand Prize"
       ],
+      "tags": [
+        "AnomalyDetection",
+        "VisualInspection",
+        "RobotVision",
+        "VideoRetrieval"
+      ],
       "original_language": "vi",
       "image": {
         "url": "https://i2-vnexpress.vnecdn.net/2026/10/22/c1-1792657598-2873-1792662850.png?w=1200&h=675&q=100&dpr=1&fit=crop&s=uBJYZZcS5LMsdAmSDV4VaA",
@@ -159,6 +165,12 @@
         "tế bào học",
         "sàng lọc ung thư cổ tử cung",
         "soi trứng"
+      ],
+      "tags": [
+        "MedicalImaging",
+        "Cytology",
+        "EEG",
+        "3DScanning"
       ],
       "original_language": "vi",
       "image": {
@@ -240,6 +252,11 @@
         "Viettel",
         "kiểm soát ra vào"
       ],
+      "tags": [
+        "FaceRecognition",
+        "Biometrics",
+        "AccessControl"
+      ],
       "original_language": "vi",
       "image": {
         "url": "https://cafefcdn.com/thumb_w/1200/203337114487263232/2026/10/20/avatar1792486511333-17924865117121074976419.webp",
@@ -308,6 +325,12 @@
         "điều khiển tự động",
         "thị giác cho robot"
       ],
+      "tags": [
+        "Drone",
+        "ReinforcementLearning",
+        "Sim2Real",
+        "VisualNavigation"
+      ],
       "original_language": "vi",
       "video": {
         "provider": "youtube",
@@ -351,6 +374,11 @@
         "edge AI",
         "ảnh y tế"
       ],
+      "tags": [
+        "MarketReport",
+        "EdgeAI",
+        "MedicalImaging"
+      ],
       "original_language": "en",
       "image": {
         "file": "images/cv-market-forecast.png",
@@ -388,6 +416,12 @@
         "humanoid",
         "Human 1M",
         "Jetson Thor"
+      ],
+      "tags": [
+        "Humanoid",
+        "Simulation",
+        "SyntheticData",
+        "Jetson"
       ],
       "original_language": "en",
       "video": {
@@ -454,6 +488,12 @@
         "Nemotron 3.5 Super VL",
         "OCR",
         "trọng số mở"
+      ],
+      "tags": [
+        "VLM",
+        "OCR",
+        "OpenWeights",
+        "Quantization"
       ],
       "original_language": "en",
       "video": {
@@ -562,6 +602,11 @@
         "NPU",
         "camera thông minh"
       ],
+      "tags": [
+        "EdgeAI",
+        "MCU",
+        "NPU"
+      ],
       "original_language": "en",
       "video": {
         "provider": "youtube",
@@ -604,6 +649,12 @@
         "MRI thai nhi",
         "E(3)-Pose",
         "theo dõi tư thế"
+      ],
+      "tags": [
+        "MedicalImaging",
+        "MRI",
+        "PoseEstimation",
+        "Equivariance"
       ],
       "original_language": "en",
       "editor_note": "Bài không nêu số liệu định lượng",
@@ -650,6 +701,11 @@
         "nền tảng AI vision",
         "VLM"
       ],
+      "tags": [
+        "VLM",
+        "VisionPlatforms",
+        "Benchmark"
+      ],
       "original_language": "en",
       "image": {
         "url": "https://www.edge-ai-vision.com/wp-content/uploads/2026/10/6ac03bc3246c263b393e9d4a_white-paper-hero-p-1600.png",
@@ -695,6 +751,11 @@
         "best paper",
         "texture 3D"
       ],
+      "tags": [
+        "ECCV",
+        "3DVision",
+        "Texture"
+      ],
       "original_language": "en",
       "editor_note": "Tạp chí số tháng 10, không có ngày cụ thể",
       "video": {
@@ -739,6 +800,11 @@
         "cảm biến lực",
         "Meta Aria"
       ],
+      "tags": [
+        "EgocentricVision",
+        "Dataset",
+        "ForceSensing"
+      ],
       "original_language": "en",
       "editor_note": "Tạp chí số tháng 10, không có ngày cụ thể",
       "image": {
@@ -779,6 +845,12 @@
         "ICCV 2027",
         "hạn nộp bài"
       ],
+      "tags": [
+        "CVPR",
+        "ICCV",
+        "WACV",
+        "Conferences"
+      ],
       "original_language": "en",
       "editor_note": "Ngày đăng là ngày truy cập. Cần đối chiếu với trang chính thức của hội nghị",
       "image": {
@@ -815,6 +887,9 @@
       "keywords": [
         "tuyển dụng",
         "computer vision"
+      ],
+      "tags": [
+        "Hiring"
       ],
       "original_language": "en",
       "editor_note": "Số liệu lấy từ tiêu đề kết quả tìm kiếm; trang không truy cập được để kiểm tra",

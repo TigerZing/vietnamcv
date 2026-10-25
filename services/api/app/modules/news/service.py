@@ -41,6 +41,8 @@ from app.modules.news.schemas import (
     NewsPage,
     NewsSummary,
     SourceRef,
+    TagCount,
+    TagList,
     Video,
 )
 
@@ -68,6 +70,7 @@ async def list_news(
     cursor: str | None,
     category: NewsCategory | None = None,
     region: NewsRegion | None = None,
+    tag: str | None = None,
     language: TextLanguage = TextLanguage.VI,
     allow_uncleared_images: bool = False,
 ) -> NewsPage:
@@ -77,6 +80,7 @@ async def list_news(
         cursor=KeysetCursor.decode(cursor) if cursor else None,
         category=category,
         region=region,
+        tag=tag,
     )
     page = rows[:limit]
     ids = [content.id for content, _ in page]
@@ -97,10 +101,16 @@ async def list_news(
     ]
     next_cursor = None
     if len(rows) > limit:
-        last = page[-1][0]
-        assert last.published_at is not None  # noqa: S101 - published rows have a timestamp
-        next_cursor = KeysetCursor(last.published_at, last.id).encode()
+        last = page[-1][1]
+        next_cursor = KeysetCursor(last.dated_at, last.content_id).encode()
     return NewsPage(items=items, next_cursor=next_cursor)
+
+
+async def list_tags(
+    session: AsyncSession, *, region: NewsRegion | None = None, limit: int = 30
+) -> TagList:
+    rows = await repository.tag_counts(session, region=region, limit=limit)
+    return TagList(items=[TagCount(tag=tag, count=count) for tag, count in rows])
 
 
 async def get_news(
@@ -208,6 +218,7 @@ def _summary(
         category=NewsCategory(item.category),
         region=NewsRegion(item.region),
         keywords=list(item.keywords),
+        tags=list(item.tags),
         published_at=content.published_at,
         source=SourceRef(
             name=source.name,
@@ -294,6 +305,8 @@ async def import_item(
     item.region = entry.region
     item.category = entry.category
     item.keywords = entry.keywords
+    item.tags = entry.tags
+    item.dated_at = _midnight_utc(entry.published_on)
     item.original_language = entry.original_language
     item.editor_note = entry.editor_note
     item.video_provider = entry.video.provider if entry.video else None

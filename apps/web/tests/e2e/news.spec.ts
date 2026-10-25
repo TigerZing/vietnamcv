@@ -222,9 +222,97 @@ test.describe("news", () => {
     ).toBeDisabled();
   });
 
+  test("region tabs split Vietnam and international news", async ({ page }) => {
+    await page.goto("/vi/news");
+    const regions = page.getByRole("navigation", { name: "Khu vực" });
+    await expect(regions.getByRole("link", { name: "Tất cả" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    await regions.getByRole("link", { name: "Trong nước" }).click();
+    await expect(page).toHaveURL(/region=vietnam/);
+    await expect(
+      regions.getByRole("link", { name: "Trong nước" }),
+    ).toHaveAttribute("aria-current", "page");
+    await expect(page.getByRole("article")).toHaveCount(1);
+    await expect(page.getByRole("article")).toContainText("Bài mẫu chỉ có chữ");
+
+    await regions.getByRole("link", { name: "Quốc tế" }).click();
+    await expect(page).toHaveURL(/region=international/);
+    await expect(page.getByRole("article")).toHaveCount(1);
+    await expect(page.getByRole("article")).toContainText(
+      "Demo post with a video",
+    );
+  });
+
+  test("hashtags filter the feed and keep the layout", async ({ page }) => {
+    await page.goto("/vi/news?view=grid");
+    const card = page
+      .getByRole("article")
+      .filter({ hasText: "Demo post with a video" });
+    await expect(card.getByRole("link", { name: "#Drone" })).toBeVisible();
+    // The source date of the fixture is shown as the date or a relative time.
+    await expect(card.locator("time")).toHaveAttribute(
+      "datetime",
+      "2026-10-20",
+    );
+
+    const tagBar = page.getByRole("navigation", { name: "Công nghệ" });
+    await tagBar.getByRole("link", { name: /#Drone/ }).click();
+    await expect(page).toHaveURL(/tag=Drone/);
+    await expect(page).toHaveURL(/view=grid/);
+    await expect(page.getByRole("article")).toHaveCount(1);
+    await expect(tagBar.getByRole("link", { name: /#Drone/ })).toHaveAttribute(
+      "aria-current",
+      "true",
+    );
+
+    // Choosing the active tag again clears it.
+    await tagBar.getByRole("link", { name: /#Drone/ }).click();
+    await expect(page).not.toHaveURL(/tag=/);
+    await expect(page.getByRole("article")).toHaveCount(2);
+  });
+
+  test("a hashtag on a card opens the filtered feed", async ({ page }) => {
+    await page.goto("/vi/news");
+    const card = page
+      .getByRole("article")
+      .filter({ hasText: "Bài mẫu chỉ có chữ" });
+    await card.getByRole("link", { name: "#VLM" }).click();
+    await expect(page).toHaveURL(/\/vi\/news\?tag=VLM$/);
+    await expect(page.getByRole("article")).toHaveCount(2);
+  });
+
+  test("filters with no match explain and offer to clear", async ({ page }) => {
+    await page.goto("/vi/news?region=vietnam&tag=Drone");
+    await expect(
+      page.getByRole("heading", { name: "Không có bài nào khớp bộ lọc" }),
+    ).toBeVisible();
+    // The active tag stays visible so it can be removed.
+    await expect(
+      page
+        .getByRole("navigation", { name: "Công nghệ" })
+        .getByRole("link", { name: /#Drone/ }),
+    ).toHaveAttribute("aria-current", "true");
+    await page.getByRole("link", { name: "Bỏ lọc" }).click();
+    await expect(page).toHaveURL(/\/vi\/news$/);
+    await expect(page.getByRole("article")).toHaveCount(2);
+  });
+
+  test("a post shows its hashtags", async ({ page }) => {
+    await page.goto("/en/news/demo-video-post");
+    const tags = page.getByRole("list", { name: "Technology hashtags" });
+    await expect(tags.getByRole("link", { name: "#VLM" })).toHaveAttribute(
+      "href",
+      "/en/news?tag=VLM",
+    );
+  });
+
   for (const path of [
     "/vi/news",
     "/vi/news?view=grid&cols=4",
+    "/vi/news?region=vietnam&tag=Drone",
+    "/en/news?region=international&tag=VLM&view=grid",
     "/vi/news/demo-video-post",
     "/en/news/demo-video-post",
   ]) {

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import date, datetime
+from typing import Annotated
 
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl, model_validator
 
@@ -12,6 +13,8 @@ from app.modules.news.models import NewsCategory, NewsRegion, VideoProvider
 
 SLUG_PATTERN = r"^[a-z0-9]+(?:-[a-z0-9]+)*$"
 YOUTUBE_ID_PATTERN = r"^[A-Za-z0-9_-]{11}$"
+# A technology hashtag without the "#": letters and digits, then also "+", "." or "-".
+TAG_PATTERN = r"^[A-Za-z0-9][A-Za-z0-9+.-]{0,39}$"
 
 
 class SourceRef(BaseModel):
@@ -59,6 +62,7 @@ class NewsSummary(BaseModel):
     category: NewsCategory
     region: NewsRegion
     keywords: list[str]
+    tags: list[str] = Field(description='Technology hashtags, shown as "#tag"')
     published_at: datetime
     source: SourceRef
     video: Video | None
@@ -84,6 +88,15 @@ class NewsDetail(NewsSummary):
 class NewsPage(BaseModel):
     items: list[NewsSummary]
     next_cursor: str | None
+
+
+class TagCount(BaseModel):
+    tag: str
+    count: int = Field(description="Published posts with this tag")
+
+
+class TagList(BaseModel):
+    items: list[TagCount] = Field(description="Most used first")
 
 
 # --- Curated import (editor-approved rows exported from the news sheet) ---
@@ -168,6 +181,9 @@ class CuratedNewsItem(BaseModel):
     region: NewsRegion
     category: NewsCategory
     keywords: list[str] = Field(default_factory=list)
+    tags: list[Annotated[str, Field(pattern=TAG_PATTERN)]] = Field(
+        default_factory=list, max_length=8
+    )
     original_language: str = Field(pattern=r"^[a-z]{2}$")
     editor_note: str | None = None
     video: CuratedVideo | None = None
