@@ -21,11 +21,22 @@ behaviour. Plan: [Sprint 0–1 plan](https://claude.ai/artifact/5RodXoxVBbfzRcCk
 
 ## Sprint 1: Canonical content and taxonomy
 
-Not started. See the plan for tasks S1-01 … S1-10.
+Started with the slice the owner asked for: curated news posts with comments. It lands
+part of the Sprint 1 content model early; taxonomy, papers and repositories are not
+started. See the plan for tasks S1-01 … S1-10.
+
+| Task ID | Status | PR/Commit | Tests | Risks | Next action |
+| --- | --- | --- | --- | --- | --- |
+| NEWS-01 Content core subset (sources, contents, content_sources, news_items, audit_events) and `PublishService` | Review | this branch | `test_news.py`, migration round trip and drift | `news_items.category` is a fixed list until taxonomy (S1) replaces it | Map categories to taxonomy nodes in S1 |
+| NEWS-02 Curated news import (14 approved sheet rows, 5 with video) | Review | this branch | `test_committed_seed_files_import`, idempotency test | Videos were chosen from search results by title; editor should confirm each | Editor review of `seed/news/2026-10-25.json` |
+| NEWS-03 News list and post pages (video, provenance, editor note) | Review | this branch | `news.spec.ts` at 360px + desktop with axe | Pages render at request time (not cached) | Cache with tag revalidation via the outbox handler |
+| COMM-01 Comments (anonymous, guest name, Google), rate limits, moderation API | Review | this branch | `test_comments.py`, `test_comment_policy.py`, e2e comment flow | No moderation UI or reporting yet | Moderation UI with the admin area (Sprint 3) |
+| AUTH-G Google sign-in (ADR-009) | Review | this branch | `test_google_auth.py`, `auth-tokens.test.ts` | Needs an OAuth client from the owner; session lasts one hour | Owner creates the Google OAuth client |
 
 ## Open decisions
 
-- Auth provider (ADR-002), by Sprint 3.
+- Auth provider (ADR-002), by Sprint 3. Google is in use for comments (ADR-009); a
+  managed provider can still replace it.
 - Hosting and region (ADR-007), staging by end of Sprint 1.
 - LLM provider and monthly budget, by Sprint 3.
 - Native-speaker review of Vietnamese UI copy and taxonomy labels.

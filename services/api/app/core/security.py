@@ -1,25 +1,36 @@
 """Authentication seam and role-based access control.
 
-Endpoints depend only on :class:`Principal` and :func:`require_role`. Until the OIDC
-provider is chosen (ADR-002), the only identity source is a development fixture selected
-with the ``X-Dev-Principal`` header, available when ``DEV_AUTH_ENABLED`` is true. Settings
-validation refuses that flag in staging and production, so the fixture cannot leak there.
-Swapping in JWT validation later changes :func:`get_principal` and nothing else.
+Endpoints depend only on :class:`Principal` and :func:`require_role`. Two identity sources
+exist:
+
+- A Google ID token sent as ``Authorization: Bearer <token>`` (ADR-009). The web app holds
+  it in an httpOnly cookie and attaches it on server-side calls; the API verifies issuer,
+  audience, expiry and signature against Google's JWKS. Google users are members.
+- A development fixture selected with the ``X-Dev-Principal`` header, available when
+  ``DEV_AUTH_ENABLED`` is true. Settings validation refuses that flag in staging and
+  production, so the fixture cannot leak there.
 """
 
 from __future__ import annotations
 
+import asyncio
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from enum import StrEnum
-from typing import Annotated
+from typing import Annotated, Protocol
 
+import jwt
 from fastapi import Depends, Request
 
 from app.core.config import Settings
 from app.core.errors import ForbiddenError, UnauthorizedError
+from app.core.logging import get_logger
+
+logger = get_logger(__name__)
 
 DEV_PRINCIPAL_HEADER = "X-Dev-Principal"
+GOOGLE_ISSUERS = ("https://accounts.google.com", "accounts.google.com")
+GOOGLE_JWKS_URL = "https://www.googleapis.com/oauth2/v3/certs"
 
 
 class Role(StrEnum):
@@ -42,6 +53,9 @@ class Principal:
 
     subject: str
     roles: frozenset[Role] = field(default_factory=frozenset)
+    # Profile claims from the identity provider, shown next to the user's comments.
+    name: str | None = None
+    picture: str | None = None
 
     def has_role(self, role: Role) -> bool:
         return any(role in _IMPLIED_ROLES[granted] for granted in self.roles)
@@ -55,8 +69,71 @@ DEV_PRINCIPALS: dict[str, Principal] = {
 }
 
 
+class IdTokenVerifier(Protocol):
+    def verify(self, token: str) -> Principal:
+        """Return the token's principal or raise :class:`UnauthorizedError`."""
+        ...
+
+
+class GoogleIdTokenVerifier:
+    """Verifies Google ID tokens. Signing keys are fetched from Google and cached."""
+
+    def __init__(self, client_id: str, jwks_client: jwt.PyJWKClient | None = None) -> None:
+        self._client_id = client_id
+        self._jwks = jwks_client or jwt.PyJWKClient(
+            GOOGLE_JWKS_URL, cache_keys=True, lifespan=3600, timeout=5
+        )
+
+    def verify(self, token: str) -> Principal:
+        try:
+            signing_key = self._jwks.get_signing_key_from_jwt(token)
+            claims = jwt.decode(
+                token,
+                signing_key.key,
+                algorithms=["RS256"],
+                audience=self._client_id,
+                issuer=GOOGLE_ISSUERS,
+                leeway=30,
+                options={"require": ["exp", "iat", "iss", "aud", "sub"]},
+            )
+        except jwt.PyJWKClientConnectionError as exc:
+            logger.warning("google_jwks_unreachable", error=str(exc))
+            raise UnauthorizedError("Could not verify the sign-in token") from None
+        except jwt.PyJWTError as exc:
+            logger.info("id_token_rejected", reason=type(exc).__name__)
+            raise UnauthorizedError("Invalid or expired sign-in token") from None
+        return Principal(
+            subject=f"google|{claims['sub']}",
+            roles=frozenset({Role.MEMBER}),
+            name=_optional_str(claims.get("name")),
+            picture=_optional_str(claims.get("picture")),
+        )
+
+
+def _optional_str(value: object) -> str | None:
+    return value if isinstance(value, str) and value else None
+
+
+def _bearer_token(request: Request) -> str | None:
+    header = request.headers.get("Authorization")
+    if header is None:
+        return None
+    scheme, _, token = header.partition(" ")
+    if scheme.lower() != "bearer" or not token.strip():
+        raise UnauthorizedError("Malformed Authorization header")
+    return token.strip()
+
+
 async def get_principal(request: Request) -> Principal | None:
     """Return the caller's identity, or ``None`` for anonymous requests."""
+    token = _bearer_token(request)
+    if token is not None:
+        verifier: IdTokenVerifier | None = getattr(request.app.state, "id_token_verifier", None)
+        if verifier is None:
+            raise UnauthorizedError("Sign-in is not configured")
+        # Key lookups may hit the network on a cache miss; keep the event loop free.
+        return await asyncio.to_thread(verifier.verify, token)
+
     settings: Settings = request.app.state.settings
     if not settings.dev_auth_enabled:
         return None

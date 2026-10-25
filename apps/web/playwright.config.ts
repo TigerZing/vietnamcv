@@ -32,13 +32,22 @@ export default defineConfig({
       },
     },
   ],
-  // Starts the production server unless E2E_BASE_URL points at a running stack (CI compose).
+  // Starts a mock API (fixture posts on :8000, the default API_INTERNAL_URL) and the
+  // production server, unless E2E_BASE_URL points at a running stack.
   webServer: process.env.E2E_BASE_URL
     ? undefined
-    : {
-        command: "pnpm start",
-        url: `${baseURL}/api/health`,
-        reuseExistingServer: !process.env.CI,
-        timeout: 60_000,
-      },
+    : [
+        {
+          command: "node tests/e2e/mock-api.mjs",
+          url: "http://localhost:8000/api/v1/health/live",
+          reuseExistingServer: !process.env.CI,
+          timeout: 30_000,
+        },
+        {
+          command: "pnpm start",
+          url: `${baseURL}/api/health`,
+          reuseExistingServer: !process.env.CI,
+          timeout: 60_000,
+        },
+      ],
 });

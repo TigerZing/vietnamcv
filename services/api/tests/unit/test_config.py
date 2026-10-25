@@ -65,3 +65,21 @@ def test_settings_are_immutable(env: pytest.MonkeyPatch) -> None:
     settings: Settings = load_settings()
     with pytest.raises(ValueError, match="frozen"):
         settings.log_level = "DEBUG"  # type: ignore[misc]
+
+
+@pytest.mark.parametrize("environment", ["staging", "production"])
+def test_fingerprint_secret_required_in_deployed_environments(
+    env: pytest.MonkeyPatch, environment: str
+) -> None:
+    env.setenv("APP_ENV", environment)
+    env.delenv("CLIENT_FINGERPRINT_SECRET", raising=False)
+    with pytest.raises(ConfigurationError, match="CLIENT_FINGERPRINT_SECRET"):
+        load_settings()
+    env.setenv("CLIENT_FINGERPRINT_SECRET", "a-real-secret")
+    assert load_settings().environment.is_deployed
+
+
+def test_google_client_id_shares_the_web_variable(env: pytest.MonkeyPatch) -> None:
+    assert load_settings().google_oauth_client_id is None
+    env.setenv("GOOGLE_CLIENT_ID", "abc.apps.googleusercontent.com")
+    assert load_settings().google_oauth_client_id == "abc.apps.googleusercontent.com"

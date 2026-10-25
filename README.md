@@ -42,7 +42,7 @@ specs/                 Product and engineering specification (read-only)
 
 ```bash
 make bootstrap   # install dependencies, create .env from .env.example
-make dev         # build and start postgres, redis, migrate, api, worker, beat, web
+make dev         # build and start postgres, redis, migrate, seed, api, worker, beat, web
 ```
 
 Then open:
@@ -60,10 +60,25 @@ For faster feedback, run only the databases in Docker and the apps locally:
 ```bash
 make infra       # postgres + redis
 make migrate     # apply migrations
+make seed        # import the editor-approved news posts
 make api         # FastAPI with auto-reload on :8000
 make web         # Next.js dev server on :3000
 make worker      # Celery worker (optional)
 ```
+
+### News posts and comments
+
+`make dev` imports the editor-approved news in `services/api/seed/news/*.json` (exported
+from the news sheet) and publishes them at <http://localhost:3000/vi/news>. The import is
+idempotent: edit a file and run `make seed-docker` (or `make seed` on the host) to update.
+
+Comments can be posted anonymously, with a chosen name, or with a Google account.
+Google sign-in is off until you set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in
+`.env` (see ADR-009 for creating the OAuth client), then `make down && make dev`.
+
+Moderation has no UI yet. Locally, use the API docs with the `X-Dev-Principal: moderator`
+header: `GET /api/v1/admin/comments` lists held comments and
+`POST /api/v1/admin/comments/{id}/moderate` publishes or hides one.
 
 ## Quality checks
 

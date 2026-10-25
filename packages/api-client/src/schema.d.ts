@@ -4,6 +4,40 @@
  */
 
 export interface paths {
+  "/api/v1/admin/comments": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Moderation queue */
+    get: operations["moderation_queue_api_v1_admin_comments_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/admin/comments/{comment_id}/moderate": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Publish or hide a comment (audited) */
+    post: operations["moderate_comment_api_v1_admin_comments__comment_id__moderate_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/health/live": {
     parameters: {
       query?: never;
@@ -38,15 +72,136 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/news": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List published news, newest first */
+    get: operations["list_news_api_v1_news_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/news/{slug}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get one published news post */
+    get: operations["get_news_api_v1_news__slug__get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/news/{slug}/comments": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List published comments on a news post, newest first */
+    get: operations["list_comments_api_v1_news__slug__comments_get"];
+    put?: never;
+    /**
+     * Post a comment anonymously, with a display name, or as the signed-in user
+     * @description Comments by signed-in users are published at once. Anonymous and guest comments containing links are held for moderation (`status: pending`). Rate limited per client and per account.
+     */
+    post: operations["create_comment_api_v1_news__slug__comments_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     /**
+     * AuthorKind
+     * @enum {string}
+     */
+    AuthorKind: "anonymous" | "guest" | "account";
+    /**
      * CheckStatus
      * @enum {string}
      */
     CheckStatus: "ok" | "failed";
+    /** CommentAuthor */
+    CommentAuthor: {
+      /** Avatar Url */
+      avatar_url: string | null;
+      kind: components["schemas"]["AuthorKind"];
+      /**
+       * Name
+       * @description Null for anonymous authors
+       */
+      name: string | null;
+      /**
+       * Verified
+       * @description True when the name comes from a signed-in account
+       */
+      verified: boolean;
+    };
+    /** CommentCreate */
+    CommentCreate: {
+      /** Body */
+      body: string;
+      /** Display Name */
+      display_name?: string | null;
+      mode: components["schemas"]["PostingMode"];
+      /** Website */
+      website?: string | null;
+    };
+    /** CommentOut */
+    CommentOut: {
+      author: components["schemas"]["CommentAuthor"];
+      /** Body */
+      body: string;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at: string;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      status: components["schemas"]["CommentStatus"];
+    };
+    /** CommentPage */
+    CommentPage: {
+      /** Items */
+      items: components["schemas"]["CommentOut"][];
+      /** Next Cursor */
+      next_cursor: string | null;
+    };
+    /**
+     * CommentStatus
+     * @enum {string}
+     */
+    CommentStatus: "published" | "pending" | "hidden";
+    /**
+     * DatePrecision
+     * @description How much of a source date is known. Monthly magazines only give the month.
+     * @enum {string}
+     */
+    DatePrecision: "day" | "month";
     /** ErrorBody */
     ErrorBody: {
       /**
@@ -76,6 +231,149 @@ export interface components {
        */
       status: "ok";
     };
+    /**
+     * ModerationAction
+     * @enum {string}
+     */
+    ModerationAction: "publish" | "hide";
+    /** ModerationQueue */
+    ModerationQueue: {
+      /** Items */
+      items: components["schemas"]["QueuedComment"][];
+      /** Next Cursor */
+      next_cursor: string | null;
+    };
+    /** ModerationRequest */
+    ModerationRequest: {
+      action: components["schemas"]["ModerationAction"];
+      /** Reason */
+      reason?: string | null;
+    };
+    /**
+     * NewsCategory
+     * @enum {string}
+     */
+    NewsCategory:
+      | "industrial"
+      | "medical-imaging"
+      | "public-sector"
+      | "robotics"
+      | "market"
+      | "models-open-source"
+      | "edge-hardware"
+      | "research"
+      | "datasets"
+      | "events"
+      | "jobs";
+    /** NewsDetail */
+    NewsDetail: {
+      category: components["schemas"]["NewsCategory"];
+      /** Comment Count */
+      comment_count: number;
+      /** Editor Note */
+      editor_note: string | null;
+      /**
+       * Fetched At
+       * Format: date-time
+       */
+      fetched_at: string;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /** Keywords */
+      keywords: string[];
+      /** Language */
+      language: string;
+      /** Original Language */
+      original_language: string;
+      /**
+       * Published At
+       * Format: date-time
+       */
+      published_at: string;
+      region: components["schemas"]["NewsRegion"];
+      /** Slug */
+      slug: string;
+      source: components["schemas"]["SourceRef"];
+      /** Summary */
+      summary: string;
+      /** Title */
+      title: string;
+      video: components["schemas"]["Video"] | null;
+    };
+    /** NewsPage */
+    NewsPage: {
+      /** Items */
+      items: components["schemas"]["NewsSummary"][];
+      /** Next Cursor */
+      next_cursor: string | null;
+    };
+    /**
+     * NewsRegion
+     * @enum {string}
+     */
+    NewsRegion: "vietnam" | "international";
+    /**
+     * NewsSummary
+     * @description A news card.
+     */
+    NewsSummary: {
+      category: components["schemas"]["NewsCategory"];
+      /** Comment Count */
+      comment_count: number;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /** Keywords */
+      keywords: string[];
+      /** Language */
+      language: string;
+      /**
+       * Published At
+       * Format: date-time
+       */
+      published_at: string;
+      region: components["schemas"]["NewsRegion"];
+      /** Slug */
+      slug: string;
+      source: components["schemas"]["SourceRef"];
+      /** Summary */
+      summary: string;
+      /** Title */
+      title: string;
+      video: components["schemas"]["Video"] | null;
+    };
+    /**
+     * PostingMode
+     * @enum {string}
+     */
+    PostingMode: "anonymous" | "guest" | "account";
+    /** QueuedComment */
+    QueuedComment: {
+      author: components["schemas"]["CommentAuthor"];
+      /** Body */
+      body: string;
+      /**
+       * Content Id
+       * Format: uuid
+       */
+      content_id: string;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at: string;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      status: components["schemas"]["CommentStatus"];
+    };
     /** ReadinessResponse */
     ReadinessResponse: {
       /** Checks */
@@ -88,6 +386,35 @@ export interface components {
        */
       status: "ready" | "not_ready";
     };
+    /** SourceRef */
+    SourceRef: {
+      /** Name */
+      name: string;
+      /**
+       * Published On
+       * @description Date the source published the story
+       */
+      published_on: string | null;
+      published_precision: components["schemas"]["DatePrecision"];
+      /**
+       * Url
+       * @description Original article URL
+       */
+      url: string;
+    };
+    /** Video */
+    Video: {
+      /** Id */
+      id: string;
+      provider: components["schemas"]["VideoProvider"];
+      /** Title */
+      title: string | null;
+    };
+    /**
+     * VideoProvider
+     * @enum {string}
+     */
+    VideoProvider: "youtube";
   };
   responses: never;
   parameters: never;
@@ -97,6 +424,103 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  moderation_queue_api_v1_admin_comments_get: {
+    parameters: {
+      query?: {
+        status?: components["schemas"]["CommentStatus"];
+        /** @description Page size */
+        limit?: number;
+        /** @description Opaque cursor from `next_cursor` */
+        cursor?: string | null;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ModerationQueue"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  moderate_comment_api_v1_admin_comments__comment_id__moderate_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        comment_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ModerationRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CommentOut"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
   live_api_v1_health_live_get: {
     parameters: {
       query?: never;
@@ -178,6 +602,234 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["ReadinessResponse"];
+        };
+      };
+    };
+  };
+  list_news_api_v1_news_get: {
+    parameters: {
+      query?: {
+        /** @description Page size */
+        limit?: number;
+        /** @description Opaque cursor from `next_cursor` */
+        cursor?: string | null;
+        category?: components["schemas"]["NewsCategory"] | null;
+        region?: components["schemas"]["NewsRegion"] | null;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["NewsPage"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  get_news_api_v1_news__slug__get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        slug: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["NewsDetail"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  list_comments_api_v1_news__slug__comments_get: {
+    parameters: {
+      query?: {
+        /** @description Page size */
+        limit?: number;
+        /** @description Opaque cursor from `next_cursor` */
+        cursor?: string | null;
+      };
+      header?: never;
+      path: {
+        slug: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CommentPage"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  create_comment_api_v1_news__slug__comments_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        slug: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CommentCreate"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["CommentOut"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Too Many Requests */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
         };
       };
     };

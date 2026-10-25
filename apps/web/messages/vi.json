@@ -49,5 +49,96 @@
   },
   "Loading": {
     "label": "Đang tải nội dung"
+  },
+  "News": {
+    "title": "Tin tức Thị giác máy tính",
+    "lead": "Tin tức Computer Vision trong nước và quốc tế, được biên tập viên chọn lọc và tóm tắt bằng tiếng Việt. Mỗi bài đều dẫn về nguồn gốc.",
+    "emptyTitle": "Chưa có tin tức",
+    "emptyBody": "Tin tức đã được kiểm duyệt sẽ xuất hiện tại đây.",
+    "loadMore": "Xem thêm tin",
+    "backToList": "Tất cả tin tức",
+    "readOriginal": "Đọc bài gốc tại {source}",
+    "sourceLabel": "Nguồn",
+    "sourcePublished": "Ngày đăng gốc:",
+    "originalLanguage": "Bài gốc bằng {language}",
+    "languages": {
+      "vi": "tiếng Việt",
+      "en": "tiếng Anh",
+      "other": "ngôn ngữ khác"
+    },
+    "editorNote": "Ghi chú của biên tập viên",
+    "summaryNotice": "Đây là bản tóm tắt tiếng Việt do biên tập viên VietnamCV viết, không phải toàn văn bài gốc.",
+    "keywords": "Từ khóa",
+    "comments": "{count, plural, =0 {Chưa có bình luận} other {# bình luận}}",
+    "hasVideo": "Có video",
+    "video": {
+      "play": "Phát video: {title}",
+      "fallbackTitle": "Video liên quan",
+      "provider": "Video từ YouTube. Khi phát, YouTube có thể đặt cookie."
+    },
+    "regions": {
+      "vietnam": "Việt Nam",
+      "international": "Quốc tế"
+    },
+    "categories": {
+      "industrial": "Ứng dụng công nghiệp",
+      "medical-imaging": "Ảnh y tế",
+      "public-sector": "Ứng dụng công cộng",
+      "robotics": "Robot & tự hành",
+      "market": "Thị trường",
+      "models-open-source": "Mô hình & mã nguồn mở",
+      "edge-hardware": "Phần cứng & edge AI",
+      "research": "Nghiên cứu",
+      "datasets": "Bộ dữ liệu",
+      "events": "Sự kiện & cuộc thi",
+      "jobs": "Việc làm"
+    },
+    "latestTitle": "Tin mới",
+    "seeAll": "Xem tất cả tin tức"
+  },
+  "Comments": {
+    "title": "Bình luận",
+    "empty": "Chưa có bình luận nào. Hãy là người đầu tiên chia sẻ ý kiến.",
+    "loadOlder": "Xem bình luận cũ hơn",
+    "loadError": "Không tải được bình luận. Vui lòng thử lại sau.",
+    "anonymous": "Ẩn danh",
+    "guestBadge": "Khách",
+    "verifiedBadge": "Đã xác minh qua Google",
+    "member": "Thành viên",
+    "postAs": "Bình luận với tư cách",
+    "modes": {
+      "anonymous": "Ẩn danh",
+      "guest": "Đặt tên",
+      "account": "Tài khoản Google"
+    },
+    "modeHints": {
+      "anonymous": "Bình luận không hiện tên.",
+      "guest": "Tên bạn tự đặt, không được xác minh.",
+      "account": "Hiện tên và ảnh đại diện Google của bạn.",
+      "accountDisabled": "Đăng nhập Google chưa được bật trên trang này."
+    },
+    "nameLabel": "Tên hiển thị",
+    "namePlaceholder": "Ví dụ: Minh Anh",
+    "bodyLabel": "Nội dung bình luận",
+    "bodyPlaceholder": "Chia sẻ ý kiến, kinh nghiệm hoặc câu hỏi của bạn…",
+    "counter": "{count}/{max} ký tự",
+    "honeypot": "Để trống ô này",
+    "submit": "Gửi bình luận",
+    "submitting": "Đang gửi…",
+    "signIn": "Đăng nhập với Google",
+    "signOut": "Đăng xuất",
+    "signedInAs": "Đang đăng nhập: {name}",
+    "signInFailed": "Đăng nhập Google không thành công. Vui lòng thử lại.",
+    "rules": "Bình luận ẩn danh hoặc đặt tên có chứa liên kết sẽ chờ kiểm duyệt. Vui lòng tôn trọng người khác.",
+    "result": {
+      "published": "Đã đăng bình luận của bạn.",
+      "pending": "Bình luận đã được gửi và đang chờ kiểm duyệt vì có chứa liên kết.",
+      "rateLimited": "Bạn gửi bình luận quá nhanh. Vui lòng thử lại sau {minutes, plural, other {# phút}}.",
+      "duplicate": "Bạn vừa gửi bình luận này rồi.",
+      "reservedName": "Tên này được dành riêng. Vui lòng chọn tên khác.",
+      "invalid": "Bình luận cần từ 2 đến 2000 ký tự; tên hiển thị từ 2 đến 40 ký tự.",
+      "signInRequired": "Phiên đăng nhập Google đã hết hạn. Vui lòng đăng nhập lại.",
+      "error": "Không gửi được bình luận. Vui lòng thử lại sau."
+    }
   }
 }

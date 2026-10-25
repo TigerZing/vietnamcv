@@ -1,11 +1,12 @@
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Suspense } from "react";
 
 import { Link } from "@/i18n/navigation";
 
-import { LocaleSwitcher } from "./locale-switcher";
+import { LocaleSwitcher, LocaleSwitcherView } from "./locale-switcher";
 import { MobileNav } from "./mobile-nav";
-import { NavLinks } from "./nav-links";
+import { NavLinks, NavLinksView } from "./nav-links";
 
 export function SiteHeader() {
   const t = useTranslations();
@@ -17,7 +18,9 @@ export function SiteHeader() {
           {t("Common.siteName")}
         </Link>
         <nav aria-label={t("Nav.label")} className="hidden flex-1 md:block">
-          <NavLinks />
+          <Suspense fallback={<NavLinksView pathname={null} />}>
+            <NavLinks />
+          </Suspense>
         </nav>
         <div className="ml-auto flex items-center gap-1">
           <Link
@@ -27,7 +30,9 @@ export function SiteHeader() {
             <Search aria-hidden className="size-5" />
             <span className="sr-only">{t("Nav.search")}</span>
           </Link>
-          <LocaleSwitcher />
+          <Suspense fallback={<LocaleSwitcherView pathname="/" />}>
+            <LocaleSwitcher />
+          </Suspense>
           <MobileNav />
         </div>
       </div>

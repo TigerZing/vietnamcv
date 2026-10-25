@@ -1,6 +1,52 @@
+import { connection } from "next/server";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 
+import { NewsCard } from "@/components/news/news-card";
 import { EmptyState } from "@/components/states/empty-state";
+import { buttonVariants } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
+import { listNews } from "@/lib/news";
+
+async function LatestNews() {
+  await connection();
+  const t = await getTranslations();
+  const page = await listNews({ limit: 3 }).catch(() => null);
+  if (!page || page.items.length === 0) {
+    return (
+      <EmptyState
+        title={t("Home.emptyTitle")}
+        description={t("Home.emptyBody")}
+      />
+    );
+  }
+  return (
+    <section aria-labelledby="latest-news" className="flex flex-col gap-5">
+      <div className="flex items-end justify-between gap-4">
+        <h2 id="latest-news" className="text-xl font-semibold">
+          {t("News.latestTitle")}
+        </h2>
+        <Link
+          href="/news"
+          className={buttonVariants({
+            variant: "ghost",
+            className: "text-accent",
+          })}
+        >
+          {t("News.seeAll")}
+        </Link>
+      </div>
+      <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {page.items.map((item) => (
+          <li key={item.id} className="flex">
+            <NewsCard item={item} />
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 
 export default function HomePage() {
   const t = useTranslations("Home");
@@ -13,7 +59,9 @@ export default function HomePage() {
         </h1>
         <p className="max-w-2xl text-lg text-muted-foreground">{t("lead")}</p>
       </section>
-      <EmptyState title={t("emptyTitle")} description={t("emptyBody")} />
+      <Suspense fallback={<div className="h-80" aria-hidden />}>
+        <LatestNews />
+      </Suspense>
     </div>
   );
 }

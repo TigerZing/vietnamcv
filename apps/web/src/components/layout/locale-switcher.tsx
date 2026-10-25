@@ -7,9 +7,13 @@ import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 export function LocaleSwitcher() {
+  return <LocaleSwitcherView pathname={usePathname()} />;
+}
+
+/** Static-shell fallback links to each locale's home until the current path is known. */
+export function LocaleSwitcherView({ pathname }: { pathname: string }) {
   const t = useTranslations("LocaleSwitcher");
   const current = useLocale();
-  const pathname = usePathname();
 
   return (
     <nav aria-label={t("label")}>
