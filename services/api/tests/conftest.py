@@ -108,3 +108,35 @@ def migrated_database_url(database_url: str) -> str:
 @pytest.fixture
 def integration_settings(migrated_database_url: str, redis_url: str) -> Settings:
     return make_settings(migrated_database_url, redis_url)
+
+
+CONTENT_TABLES = (
+    "comments",
+    "users",
+    "news_items",
+    "content_sources",
+    "contents",
+    "sources",
+    "audit_events",
+    "outbox_events",
+)
+
+
+@pytest.fixture
+def clean_database(migrated_database_url: str, redis_url: str) -> str:
+    """Empty content tables and Redis before a test that writes them."""
+    import redis
+    from sqlalchemy import create_engine, text
+
+    engine = create_engine(migrated_database_url)
+    try:
+        with engine.begin() as connection:
+            connection.execute(text(f"TRUNCATE {', '.join(CONTENT_TABLES)} CASCADE"))
+    finally:
+        engine.dispose()
+    client = redis.Redis.from_url(redis_url)
+    try:
+        client.flushdb()
+    finally:
+        client.close()
+    return migrated_database_url

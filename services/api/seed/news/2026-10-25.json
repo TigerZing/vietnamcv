@@ -1,0 +1,352 @@
+{
+  "description": "Rows approved (Duyệt) in the news sheet 'Tin tức CV 2026-10-25', exported 2026-10-25. Videos are optional and chosen by the editor; the post text is the editor's Vietnamese summary, never the full article.",
+  "sources": [
+    {
+      "code": "vnexpress",
+      "name": "VnExpress",
+      "kind": "news_site",
+      "base_url": "https://vnexpress.net/"
+    },
+    {
+      "code": "cafef",
+      "name": "CafeF",
+      "kind": "news_site",
+      "base_url": "https://cafef.vn/"
+    },
+    {
+      "code": "globenewswire",
+      "name": "GlobeNewswire (Research and Markets)",
+      "kind": "press_release",
+      "base_url": "https://www.globenewswire.com/"
+    },
+    {
+      "code": "edge-ai-vision",
+      "name": "Edge AI and Vision Alliance",
+      "kind": "industry_site",
+      "base_url": "https://www.edge-ai-vision.com/"
+    },
+    {
+      "code": "mit-news",
+      "name": "MIT News",
+      "kind": "research_news",
+      "base_url": "https://news.mit.edu/"
+    },
+    {
+      "code": "rsip-vision",
+      "name": "RSIP Vision",
+      "kind": "magazine",
+      "base_url": "https://www.rsipvision.com/"
+    },
+    {
+      "code": "trybibby",
+      "name": "trybibby (tổng hợp)",
+      "kind": "aggregator",
+      "base_url": "https://trybibby.com/"
+    },
+    {
+      "code": "glassdoor",
+      "name": "Glassdoor",
+      "kind": "job_board",
+      "base_url": "https://www.glassdoor.com/"
+    }
+  ],
+  "items": [
+    {
+      "slug": "ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu",
+      "title": "AI Việt giải bài toán vận hành từ sản xuất đến dịch vụ",
+      "summary": "Ở vòng sơ khảo Âu Lạc Grand Prize 2026, đội ViCore dùng ảnh camera trên dây chuyền sản xuất thước đo, lấy ảnh sản phẩm đạt chuẩn làm mẫu để tìm vùng bất thường. Cách này phát hiện được cả lỗi hiếm mà nhà máy chưa có đủ ảnh để huấn luyện. Đội CMC Video Miner tìm đoạn video tư liệu bằng câu hỏi ngôn ngữ tự nhiên.",
+      "source": "vnexpress",
+      "external_id": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
+      "url": "https://vnexpress.net/ai-viet-giai-bai-toan-van-hanh-tu-san-xuat-den-dich-vu-5135641.html",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-23",
+      "published_precision": "day",
+      "region": "vietnam",
+      "category": "industrial",
+      "keywords": [
+        "kiểm tra lỗi",
+        "phát hiện bất thường",
+        "Âu Lạc Grand Prize"
+      ],
+      "original_language": "vi"
+    },
+    {
+      "slug": "giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd",
+      "title": "Loạt giải pháp AI y tế, nông nghiệp 'Made in Vietnam' tranh giải triệu USD",
+      "summary": "Pathology AI Lab phân tích ảnh tế bào học cổ tử cung, đánh dấu vùng nghi ngờ để bác sĩ kiểm tra và kết luận. EggVision phân tích tín hiệu ánh sáng xuyên qua trứng để dự đoán giới tính phôi từ khoảng ngày thứ 4 mà không cần chọc thủng trứng. Các đội tranh giải Âu Lạc Grand Prize (1 triệu USD, FPT tài trợ).",
+      "source": "vnexpress",
+      "external_id": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
+      "url": "https://vnexpress.net/loat-giai-phap-ai-y-te-nong-nghiep-made-in-vietnam-tranh-giai-trieu-usd-5135629.html",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-22",
+      "published_precision": "day",
+      "region": "vietnam",
+      "category": "medical-imaging",
+      "keywords": [
+        "tế bào học",
+        "sàng lọc ung thư cổ tử cung",
+        "soi trứng"
+      ],
+      "original_language": "vi"
+    },
+    {
+      "slug": "trien-lam-quoc-phong-2026-dung-ai-nhan-dien",
+      "title": "Triển lãm Quốc phòng 2026 dùng AI nhận diện, chuẩn bị hai trực thăng cấp cứu",
+      "summary": "Triển lãm Quốc phòng quốc tế Việt Nam 2026 (10-13/12, sân bay Gia Lâm) dùng hệ thống nhận diện khuôn mặt AI của Viettel đồng bộ với cổng kiểm soát. Khách đăng ký trực tuyến từ 15/11, nộp CCCD hoặc hộ chiếu kèm ảnh chân dung rõ mặt.",
+      "source": "cafef",
+      "external_id": "https://cafef.vn/trien-lam-quoc-phong-2026-dung-ai-nhan-dien-chuan-bi-hai-truc-thang-cap-cuu-188261020155528727.chn",
+      "url": "https://cafef.vn/trien-lam-quoc-phong-2026-dung-ai-nhan-dien-chuan-bi-hai-truc-thang-cap-cuu-188261020155528727.chn",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-20",
+      "published_precision": "day",
+      "region": "vietnam",
+      "category": "public-sector",
+      "keywords": [
+        "nhận diện khuôn mặt",
+        "Viettel",
+        "kiểm soát ra vào"
+      ],
+      "original_language": "vi"
+    },
+    {
+      "slug": "ai-dau-voi-con-nguoi-trong-cuoc-dua-drone-toc-do-cao",
+      "title": "AI đấu với con người trong cuộc đua drone tốc độ cao",
+      "summary": "Drone do AI điều khiển tự học bay và hoàn thành đường đua ở tốc độ trên 96 km/h, vượt qua các phi công hàng đầu.",
+      "source": "vnexpress",
+      "external_id": "https://vnexpress.net/ai-dau-voi-con-nguoi-trong-cuoc-dua-drone-toc-do-cao-5134728.html",
+      "url": "https://vnexpress.net/ai-dau-voi-con-nguoi-trong-cuoc-dua-drone-toc-do-cao-5134728.html",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-20",
+      "published_precision": "day",
+      "region": "international",
+      "category": "robotics",
+      "keywords": [
+        "drone",
+        "điều khiển tự động",
+        "thị giác cho robot"
+      ],
+      "original_language": "vi",
+      "video": {
+        "provider": "youtube",
+        "id": "dgz8oHogMNE",
+        "title": "AI Drone Defeats World Champion Drone Pilots"
+      }
+    },
+    {
+      "slug": "global-computer-vision-market-forecast-2026-2030",
+      "title": "Global Computer Vision Market Size, Share, Trends, and Forecast 2026-2030",
+      "summary": "Thị trường thị giác máy tính toàn cầu dự kiến tăng thêm 26,13 tỷ USD giai đoạn 2025-2030, tốc độ tăng trưởng kép 16,9%/năm. Động lực chính là giám sát an ninh, hệ thống tự hành trong sản xuất và logistics, và ảnh y tế. Thách thức gồm quyền riêng tư, chi phí hạ tầng và thiên lệch dữ liệu.",
+      "source": "globenewswire",
+      "external_id": "https://www.globenewswire.com/news-release/2026/10/23/3387357/28124/en/global-computer-vision-market-size-share-trends-and-forecast-2026-2030-edge-ai-autonomous-systems-and-medical-imaging-drive-16-9-cagr-and-26-13-billion-growth.html",
+      "url": "https://www.globenewswire.com/news-release/2026/10/23/3387357/28124/en/global-computer-vision-market-size-share-trends-and-forecast-2026-2030-edge-ai-autonomous-systems-and-medical-imaging-drive-16-9-cagr-and-26-13-billion-growth.html",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-23",
+      "published_precision": "day",
+      "region": "international",
+      "category": "market",
+      "keywords": [
+        "thị trường",
+        "edge AI",
+        "ảnh y tế"
+      ],
+      "original_language": "en"
+    },
+    {
+      "slug": "nvidia-isaac-platform-reference-humanoid",
+      "title": "NVIDIA Advances Isaac Platform for General-Purpose Robotics with New Reference Humanoid, Frameworks, Simulation Pipelines and Data",
+      "summary": "NVIDIA công bố Isaac Lab 3.0 (bản chính thức), Isaac OS mã nguồn mở và robot hình người tham chiếu Agile ONE SN có camera ở đầu và cổ tay, lidar, chạy Jetson Thor (dự kiến đầu 2027). Kèm bộ dữ liệu Human 1M gồm video ba góc nhìn đồng bộ và theo dõi bàn tay 3D trên Hugging Face.",
+      "source": "edge-ai-vision",
+      "external_id": "https://www.edge-ai-vision.com/2026/10/nvidia-advances-isaac-platform-for-general-purpose-robotics-with-new-reference-humanoid-frameworks-simulation-pipelines-and-data/",
+      "url": "https://www.edge-ai-vision.com/2026/10/nvidia-advances-isaac-platform-for-general-purpose-robotics-with-new-reference-humanoid-frameworks-simulation-pipelines-and-data/",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-22",
+      "published_precision": "day",
+      "region": "international",
+      "category": "robotics",
+      "keywords": [
+        "NVIDIA Isaac",
+        "humanoid",
+        "Human 1M",
+        "Jetson Thor"
+      ],
+      "original_language": "en",
+      "video": {
+        "provider": "youtube",
+        "id": "EaUlCfDYzxk",
+        "title": "NVIDIA Isaac Lab 3.0: The Ultimate Virtual Gym for AI Robots"
+      }
+    },
+    {
+      "slug": "nvidia-nemotron-3-5-super-vl-bolt",
+      "title": "Open From Data Center to Desktop: NVIDIA Expands Nemotron Family with Highest Efficiency Super VL and Bolt Models",
+      "summary": "NVIDIA phát hành Nemotron 3.5 Super VL, mô hình thị giác-ngôn ngữ 120 tỷ tham số với trọng số, dữ liệu và công thức huấn luyện mở. Mạnh về OCR, bảng, biểu đồ và tài liệu, dành cho tác tử AI. Có trên Hugging Face, OpenRouter và NVIDIA NIM, chạy được từ Jetson đến trung tâm dữ liệu.",
+      "source": "edge-ai-vision",
+      "external_id": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
+      "url": "https://www.edge-ai-vision.com/2026/10/open-from-data-center-to-desktop-nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-15",
+      "published_precision": "day",
+      "region": "international",
+      "category": "models-open-source",
+      "keywords": [
+        "VLM",
+        "Nemotron 3.5 Super VL",
+        "OCR",
+        "trọng số mở"
+      ],
+      "original_language": "en",
+      "video": {
+        "provider": "youtube",
+        "id": "hfUUT7gZz-0",
+        "title": "Introducing NVIDIA Nemotron 3.5 Super VL"
+      }
+    },
+    {
+      "slug": "synaptics-astra-sr200-edge-ai-mcu",
+      "title": "Synaptics Astra SR200 Series Redefines Edge AI with Vision, Voice and Display on a Single MCU with High-Density Custom DRAM",
+      "summary": "Dòng vi điều khiển Astra SR200 của Synaptics kết hợp Cortex-M85 và Cortex-M52, NPU Torq tới 400 GOPS và tối đa 256MB DRAM. Bản SR230 hỗ trợ một luồng thị giác, SR250 hỗ trợ hai luồng thị giác và hiển thị, nhắm tới camera kết nối và thị giác công nghiệp.",
+      "source": "edge-ai-vision",
+      "external_id": "https://www.edge-ai-vision.com/2026/10/synaptics-astra-sr200-series-redefines-edge-ai-with-vision-voice-and-display-on-a-single-mcu-with-high-density-custom-dram/",
+      "url": "https://www.edge-ai-vision.com/2026/10/synaptics-astra-sr200-series-redefines-edge-ai-with-vision-voice-and-display-on-a-single-mcu-with-high-density-custom-dram/",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-20",
+      "published_precision": "day",
+      "region": "international",
+      "category": "edge-hardware",
+      "keywords": [
+        "MCU",
+        "NPU",
+        "camera thông minh"
+      ],
+      "original_language": "en",
+      "video": {
+        "provider": "youtube",
+        "id": "lyvWKHxPMo8",
+        "title": "Hot Stuff: Synaptics Astra SR-Series MCU for Edge AI"
+      }
+    },
+    {
+      "slug": "mit-symmetry-ai-prenatal-diagnosis",
+      "title": "Why teaching AI about symmetry could make prenatal diagnosis more reliable",
+      "summary": "MIT, Bệnh viện Nhi Boston và Inria xây dựng E(3)-Pose, mô hình học sâu đưa tính đối xứng trái-phải của đầu thai nhi vào kiến trúc để theo dõi chuyển động khi chụp MRI. Mục tiêu là giảm lát cắt lệch, giúp phát hiện bất thường não sớm hơn và tránh phải chụp lại.",
+      "source": "mit-news",
+      "external_id": "https://news.mit.edu/2026/teaching-ai-about-symmetry-could-make-prenatal-diagnosis-more-reliable-1019",
+      "url": "https://news.mit.edu/2026/teaching-ai-about-symmetry-could-make-prenatal-diagnosis-more-reliable-1019",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-19",
+      "published_precision": "day",
+      "region": "international",
+      "category": "medical-imaging",
+      "keywords": [
+        "MRI thai nhi",
+        "E(3)-Pose",
+        "theo dõi tư thế"
+      ],
+      "original_language": "en",
+      "editor_note": "Bài không nêu số liệu định lượng"
+    },
+    {
+      "slug": "eyepop-ai-whitepaper-35-vision-platforms",
+      "title": "EyePop.ai Releases Whitepaper Comparing 35 AI Vision Platforms",
+      "summary": "Sách trắng của EyePop.ai đánh giá 35 nền tảng AI thị giác theo khoảng 12 tiêu chí (cách xây ứng dụng, nơi chạy, người dùng, khả năng mở rộng). Nhận định chính: khi VLM mạnh lên, khó khăn lớn hơn nằm ở việc xây và vận hành ứng dụng ổn định.",
+      "source": "edge-ai-vision",
+      "external_id": "https://www.edge-ai-vision.com/2026/10/eyepop-ai-releases-whitepaper-comparing-35-ai-vision-platforms/",
+      "url": "https://www.edge-ai-vision.com/2026/10/eyepop-ai-releases-whitepaper-comparing-35-ai-vision-platforms/",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-13",
+      "published_precision": "day",
+      "region": "international",
+      "category": "market",
+      "keywords": [
+        "nền tảng AI vision",
+        "VLM"
+      ],
+      "original_language": "en"
+    },
+    {
+      "slug": "eccv-2026-best-paper-heat-kernel-textures",
+      "title": "Computer Vision News - October 2026: ECCV 2026 Best Paper (Heat Kernel Textures)",
+      "summary": "Giải Best Paper ECCV 2026 thuộc về Heat Kernel Textures (Imperial College London). Phương pháp thay UV mapping bằng heat kernel dị hướng đặt trực tiếp trên bề mặt lưới 3D, không dùng mạng nơ-ron và tốn ít bộ nhớ hơn phần lớn phương pháp so sánh.",
+      "source": "rsip-vision",
+      "external_id": "https://www.rsipvision.com/ComputerVisionNews-2026October/#eccv-2026-best-paper",
+      "url": "https://www.rsipvision.com/ComputerVisionNews-2026October/",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-01",
+      "published_precision": "month",
+      "region": "international",
+      "category": "research",
+      "keywords": [
+        "ECCV 2026",
+        "best paper",
+        "texture 3D"
+      ],
+      "original_language": "en",
+      "editor_note": "Tạp chí số tháng 10, không có ngày cụ thể",
+      "video": {
+        "provider": "youtube",
+        "id": "FA0QSIK1tNU",
+        "title": "ECCV 2026 [Long Oral]. Heat Kernel Textures: the Geodesic Gaussians That Do Not Splat"
+      }
+    },
+    {
+      "slug": "feel-force-enhanced-egocentric-learning",
+      "title": "Computer Vision News - October 2026: FEEL (Force-Enhanced Egocentric Learning)",
+      "summary": "Nhóm Đại học Maryland ghép găng tay cảm biến lực với kính Meta Aria để thu lực tác động phía sau hành động. Bộ dữ liệu giúp phát hiện tiếp xúc không cần gán nhãn thủ công và cải thiện nhận dạng hành động. Cùng số báo có MIMFlow (Đại học Nam Kinh), FID 2,50 trên ImageNet 256x256.",
+      "source": "rsip-vision",
+      "external_id": "https://www.rsipvision.com/ComputerVisionNews-2026October/#feel",
+      "url": "https://www.rsipvision.com/ComputerVisionNews-2026October/",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-01",
+      "published_precision": "month",
+      "region": "international",
+      "category": "datasets",
+      "keywords": [
+        "egocentric",
+        "cảm biến lực",
+        "Meta Aria"
+      ],
+      "original_language": "en",
+      "editor_note": "Tạp chí số tháng 10, không có ngày cụ thể"
+    },
+    {
+      "slug": "cv-conference-deadlines-2026-2027",
+      "title": "CV Conference Deadlines 2026-2027: CVPR, ICCV",
+      "summary": "Hạn sắp tới: WACV 2027 nộp bản camera-ready 3/11/2026. CVPR 2027 (22-25/6/2027): đề xuất workshop 5/11, đăng ký bài 11/11, nộp toàn văn 17/11/2026. ICCV 2027 tại Hồng Kông, hạn nộp dự kiến đầu tháng 3/2027.",
+      "source": "trybibby",
+      "external_id": "https://trybibby.com/conference-deadlines/cv",
+      "url": "https://trybibby.com/conference-deadlines/cv",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-25",
+      "published_precision": "day",
+      "region": "international",
+      "category": "events",
+      "keywords": [
+        "CVPR 2027",
+        "WACV 2027",
+        "ICCV 2027",
+        "hạn nộp bài"
+      ],
+      "original_language": "en",
+      "editor_note": "Ngày đăng là ngày truy cập. Cần đối chiếu với trang chính thức của hội nghị"
+    },
+    {
+      "slug": "computer-vision-jobs-vietnam-october-2026",
+      "title": "198 computer vision Jobs in Vietnam, October 2026",
+      "summary": "Glassdoor ghi nhận 198 tin tuyển dụng computer vision tại Việt Nam trong tháng 10/2026.",
+      "source": "glassdoor",
+      "external_id": "https://www.glassdoor.com/Job/vietnam-computer-vision-jobs-SRCH_IL.0,7_IN251_KO8,23.htm",
+      "url": "https://www.glassdoor.com/Job/vietnam-computer-vision-jobs-SRCH_IL.0,7_IN251_KO8,23.htm",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-01",
+      "published_precision": "month",
+      "region": "vietnam",
+      "category": "jobs",
+      "keywords": [
+        "tuyển dụng",
+        "computer vision"
+      ],
+      "original_language": "en",
+      "editor_note": "Số liệu lấy từ tiêu đề kết quả tìm kiếm; trang không truy cập được để kiểm tra"
+    }
+  ]
+}

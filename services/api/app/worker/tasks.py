@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from functools import lru_cache
+from typing import Any
 
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -15,9 +16,15 @@ from app.worker.celery_app import celery_app
 
 logger = get_logger(__name__)
 
-# Event type -> handler. Feature modules register handlers here as they are built
-# (for example cache revalidation on ContentPublished in Sprint 1).
-OUTBOX_HANDLERS: Mapping[str, OutboxHandler] = {}
+
+def _log_content_published(payload: Mapping[str, Any]) -> None:
+    # Web pages read news at request time, so there is no cache to revalidate yet. When
+    # pages become cached, this handler triggers on-demand revalidation instead.
+    logger.info("content_published", **{key: str(value) for key, value in payload.items()})
+
+
+# Event type -> handler. Feature modules register handlers here as they are built.
+OUTBOX_HANDLERS: Mapping[str, OutboxHandler] = {"ContentPublished": _log_content_published}
 
 
 @lru_cache(maxsize=1)

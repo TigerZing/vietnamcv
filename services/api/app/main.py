@@ -15,6 +15,7 @@ from app.core.db import create_async_db_engine, create_async_session_factory
 from app.core.errors import register_exception_handlers
 from app.core.logging import configure_logging, get_logger
 from app.core.middleware import RequestContextMiddleware
+from app.core.security import GoogleIdTokenVerifier
 
 logger = get_logger(__name__)
 
@@ -52,6 +53,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         lifespan=lifespan,
     )
     app.state.settings = settings
+    app.state.id_token_verifier = (
+        GoogleIdTokenVerifier(settings.google_oauth_client_id)
+        if settings.google_oauth_client_id
+        else None
+    )
 
     if settings.cors_allowed_origins:
         app.add_middleware(

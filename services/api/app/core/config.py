@@ -15,11 +15,14 @@ from pydantic import (
     Field,
     PostgresDsn,
     RedisDsn,
+    SecretStr,
     ValidationError,
     field_validator,
     model_validator,
 )
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
+
+_LOCAL_FINGERPRINT_SECRET = "local-only-fingerprint-secret"  # noqa: S105 - placeholder
 
 
 class Environment(StrEnum):
@@ -59,6 +62,14 @@ class Settings(BaseSettings):
     # Development-only identity switch. Never enabled outside local/test (validated below).
     dev_auth_enabled: bool = False
 
+    # Google sign-in (ADR-009). The API only verifies ID tokens, so it needs the OAuth client
+    # ID (the token audience) and never the client secret. Unset disables Google sign-in.
+    google_oauth_client_id: str | None = None
+
+    # Keys the HMAC that turns client IP addresses into rate-limit and abuse fingerprints,
+    # so raw IPs are never stored. Must be a real secret outside local/test.
+    client_fingerprint_secret: SecretStr = SecretStr(_LOCAL_FINGERPRINT_SECRET)
+
     @field_validator("database_url", mode="before")
     @classmethod
     def _use_psycopg_driver(cls, value: object) -> object:
@@ -80,6 +91,11 @@ class Settings(BaseSettings):
     def _guard_deployed_environments(self) -> Self:
         if self.environment.is_deployed and self.dev_auth_enabled:
             raise ValueError("DEV_AUTH_ENABLED must be false in staging and production")
+        if (
+            self.environment.is_deployed
+            and self.client_fingerprint_secret.get_secret_value() == _LOCAL_FINGERPRINT_SECRET
+        ):
+            raise ValueError("CLIENT_FINGERPRINT_SECRET must be set in staging and production")
         return self
 
     @property

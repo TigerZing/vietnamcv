@@ -1,0 +1,54 @@
+{
+  "description": "Test fixture: three posts from two sources. Not real news.",
+  "sources": [
+    {"code": "demo-news", "name": "Demo News", "kind": "news_site", "base_url": "https://news.example/"},
+    {"code": "demo-lab", "name": "Demo Lab", "kind": "research_news", "base_url": "https://lab.example/"}
+  ],
+  "items": [
+    {
+      "slug": "older-post",
+      "title": "Older post",
+      "summary": "Tóm tắt bài cũ.",
+      "source": "demo-news",
+      "external_id": "https://news.example/older",
+      "url": "https://news.example/older",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-01",
+      "published_precision": "month",
+      "region": "vietnam",
+      "category": "industrial",
+      "keywords": ["kiểm tra lỗi"],
+      "original_language": "vi",
+      "editor_note": "Chỉ có tháng, không có ngày."
+    },
+    {
+      "slug": "video-post",
+      "title": "Post with a video",
+      "summary": "Tóm tắt có video.",
+      "source": "demo-lab",
+      "external_id": "lab-1",
+      "url": "https://lab.example/1",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-20",
+      "region": "international",
+      "category": "research",
+      "keywords": [],
+      "original_language": "en",
+      "video": {"provider": "youtube", "id": "abcdefghijk", "title": "Demo video"}
+    },
+    {
+      "slug": "newest-post",
+      "title": "Newest post",
+      "summary": "Tóm tắt bài mới nhất.",
+      "source": "demo-news",
+      "external_id": "https://news.example/newest",
+      "url": "https://news.example/newest",
+      "collected_on": "2026-10-25",
+      "published_on": "2026-10-24",
+      "region": "international",
+      "category": "robotics",
+      "keywords": ["drone"],
+      "original_language": "en"
+    }
+  ]
+}
