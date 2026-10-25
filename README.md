@@ -58,6 +58,10 @@ which it starts if needed) and Compose v2 are available, creates `.env` if missi
 that ports 3000/8000/5432/6379 are free, starts the stack and prints the URLs. Add `--open`
 to open the site; `scripts/run.sh down`, `logs` and `status` do what they say.
 
+The containers run the code baked into their images, so new commits need a rebuild.
+`scripts/run.sh update` pulls, rebuilds only the images whose inputs changed (API, web, or
+none for docs-only commits) and restarts them; migrations and the news import re-run.
+
 ### Running services on the host
 
 For faster feedback, run only the databases in Docker and the apps locally:

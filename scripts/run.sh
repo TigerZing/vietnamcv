@@ -3,6 +3,7 @@
 #
 #   scripts/run.sh            check prerequisites, build and start everything, print URLs
 #   scripts/run.sh --open     same, then open the site in the browser
+#   scripts/run.sh update     git pull, then rebuild and restart only what the new commits change
 #   scripts/run.sh down       stop the stack (keeps database volumes)
 #   scripts/run.sh logs       follow logs from all services
 #   scripts/run.sh status     show container status
@@ -32,7 +33,7 @@ die() {
   exit 1
 }
 
-usage() { sed -n '2,11p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,12p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
 compose() {
   if [ -f "$ENV_FILE" ]; then
@@ -114,12 +115,7 @@ up() {
   wait_for "$API_URL/api/v1/health/ready" "API"
   wait_for "$WEB_URL/vi" "Web"
 
-  printf '\n%sVietnamCV is running%s\n' "$BOLD" "$RESET"
-  printf '  Web:       %s/vi\n' "$WEB_URL"
-  printf '  News:      %s/vi/news\n' "$WEB_URL"
-  printf '  API docs:  %s/api/v1/docs\n' "$API_URL"
-  printf '  Readiness: %s/api/v1/health/ready\n' "$API_URL"
-  printf '\nLogs: scripts/run.sh logs    Stop: scripts/run.sh down\n'
+  print_urls
 
   if [ "$open_browser" = "yes" ]; then
     if command -v open >/dev/null 2>&1; then
@@ -130,6 +126,79 @@ up() {
   fi
 }
 
+print_urls() {
+  printf '\n%sVietnamCV is running%s\n' "$BOLD" "$RESET"
+  printf '  Web:       %s/vi\n' "$WEB_URL"
+  printf '  News:      %s/vi/news\n' "$WEB_URL"
+  printf '  API docs:  %s/api/v1/docs\n' "$API_URL"
+  printf '  Readiness: %s/api/v1/health/ready\n' "$API_URL"
+  printf '\nLogs: scripts/run.sh logs    Stop: scripts/run.sh down\n'
+}
+
+# The images bake the code in (no bind mounts), so pulled code only shows up after a
+# rebuild. Rebuild just the images whose build inputs changed; `compose up` then
+# recreates their containers and re-runs migrate and seed (both idempotent).
+update() {
+  local before after changed api="no" web="no" stack="no" seed="no" migrations="no" file
+  local -a services=()
+
+  command -v git >/dev/null 2>&1 || die "git not found"
+  before="$(git rev-parse HEAD)"
+  info "Pulling the latest code"
+  git pull --ff-only || die "git pull failed. Commit or stash local changes (git status), then retry."
+  after="$(git rev-parse HEAD)"
+
+  check_docker
+  check_env
+
+  if [ -z "$(compose ps --status running --quiet 2>/dev/null || true)" ]; then
+    info "The stack is not running; starting it"
+    up "no"
+    return
+  fi
+
+  if [ "$before" = "$after" ]; then
+    ok "Already up to date ($(git rev-parse --short HEAD)); nothing to rebuild"
+    return
+  fi
+
+  changed="$(git diff --name-only "$before" "$after")"
+  while IFS= read -r file; do
+    case "$file" in
+      services/api/seed/*) api="yes" seed="yes" ;;
+      services/api/alembic/*) api="yes" migrations="yes" ;;
+      services/api/* | infra/docker/api.Dockerfile) api="yes" ;;
+      apps/web/* | packages/* | package.json | pnpm-lock.yaml | pnpm-workspace.yaml | \
+        infra/docker/web.Dockerfile) web="yes" ;;
+      infra/compose/* | .dockerignore) stack="yes" ;;
+    esac
+  done <<EOF_CHANGED
+$changed
+EOF_CHANGED
+
+  [ "$api" = "yes" ] && services+=(api)
+  [ "$web" = "yes" ] && services+=(web)
+
+  if [ "${#services[@]}" -eq 0 ] && [ "$stack" = "no" ]; then
+    ok "Pulled $(git rev-parse --short "$before")..$(git rev-parse --short "$after"): no app changes, nothing to rebuild"
+    return
+  fi
+
+  if [ "${#services[@]}" -gt 0 ]; then
+    info "Rebuilding: ${services[*]}"
+    compose build "${services[@]}" || die "Build failed (see output above)"
+  fi
+  [ "$migrations" = "yes" ] && info "New migrations will be applied"
+  [ "$seed" = "yes" ] && info "News seed data changed; it will be re-imported"
+
+  info "Restarting changed services"
+  compose up --detach --wait ||
+    die "Restarting the stack failed (a service is unhealthy: scripts/run.sh status)"
+  wait_for "$API_URL/api/v1/health/ready" "API"
+  wait_for "$WEB_URL/vi" "Web"
+  print_urls
+}
+
 main() {
   cd "$ROOT_DIR"
   local cmd="up" open_browser="no" arg
@@ -137,6 +206,7 @@ main() {
     case "$arg" in
       up | start) cmd="up" ;;
       down | stop) cmd="down" ;;
+      update | pull) cmd="update" ;;
       logs) cmd="logs" ;;
       status | ps) cmd="status" ;;
       --open | -o) open_browser="yes" ;;
@@ -153,6 +223,7 @@ main() {
 
   case "$cmd" in
     up) up "$open_browser" ;;
+    update) update ;;
     down)
       compose down
       ok "Stack stopped (database volumes kept)"
@@ -162,4 +233,5 @@ main() {
   esac
 }
 
-main "$@"
+# One line, so bash has parsed it before `update` lets git pull rewrite this file.
+main "$@"; exit $?
