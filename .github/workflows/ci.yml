@@ -62,7 +62,7 @@ jobs:
         run: uv run lint-imports
       - name: Tests (unit + integration on PostgreSQL 17 and Redis 7)
         run: uv run pytest --cov --cov-report=term --cov-report=xml
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: api-coverage
@@ -99,7 +99,7 @@ jobs:
         run: pnpm --filter @vietnamcv/web exec playwright install --with-deps chromium
       - name: End-to-end tests (360px + desktop, axe)
         run: pnpm --filter @vietnamcv/web e2e
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-report
