@@ -72,6 +72,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/media/{media_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get a stored image used by published content */
+    get: operations["get_media_api_v1_media__media_id__get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/news": {
     parameters: {
       query?: never;
@@ -222,6 +239,52 @@ export interface components {
     ErrorEnvelope: {
       error: components["schemas"]["ErrorBody"];
     };
+    /** Image */
+    Image: {
+      /** Alt */
+      alt: string;
+      /** Caption */
+      caption: string | null;
+      /** Credit */
+      credit: string;
+      /** Credit Url */
+      credit_url: string | null;
+      /** Height */
+      height: number;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      rights: components["schemas"]["ImageRights"];
+      /**
+       * Url
+       * @description Path of the image bytes on this API
+       */
+      url: string;
+      /** Width */
+      width: number;
+    };
+    /**
+     * ImageRights
+     * @description Whether VietnamCV may show an image in public (ADR-010).
+     * @enum {string}
+     */
+    ImageRights: "own" | "licensed" | "permission_pending";
+    /** Link */
+    Link: {
+      kind: components["schemas"]["LinkKind"];
+      /** Label */
+      label: string;
+      /** Url */
+      url: string;
+    };
+    /**
+     * LinkKind
+     * @description A related link shown at the end of a post, after the source.
+     * @enum {string}
+     */
+    LinkKind: "official" | "paper" | "code" | "dataset" | "model" | "reference";
     /** LivenessResponse */
     LivenessResponse: {
       /**
@@ -267,6 +330,13 @@ export interface components {
       | "jobs";
     /** NewsDetail */
     NewsDetail: {
+      /** Ai Assisted */
+      ai_assisted: boolean;
+      /**
+       * Body
+       * @description Post text: paragraphs split by blank lines, "## " headings, "- " items
+       */
+      body: string | null;
       category: components["schemas"]["NewsCategory"];
       /** Comment Count */
       comment_count: number;
@@ -282,12 +352,20 @@ export interface components {
        * Format: uuid
        */
       id: string;
+      image: components["schemas"]["Image"] | null;
       /** Keywords */
       keywords: string[];
-      /** Language */
-      language: string;
+      /** @description Language of title, summary and body; Vietnamese when no translation */
+      language: components["schemas"]["TextLanguage"];
+      /** Links */
+      links: components["schemas"]["Link"][];
       /** Original Language */
       original_language: string;
+      /**
+       * Original Title
+       * @description Title as the source published it
+       */
+      original_title: string;
       /**
        * Published At
        * Format: date-time
@@ -299,7 +377,10 @@ export interface components {
       source: components["schemas"]["SourceRef"];
       /** Summary */
       summary: string;
-      /** Title */
+      /**
+       * Title
+       * @description Title in the returned language
+       */
       title: string;
       video: components["schemas"]["Video"] | null;
     };
@@ -320,6 +401,8 @@ export interface components {
      * @description A news card.
      */
     NewsSummary: {
+      /** Ai Assisted */
+      ai_assisted: boolean;
       category: components["schemas"]["NewsCategory"];
       /** Comment Count */
       comment_count: number;
@@ -328,10 +411,16 @@ export interface components {
        * Format: uuid
        */
       id: string;
+      image: components["schemas"]["Image"] | null;
       /** Keywords */
       keywords: string[];
-      /** Language */
-      language: string;
+      /** @description Language of title, summary and body; Vietnamese when no translation */
+      language: components["schemas"]["TextLanguage"];
+      /**
+       * Original Title
+       * @description Title as the source published it
+       */
+      original_title: string;
       /**
        * Published At
        * Format: date-time
@@ -343,7 +432,10 @@ export interface components {
       source: components["schemas"]["SourceRef"];
       /** Summary */
       summary: string;
-      /** Title */
+      /**
+       * Title
+       * @description Title in the returned language
+       */
       title: string;
       video: components["schemas"]["Video"] | null;
     };
@@ -402,6 +494,12 @@ export interface components {
        */
       url: string;
     };
+    /**
+     * TextLanguage
+     * @description Languages VietnamCV publishes its own text in (ADR-008). Vietnamese is the source.
+     * @enum {string}
+     */
+    TextLanguage: "vi" | "en";
     /** Video */
     Video: {
       /** Id */
@@ -606,6 +704,55 @@ export interface operations {
       };
     };
   };
+  get_media_api_v1_media__media_id__get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        media_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Image bytes */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "image/webp": unknown;
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
   list_news_api_v1_news_get: {
     parameters: {
       query?: {
@@ -615,6 +762,8 @@ export interface operations {
         cursor?: string | null;
         category?: components["schemas"]["NewsCategory"] | null;
         region?: components["schemas"]["NewsRegion"] | null;
+        /** @description Language of title, summary and body; falls back to Vietnamese */
+        lang?: components["schemas"]["TextLanguage"];
       };
       header?: never;
       path?: never;
@@ -653,7 +802,10 @@ export interface operations {
   };
   get_news_api_v1_news__slug__get: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Language of title, summary and body; falls back to Vietnamese */
+        lang?: components["schemas"]["TextLanguage"];
+      };
       header?: never;
       path: {
         slug: string;

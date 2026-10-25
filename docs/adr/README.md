@@ -11,6 +11,7 @@
 | [007](007-hosting-and-data-residency.md) | Hosting and data residency | Proposed |
 | [008](008-internationalization.md) | Internationalization (Vietnamese / English) | Accepted |
 | [009](009-google-sign-in-and-comments.md) | Google sign-in and comments on news posts | Accepted |
+| [010](010-post-text-images-and-rights.md) | Post text, stored images and image rights | Accepted |
 
 New ADRs copy the structure below: Context, Decision, Consequences. An ADR that changes a
 spec says which spec section it overrides.

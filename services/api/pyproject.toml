@@ -16,13 +16,14 @@ dependencies = [
     "structlog==26.1.0",
     "uvicorn[standard]==0.54.0",
     "pyjwt[crypto]==2.15.1",
+    "httpx==0.28.1",
+    "pillow==13.0.0",
 ]
 
 [dependency-groups]
 dev = [
     "asgi-lifespan==2.1.0",
     "celery-types==0.26.0",
-    "httpx==0.28.1",
     "hypothesis==6.170.9",
     "import-linter==2.15",
     "mypy==2.4.0",

@@ -232,6 +232,119 @@
         "title": "ErrorEnvelope",
         "type": "object"
       },
+      "Image": {
+        "properties": {
+          "alt": {
+            "title": "Alt",
+            "type": "string"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caption"
+          },
+          "credit": {
+            "title": "Credit",
+            "type": "string"
+          },
+          "credit_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Credit Url"
+          },
+          "height": {
+            "title": "Height",
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "rights": {
+            "$ref": "#/components/schemas/ImageRights"
+          },
+          "url": {
+            "description": "Path of the image bytes on this API",
+            "title": "Url",
+            "type": "string"
+          },
+          "width": {
+            "title": "Width",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "url",
+          "width",
+          "height",
+          "alt",
+          "caption",
+          "credit",
+          "credit_url",
+          "rights"
+        ],
+        "title": "Image",
+        "type": "object"
+      },
+      "ImageRights": {
+        "description": "Whether VietnamCV may show an image in public (ADR-010).",
+        "enum": [
+          "own",
+          "licensed",
+          "permission_pending"
+        ],
+        "title": "ImageRights",
+        "type": "string"
+      },
+      "Link": {
+        "properties": {
+          "kind": {
+            "$ref": "#/components/schemas/LinkKind"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "label",
+          "url"
+        ],
+        "title": "Link",
+        "type": "object"
+      },
+      "LinkKind": {
+        "description": "A related link shown at the end of a post, after the source.",
+        "enum": [
+          "official",
+          "paper",
+          "code",
+          "dataset",
+          "model",
+          "reference"
+        ],
+        "title": "LinkKind",
+        "type": "string"
+      },
       "LivenessResponse": {
         "properties": {
           "status": {
@@ -324,6 +437,22 @@
       },
       "NewsDetail": {
         "properties": {
+          "ai_assisted": {
+            "title": "Ai Assisted",
+            "type": "boolean"
+          },
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Post text: paragraphs split by blank lines, \"## \" headings, \"- \" items",
+            "title": "Body"
+          },
           "category": {
             "$ref": "#/components/schemas/NewsCategory"
           },
@@ -352,6 +481,16 @@
             "title": "Id",
             "type": "string"
           },
+          "image": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Image"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "keywords": {
             "items": {
               "type": "string"
@@ -360,11 +499,23 @@
             "type": "array"
           },
           "language": {
-            "title": "Language",
-            "type": "string"
+            "$ref": "#/components/schemas/TextLanguage",
+            "description": "Language of title, summary and body; Vietnamese when no translation"
+          },
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            },
+            "title": "Links",
+            "type": "array"
           },
           "original_language": {
             "title": "Original Language",
+            "type": "string"
+          },
+          "original_title": {
+            "description": "Title as the source published it",
+            "title": "Original Title",
             "type": "string"
           },
           "published_at": {
@@ -387,6 +538,7 @@
             "type": "string"
           },
           "title": {
+            "description": "Title in the returned language",
             "title": "Title",
             "type": "string"
           },
@@ -405,6 +557,7 @@
           "id",
           "slug",
           "title",
+          "original_title",
           "summary",
           "language",
           "category",
@@ -413,7 +566,11 @@
           "published_at",
           "source",
           "video",
+          "image",
+          "ai_assisted",
           "comment_count",
+          "body",
+          "links",
           "original_language",
           "editor_note",
           "fetched_at"
@@ -460,6 +617,10 @@
       "NewsSummary": {
         "description": "A news card.",
         "properties": {
+          "ai_assisted": {
+            "title": "Ai Assisted",
+            "type": "boolean"
+          },
           "category": {
             "$ref": "#/components/schemas/NewsCategory"
           },
@@ -472,6 +633,16 @@
             "title": "Id",
             "type": "string"
           },
+          "image": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Image"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "keywords": {
             "items": {
               "type": "string"
@@ -480,7 +651,12 @@
             "type": "array"
           },
           "language": {
-            "title": "Language",
+            "$ref": "#/components/schemas/TextLanguage",
+            "description": "Language of title, summary and body; Vietnamese when no translation"
+          },
+          "original_title": {
+            "description": "Title as the source published it",
+            "title": "Original Title",
             "type": "string"
           },
           "published_at": {
@@ -503,6 +679,7 @@
             "type": "string"
           },
           "title": {
+            "description": "Title in the returned language",
             "title": "Title",
             "type": "string"
           },
@@ -521,6 +698,7 @@
           "id",
           "slug",
           "title",
+          "original_title",
           "summary",
           "language",
           "category",
@@ -529,6 +707,8 @@
           "published_at",
           "source",
           "video",
+          "image",
+          "ai_assisted",
           "comment_count"
         ],
         "title": "NewsSummary",
@@ -643,6 +823,15 @@
         ],
         "title": "SourceRef",
         "type": "object"
+      },
+      "TextLanguage": {
+        "description": "Languages VietnamCV publishes its own text in (ADR-008). Vietnamese is the source.",
+        "enum": [
+          "vi",
+          "en"
+        ],
+        "title": "TextLanguage",
+        "type": "string"
       },
       "Video": {
         "properties": {
@@ -939,6 +1128,65 @@
         ]
       }
     },
+    "/api/v1/media/{media_id}": {
+      "get": {
+        "operationId": "get_media_api_v1_media__media_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "media_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Media Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/webp": {}
+            },
+            "description": "Image bytes"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal error"
+          }
+        },
+        "summary": "Get a stored image used by published content",
+        "tags": [
+          "media"
+        ]
+      }
+    },
     "/api/v1/news": {
       "get": {
         "operationId": "list_news_api_v1_news_get",
@@ -1007,6 +1255,17 @@
               ],
               "title": "Region"
             }
+          },
+          {
+            "description": "Language of title, summary and body; falls back to Vietnamese",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/TextLanguage",
+              "default": "vi",
+              "description": "Language of title, summary and body; falls back to Vietnamese"
+            }
           }
         ],
         "responses": {
@@ -1060,6 +1319,17 @@
               "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
               "title": "Slug",
               "type": "string"
+            }
+          },
+          {
+            "description": "Language of title, summary and body; falls back to Vietnamese",
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/TextLanguage",
+              "default": "vi",
+              "description": "Language of title, summary and body; falls back to Vietnamese"
             }
           }
         ],

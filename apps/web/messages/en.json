@@ -52,7 +52,7 @@
   },
   "News": {
     "title": "Computer Vision news",
-    "lead": "Computer Vision news from Vietnam and around the world, selected by editors and summarised in Vietnamese. Every post links to its source.",
+    "lead": "Computer vision news from Vietnam and around the world, selected and rewritten by VietnamCV. Every post links to its source.",
     "emptyTitle": "No news yet",
     "emptyBody": "Reviewed news will appear here.",
     "loadMore": "More news",
@@ -67,7 +67,7 @@
       "other": "another language"
     },
     "editorNote": "Editor's note",
-    "summaryNotice": "This is a Vietnamese summary written by VietnamCV editors, not the full original article.",
+    "summaryNotice": "This is a summary written by VietnamCV, not the full original article.",
     "keywords": "Keywords",
     "comments": "{count, plural, =0 {No comments} one {# comment} other {# comments}}",
     "hasVideo": "Video",
@@ -94,7 +94,28 @@
       "jobs": "Jobs"
     },
     "latestTitle": "Latest news",
-    "seeAll": "See all news"
+    "seeAll": "See all news",
+    "aiNotice": "Written by VietnamCV from the source with AI assistance, not the full original article. If you spot a mistake, tell us in the comments.",
+    "notTranslated": "This post is not available in English yet; showing the Vietnamese version.",
+    "imageCredit": "Image:",
+    "sourcesTitle": "Source and links",
+    "originalTitle": "Original title",
+    "relatedLinks": "Related links",
+    "linkKinds": {
+      "official": "Official",
+      "paper": "Paper",
+      "code": "Code",
+      "dataset": "Dataset",
+      "model": "Model",
+      "reference": "Reference"
+    },
+    "view": {
+      "label": "Layout",
+      "list": "List",
+      "grid": "Cards",
+      "columns": "Columns",
+      "columnsOption": "{count, plural, one {# column} other {# columns}}"
+    }
   },
   "Comments": {
     "title": "Comments",

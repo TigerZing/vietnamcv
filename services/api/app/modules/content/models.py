@@ -12,6 +12,7 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     Index,
+    Integer,
     String,
     Text,
     UniqueConstraint,
@@ -40,6 +41,43 @@ class DatePrecision(StrEnum):
 
     DAY = "day"
     MONTH = "month"
+
+
+class ImageRights(StrEnum):
+    """Whether VietnamCV may show an image in public (ADR-010)."""
+
+    # Made by or for VietnamCV.
+    OWN = "own"
+    # The rights holder allowed this use, or the image's licence does.
+    LICENSED = "licensed"
+    # Taken from the source with credit; permission not yet obtained. Hidden when deployed.
+    PERMISSION_PENDING = "permission_pending"
+
+
+class TextLanguage(StrEnum):
+    """Languages VietnamCV publishes its own text in (ADR-008). Vietnamese is the source."""
+
+    VI = "vi"
+    EN = "en"
+
+
+class MediaRole(StrEnum):
+    ILLUSTRATION = "illustration"
+
+
+class LinkKind(StrEnum):
+    """A related link shown at the end of a post, after the source."""
+
+    OFFICIAL = "official"
+    PAPER = "paper"
+    CODE = "code"
+    DATASET = "dataset"
+    MODEL = "model"
+    REFERENCE = "reference"
+
+
+def _in(column: str, values: type[StrEnum]) -> str:
+    return f"{column} IN ({', '.join(repr(member.value) for member in values)})"
 
 
 class Source(UUIDPrimaryKeyMixin, Base):
@@ -75,7 +113,7 @@ class Content(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     slug: Mapped[str] = mapped_column(String(200), nullable=False, unique=True)
     # Original title, preserved as published by the source (English titles stay English).
     title: Mapped[str] = mapped_column(String(500), nullable=False)
-    # Short Vietnamese text shown on cards and as the post body for curated news.
+    # Short Vietnamese text; localized versions live in content_translations.
     summary: Mapped[str] = mapped_column(Text, nullable=False)
     language: Mapped[str] = mapped_column(String(8), nullable=False)
     status: Mapped[str] = mapped_column(
@@ -112,3 +150,73 @@ class ContentSource(UUIDPrimaryKeyMixin, Base):
 
     content: Mapped[Content] = relationship(back_populates="sources", lazy="raise")
     source: Mapped[Source] = relationship(lazy="raise")
+
+
+class ContentMedia(UUIDPrimaryKeyMixin, Base):
+    """An image used by a content, with the credit and rights of that use."""
+
+    __tablename__ = "content_media"
+    __table_args__ = (
+        UniqueConstraint("content_id", "role", "position"),
+        CheckConstraint(_in("role", MediaRole), name="role"),
+        CheckConstraint(_in("rights", ImageRights), name="rights"),
+        CheckConstraint("position >= 0", name="position"),
+    )
+
+    content_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid, ForeignKey("contents.id", ondelete="CASCADE"), nullable=False
+    )
+    media_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid, ForeignKey("media_assets.id", ondelete="RESTRICT"), nullable=False, index=True
+    )
+    role: Mapped[str] = mapped_column(String(32), nullable=False)
+    position: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
+    alt_text: Mapped[str] = mapped_column(String(500), nullable=False)
+    caption: Mapped[str | None] = mapped_column(Text)
+    # Who made the image, as shown under it (for example "Ảnh: VnExpress").
+    credit: Mapped[str] = mapped_column(String(300), nullable=False)
+    # Page the image was taken from, linked from the credit.
+    credit_url: Mapped[str | None] = mapped_column(String(2000))
+    rights: Mapped[str] = mapped_column(String(32), nullable=False)
+
+
+class ContentLink(UUIDPrimaryKeyMixin, Base):
+    """A related link (paper, code, dataset, official page) listed after the source."""
+
+    __tablename__ = "content_links"
+    __table_args__ = (
+        UniqueConstraint("content_id", "position"),
+        CheckConstraint(_in("kind", LinkKind), name="kind"),
+        CheckConstraint("position >= 0", name="position"),
+    )
+
+    content_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid, ForeignKey("contents.id", ondelete="CASCADE"), nullable=False
+    )
+    position: Mapped[int] = mapped_column(Integer, nullable=False)
+    kind: Mapped[str] = mapped_column(String(32), nullable=False)
+    label: Mapped[str] = mapped_column(String(300), nullable=False)
+    url: Mapped[str] = mapped_column(String(2000), nullable=False)
+
+
+class ContentTranslation(UUIDPrimaryKeyMixin, Base):
+    """VietnamCV's own title, summary and article text in one language.
+
+    The text is written by VietnamCV from the source, never the source's full text
+    (specs/05-INGESTION.md). ``body`` is plain text: paragraphs separated by blank lines,
+    "## " headings and "- " list items.
+    """
+
+    __tablename__ = "content_translations"
+    __table_args__ = (
+        UniqueConstraint("content_id", "language"),
+        CheckConstraint(_in("language", TextLanguage), name="language"),
+    )
+
+    content_id: Mapped[uuid.UUID] = mapped_column(
+        Uuid, ForeignKey("contents.id", ondelete="CASCADE"), nullable=False
+    )
+    language: Mapped[str] = mapped_column(String(8), nullable=False)
+    title: Mapped[str] = mapped_column(String(500), nullable=False)
+    summary: Mapped[str] = mapped_column(Text, nullable=False)
+    body: Mapped[str | None] = mapped_column(Text)

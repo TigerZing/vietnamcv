@@ -27,11 +27,13 @@ started. See the plan for tasks S1-01 … S1-10.
 
 | Task ID | Status | PR/Commit | Tests | Risks | Next action |
 | --- | --- | --- | --- | --- | --- |
-| NEWS-01 Content core subset (sources, contents, content_sources, news_items, audit_events) and `PublishService` | Review | this branch | `test_news.py`, migration round trip and drift | `news_items.category` is a fixed list until taxonomy (S1) replaces it | Map categories to taxonomy nodes in S1 |
-| NEWS-02 Curated news import (14 approved sheet rows, 5 with video) | Review | this branch | `test_committed_seed_files_import`, idempotency test | Videos were chosen from search results by title; editor should confirm each | Editor review of `seed/news/2026-10-25.json` |
-| NEWS-03 News list and post pages (video, provenance, editor note) | Review | this branch | `news.spec.ts` at 360px + desktop with axe | Pages render at request time (not cached) | Cache with tag revalidation via the outbox handler |
-| COMM-01 Comments (anonymous, guest name, Google), rate limits, moderation API | Review | this branch | `test_comments.py`, `test_comment_policy.py`, e2e comment flow | No moderation UI or reporting yet | Moderation UI with the admin area (Sprint 3) |
-| AUTH-G Google sign-in (ADR-009) | Review | this branch | `test_google_auth.py`, `auth-tokens.test.ts` | Needs an OAuth client from the owner; session lasts one hour | Owner creates the Google OAuth client |
+| NEWS-01 Content core subset (sources, contents, content_sources, news_items, audit_events) and `PublishService` | Done | [#10](https://github.com/TigerZing/vietnamcv/pull/10) | `test_news.py`, migration round trip and drift | `news_items.category` is a fixed list until taxonomy (S1) replaces it | Map categories to taxonomy nodes in S1 |
+| NEWS-02 Curated news import (14 approved sheet rows, 5 with video) | Done | [#10](https://github.com/TigerZing/vietnamcv/pull/10) | `test_committed_seed_files_import`, idempotency test | Videos were chosen from search results by title; editor should confirm each | Editor review of `seed/news/2026-10-25.json` |
+| NEWS-03 News list and post pages (video, provenance, editor note) | Done | [#10](https://github.com/TigerZing/vietnamcv/pull/10) | `news.spec.ts` at 360px + desktop with axe | Pages render at request time (not cached) | Cache with tag revalidation via the outbox handler |
+| COMM-01 Comments (anonymous, guest name, Google), rate limits, moderation API | Done | [#10](https://github.com/TigerZing/vietnamcv/pull/10) | `test_comments.py`, `test_comment_policy.py`, e2e comment flow | No moderation UI or reporting yet | Moderation UI with the admin area (Sprint 3) |
+| NEWS-04 Post text in Vietnamese and English, stored images, related links (ADR-010) | Review | this branch | `test_news_media.py`, `test_media.py`, `article-body.test.ts`, `news.spec.ts` | 11 source images are `permission_pending` and hidden when deployed; texts are AI-assisted | Owner asks sources for image permission; editor reviews the 14 texts |
+| NEWS-05 News list layouts: list (default) and cards with 2-4 columns, 15 per page | Review | this branch | `news-view.test.ts`, `news.spec.ts` at 360px + desktop with axe | Layout choice lives in the URL only | Remember the choice per visitor if wanted |
+| AUTH-G Google sign-in (ADR-009) | Done | [#10](https://github.com/TigerZing/vietnamcv/pull/10) | `test_google_auth.py`, `auth-tokens.test.ts` | Needs an OAuth client from the owner; session lasts one hour | Owner creates the Google OAuth client |
 
 ## Open decisions
 
