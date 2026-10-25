@@ -11,7 +11,7 @@ dependencies = [
     "psycopg[binary,pool]==3.3.6",
     "pydantic==2.14.1",
     "pydantic-settings==2.16.1",
-    "redis>=5.2,<6.5",  # bounded by kombu[redis]
+    "redis>=5.2,<8.2",  # bounded by kombu[redis]
     "sqlalchemy[asyncio]==2.1.6",
     "structlog==26.1.0",
     "uvicorn[standard]==0.54.0",
