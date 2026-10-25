@@ -114,6 +114,7 @@ up() {
 
   wait_for "$API_URL/api/v1/health/ready" "API"
   wait_for "$WEB_URL/vi" "Web"
+  record_built
 
   print_urls
 
@@ -135,15 +136,23 @@ print_urls() {
   printf '\nLogs: scripts/run.sh logs    Stop: scripts/run.sh down\n'
 }
 
+# The commit the running images were last built from, kept inside .git so it is never
+# committed. `update` diffs against it, so a manual `git pull` before `update` still
+# rebuilds what changed.
+built_file() { git rev-parse --git-path vietnamcv-built-commit 2>/dev/null; }
+record_built() {
+  command -v git >/dev/null 2>&1 || return 0
+  git rev-parse HEAD >"$(built_file)" 2>/dev/null || true
+}
+
 # The images bake the code in (no bind mounts), so pulled code only shows up after a
 # rebuild. Rebuild just the images whose build inputs changed; `compose up` then
 # recreates their containers and re-runs migrate and seed (both idempotent).
 update() {
-  local before after changed api="no" web="no" stack="no" seed="no" migrations="no" file
+  local built="" after changed api="no" web="no" stack="no" seed="no" migrations="no" file
   local -a services=()
 
   command -v git >/dev/null 2>&1 || die "git not found"
-  before="$(git rev-parse HEAD)"
   info "Pulling the latest code"
   git pull --ff-only || die "git pull failed. Commit or stash local changes (git status), then retry."
   after="$(git rev-parse HEAD)"
@@ -157,12 +166,19 @@ update() {
     return
   fi
 
-  if [ "$before" = "$after" ]; then
-    ok "Already up to date ($(git rev-parse --short HEAD)); nothing to rebuild"
-    return
+  [ -f "$(built_file)" ] && built="$(cat "$(built_file)")"
+  if [ -n "$built" ] && git cat-file -e "$built^{commit}" 2>/dev/null; then
+    if [ "$built" = "$after" ]; then
+      ok "Running images already match $(git rev-parse --short HEAD); nothing to rebuild"
+      return
+    fi
+    changed="$(git diff --name-only "$built" "$after")"
+  else
+    # Unknown build commit (stack started before this command existed): rebuild both.
+    info "Build commit of the running images is unknown; rebuilding everything once"
+    changed="services/api/
+apps/web/"
   fi
-
-  changed="$(git diff --name-only "$before" "$after")"
   while IFS= read -r file; do
     case "$file" in
       services/api/seed/*) api="yes" seed="yes" ;;
@@ -180,7 +196,8 @@ EOF_CHANGED
   [ "$web" = "yes" ] && services+=(web)
 
   if [ "${#services[@]}" -eq 0 ] && [ "$stack" = "no" ]; then
-    ok "Pulled $(git rev-parse --short "$before")..$(git rev-parse --short "$after"): no app changes, nothing to rebuild"
+    ok "$(git rev-parse --short "$built")..$(git rev-parse --short "$after"): no app changes, nothing to rebuild"
+    record_built
     return
   fi
 
@@ -196,6 +213,7 @@ EOF_CHANGED
     die "Restarting the stack failed (a service is unhealthy: scripts/run.sh status)"
   wait_for "$API_URL/api/v1/health/ready" "API"
   wait_for "$WEB_URL/vi" "Web"
+  record_built
   print_urls
 }
 
