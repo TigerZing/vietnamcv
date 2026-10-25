@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { routing } from "@/i18n/routing";
 import { env } from "@/lib/env";
+import { DEFAULT_THEME, THEME_COLORS, themeInitScript } from "@/lib/theme";
 
 import "../globals.css";
 
@@ -26,10 +27,8 @@ export function generateStaticParams() {
 }
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
-  ],
+  // The inline theme script updates this when a saved light theme is applied.
+  themeColor: THEME_COLORS[DEFAULT_THEME],
 };
 
 export async function generateMetadata({
@@ -71,7 +70,16 @@ export default async function LocaleLayout({
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale} className={beVietnamPro.variable}>
+    // suppressHydrationWarning: the inline script may switch data-theme before hydration.
+    <html
+      lang={locale}
+      className={beVietnamPro.variable}
+      data-theme={DEFAULT_THEME}
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="flex min-h-screen flex-col font-sans antialiased">
         <IntlProvider locale={locale} messages={messages} timeZone={TIME_ZONE}>
           <a

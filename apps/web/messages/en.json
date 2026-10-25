@@ -27,6 +27,10 @@
     "vi": "Tiếng Việt",
     "en": "English"
   },
+  "Theme": {
+    "toLight": "Switch to light theme",
+    "toDark": "Switch to dark theme"
+  },
   "Home": {
     "title": "Discover Computer Vision, made for Vietnam",
     "lead": "VietnamCV brings together Computer Vision papers, open-source code and news, with clear provenance and Vietnamese summaries.",

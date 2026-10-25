@@ -25,6 +25,25 @@ test.describe("layout shell", () => {
     ).toBeVisible();
   });
 
+  test("defaults to the dark theme and remembers the light one", async ({
+    page,
+  }) => {
+    await page.goto("/vi");
+    const html = page.locator("html");
+    await expect(html).toHaveAttribute("data-theme", "dark");
+
+    await page
+      .getByRole("button", { name: "Chuyển sang giao diện sáng" })
+      .click();
+    await expect(html).toHaveAttribute("data-theme", "light");
+
+    await page.reload();
+    await expect(html).toHaveAttribute("data-theme", "light");
+    await expect(
+      page.getByRole("button", { name: "Chuyển sang giao diện tối" }),
+    ).toBeVisible();
+  });
+
   test("has no horizontal overflow", async ({ page }) => {
     await page.goto("/vi");
     const overflow = await page.evaluate(
@@ -61,10 +80,18 @@ test.describe("layout shell", () => {
     expect(response?.status()).toBe(404);
   });
 
-  for (const path of ["/vi", "/en", "/vi/papers"]) {
-    test(`has no serious accessibility violations on ${path}`, async ({
+  for (const [path, theme] of [
+    ["/vi", "dark"],
+    ["/vi", "light"],
+    ["/en", "dark"],
+    ["/vi/papers", "dark"],
+  ] as const) {
+    test(`has no serious accessibility violations on ${path} (${theme})`, async ({
       page,
     }) => {
+      await page.addInitScript((value) => {
+        localStorage.setItem("vietnamcv-theme", value);
+      }, theme);
       await page.goto(path);
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
