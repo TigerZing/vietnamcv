@@ -203,8 +203,11 @@ async def test_deployed_environments_hide_figures_pending_permission(
         client_fingerprint_secret="staging-test-secret",
     )
     deployed = await client_for(create_app(staging))
-    figures = (await deployed.get("/api/v1/news/newest-post")).json()["figures"]
-    assert [figure["rights"] for figure in figures] == ["own"]
+    post = (await deployed.get("/api/v1/news/newest-post")).json()
+    assert [figure["rights"] for figure in post["figures"]] == ["own"]
+    # The text placed figure 2; with figure 1 hidden it is the first one returned.
+    assert "{{figure:1}}" in post["body"]
+    assert "{{figure:2}}" not in post["body"]
 
 
 async def test_failed_figure_is_left_out_then_added(clean_database: str) -> None:

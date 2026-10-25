@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import uuid
 from collections.abc import Awaitable, Callable
 from datetime import UTC, date, datetime, time
@@ -133,15 +134,16 @@ async def get_news(
         comment_count=counts.get(content.id, 0),
         image=images.get(content.id),
     )
+    shown = [use for use in figure_uses if use.media_id in figure_assets]
     links = await content_service.get_links(session, content.id)
     return NewsDetail(
         **summary.model_dump(),
-        body=text.body if text is not None else None,
-        figures=[
-            _image(use, figure_assets[use.media_id], language)
-            for use in figure_uses
-            if use.media_id in figure_assets
-        ],
+        body=(
+            place_figures(text.body, [use.position for use in shown])
+            if text is not None and text.body is not None
+            else None
+        ),
+        figures=[_image(use, figure_assets[use.media_id], language) for use in shown],
         links=[Link(kind=LinkKind(row.kind), label=row.label, url=row.url) for row in links],
         original_language=item.original_language,
         editor_note=item.editor_note,
@@ -165,6 +167,25 @@ async def _images(
         for content_id, use in uses.items()
         if use.media_id in assets
     }
+
+
+_FIGURE_LINE = re.compile(r"^[ \t]*\{\{figure:([1-9]\d{0,2})\}\}[ \t]*$", re.MULTILINE)
+
+
+def place_figures(body: str, positions: list[int]) -> str:
+    """Renumber "{{figure:N}}" lines to index the figures actually returned.
+
+    N counts the curated figures from 1 (position N - 1). Hidden (rights) or not yet
+    downloaded figures are missing from the response, so later ones shift down; their
+    own placeholders are removed.
+    """
+    numbers = {position + 1: index + 1 for index, position in enumerate(positions)}
+
+    def renumber(match: re.Match[str]) -> str:
+        number = numbers.get(int(match.group(1)))
+        return f"{{{{figure:{number}}}}}" if number is not None else ""
+
+    return _FIGURE_LINE.sub(renumber, body)
 
 
 def _image(use: ContentMedia, asset: MediaAsset, language: TextLanguage) -> Image:
@@ -369,8 +390,8 @@ async def _import_figures(
         origin = row.origin or (assets[row.media_id].origin if row.media_id in assets else None)
         if origin is not None:
             known[origin] = row.media_id
-    resolved: list[content_service.Illustration] = []
-    for spec in entry.figures:
+    resolved: list[tuple[int, content_service.Illustration]] = []
+    for position, spec in enumerate(entry.figures):
         media_id = known.get(spec.origin)
         if media_id is None and load_image is not None:
             try:
@@ -384,7 +405,8 @@ async def _import_figures(
                     error=str(exc),
                 )
         if media_id is not None:
-            resolved.append(_illustration(spec, media_id))
+            # Keep the curated position so "{{figure:N}}" still finds it when one fails.
+            resolved.append((position, _illustration(spec, media_id)))
     await content_service.replace_figures(session, content, resolved)
 
 
