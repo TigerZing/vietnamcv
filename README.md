@@ -53,6 +53,11 @@ Then open:
 
 `make down` stops the stack; `make help` lists every target.
 
+Or do it in one command: `scripts/run.sh` checks that Docker (Docker Desktop or Colima,
+which it starts if needed) and Compose v2 are available, creates `.env` if missing, checks
+that ports 3000/8000/5432/6379 are free, starts the stack and prints the URLs. Add `--open`
+to open the site; `scripts/run.sh down`, `logs` and `status` do what they say.
+
 ### Running services on the host
 
 For faster feedback, run only the databases in Docker and the apps locally:
