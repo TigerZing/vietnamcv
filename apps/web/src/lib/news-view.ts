@@ -47,3 +47,36 @@ export function gridClass(cols: GridColumns): string {
 export function gridImageSizes(cols: GridColumns): string {
   return GRID_SIZES[cols];
 }
+
+// --- Filters: region tabs and technology hashtags ---
+
+export const NEWS_REGIONS = ["vietnam", "international"] as const;
+export type NewsRegion = (typeof NEWS_REGIONS)[number];
+
+export type NewsFilters = { region: NewsRegion | null; tag: string | null };
+
+// Same rule as the API's TAG_PATTERN.
+const TAG = /^[A-Za-z0-9][A-Za-z0-9+.-]{0,39}$/;
+
+/** Reads the region and hashtag filters from the URL; invalid values are ignored. */
+export function parseNewsFilters(params: {
+  region?: string | string[];
+  tag?: string | string[];
+}): NewsFilters {
+  const region = NEWS_REGIONS.find((value) => value === params.region) ?? null;
+  const raw =
+    typeof params.tag === "string" ? params.tag.replace(/^#/, "") : "";
+  return { region, tag: TAG.test(raw) ? raw : null };
+}
+
+/** Query string for a layout and filters, leaving out defaults. */
+export function newsQuery(
+  state: NewsViewState,
+  filters: NewsFilters,
+): Record<string, string> {
+  return {
+    ...(filters.region ? { region: filters.region } : {}),
+    ...(filters.tag ? { tag: filters.tag } : {}),
+    ...newsViewQuery(state),
+  };
+}

@@ -106,6 +106,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/news/tags": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Technology hashtags of published news */
+    get: operations["list_tags_api_v1_news_tags_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/news/{slug}": {
     parameters: {
       query?: never;
@@ -383,6 +400,11 @@ export interface components {
       /** Summary */
       summary: string;
       /**
+       * Tags
+       * @description Technology hashtags, shown as "#tag"
+       */
+      tags: string[];
+      /**
        * Title
        * @description Title in the returned language
        */
@@ -437,6 +459,11 @@ export interface components {
       source: components["schemas"]["SourceRef"];
       /** Summary */
       summary: string;
+      /**
+       * Tags
+       * @description Technology hashtags, shown as "#tag"
+       */
+      tags: string[];
       /**
        * Title
        * @description Title in the returned language
@@ -498,6 +525,24 @@ export interface components {
        * @description Original article URL
        */
       url: string;
+    };
+    /** TagCount */
+    TagCount: {
+      /**
+       * Count
+       * @description Published posts with this tag
+       */
+      count: number;
+      /** Tag */
+      tag: string;
+    };
+    /** TagList */
+    TagList: {
+      /**
+       * Items
+       * @description Most used first
+       */
+      items: components["schemas"]["TagCount"][];
     };
     /**
      * TextLanguage
@@ -767,6 +812,8 @@ export interface operations {
         cursor?: string | null;
         category?: components["schemas"]["NewsCategory"] | null;
         region?: components["schemas"]["NewsRegion"] | null;
+        /** @description Technology hashtag, without "#" */
+        tag?: string | null;
         /** @description Language of title, summary and body; falls back to Vietnamese */
         lang?: components["schemas"]["TextLanguage"];
       };
@@ -783,6 +830,46 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["NewsPage"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  list_tags_api_v1_news_tags_get: {
+    parameters: {
+      query?: {
+        region?: components["schemas"]["NewsRegion"] | null;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["TagList"];
         };
       };
       /** @description Validation error */

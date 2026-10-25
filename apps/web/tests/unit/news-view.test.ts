@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { newsViewQuery, parseNewsView } from "@/lib/news-view";
+import {
+  newsQuery,
+  newsViewQuery,
+  parseNewsFilters,
+  parseNewsView,
+} from "@/lib/news-view";
 
 describe("parseNewsView", () => {
   it("defaults to the list view", () => {
@@ -34,5 +39,39 @@ describe("newsViewQuery", () => {
       view: "grid",
       cols: "2",
     });
+  });
+});
+
+describe("parseNewsFilters", () => {
+  it("reads region and hashtag, with or without #", () => {
+    expect(parseNewsFilters({ region: "vietnam", tag: "#VLM" })).toEqual({
+      region: "vietnam",
+      tag: "VLM",
+    });
+  });
+
+  it("ignores unknown regions and invalid tags", () => {
+    expect(parseNewsFilters({ region: "mars", tag: "a b" })).toEqual({
+      region: null,
+      tag: null,
+    });
+    expect(parseNewsFilters({ tag: ["VLM"] })).toEqual({
+      region: null,
+      tag: null,
+    });
+  });
+});
+
+describe("newsQuery", () => {
+  it("keeps filters and layout together, leaving defaults out", () => {
+    expect(
+      newsQuery(
+        { view: "grid", cols: 2 },
+        { region: "international", tag: "OCR" },
+      ),
+    ).toEqual({ region: "international", tag: "OCR", view: "grid", cols: "2" });
+    expect(
+      newsQuery({ view: "list", cols: 3 }, { region: null, tag: null }),
+    ).toEqual({});
   });
 });

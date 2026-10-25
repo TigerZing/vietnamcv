@@ -545,6 +545,14 @@
             "title": "Summary",
             "type": "string"
           },
+          "tags": {
+            "description": "Technology hashtags, shown as \"#tag\"",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
           "title": {
             "description": "Title in the returned language",
             "title": "Title",
@@ -571,6 +579,7 @@
           "category",
           "region",
           "keywords",
+          "tags",
           "published_at",
           "source",
           "video",
@@ -687,6 +696,14 @@
             "title": "Summary",
             "type": "string"
           },
+          "tags": {
+            "description": "Technology hashtags, shown as \"#tag\"",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
           "title": {
             "description": "Title in the returned language",
             "title": "Title",
@@ -713,6 +730,7 @@
           "category",
           "region",
           "keywords",
+          "tags",
           "published_at",
           "source",
           "video",
@@ -831,6 +849,42 @@
           "published_precision"
         ],
         "title": "SourceRef",
+        "type": "object"
+      },
+      "TagCount": {
+        "properties": {
+          "count": {
+            "description": "Published posts with this tag",
+            "title": "Count",
+            "type": "integer"
+          },
+          "tag": {
+            "title": "Tag",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tag",
+          "count"
+        ],
+        "title": "TagCount",
+        "type": "object"
+      },
+      "TagList": {
+        "properties": {
+          "items": {
+            "description": "Most used first",
+            "items": {
+              "$ref": "#/components/schemas/TagCount"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "TagList",
         "type": "object"
       },
       "TextLanguage": {
@@ -1266,6 +1320,25 @@
             }
           },
           {
+            "description": "Technology hashtag, without \"#\"",
+            "in": "query",
+            "name": "tag",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9+.-]{0,39}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Technology hashtag, without \"#\"",
+              "title": "Tag"
+            }
+          },
+          {
             "description": "Language of title, summary and body; falls back to Vietnamese",
             "in": "query",
             "name": "lang",
@@ -1310,6 +1383,65 @@
           }
         },
         "summary": "List published news, newest first",
+        "tags": [
+          "news"
+        ]
+      }
+    },
+    "/api/v1/news/tags": {
+      "get": {
+        "operationId": "list_tags_api_v1_news_tags_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "region",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/NewsRegion"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Region"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TagList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal error"
+          }
+        },
+        "summary": "Technology hashtags of published news",
         "tags": [
           "news"
         ]

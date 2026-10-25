@@ -10,6 +10,7 @@ import { CommentSection } from "@/components/comments/comment-section";
 import { ArticleBody } from "@/components/news/article-body";
 import { ArticleImage } from "@/components/news/article-image";
 import { CategoryBadge } from "@/components/news/category";
+import { NewsTags } from "@/components/news/news-tags";
 import { PostSources } from "@/components/news/post-sources";
 import { SourceDate } from "@/components/news/source-date";
 import { VideoEmbed } from "@/components/news/video-embed";
@@ -57,10 +58,13 @@ function Article({ post, locale }: { post: NewsDetail; locale: Locale }) {
       <header className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
           <CategoryBadge category={post.category} />
-          <span className="inline-flex items-center gap-1">
+          <Link
+            href={{ pathname: "/news", query: { region: post.region } }}
+            className="inline-flex items-center gap-1 hover:text-foreground"
+          >
             <MapPin aria-hidden className="size-3.5" />
             {t(`regions.${post.region}`)}
-          </span>
+          </Link>
         </div>
         <h1
           lang={post.language}
@@ -68,6 +72,7 @@ function Article({ post, locale }: { post: NewsDetail; locale: Locale }) {
         >
           {post.title}
         </h1>
+        <NewsTags tags={post.tags} />
         {/* Provenance above the fold (specs/08-UI-UX.md); the link sits at the end. */}
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
           <span>

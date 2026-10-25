@@ -5,25 +5,28 @@ import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import {
   GRID_COLUMNS,
-  newsViewQuery,
+  newsQuery,
+  type NewsFilters,
   type NewsViewState,
 } from "@/lib/news-view";
 import { cn } from "@/lib/utils";
 
 function Option({
   state,
+  filters,
   active,
   label,
   children,
 }: {
   state: NewsViewState;
+  filters: NewsFilters;
   active: boolean;
   label?: string;
   children: ReactNode;
 }) {
   return (
     <Link
-      href={{ pathname: "/news", query: newsViewQuery(state) }}
+      href={{ pathname: "/news", query: newsQuery(state, filters) }}
       aria-current={active ? "true" : undefined}
       aria-label={label}
       scroll={false}
@@ -40,7 +43,13 @@ function Option({
 }
 
 /** Switches between the list and card layouts; plain links, so it works without JS. */
-export function FeedToolbar({ state }: { state: NewsViewState }) {
+export function FeedToolbar({
+  state,
+  filters,
+}: {
+  state: NewsViewState;
+  filters: NewsFilters;
+}) {
   const t = useTranslations("News.view");
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -48,6 +57,7 @@ export function FeedToolbar({ state }: { state: NewsViewState }) {
         <div className="inline-flex gap-1 rounded-lg border border-border bg-surface p-1">
           <Option
             state={{ ...state, view: "list" }}
+            filters={filters}
             active={state.view === "list"}
           >
             <List aria-hidden className="size-4" />
@@ -55,6 +65,7 @@ export function FeedToolbar({ state }: { state: NewsViewState }) {
           </Option>
           <Option
             state={{ ...state, view: "grid" }}
+            filters={filters}
             active={state.view === "grid"}
           >
             <LayoutGrid aria-hidden className="size-4" />
@@ -75,6 +86,7 @@ export function FeedToolbar({ state }: { state: NewsViewState }) {
               <Option
                 key={cols}
                 state={{ view: "grid", cols }}
+                filters={filters}
                 active={state.cols === cols}
                 label={t("columnsOption", { count: cols })}
               >

@@ -9,12 +9,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { listNews } from "@/lib/news";
+import { requestTime } from "@/lib/news-time";
 
 async function LatestNews() {
   await connection();
   const t = await getTranslations();
   const locale = (await getLocale()) as Locale;
   const page = await listNews({ lang: locale, limit: 3 }).catch(() => null);
+  const now = requestTime();
   if (!page || page.items.length === 0) {
     return (
       <EmptyState
@@ -42,7 +44,7 @@ async function LatestNews() {
       <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {page.items.map((item) => (
           <li key={item.id} className="flex">
-            <NewsCard item={item} />
+            <NewsCard item={item} now={now} />
           </li>
         ))}
       </ul>

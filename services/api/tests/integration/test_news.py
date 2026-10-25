@@ -1,3 +1,5 @@
+import json
+import shutil
 from pathlib import Path
 
 import pytest
@@ -50,6 +52,45 @@ async def test_feed_filters(client: AsyncClient) -> None:
     assert [item["slug"] for item in by_region["items"]] == ["older-post"]
     by_category = (await client.get("/api/v1/news", params={"category": "research"})).json()
     assert [item["slug"] for item in by_category["items"]] == ["video-post"]
+
+
+async def test_feed_follows_the_news_date_not_the_import_order(
+    clean_database: str, integration_settings: Settings, client_for: ClientFactory, tmp_path: Path
+) -> None:
+    data = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    data["items"].reverse()  # newest story imported (and published here) first
+    reversed_file = tmp_path / "news_reversed.json"
+    reversed_file.write_text(json.dumps(data), encoding="utf-8")
+    shutil.copytree(FIXTURE.parent / "images", tmp_path / "images")
+    await seed([reversed_file], clean_database, client=FakeImageServer().client())
+    client = await client_for(create_app(integration_settings))
+    first = (await client.get("/api/v1/news", params={"limit": 2})).json()
+    assert [item["slug"] for item in first["items"]] == ["newest-post", "video-post"]
+    second = (
+        await client.get("/api/v1/news", params={"limit": 2, "cursor": first["next_cursor"]})
+    ).json()
+    assert [item["slug"] for item in second["items"]] == ["older-post"]
+
+
+async def test_feed_filters_by_tag(client: AsyncClient) -> None:
+    by_tag = (await client.get("/api/v1/news", params={"tag": "VLM"})).json()
+    assert [item["slug"] for item in by_tag["items"]] == ["newest-post", "video-post"]
+    assert by_tag["items"][0]["tags"] == ["Drone", "VLM"]
+    both = (await client.get("/api/v1/news", params={"tag": "VLM", "region": "vietnam"})).json()
+    assert both["items"] == []
+    assert (await client.get("/api/v1/news", params={"tag": "#VLM"})).status_code == 422
+
+
+async def test_tags_are_counted_most_used_first(client: AsyncClient) -> None:
+    response = await client.get("/api/v1/news/tags")
+    assert response.status_code == 200
+    assert response.json()["items"] == [
+        {"tag": "VLM", "count": 2},
+        {"tag": "AnomalyDetection", "count": 1},
+        {"tag": "Drone", "count": 1},
+    ]
+    vietnam = (await client.get("/api/v1/news/tags", params={"region": "vietnam"})).json()
+    assert vietnam["items"] == [{"tag": "AnomalyDetection", "count": 1}]
 
 
 async def test_invalid_filter_and_cursor_are_422(client: AsyncClient) -> None:

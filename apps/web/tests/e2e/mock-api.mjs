@@ -56,6 +56,7 @@ const news = [
     category: "research",
     region: "international",
     keywords: ["kiểm thử", "video"],
+    tags: ["VLM", "Drone"],
     published_at: "2026-10-25T08:00:00Z",
     source: {
       name: "Demo Source",
@@ -85,6 +86,7 @@ const news = [
     category: "industrial",
     region: "vietnam",
     keywords: [],
+    tags: ["VLM"],
     published_at: "2026-10-24T08:00:00Z",
     source: {
       name: "Nguồn mẫu",
@@ -136,8 +138,27 @@ createServer(async (req, res) => {
     });
     return res.end(PNG);
   }
+  if (path === "/api/v1/news/tags") {
+    const region = url.searchParams.get("region");
+    const counts = new Map();
+    for (const item of news) {
+      if (region && item.region !== region) continue;
+      for (const tag of item.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    }
+    const items = [...counts]
+      .map(([tag, count]) => ({ tag, count }))
+      .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+    return send(res, 200, { items });
+  }
   if (path === "/api/v1/news") {
-    const items = news.map((item) => {
+    const region = url.searchParams.get("region");
+    const tag = url.searchParams.get("tag");
+    const matching = news.filter(
+      (item) =>
+        (!region || item.region === region) &&
+        (!tag || item.tags.includes(tag)),
+    );
+    const items = matching.map((item) => {
       const card = {
         ...localize(item, lang),
         comment_count: comments.get(item.slug).length,

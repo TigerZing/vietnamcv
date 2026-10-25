@@ -119,7 +119,24 @@
       "grid": "Cards",
       "columns": "Columns",
       "columnsOption": "{count, plural, one {# column} other {# columns}}"
-    }
+    },
+    "filters": {
+      "regionsLabel": "Region",
+      "all": "All",
+      "tagsLabel": "Technology",
+      "clear": "Clear filters",
+      "activeTag": "Filtering by {tag}",
+      "tagCount": "{count, plural, one {# post} other {# posts}}",
+      "emptyTitle": "No posts match these filters",
+      "emptyBody": "Try another region or remove the hashtag."
+    },
+    "time": {
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "daysAgo": "{count, plural, one {# day ago} other {# days ago}}",
+      "new": "New"
+    },
+    "tags": "Technology hashtags"
   },
   "Comments": {
     "title": "Comments",

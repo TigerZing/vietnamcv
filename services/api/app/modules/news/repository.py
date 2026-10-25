@@ -6,7 +6,7 @@ import uuid
 from collections.abc import Sequence
 from typing import cast
 
-from sqlalchemy import and_, or_, select
+from sqlalchemy import Select, and_, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.pagination import KeysetCursor
@@ -31,27 +31,58 @@ async def list_published(
     cursor: KeysetCursor | None,
     category: str | None,
     region: str | None,
+    tag: str | None = None,
 ) -> Sequence[tuple[Content, NewsItem]]:
-    """Newest first by ``(published_at, id)``; fetches ``limit + 1`` rows to detect more."""
+    """Newest news first by ``(dated_at, id)``; fetches ``limit + 1`` rows to detect more."""
     statement = (
-        select(Content, NewsItem)
-        .join(NewsItem, NewsItem.content_id == Content.id)
-        .where(Content.type == ContentType.NEWS, Content.status == ContentStatus.PUBLISHED)
-        .order_by(Content.published_at.desc(), Content.id.desc())
-        .limit(limit + 1)
+        _published().order_by(NewsItem.dated_at.desc(), NewsItem.content_id.desc()).limit(limit + 1)
     )
     if cursor is not None:
         statement = statement.where(
             or_(
-                Content.published_at < cursor.timestamp,
-                and_(Content.published_at == cursor.timestamp, Content.id < cursor.id),
+                NewsItem.dated_at < cursor.timestamp,
+                and_(NewsItem.dated_at == cursor.timestamp, NewsItem.content_id < cursor.id),
             )
         )
     if category is not None:
         statement = statement.where(NewsItem.category == category)
     if region is not None:
         statement = statement.where(NewsItem.region == region)
+    if tag is not None:
+        statement = statement.where(NewsItem.tags.contains([tag]))
     return cast(_ROWS, (await session.execute(statement)).all())
+
+
+async def tag_counts(
+    session: AsyncSession, *, region: str | None, limit: int
+) -> Sequence[tuple[str, int]]:
+    """Tags of published news with their post counts, most used first."""
+    tag = func.unnest(NewsItem.tags).label("tag")
+    tagged = (
+        select(tag)
+        .select_from(Content)
+        .join(NewsItem, NewsItem.content_id == Content.id)
+        .where(Content.type == ContentType.NEWS, Content.status == ContentStatus.PUBLISHED)
+    )
+    if region is not None:
+        tagged = tagged.where(NewsItem.region == region)
+    rows = tagged.subquery()
+    count = func.count().label("count")
+    statement = (
+        select(rows.c.tag, count)
+        .group_by(rows.c.tag)
+        .order_by(count.desc(), rows.c.tag)
+        .limit(limit)
+    )
+    return cast(Sequence[tuple[str, int]], (await session.execute(statement)).all())
+
+
+def _published() -> Select[Content, NewsItem]:
+    return (
+        select(Content, NewsItem)
+        .join(NewsItem, NewsItem.content_id == Content.id)
+        .where(Content.type == ContentType.NEWS, Content.status == ContentStatus.PUBLISHED)
+    )
 
 
 async def get_published_by_slug(

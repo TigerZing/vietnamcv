@@ -1,37 +1,29 @@
-import { Play } from "lucide-react";
-import { useTranslations } from "next-intl";
-
 import { Link } from "@/i18n/navigation";
 import type { NewsSummary } from "@/lib/news";
 
-import { CategoryBadge } from "./category";
-import { NewsMeta } from "./news-meta";
+import { NewsKicker, NewsMeta } from "./news-meta";
+import { NewsTags } from "./news-tags";
 import { NewsThumb } from "./news-thumb";
 
-/** A post as one row of the list view: picture on the left, text on the right. */
-export function NewsListItem({ item }: { item: NewsSummary }) {
-  const t = useTranslations("News");
-
+/** A post as one compact row of the list view: small picture left, text right. */
+export function NewsListItem({
+  item,
+  now,
+}: {
+  item: NewsSummary;
+  now: number;
+}) {
   return (
-    <article className="group relative flex gap-4 rounded-xl border border-border bg-surface p-3 shadow-sm transition-shadow focus-within:ring-2 focus-within:ring-ring hover:shadow-md sm:gap-5 sm:p-4">
+    <article className="group relative flex gap-3 rounded-lg border border-border bg-surface p-3 transition-colors focus-within:ring-2 focus-within:ring-ring hover:border-accent/50 sm:gap-4">
       <NewsThumb
         item={item}
-        sizes="(min-width: 640px) 240px, 112px"
+        sizes="(min-width: 640px) 176px, 96px"
         showVideoBadge={false}
-        className="w-28 shrink-0 self-start rounded-lg sm:w-60"
+        className="w-24 shrink-0 self-start rounded-md sm:w-44"
       />
-      <div className="flex min-w-0 flex-1 flex-col gap-2">
-        <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-          <CategoryBadge category={item.category} />
-          <span>{t(`regions.${item.region}`)}</span>
-          {item.video ? (
-            <span className="inline-flex items-center gap-1">
-              <Play aria-hidden className="size-3 fill-current" />
-              {t("hasVideo")}
-            </span>
-          ) : null}
-        </div>
-        <h2 className="text-base leading-snug font-semibold text-balance sm:text-lg">
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+        <NewsKicker item={item} now={now} />
+        <h2 className="line-clamp-2 text-base leading-snug font-semibold text-balance">
           <Link
             href={`/news/${item.slug}`}
             className="after:absolute after:inset-0 focus-visible:outline-none"
@@ -42,7 +34,8 @@ export function NewsListItem({ item }: { item: NewsSummary }) {
         <p className="line-clamp-2 hidden text-sm text-muted-foreground sm:block">
           {item.summary}
         </p>
-        <div className="mt-auto">
+        <NewsTags tags={item.tags} max={4} className="mt-0.5" />
+        <div className="mt-auto pt-1">
           <NewsMeta item={item} />
         </div>
       </div>
