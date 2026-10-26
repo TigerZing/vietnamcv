@@ -373,6 +373,11 @@
         "summary": "Meta phát hành mô hình phân vùng điều khiển bằng gợi ý, kèm bộ dữ liệu hơn một tỉ mặt nạ.",
         "impact": "Mô hình nền tảng đầu tiên cho phân vùng: dùng được ngay trên ảnh lạ, không cần huấn luyện lại."
       },
+      "rtDetr": {
+        "title": "RT-DETR",
+        "summary": "Nhóm Baidu giới thiệu bộ dò vật thể transformer đầu cuối chạy thời gian thực: bộ mã hóa lai xử lý đặc trưng đa tỉ lệ hiệu quả, vẫn không cần bước NMS, vượt các mô hình YOLO cùng thời trên COCO về cả tốc độ lẫn độ chính xác.",
+        "impact": "Chứng minh dòng DETR đủ nhanh để triển khai thực tế, khép lại khoảng cách giữa transformer và YOLO trong dò vật thể thời gian thực."
+      },
       "gaussianSplatting": {
         "title": "3D Gaussian Splatting",
         "summary": "Biểu diễn cảnh bằng hàng triệu hạt Gaussian, dựng hình thời gian thực với chất lượng tương đương NeRF.",
