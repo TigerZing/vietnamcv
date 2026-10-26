@@ -18,7 +18,7 @@ export function SiteHeader() {
         <Link href="/" className="text-lg font-semibold tracking-tight">
           {t("Common.siteName")}
         </Link>
-        <nav aria-label={t("Nav.label")} className="hidden flex-1 md:block">
+        <nav aria-label={t("Nav.label")} className="hidden flex-1 lg:block">
           <Suspense fallback={<NavLinksView pathname={null} />}>
             <NavLinks />
           </Suspense>

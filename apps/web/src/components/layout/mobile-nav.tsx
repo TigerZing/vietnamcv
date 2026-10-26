@@ -14,7 +14,7 @@ export function MobileNav() {
   const panelId = useId();
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <Button
         variant="ghost"
         className="px-2"

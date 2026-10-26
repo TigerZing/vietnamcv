@@ -18,6 +18,7 @@
     "openSource": "Mã nguồn mở",
     "news": "Tin tức",
     "tasks": "Chủ đề",
+    "demos": "Sản phẩm demo",
     "search": "Tìm kiếm",
     "openMenu": "Mở menu",
     "closeMenu": "Đóng menu"
@@ -136,6 +137,19 @@
       "new": "Mới"
     },
     "tags": "Hashtag công nghệ"
+  },
+  "Demos": {
+    "title": "Sản phẩm demo",
+    "lead": "Các sản phẩm và dự án thị giác máy tính được cộng đồng chia sẻ. Bấm vào một video để xem ngay tại đây.",
+    "play": "Phát video: {title}",
+    "open": "Xem bài đăng: {title}",
+    "close": "Đóng: {title}",
+    "playerTitle": "Video LinkedIn: {title}",
+    "imageBadge": "Ảnh",
+    "viewOnLinkedIn": "Xem trên LinkedIn",
+    "opensNewTab": "(mở thẻ mới)",
+    "emptyTitle": "Chưa có sản phẩm demo",
+    "emptyBody": "Các sản phẩm demo sẽ xuất hiện ở đây khi được thêm vào."
   },
   "Comments": {
     "title": "Bình luận",
