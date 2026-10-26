@@ -899,6 +899,285 @@
         "summary": "Meta segmented and tracked every instance matching a concept given as text or an example image, instead of a single click.",
         "impact": "From \"this object\" to \"every object of this kind\"."
       }
+    },
+    "illustration": {
+      "title": "How it works",
+      "show": "Show illustration",
+      "hide": "Hide illustration"
+    },
+    "illustrations": {
+      "pixelScan": {
+        "name": "Digitising an image",
+        "caption": "A scan line sweeps the photo and every grid cell is stored as a brightness value: the picture becomes a matrix of numbers."
+      },
+      "perceptron": {
+        "name": "A perceptron learns a boundary",
+        "caption": "The neuron adds up weighted inputs; every mistake nudges the weights, so the line turns until it separates the two classes."
+      },
+      "orientationCell": {
+        "name": "Orientation-selective cells",
+        "caption": "A bar of light turns inside the receptive field; the neuron fires a burst of spikes only near its preferred orientation."
+      },
+      "houghVoting": {
+        "name": "Hough voting",
+        "caption": "Each point votes for every line through it (a curve in parameter space); where the curves cross is the line in the image."
+      },
+      "wireframe": {
+        "name": "From edges to a 3D block",
+        "caption": "The image is read as edges and junctions; from that structure the machine infers a solid it can turn and view from any side."
+      },
+      "fourier": {
+        "name": "Frequency analysis",
+        "caption": "A signal is a sum of sine waves; the more frequencies you add, the closer the fit. Keeping only the strongest ones is how JPEG compresses."
+      },
+      "shading": {
+        "name": "Shape from shading",
+        "caption": "As the light moves, brightness follows the direction each surface faces; inverting that gives the normals and the 3D shape."
+      },
+      "histogramThreshold": {
+        "name": "Thresholding from the histogram",
+        "caption": "The threshold slides along the histogram to the valley between the two peaks, the best split of foreground and background, then the image is binarised."
+      },
+      "edgeDetect": {
+        "name": "Edge detection",
+        "caption": "A gradient filter sweeps the image and keeps only where brightness changes sharply: the outlines of objects."
+      },
+      "scaleSpace": {
+        "name": "Scale space",
+        "caption": "The image is blurred more and more; each blob is detected at the scale that matches its size."
+      },
+      "opticalFlow": {
+        "name": "Optical flow",
+        "caption": "Between two frames, every pixel gets a vector saying which way and how fast it moved."
+      },
+      "ransac": {
+        "name": "RANSAC",
+        "caption": "Pick two random points, fit a line, count who agrees; repeat a few times and keep the hypothesis with the most inliers, ignoring outliers."
+      },
+      "twoView": {
+        "name": "Two-view geometry",
+        "caption": "Two cameras see the same point; tracing both rays back through the image planes, they meet at its 3D position."
+      },
+      "calibration": {
+        "name": "Camera calibration",
+        "caption": "Photograph a checkerboard from several angles and detect its corners; since its true shape is known, the lens focal length and distortion can be solved."
+      },
+      "snake": {
+        "name": "Active contour",
+        "caption": "A flexible curve is pulled towards image edges while staying smooth, shrinking until it hugs the object's boundary."
+      },
+      "keypoints": {
+        "name": "Keypoints and matching",
+        "caption": "Find distinctive points that survive rotation and scale in both images, describe them, and link the pairs that match."
+      },
+      "lbp": {
+        "name": "Local Binary Patterns",
+        "caption": "Compare the 8 neighbours with the centre pixel, one bit each; the bits form a texture code, counted into a histogram."
+      },
+      "bagOfWords": {
+        "name": "Bag of visual words",
+        "caption": "Each local patch is assigned to its nearest \"word\" in a codebook; the image becomes a histogram of word counts."
+      },
+      "svmMargin": {
+        "name": "Maximum margin",
+        "caption": "An SVM places the boundary so the gap to the nearest point of each class is as wide as possible; only a few support vectors decide it."
+      },
+      "bilateral": {
+        "name": "Bilateral filter",
+        "caption": "Smooth by averaging neighbours, but only those with similar brightness, so noise disappears while edges stay sharp."
+      },
+      "particles": {
+        "name": "Particle filter",
+        "caption": "The tracker keeps a cloud of guesses; each frame they are predicted, scored against the image, and resampled towards the likeliest spot."
+      },
+      "textureGrow": {
+        "name": "Texture synthesis",
+        "caption": "New texture grows one pixel at a time by finding the best-matching neighbourhood in the sample and copying the next pixel."
+      },
+      "graphCut": {
+        "name": "Graph cut",
+        "caption": "Each pixel is a node and similar neighbours are strongly linked; the cheapest cut through the weak links separates object from background."
+      },
+      "eigenfaces": {
+        "name": "Eigenfaces",
+        "caption": "Every face is the average face plus a few weighted eigenfaces; recognition just compares those weights."
+      },
+      "slidingWindow": {
+        "name": "Sliding window",
+        "caption": "A fixed window slides across the image; at every position a classifier (Haar, HOG, part model) decides whether the object is there."
+      },
+      "meanShift": {
+        "name": "Mean shift",
+        "caption": "Every point climbs towards the densest spot around it; points that stop at the same peak form one cluster."
+      },
+      "seamlessBlend": {
+        "name": "Poisson blending",
+        "caption": "The object is pasted by its gradients rather than its colours, so the seam vanishes and the colours blend into the new background."
+      },
+      "ssimCompare": {
+        "name": "SSIM",
+        "caption": "Two images are compared window by window on brightness, contrast and structure, giving a similarity map close to human perception."
+      },
+      "convolution": {
+        "name": "Convolution",
+        "caption": "A small kernel slides over the image; each position gives one value of a feature map. Stack many layers and the network goes from edges to shapes to a label."
+      },
+      "backprop": {
+        "name": "Backpropagation",
+        "caption": "Signals flow forward to the output; the error flows back through every layer and adjusts each weight that caused it."
+      },
+      "autoencoder": {
+        "name": "Autoencoder",
+        "caption": "The image is squeezed through a narrow latent code and rebuilt; to manage that, the network must learn the features that matter most."
+      },
+      "datasetGrid": {
+        "name": "Labelled datasets",
+        "caption": "Thousands to billions of images are collected and labelled; shared data and benchmarks are what push models forward."
+      },
+      "multiView": {
+        "name": "Structure from motion",
+        "caption": "Many photos from many angles are combined: each camera casts rays to shared points, building up a 3D point cloud and the camera poses."
+      },
+      "pose": {
+        "name": "Pose estimation",
+        "caption": "The body is represented by keypoints at the joints and the limbs between them, estimated again in every frame, even for several people."
+      },
+      "regionProposals": {
+        "name": "Two-stage detection",
+        "caption": "First propose many regions that might hold an object, then classify each region and refine its bounding box."
+      },
+      "gridDetection": {
+        "name": "One-stage detection",
+        "caption": "A single look: the image is divided into a grid, and the cell holding an object's centre predicts its box and class directly, fast enough for real time."
+      },
+      "faceEmbedding": {
+        "name": "Face embeddings",
+        "caption": "Each face is mapped to a point; training pulls photos of the same person together and pushes different people apart."
+      },
+      "inception": {
+        "name": "Inception module",
+        "caption": "Kernels of several sizes look at the same input in parallel; their outputs are concatenated so the network picks the right scale itself."
+      },
+      "superResolution": {
+        "name": "Super-resolution",
+        "caption": "A network learns to fill in the detail a low-resolution image lost, turning blocky pixels into a sharp picture."
+      },
+      "batchNorm": {
+        "name": "Batch normalization",
+        "caption": "Activations that drift between layers are re-centred and re-scaled every batch, making training faster and more stable."
+      },
+      "unet": {
+        "name": "U-Net",
+        "caption": "The encoder shrinks the image to grasp context and the decoder grows it back; skip connections carry detail across so the mask stays sharp."
+      },
+      "styleTransfer": {
+        "name": "Style transfer",
+        "caption": "Content comes from one image, texture and colour from a painting; the output is optimised to match both."
+      },
+      "residual": {
+        "name": "Residual connections",
+        "caption": "Each block only learns a correction added on top of a shortcut, so signals and gradients pass through hundreds of layers."
+      },
+      "tracking": {
+        "name": "Multi-object tracking",
+        "caption": "Objects are detected in every frame and linked to existing tracks, keeping their box and ID as they move."
+      },
+      "imageTranslation": {
+        "name": "Image-to-image translation",
+        "caption": "A network learns to turn one kind of image into another (a sketch into a photo) and, with CycleGAN, back again to check consistency."
+      },
+      "pyramid": {
+        "name": "Feature pyramid",
+        "caption": "Feature maps at several scales are linked top-down: small objects are caught at high resolution, large ones at low resolution."
+      },
+      "instanceMask": {
+        "name": "Instance and panoptic segmentation",
+        "caption": "Each object gets a box and then its own mask; panoptic segmentation also labels background stuff like road and sky."
+      },
+      "spatioTemporal": {
+        "name": "3D convolution",
+        "caption": "The kernel slides through space and time across a stack of frames, so motion itself becomes a feature for recognising actions."
+      },
+      "pixelMask": {
+        "name": "Semantic segmentation",
+        "caption": "Every pixel gets a class: first coarse blocks, then refined to the true outline of each object."
+      },
+      "gan": {
+        "name": "GAN",
+        "caption": "A generator forges images from noise while a discriminator learns to spot fakes; the contest makes the fakes ever more realistic."
+      },
+      "patchAttention": {
+        "name": "Self-attention over patches",
+        "caption": "The image is cut into patches used as tokens; each patch looks at every other one and decides how much attention each deserves."
+      },
+      "contrastive": {
+        "name": "Self-supervised contrastive learning",
+        "caption": "Two augmented views of the same image are pulled together in embedding space and other images pushed away, with no labels."
+      },
+      "nerfRays": {
+        "name": "NeRF",
+        "caption": "From the camera, each ray passes through a learned volume; accumulating colour and density along it gives one pixel's colour."
+      },
+      "setPrediction": {
+        "name": "Set prediction with object queries",
+        "caption": "A fixed set of object queries each claims exactly one object or says \"nothing here\"; no anchors or NMS needed."
+      },
+      "diffusion": {
+        "name": "Diffusion",
+        "caption": "Starting from pure noise, the model removes noise over many steps, steered by the prompt, until the image appears."
+      },
+      "imageTokens": {
+        "name": "Image generation as tokens",
+        "caption": "Text and image are both token sequences; the model writes the image out one token at a time after the text that describes it."
+      },
+      "imageTextMatch": {
+        "name": "Image–text contrastive learning",
+        "caption": "Images and captions are embedded in one space; true pairs light up the diagonal while wrong pairs fade, which enables zero-shot classification."
+      },
+      "shiftedWindows": {
+        "name": "Shifted windows",
+        "caption": "Attention is computed only within small windows to save compute; the next layer shifts the windows by half so information crosses their borders."
+      },
+      "maskedPatches": {
+        "name": "Masked image modelling",
+        "caption": "About 75% of the patches are hidden and the model must paint them back; to do so it has to understand the image."
+      },
+      "visualChat": {
+        "name": "Vision-language model",
+        "caption": "The image is encoded into tokens fed to an LLM; the user asks in words and the model looks at the relevant region and answers."
+      },
+      "controlNet": {
+        "name": "Conditional control",
+        "caption": "A sketch, pose or edge map steers the denoising, so the generated image follows that structure."
+      },
+      "textGrounding": {
+        "name": "Open-vocabulary detection",
+        "caption": "Each phrase in the prompt is linked to its box in the image, even for classes never seen in training."
+      },
+      "promptMask": {
+        "name": "Promptable segmentation",
+        "caption": "One click (or box) is enough: the model returns the mask of whatever lies under it, for any kind of object."
+      },
+      "splatting": {
+        "name": "Gaussian splatting",
+        "caption": "A cloud of soft coloured Gaussians is moved and reshaped until it renders the scene, fast enough to view in real time."
+      },
+      "depthMap": {
+        "name": "Monocular depth",
+        "caption": "From a single photo the model estimates how far away every pixel is: near is bright, far is dark."
+      },
+      "videoFrames": {
+        "name": "Video generation",
+        "caption": "Frames are denoised together rather than one by one, so the motion between them stays consistent over time."
+      },
+      "videoMask": {
+        "name": "Video segmentation with memory",
+        "caption": "Click the object in the first frame; a memory stores its features and carries the mask through every following frame."
+      },
+      "conceptMask": {
+        "name": "Concept segmentation",
+        "caption": "A short noun phrase such as \"tree\" finds and masks every instance of that concept, not just one."
+      }
     }
   },
   "Comments": {

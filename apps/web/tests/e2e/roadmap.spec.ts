@@ -50,6 +50,57 @@ test.describe("roadmap", () => {
     await expect(source).toHaveAttribute("href", /^https:\/\//);
   });
 
+  test("opens the illustration on the side opposite the card", async ({
+    page,
+    viewport,
+  }) => {
+    test.skip(
+      !viewport || viewport.width < 1024,
+      "the side panel only exists in the two-column layout",
+    );
+    await page.goto("/vi/roadmap");
+    for (const name of ["AlexNet", "Faster R-CNN"]) {
+      const card = page.locator("article").filter({ hasText: name }).first();
+      const button = card.getByRole("button", { name: /minh hoạ$/ });
+      await card.hover();
+      await expect(button).toHaveAttribute("aria-expanded", "true");
+      const panelId = await button.getAttribute("aria-controls");
+      const panel = page.locator(`[id="${panelId}"]`);
+      await expect(panel).toBeVisible();
+      await expect(panel).toContainText("Cách hoạt động");
+      const cardBox = (await card.boundingBox())!;
+      const panelBox = (await panel.boundingBox())!;
+      const cardOnLeft = cardBox.x + cardBox.width / 2 < viewport!.width / 2;
+      if (cardOnLeft) {
+        expect(panelBox.x).toBeGreaterThanOrEqual(cardBox.x + cardBox.width);
+      } else {
+        expect(panelBox.x + panelBox.width).toBeLessThanOrEqual(cardBox.x);
+      }
+      // Escape dismisses it without moving the pointer.
+      await page.keyboard.press("Escape");
+      await expect(panel).toBeHidden();
+      await page.mouse.move(0, 0);
+    }
+  });
+
+  test("shows the illustration under the card from its button", async ({
+    page,
+  }) => {
+    await page.goto("/vi/roadmap");
+    const card = page.locator("article").filter({ hasText: "NeRF" }).first();
+    const show = card.getByRole("button", { name: "Xem minh hoạ" });
+    await show.click();
+    const hide = card.getByRole("button", { name: "Ẩn minh hoạ" });
+    await expect(hide).toHaveAttribute("aria-expanded", "true");
+    const panel = page.locator(
+      `[id="${await hide.getAttribute("aria-controls")}"]`,
+    );
+    await expect(panel).toBeVisible();
+    await expect(panel).toContainText("NeRF");
+    await hide.click();
+    await expect(panel).toBeHidden();
+  });
+
   test("jumps to an era from the sticky bar", async ({ page }) => {
     await page.goto("/vi/roadmap");
     await page
@@ -113,6 +164,13 @@ test.describe("roadmap", () => {
         localStorage.setItem("vietnamcv-theme", value);
       }, theme);
       await page.goto("/vi/roadmap");
+      // Check with an illustration open, so the panel is audited too.
+      await page
+        .locator("article")
+        .filter({ hasText: "AlexNet" })
+        .first()
+        .getByRole("button", { name: "Xem minh hoạ" })
+        .click();
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
         .analyze();
