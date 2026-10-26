@@ -66,6 +66,26 @@ test.describe("roadmap", () => {
     ).toBeInViewport();
   });
 
+  test("filters milestones by topic", async ({ page }) => {
+    await page.goto("/vi/roadmap");
+    const filter = page.getByRole("region", { name: "Lọc theo chủ đề" });
+    const detection = filter.getByRole("button", { name: "Dò vật thể" });
+    await detection.click();
+    await expect(detection).toHaveAttribute("aria-pressed", "true");
+    await expect(
+      page.getByRole("heading", { name: "Faster R-CNN" }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Bộ dò cạnh Canny" }),
+    ).toBeHidden();
+    // A second press on the same topic shows everything again.
+    await detection.click();
+    await expect(detection).toHaveAttribute("aria-pressed", "false");
+    await expect(
+      page.getByRole("heading", { name: "Bộ dò cạnh Canny" }),
+    ).toBeVisible();
+  });
+
   test("has an English translation", async ({ page }) => {
     await page.goto("/en/roadmap");
     await expect(

@@ -37,18 +37,24 @@ export default function Page() {
     name: copy.eras[era.id].name,
     period: copy.eras[era.id].period,
     blurb: copy.eras[era.id].blurb,
-    countLabel: t("milestoneCount", { count: milestonesByEra(era.id).length }),
     milestones: milestonesByEra(era.id).map((milestone) => ({
       id: milestone.id,
       year: milestone.year,
-      kind: milestone.kind,
-      kindLabel: copy.kinds[milestone.kind],
+      topic: milestone.topic,
+      topicLabel: copy.topics[milestone.topic],
       title: copy.milestones[milestone.id].title,
       summary: copy.milestones[milestone.id].summary,
       impact: copy.milestones[milestone.id].impact,
       source: milestone.source,
     })),
   }));
+
+  // Topics in the order the messages list them, skipping any without a milestone yet.
+  const topics = (Object.keys(copy.topics) as (keyof typeof copy.topics)[])
+    .filter((topic) =>
+      MILESTONES.some((milestone) => milestone.topic === topic),
+    )
+    .map((topic) => ({ id: topic, label: copy.topics[topic] }));
 
   const stats = [
     t("stats.span", { from: span.from, to: span.to }),
@@ -79,6 +85,7 @@ export default function Page() {
 
       <RoadmapTimeline
         eras={eras}
+        topics={topics}
         labels={{
           jump: t("jumpLabel"),
           timeline: t("timelineLabel"),

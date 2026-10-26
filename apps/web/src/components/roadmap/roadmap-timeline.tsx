@@ -2,23 +2,31 @@
 
 import {
   ArrowUpRight,
-  Binary,
-  Boxes,
+  Box,
   ChevronDown,
   Database,
+  Film,
+  Layers,
   Lightbulb,
+  MessagesSquare,
+  ScanFace,
+  ScanLine,
+  ScanSearch,
+  Shapes,
   Sparkles,
+  Tags,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import { useEffect, useMemo, useState } from "react";
 
-import type { EraId, MilestoneKind } from "@/lib/roadmap";
+import type { EraId, MilestoneTopic } from "@/lib/roadmap";
 import { cn } from "@/lib/utils";
 
 export type TimelineMilestone = {
   id: string;
   year: number;
-  kind: MilestoneKind;
-  kindLabel: string;
+  topic: MilestoneTopic;
+  topicLabel: string;
   title: string;
   summary: string;
   impact: string;
@@ -30,7 +38,6 @@ export type TimelineEra = {
   name: string;
   period: string;
   blurb: string;
-  countLabel: string;
   milestones: readonly TimelineMilestone[];
 };
 
@@ -44,12 +51,20 @@ export type TimelineLabels = {
   noSource: string;
 };
 
-const KIND_ICONS: Record<MilestoneKind, typeof Lightbulb> = {
-  idea: Lightbulb,
-  algorithm: Binary,
-  model: Boxes,
-  dataset: Database,
-  generative: Sparkles,
+export type TimelineTopic = { id: MilestoneTopic; label: string };
+
+const TOPIC_ICONS: Record<MilestoneTopic, typeof Lightbulb> = {
+  foundations: Lightbulb,
+  processing: ScanLine,
+  recognition: Tags,
+  detection: ScanSearch,
+  segmentation: Shapes,
+  geometry: Box,
+  motion: Film,
+  people: ScanFace,
+  generation: Sparkles,
+  multimodal: MessagesSquare,
+  data: Database,
 };
 
 /** Every era carries its own hue; the CSS variables are declared in `globals.css`. */
@@ -59,24 +74,120 @@ function eraStyle(era: EraId): React.CSSProperties {
 
 export function RoadmapTimeline({
   eras,
+  topics,
   labels,
 }: {
   eras: readonly TimelineEra[];
+  topics: readonly TimelineTopic[];
   labels: TimelineLabels;
 }) {
+  const t = useTranslations("Roadmap");
+  const [topic, setTopic] = useState<MilestoneTopic | null>(null);
   const currentEra = useCurrentEra(eras);
+  const visibleEras = useMemo(
+    () =>
+      eras.map((era) => ({
+        ...era,
+        milestones: topic
+          ? era.milestones.filter((milestone) => milestone.topic === topic)
+          : era.milestones,
+      })),
+    [eras, topic],
+  );
+  const visibleCount = visibleEras.reduce(
+    (total, era) => total + era.milestones.length,
+    0,
+  );
 
   return (
     <div className="flex flex-col gap-6">
+      <TopicFilter
+        topics={topics}
+        selected={topic}
+        onSelect={setTopic}
+        status={t("filter.showing", { count: visibleCount })}
+      />
       <EraJumpBar eras={eras} currentEra={currentEra} labels={labels} />
       <ol aria-label={labels.timeline} className="flex flex-col gap-12">
-        {eras.map((era, index) => (
+        {visibleEras.map((era, index) => (
           <li key={era.id} id={eraSectionId(era.id)} className="scroll-mt-32">
-            <EraSection era={era} index={index} labels={labels} />
+            <EraSection
+              era={era}
+              index={index}
+              countLabel={t("milestoneCount", { count: era.milestones.length })}
+              emptyLabel={t("filter.empty")}
+              labels={labels}
+            />
           </li>
         ))}
       </ol>
     </div>
+  );
+}
+
+/** Narrows the timeline to one topic; a second press on the same chip clears it. */
+function TopicFilter({
+  topics,
+  selected,
+  onSelect,
+  status,
+}: {
+  topics: readonly TimelineTopic[];
+  selected: MilestoneTopic | null;
+  onSelect: (topic: MilestoneTopic | null) => void;
+  status: string;
+}) {
+  const t = useTranslations("Roadmap.filter");
+  const chip =
+    "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors";
+  const idle =
+    "border-border text-muted-foreground hover:bg-surface-muted hover:text-foreground";
+  const active = "border-accent bg-accent-soft text-foreground";
+
+  return (
+    <section
+      aria-labelledby="roadmap-filter-label"
+      className="flex flex-col gap-3"
+    >
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 id="roadmap-filter-label" className="text-sm font-semibold">
+          {t("label")}
+        </h2>
+        <p aria-live="polite" className="text-sm text-muted-foreground">
+          {status}
+        </p>
+      </div>
+      <ul className="flex flex-wrap gap-2">
+        <li>
+          <button
+            type="button"
+            aria-pressed={selected === null}
+            onClick={() => onSelect(null)}
+            className={cn(chip, selected === null ? active : idle)}
+          >
+            <Layers aria-hidden className="size-4" />
+            {t("all")}
+          </button>
+        </li>
+        {topics.map((topic) => {
+          const Icon = TOPIC_ICONS[topic.id];
+          const pressed = selected === topic.id;
+          return (
+            <li key={topic.id}>
+              <button
+                type="button"
+                aria-pressed={pressed}
+                onClick={() => onSelect(pressed ? null : topic.id)}
+                className={cn(chip, pressed ? active : idle)}
+              >
+                <Icon aria-hidden className="size-4" />
+                {topic.label}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }
 
@@ -169,10 +280,14 @@ function EraJumpBar({
 function EraSection({
   era,
   index,
+  countLabel,
+  emptyLabel,
   labels,
 }: {
   era: TimelineEra;
   index: number;
+  countLabel: string;
+  emptyLabel: string;
   labels: TimelineLabels;
 }) {
   return (
@@ -196,7 +311,7 @@ function EraSection({
               <span className="font-medium text-[var(--era)] tabular-nums">
                 {era.period}
               </span>
-              <span>{era.countLabel}</span>
+              <span>{countLabel}</span>
             </p>
           </div>
         </div>
@@ -211,8 +326,12 @@ function EraSection({
         />
       </header>
 
+      {era.milestones.length === 0 ? (
+        <p className="mt-4 text-sm text-muted-foreground">{emptyLabel}</p>
+      ) : null}
       <ol
         style={eraStyle(era.id)}
+        hidden={era.milestones.length === 0}
         className="relative mt-6 flex flex-col gap-4 lg:gap-0"
       >
         <span
@@ -274,7 +393,7 @@ function MilestoneCard({
 }) {
   const [open, setOpen] = useState(false);
   const panelId = `milestone-${milestone.id}-detail`;
-  const KindIcon = KIND_ICONS[milestone.kind];
+  const TopicIcon = TOPIC_ICONS[milestone.topic];
 
   return (
     <article className="rounded-xl border border-border bg-surface p-4 transition-colors group-hover:border-[var(--era)] sm:p-5">
@@ -283,8 +402,8 @@ function MilestoneCard({
           {milestone.year}
         </span>
         <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-muted px-2 py-0.5 text-xs text-muted-foreground">
-          <KindIcon aria-hidden className="size-3.5" />
-          {milestone.kindLabel}
+          <TopicIcon aria-hidden className="size-3.5" />
+          {milestone.topicLabel}
         </span>
       </div>
       <h4 className="mt-2 text-base font-semibold tracking-tight text-balance">

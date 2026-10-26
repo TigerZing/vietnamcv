@@ -183,12 +183,24 @@
       "title": "Về trang này",
       "body": "Dòng thời gian do VietnamCV biên soạn; mỗi mốc dẫn về công trình gốc khi có bản ghi công khai. Lịch sử thị giác máy tính rộng hơn một trang, nếu bạn thấy thiếu mốc quan trọng hãy góp ý để chúng tôi bổ sung."
     },
-    "kinds": {
-      "idea": "Ý tưởng",
-      "algorithm": "Thuật toán",
-      "model": "Mô hình",
-      "dataset": "Dữ liệu & benchmark",
-      "generative": "Sinh tạo"
+    "topics": {
+      "foundations": "Nền tảng & học máy",
+      "processing": "Xử lý ảnh & đặc trưng",
+      "recognition": "Phân loại & kiến trúc",
+      "detection": "Dò vật thể",
+      "segmentation": "Phân vùng",
+      "geometry": "3D & hình học",
+      "motion": "Chuyển động & video",
+      "people": "Khuôn mặt & con người",
+      "generation": "Sinh & chỉnh sửa ảnh",
+      "multimodal": "Thị giác – ngôn ngữ",
+      "data": "Dữ liệu & benchmark"
+    },
+    "filter": {
+      "label": "Lọc theo chủ đề",
+      "all": "Tất cả",
+      "showing": "{count, plural, other {Đang hiển thị # mốc}}",
+      "empty": "Thời kỳ này chưa có mốc thuộc chủ đề đã chọn."
     },
     "eras": {
       "origins": {
@@ -228,35 +240,85 @@
         "summary": "Russell Kirsch dùng máy tính SEAC tại Cục Tiêu chuẩn Hoa Kỳ để quét ảnh con trai mình thành một lưới 176×176 điểm ảnh.",
         "impact": "Lần đầu một hình ảnh tồn tại trong bộ nhớ máy tính dưới dạng số, điều kiện cần cho mọi xử lý ảnh về sau."
       },
+      "perceptron": {
+        "title": "Perceptron của Rosenblatt",
+        "summary": "Frank Rosenblatt mô tả perceptron, một mạng nơ-ron một lớp học được cách phân loại các mẫu hình ảnh đơn giản từ dữ liệu.",
+        "impact": "Ý tưởng máy học từ ví dụ thay vì được lập trình sẵn, nền móng xa nhất của học sâu ngày nay."
+      },
       "visualCortex": {
         "title": "Tế bào đơn giản và phức hợp trong vỏ não thị giác",
         "summary": "Hubel và Wiesel ghi nhận các tế bào trong vỏ não thị giác của mèo chỉ phản ứng với cạnh có hướng xác định và được tổ chức theo nhiều lớp.",
         "impact": "Ý tưởng trường cảm nhận phân lớp là nguồn cảm hứng trực tiếp cho mạng tích chập."
+      },
+      "houghTransform": {
+        "title": "Biến đổi Hough",
+        "summary": "Paul Hough đăng ký bằng sáng chế phương pháp tìm đường thẳng trong ảnh buồng bọt bằng cách cho mỗi điểm ảnh bỏ phiếu trong không gian tham số.",
+        "impact": "Kỹ thuật bỏ phiếu vẫn được dùng để tìm đường thẳng, đường tròn, làn đường xe chạy trong ảnh."
       },
       "blocksWorld": {
         "title": "Thế giới khối hộp",
         "summary": "Luận án của Larry Roberts tại MIT suy ra hình khối ba chiều từ một ảnh hai chiều của các khối đa diện.",
         "impact": "Đặt nền cho thị giác 3D: từ ảnh phẳng suy ra cấu trúc hình học của vật thể."
       },
+      "fastFourierTransform": {
+        "title": "Biến đổi Fourier nhanh (FFT)",
+        "summary": "Cooley và Tukey công bố thuật toán FFT, giảm chi phí phân tích tần số của tín hiệu và ảnh từ bậc hai xuống gần tuyến tính.",
+        "impact": "Lọc ảnh trong miền tần số, nén ảnh và tích chập nhanh đều trở nên khả thi trên máy tính."
+      },
       "summerVisionProject": {
         "title": "Dự án thị giác mùa hè ở MIT",
         "summary": "Seymour Papert giao cho một nhóm sinh viên mục tiêu giải quyết phân vùng và nhận dạng vật thể trong một kỳ nghỉ hè.",
         "impact": "Bài học kinh điển: thị giác khó hơn trực giác của con người rất nhiều."
+      },
+      "shapeFromShading": {
+        "title": "Hình dạng từ bóng đổ",
+        "summary": "Luận án của Berthold Horn tại MIT khôi phục hình dạng bề mặt ba chiều từ độ sáng tối trong một ảnh duy nhất.",
+        "impact": "Mở ra nhóm bài toán \"hình dạng từ X\": từ bóng đổ, kết cấu, tiêu cự, đến ước lượng độ sâu ngày nay."
+      },
+      "otsuThreshold": {
+        "title": "Phân ngưỡng Otsu",
+        "summary": "Nobuyuki Otsu chọn ngưỡng tách nền và vật thể tự động bằng cách tối đa hóa phương sai giữa hai lớp trong histogram.",
+        "impact": "Cách nhị phân hóa ảnh mặc định trong OCR, kiểm tra công nghiệp và ảnh y tế suốt hơn bốn thập kỷ."
       },
       "neocognitron": {
         "title": "Neocognitron",
         "summary": "Kunihiko Fukushima xây dựng mạng nhiều lớp với tế bào S và C mô phỏng vỏ não thị giác, nhận dạng chữ viết tay bất biến với dịch chuyển.",
         "impact": "Kiến trúc tích chập và lấy mẫu xuống đầu tiên, tiền thân trực tiếp của CNN hiện đại."
       },
+      "marrHildreth": {
+        "title": "Dò cạnh Marr–Hildreth",
+        "summary": "Marr và Hildreth tìm cạnh tại điểm qua không của Laplacian sau khi làm mờ Gauss, ở nhiều tỉ lệ khác nhau.",
+        "impact": "Đưa lý thuyết thị giác sinh học vào thuật toán và gieo mầm cho ý tưởng phân tích ảnh đa tỉ lệ."
+      },
       "opticalFlow": {
         "title": "Dòng quang học",
         "summary": "Horn và Schunck, cùng với Lucas và Kanade, đưa ra cách ước lượng chuyển động của từng điểm ảnh giữa hai khung hình.",
         "impact": "Nền tảng cho theo vết vật thể, ổn định hình ảnh và phân tích video đến hôm nay."
       },
+      "ransac": {
+        "title": "RANSAC",
+        "summary": "Fischler và Bolles ước lượng mô hình bằng cách lấy mẫu ngẫu nhiên vài điểm, đếm số điểm khớp và giữ mô hình được đồng thuận nhiều nhất.",
+        "impact": "Cách tiêu chuẩn để chịu được dữ liệu nhiễu trong ghép ảnh, hiệu chỉnh camera và tái dựng 3D."
+      },
+      "generalizedHough": {
+        "title": "Biến đổi Hough tổng quát",
+        "summary": "Dana Ballard mở rộng biến đổi Hough để dò bất kỳ hình dạng nào, dùng bảng tra các vector từ cạnh tới tâm vật thể.",
+        "impact": "Một trong những phương pháp dò vật thể theo hình dạng đầu tiên, ý tưởng bỏ phiếu tâm còn sống trong các mô hình dò hiện đại."
+      },
+      "essentialMatrix": {
+        "title": "Ma trận thiết yếu và thuật toán 8 điểm",
+        "summary": "Longuet-Higgins chỉ ra rằng từ tám cặp điểm tương ứng giữa hai ảnh có thể tính được chuyển động tương đối của camera và cấu trúc cảnh.",
+        "impact": "Nền tảng toán học của hình học hai góc nhìn, dùng trong mọi hệ SfM và SLAM."
+      },
       "marrVision": {
         "title": "Ba mức phân tích của David Marr",
         "summary": "Cuốn Vision đề xuất tách bài toán thị giác thành mức tính toán, mức biểu diễn – thuật toán và mức hiện thực.",
         "impact": "Khung tư duy giúp thị giác máy tính thành một khoa học có cấu trúc, không chỉ là tập hợp mẹo kỹ thuật."
+      },
+      "scaleSpace": {
+        "title": "Lý thuyết không gian tỉ lệ",
+        "summary": "Witkin và Koenderink hình thức hóa việc quan sát ảnh ở nhiều mức làm mờ Gauss liên tục, gọi là không gian tỉ lệ.",
+        "impact": "Cơ sở lý thuyết của đặc trưng bất biến tỉ lệ như SIFT và của các mạng kim tự tháp đặc trưng."
       },
       "backpropagation": {
         "title": "Lan truyền ngược",
@@ -268,10 +330,50 @@
         "summary": "John Canny hình thức hóa dò cạnh thành bài toán tối ưu với ba tiêu chí: ít lỗi, định vị chính xác và một đáp ứng cho mỗi cạnh.",
         "impact": "Thuật toán xử lý ảnh kinh điển, đến nay vẫn có trong mọi thư viện thị giác."
       },
+      "tsaiCalibration": {
+        "title": "Hiệu chỉnh camera Tsai",
+        "summary": "Roger Tsai đưa ra quy trình hiệu chỉnh camera chính xác, gồm cả méo ống kính, bằng camera và ống kính thương mại có sẵn.",
+        "impact": "Đưa đo lường 3D bằng camera vào nhà máy và robot công nghiệp."
+      },
+      "activeContours": {
+        "title": "Đường viền chủ động (Snakes)",
+        "summary": "Kass, Witkin và Terzopoulos mô hình đường biên vật thể như một đường cong đàn hồi tự co dãn để bám vào cạnh ảnh.",
+        "impact": "Mở đầu dòng phân vùng dựa trên năng lượng, dùng lâu dài trong ảnh y tế."
+      },
+      "harrisCorner": {
+        "title": "Bộ dò góc Harris",
+        "summary": "Harris và Stephens dò các điểm góc dựa trên ma trận gradient cục bộ, những điểm dễ định vị lại giữa các ảnh.",
+        "impact": "Điểm đặc trưng chuẩn cho theo vết và ghép ảnh trong nhiều năm, tiền đề cho các bộ dò điểm khóa sau này."
+      },
+      "convNetBackprop": {
+        "title": "CNN huấn luyện bằng lan truyền ngược",
+        "summary": "Yann LeCun và cộng sự huấn luyện mạng tích chập bằng lan truyền ngược để đọc mã bưu chính viết tay.",
+        "impact": "Lần đầu tích chập, chia sẻ trọng số và học đầu cuối kết hợp với nhau: công thức của CNN hiện đại."
+      },
       "eigenfaces": {
         "title": "Eigenfaces",
         "summary": "Turk và Pentland dùng phân tích thành phần chính để biểu diễn một khuôn mặt bằng vài chục hệ số.",
         "impact": "Nhận dạng mặt chạy được trên máy tính thông thường, mở hướng học biểu diễn từ dữ liệu."
+      },
+      "jpeg": {
+        "title": "Chuẩn nén ảnh JPEG",
+        "summary": "Chuẩn JPEG dùng biến đổi cosin rời rạc trên từng khối 8×8 và lượng tử hóa để nén ảnh chụp gấp hàng chục lần.",
+        "impact": "Biến ảnh số thành thứ chia sẻ được khắp nơi, và tạo ra kho ảnh khổng lồ trên web mà thị giác máy tính về sau học từ đó."
+      },
+      "supportVectorMachines": {
+        "title": "Máy vector hỗ trợ (SVM)",
+        "summary": "Cortes và Vapnik công bố SVM với lề mềm: bộ phân loại tìm siêu phẳng có khoảng cách lớn nhất giữa các lớp.",
+        "impact": "Bộ phân loại mặc định đi cùng đặc trưng thủ công như HOG và túi từ thị giác cho đến năm 2012."
+      },
+      "bilateralFilter": {
+        "title": "Bộ lọc song phương",
+        "summary": "Tomasi và Manduchi làm mịn ảnh bằng trọng số theo cả khoảng cách không gian lẫn độ chênh màu, giữ nguyên các cạnh sắc.",
+        "impact": "Công cụ khử nhiễu giữ cạnh có trong mọi phần mềm chỉnh ảnh và camera điện thoại."
+      },
+      "condensation": {
+        "title": "Theo vết CONDENSATION",
+        "summary": "Isard và Blake dùng bộ lọc hạt để theo vết đường viền vật thể trong video có nền lộn xộn.",
+        "impact": "Đưa suy luận xác suất vào theo vết, nền tảng cho theo vết người và vật thể nhiều năm sau."
       },
       "lenet5": {
         "title": "LeNet-5 và MNIST",
@@ -283,10 +385,60 @@
         "summary": "David Lowe giới thiệu đặc trưng cục bộ bất biến với tỉ lệ và phép quay, cho phép khớp cùng một vật thể giữa các ảnh khác nhau.",
         "impact": "Trụ cột của ghép ảnh toàn cảnh, SLAM và tìm kiếm ảnh trong suốt thập niên 2000."
       },
+      "textureSynthesis": {
+        "title": "Tổng hợp kết cấu Efros–Leung",
+        "summary": "Efros và Leung tạo ra kết cấu mới giống mẫu bằng cách điền từng điểm ảnh theo các vùng lân cận tương tự trong ảnh gốc.",
+        "impact": "Một trong những phương pháp sinh ảnh phi tham số đầu tiên, tiền đề cho vá ảnh và inpainting."
+      },
+      "normalizedCuts": {
+        "title": "Normalized Cuts",
+        "summary": "Shi và Malik coi phân vùng ảnh là bài toán cắt đồ thị điểm ảnh, giải bằng vector riêng.",
+        "impact": "Đặt nền cho phân vùng dựa trên đồ thị và phương pháp phổ trong thị giác."
+      },
+      "zhangCalibration": {
+        "title": "Hiệu chỉnh camera Zhang",
+        "summary": "Zhengyou Zhang hiệu chỉnh camera chỉ từ vài ảnh chụp một bàn cờ phẳng ở các góc khác nhau.",
+        "impact": "Cách hiệu chỉnh camera phổ biến nhất hiện nay, có sẵn trong OpenCV và MATLAB."
+      },
+      "multipleViewGeometry": {
+        "title": "Sách Multiple View Geometry",
+        "summary": "Hartley và Zisserman hệ thống hóa hình học xạ ảnh, ma trận cơ bản, tam giác hóa và bundle adjustment trong một cuốn sách.",
+        "impact": "Giáo trình chuẩn của thị giác 3D, nền tảng lý thuyết cho SfM, SLAM và AR."
+      },
       "violaJones": {
         "title": "Dò mặt thời gian thực Viola–Jones",
         "summary": "Bộ dò dùng đặc trưng Haar, AdaBoost và các tầng phân loại xếp lớp, chạy thời gian thực trên CPU phổ thông thời đó.",
         "impact": "Đưa thị giác máy tính vào máy ảnh số và điện thoại của người dùng cuối."
+      },
+      "graphCuts": {
+        "title": "Tối ưu năng lượng bằng graph cuts",
+        "summary": "Boykov, Veksler và Zabih giải nhanh các bài toán gán nhãn điểm ảnh (phân vùng, ghép ảnh nổi) bằng thuật toán luồng cực đại.",
+        "impact": "Nền tảng của các công cụ tách đối tượng tương tác như GrabCut và nhiều phương pháp ảnh nổi."
+      },
+      "localBinaryPatterns": {
+        "title": "Mẫu nhị phân cục bộ (LBP)",
+        "summary": "Ojala và cộng sự mô tả kết cấu bằng cách so sánh mỗi điểm ảnh với các điểm lân cận, tạo mã nhị phân bất biến với độ sáng.",
+        "impact": "Đặc trưng nhẹ, nhanh, dùng rộng rãi trong nhận dạng khuôn mặt và kiểm tra bề mặt."
+      },
+      "meanShift": {
+        "title": "Mean shift",
+        "summary": "Comaniciu và Meer dùng mean shift tìm các đỉnh mật độ trong không gian màu và vị trí để phân vùng và làm mịn ảnh.",
+        "impact": "Phương pháp gom cụm không cần biết trước số cụm, dùng cho phân vùng và theo vết vật thể."
+      },
+      "bagOfVisualWords": {
+        "title": "Túi từ thị giác (Video Google)",
+        "summary": "Sivic và Zisserman lượng tử hóa đặc trưng cục bộ thành \"từ thị giác\" và tìm kiếm ảnh như tìm kiếm văn bản.",
+        "impact": "Biểu diễn ảnh chủ đạo cho phân loại và truy vấn ảnh trong gần một thập kỷ."
+      },
+      "poissonEditing": {
+        "title": "Chỉnh sửa ảnh Poisson",
+        "summary": "Pérez, Gangnet và Blake ghép một vùng ảnh vào ảnh khác liền mạch bằng cách giải phương trình Poisson trên gradient.",
+        "impact": "Nền tảng của công cụ ghép, xóa vật thể liền mạch trong phần mềm chỉnh ảnh."
+      },
+      "ssim": {
+        "title": "Chỉ số SSIM",
+        "summary": "Wang và cộng sự đo chất lượng ảnh theo độ tương đồng cấu trúc, độ sáng và tương phản thay vì sai số từng điểm ảnh.",
+        "impact": "Thước đo chuẩn cho nén ảnh, khử nhiễu và siêu phân giải, gần với cảm nhận của mắt người hơn PSNR."
       },
       "hog": {
         "title": "Đặc trưng HOG",
@@ -298,15 +450,55 @@
         "summary": "Cuộc thi thường niên với bộ dữ liệu và quy trình đánh giá dùng chung cho phân loại, dò vật thể và phân vùng.",
         "impact": "Thiết lập văn hóa đo lường công bằng bằng benchmark công khai trong ngành."
       },
+      "deepAutoencoders": {
+        "title": "Mạng sâu tiền huấn luyện từng lớp",
+        "summary": "Hinton và Salakhutdinov huấn luyện mạng nhiều lớp bằng cách tiền huấn luyện từng lớp, nén ảnh tốt hơn hẳn PCA.",
+        "impact": "Chứng minh mạng sâu huấn luyện được, khởi động làn sóng học sâu trước khi GPU và ImageNet xuất hiện."
+      },
+      "surf": {
+        "title": "SURF",
+        "summary": "Bay, Tuytelaars và Van Gool tăng tốc đặc trưng bất biến tỉ lệ bằng ảnh tích phân và bộ lọc hộp.",
+        "impact": "Đưa khớp đặc trưng cục bộ lên thời gian thực, phổ biến trong robot và thực tế tăng cường thời đó."
+      },
+      "photoTourism": {
+        "title": "Photo Tourism và SfM quy mô lớn",
+        "summary": "Snavely, Seitz và Szeliski tái dựng cảnh 3D và vị trí camera từ hàng nghìn ảnh du lịch trên Internet.",
+        "impact": "Mở đường cho tái dựng 3D từ ảnh cộng đồng, tiền thân của Photosynth và các công cụ như COLMAP."
+      },
+      "deformablePartModels": {
+        "title": "Mô hình bộ phận biến dạng (DPM)",
+        "summary": "Felzenszwalb và cộng sự mô tả vật thể bằng một khung gốc và các bộ phận có thể xê dịch, học trên đặc trưng HOG.",
+        "impact": "Đỉnh cao của dò vật thể trước học sâu, thắng PASCAL VOC nhiều năm liền."
+      },
       "imagenet": {
         "title": "ImageNet",
         "summary": "Nhóm của Fei-Fei Li xây dựng bộ dữ liệu hơn 14 triệu ảnh gán nhãn theo WordNet; cuộc thi ILSVRC bắt đầu từ năm 2010.",
         "impact": "Dữ liệu ở quy mô này là điều kiện cần để học sâu bộc lộ sức mạnh."
       },
+      "kinectPose": {
+        "title": "Ước lượng tư thế người trên Kinect",
+        "summary": "Shotton và cộng sự dùng rừng ngẫu nhiên trên ảnh độ sâu để nhận dạng các bộ phận cơ thể theo thời gian thực.",
+        "impact": "Đưa ước lượng tư thế người vào hàng triệu phòng khách và chứng minh sức mạnh của dữ liệu tổng hợp."
+      },
+      "kittiBenchmark": {
+        "title": "Bộ dữ liệu KITTI",
+        "summary": "Geiger, Lenz và Urtasun thu dữ liệu từ xe chạy thật với camera nổi, LiDAR và GPS, kèm benchmark cho ảnh nổi, dòng quang học, odometry và dò vật thể 3D.",
+        "impact": "Benchmark đầu tiên đưa thị giác máy tính vào bài toán xe tự hành trên đường thật."
+      },
       "alexnet": {
         "title": "AlexNet",
         "summary": "Krizhevsky, Sutskever và Hinton huấn luyện mạng tích chập trên GPU, giảm sai số top-5 của ILSVRC 2012 từ khoảng 26% xuống 15,3%.",
         "impact": "Khoảnh khắc cả ngành chuyển sang học sâu, chỉ sau một cuộc thi."
+      },
+      "visualizingConvnets": {
+        "title": "Trực quan hóa mạng tích chập (ZFNet)",
+        "summary": "Zeiler và Fergus dùng mạng giải tích chập để xem từng lớp CNN học được gì, từ cạnh, kết cấu đến bộ phận vật thể.",
+        "impact": "Giúp hiểu và tinh chỉnh CNN thay vì coi nó là hộp đen, thắng ILSVRC 2013."
+      },
+      "variationalAutoencoder": {
+        "title": "Bộ tự mã hóa biến phân (VAE)",
+        "summary": "Kingma và Welling kết hợp mạng nơ-ron với suy luận biến phân để học một không gian tiềm ẩn liên tục có thể lấy mẫu.",
+        "impact": "Khối không gian tiềm ẩn của VAE về sau chính là phần nén ảnh trong Stable Diffusion."
       },
       "rcnn": {
         "title": "R-CNN",
@@ -318,30 +510,200 @@
         "summary": "Goodfellow và cộng sự để hai mạng sinh và phân biệt cạnh tranh nhau, tạo ra ảnh mới ngày càng giống thật.",
         "impact": "Mở nhánh thị giác sinh tạo, tiền đề cho việc tạo ảnh bằng AI."
       },
+      "microsoftCoco": {
+        "title": "Bộ dữ liệu MS COCO",
+        "summary": "Microsoft COCO gồm hơn 300 nghìn ảnh cảnh đời thường với hộp bao, mặt nạ từng thực thể và chú thích bằng câu.",
+        "impact": "Benchmark chuẩn của dò vật thể, phân vùng và mô tả ảnh đến tận hôm nay."
+      },
+      "deepFace": {
+        "title": "DeepFace",
+        "summary": "Facebook kết hợp căn chỉnh khuôn mặt 3D với mạng sâu, đạt độ chính xác gần con người trên bộ LFW.",
+        "impact": "Nhận dạng khuôn mặt bằng học sâu bước vào sản phẩm quy mô lớn, kéo theo các tranh luận về quyền riêng tư."
+      },
+      "vggNet": {
+        "title": "VGGNet",
+        "summary": "Simonyan và Zisserman chỉ dùng các lớp tích chập 3×3 xếp chồng thật sâu, đạt kết quả hàng đầu ILSVRC 2014.",
+        "impact": "Kiến trúc đơn giản, dễ hiểu, trở thành xương sống trích đặc trưng mặc định trong nhiều năm."
+      },
+      "googLeNet": {
+        "title": "GoogLeNet và khối Inception",
+        "summary": "Szegedy và cộng sự ghép các nhánh tích chập nhiều cỡ song song trong khối Inception, thắng ILSVRC 2014 với ít tham số hơn nhiều.",
+        "impact": "Mở đầu việc thiết kế kiến trúc tối ưu cả độ chính xác lẫn chi phí tính toán."
+      },
+      "superResolutionCnn": {
+        "title": "SRCNN: siêu phân giải bằng CNN",
+        "summary": "Dong và cộng sự dùng một mạng tích chập nhỏ để phóng to ảnh, vượt các phương pháp siêu phân giải truyền thống.",
+        "impact": "Mở đầu dòng phục hồi ảnh bằng học sâu: khử nhiễu, khử mờ, phóng to ảnh trên điện thoại."
+      },
+      "fullyConvolutionalNetworks": {
+        "title": "Mạng tích chập hoàn toàn (FCN)",
+        "summary": "Long, Shelhamer và Darrell thay lớp kết nối đầy đủ bằng tích chập để dự đoán nhãn cho từng điểm ảnh.",
+        "impact": "Khuôn mẫu của mọi mạng phân vùng ngữ nghĩa về sau."
+      },
+      "deepLab": {
+        "title": "DeepLab và tích chập giãn",
+        "summary": "Chen và cộng sự dùng tích chập giãn (atrous) để mở rộng trường nhìn mà không giảm độ phân giải, kèm CRF làm mịn biên.",
+        "impact": "Dòng DeepLab dẫn đầu phân vùng ngữ nghĩa nhiều năm, tích chập giãn thành công cụ tiêu chuẩn."
+      },
+      "batchNormalization": {
+        "title": "Chuẩn hóa theo lô (Batch Norm)",
+        "summary": "Ioffe và Szegedy chuẩn hóa đầu ra mỗi lớp theo từng lô dữ liệu, giúp huấn luyện nhanh và ổn định hơn nhiều.",
+        "impact": "Có mặt trong gần như mọi CNN từ đó, điều kiện để huấn luyện được các mạng rất sâu."
+      },
+      "faceNet": {
+        "title": "FaceNet",
+        "summary": "Google học một không gian nhúng khuôn mặt bằng hàm mất mát bộ ba, khoảng cách trong đó phản ánh mức giống nhau giữa hai người.",
+        "impact": "Học metric bằng embedding trở thành cách làm chuẩn cho nhận dạng mặt và truy vấn ảnh."
+      },
+      "fastRcnn": {
+        "title": "Fast R-CNN",
+        "summary": "Ross Girshick tính đặc trưng một lần cho cả ảnh rồi cắt theo vùng bằng RoI pooling, nhanh hơn R-CNN hàng trăm lần khi suy luận.",
+        "impact": "Đưa dò vật thể hai giai đoạn thành một mạng huấn luyện đầu cuối."
+      },
+      "flowNet": {
+        "title": "FlowNet",
+        "summary": "Dosovitskiy và cộng sự ước lượng dòng quang học trực tiếp bằng CNN, huấn luyện trên dữ liệu tổng hợp Flying Chairs.",
+        "impact": "Chuyển ước lượng chuyển động sang học sâu, mở đường cho RAFT và các mô hình video sau này."
+      },
       "unet": {
         "title": "U-Net",
         "summary": "Kiến trúc encoder–decoder với kết nối tắt, phân vùng ảnh y sinh chính xác với rất ít dữ liệu huấn luyện.",
         "impact": "Đến nay vẫn là xương sống của phân vùng ảnh y tế và của các mô hình khuếch tán."
+      },
+      "fasterRcnn": {
+        "title": "Faster R-CNN",
+        "summary": "Ren và cộng sự thêm mạng đề xuất vùng (RPN) với anchor, để mạng tự sinh vùng ứng viên thay cho thuật toán ngoài.",
+        "impact": "Bộ dò hai giai đoạn kinh điển; anchor và RPN thành khái niệm nền tảng của dò vật thể."
       },
       "yolo": {
         "title": "YOLO",
         "summary": "Redmon và cộng sự coi dò vật thể là một bài toán hồi quy duy nhất trên toàn ảnh, đạt tốc độ thời gian thực.",
         "impact": "Mở đường cho thị giác trên thiết bị: camera an ninh, dây chuyền sản xuất, drone."
       },
+      "neuralStyleTransfer": {
+        "title": "Chuyển phong cách nghệ thuật",
+        "summary": "Gatys, Ecker và Bethge tách nội dung và phong cách của ảnh bằng đặc trưng CNN, vẽ lại ảnh chụp theo phong cách một bức tranh.",
+        "impact": "Lần đầu công chúng thấy AI \"sáng tác\" hình ảnh, tạo làn sóng ứng dụng chỉnh ảnh nghệ thuật."
+      },
+      "dcgan": {
+        "title": "DCGAN",
+        "summary": "Radford và cộng sự đưa ra các quy tắc kiến trúc tích chập giúp GAN huấn luyện ổn định và sinh ảnh rõ nét.",
+        "impact": "Biến GAN từ ý tưởng thành công cụ dùng được, và cho thấy không gian tiềm ẩn có cấu trúc ngữ nghĩa."
+      },
+      "ssdDetector": {
+        "title": "SSD",
+        "summary": "Liu và cộng sự dò vật thể một giai đoạn trên nhiều bản đồ đặc trưng ở các tỉ lệ khác nhau.",
+        "impact": "Cùng YOLO định hình dòng bộ dò một giai đoạn nhanh, dùng nhiều trên thiết bị di động."
+      },
       "resnet": {
         "title": "ResNet",
         "summary": "He và cộng sự thêm kết nối tắt dư, huấn luyện được mạng sâu hơn 100 lớp và thắng ILSVRC 2015.",
         "impact": "Kết nối dư thành thành phần tiêu chuẩn trong gần như mọi kiến trúc sâu về sau."
+      },
+      "denseNet": {
+        "title": "DenseNet",
+        "summary": "Huang và cộng sự nối mỗi lớp với mọi lớp phía sau trong khối, tái sử dụng đặc trưng với ít tham số.",
+        "impact": "Một hướng khác của kết nối tắt, phổ biến trong ảnh y tế nhờ hiệu quả tham số."
+      },
+      "sortTracking": {
+        "title": "SORT: theo vết nhiều đối tượng",
+        "summary": "Bewley và cộng sự ghép kết quả của bộ dò qua các khung hình bằng bộ lọc Kalman và thuật toán Hungary, cực kỳ đơn giản mà nhanh.",
+        "impact": "Khuôn mẫu \"dò rồi theo vết\" dùng trong đếm người, giám sát giao thông; DeepSORT và ByteTrack phát triển từ đây."
+      },
+      "cityscapes": {
+        "title": "Bộ dữ liệu Cityscapes",
+        "summary": "Cordts và cộng sự gán nhãn chi tiết từng điểm ảnh cho ảnh đường phố của 50 thành phố.",
+        "impact": "Benchmark chuẩn cho phân vùng ngữ nghĩa cảnh đô thị và xe tự hành."
+      },
+      "openPose": {
+        "title": "OpenPose",
+        "summary": "Cao và cộng sự ước lượng khung xương nhiều người cùng lúc bằng các trường liên kết bộ phận, chạy thời gian thực.",
+        "impact": "Mã nguồn mở được dùng rộng rãi cho phân tích thể thao, vật lý trị liệu và hoạt hình."
+      },
+      "pix2pix": {
+        "title": "pix2pix",
+        "summary": "Isola và cộng sự dùng GAN có điều kiện để dịch ảnh sang ảnh: phác thảo thành ảnh chụp, bản đồ thành ảnh vệ tinh, ngày thành đêm.",
+        "impact": "Một khung chung cho mọi bài toán biến đổi ảnh có cặp dữ liệu."
+      },
+      "featurePyramidNetworks": {
+        "title": "Mạng kim tự tháp đặc trưng (FPN)",
+        "summary": "Lin và cộng sự kết hợp đặc trưng sâu và nông theo đường từ trên xuống, giúp dò tốt cả vật thể nhỏ lẫn lớn.",
+        "impact": "Thành phần tiêu chuẩn trong gần như mọi bộ dò và mô hình phân vùng hiện đại."
       },
       "maskRcnn": {
         "title": "Mask R-CNN",
         "summary": "Mở rộng Faster R-CNN bằng một nhánh dự đoán mặt nạ, cho ra phân vùng từng thực thể.",
         "impact": "Thống nhất dò vật thể và phân vùng trong một mô hình, chuẩn mực cho nhiều ứng dụng công nghiệp."
       },
+      "cycleGan": {
+        "title": "CycleGAN",
+        "summary": "Zhu và cộng sự dịch ảnh giữa hai miền không cần dữ liệu cặp, nhờ ràng buộc nhất quán vòng.",
+        "impact": "Ngựa thành ngựa vằn, ảnh thành tranh Monet: chuyển miền ảnh khi không có dữ liệu ghép đôi."
+      },
+      "mobileNets": {
+        "title": "MobileNets",
+        "summary": "Howard và cộng sự dùng tích chập tách theo chiều sâu để tạo mạng nhỏ, nhanh cho điện thoại và thiết bị nhúng.",
+        "impact": "Đưa CNN chạy ngay trên điện thoại, camera và thiết bị IoT."
+      },
+      "kineticsI3d": {
+        "title": "Kinetics và I3D",
+        "summary": "Carreira và Zisserman giới thiệu bộ dữ liệu hành động Kinetics và \"thổi phồng\" CNN 2D thành 3D để nhận dạng hành động trong video.",
+        "impact": "Đặt nền cho nhận dạng hành động bằng học sâu, giống vai trò ImageNet với ảnh tĩnh."
+      },
       "transformerArchitecture": {
         "title": "Kiến trúc Transformer",
         "summary": "Bài báo Attention Is All You Need bỏ hẳn hồi quy và tích chập, chỉ dùng cơ chế tự chú ý.",
         "impact": "Ba năm sau, chính kiến trúc này thay thế CNN trong thị giác."
+      },
+      "focalLoss": {
+        "title": "RetinaNet và focal loss",
+        "summary": "Lin và cộng sự giảm trọng số các mẫu nền dễ, giúp bộ dò một giai đoạn lần đầu vượt độ chính xác của bộ dò hai giai đoạn.",
+        "impact": "Focal loss trở thành hàm mất mát mặc định cho dữ liệu mất cân bằng trong dò vật thể."
+      },
+      "panopticSegmentation": {
+        "title": "Phân vùng toàn cảnh (panoptic)",
+        "summary": "Kirillov và cộng sự hợp nhất phân vùng ngữ nghĩa (\"stuff\") và phân vùng thực thể (\"things\") thành một bài toán và một thước đo PQ.",
+        "impact": "Định nghĩa lại mục tiêu phân vùng: mỗi điểm ảnh có cả lớp lẫn danh tính thực thể."
+      },
+      "arcFace": {
+        "title": "ArcFace",
+        "summary": "Deng và cộng sự thêm lề góc vào hàm mất mát softmax, tạo đặc trưng khuôn mặt phân biệt rõ hơn.",
+        "impact": "Chuẩn mực cho nhận dạng mặt trong cả nghiên cứu và hệ thống chấm công, xác thực thực tế."
+      },
+      "yoloV3": {
+        "title": "YOLOv3",
+        "summary": "Redmon và Farhadi bổ sung dự đoán đa tỉ lệ và backbone Darknet-53, cân bằng tốt tốc độ và độ chính xác.",
+        "impact": "Phiên bản YOLO được triển khai rộng rãi nhất một thời, khởi đầu hệ sinh thái YOLO cộng đồng (v4, v5, v8…)."
+      },
+      "styleGan": {
+        "title": "StyleGAN",
+        "summary": "Karras và cộng sự của NVIDIA điều khiển từng mức chi tiết của ảnh sinh qua các vector phong cách, tạo khuôn mặt giả gần như không phân biệt được.",
+        "impact": "Đỉnh cao chất lượng của GAN, đồng thời khởi đầu mối lo về deepfake."
+      },
+      "fcosAnchorFree": {
+        "title": "FCOS: dò vật thể không anchor",
+        "summary": "Tian và cộng sự dự đoán khoảng cách từ mỗi điểm tới bốn cạnh hộp, bỏ hoàn toàn anchor.",
+        "impact": "Đơn giản hóa thiết kế bộ dò; hướng không anchor được nhiều mô hình YOLO đời sau áp dụng."
+      },
+      "efficientNet": {
+        "title": "EfficientNet",
+        "summary": "Tan và Le mở rộng đồng thời chiều sâu, chiều rộng và độ phân giải theo một hệ số chung, tìm kiến trúc gốc bằng NAS.",
+        "impact": "Đạt độ chính xác cao với ít phép tính hơn nhiều, phổ biến trong các cuộc thi và ứng dụng thực tế."
+      },
+      "momentumContrast": {
+        "title": "MoCo: học tự giám sát tương phản",
+        "summary": "He và cộng sự học biểu diễn ảnh không cần nhãn bằng cách phân biệt các biến thể của cùng một ảnh với hàng đợi ảnh khác.",
+        "impact": "Lần đầu biểu diễn tự giám sát vượt tiền huấn luyện có nhãn trên nhiều tác vụ dò và phân vùng."
+      },
+      "simClr": {
+        "title": "SimCLR",
+        "summary": "Chen và cộng sự cho thấy chỉ cần tăng cường dữ liệu mạnh, lô lớn và đầu chiếu là học tương phản đạt gần mức có giám sát.",
+        "impact": "Công thức đơn giản giúp học tự giám sát phổ biến rộng rãi."
+      },
+      "raftFlow": {
+        "title": "RAFT",
+        "summary": "Teed và Deng ước lượng dòng quang học bằng cách lặp lại việc tra một khối tương quan đầy đủ giữa mọi cặp điểm ảnh; giải bài báo xuất sắc ECCV 2020.",
+        "impact": "Chuẩn mực mới của dòng quang học, dùng trong nội suy khung hình và chỉnh sửa video."
       },
       "nerf": {
         "title": "NeRF",
@@ -353,50 +715,190 @@
         "summary": "Carion và cộng sự dò vật thể bằng transformer, bỏ anchor và bước hậu xử lý NMS.",
         "impact": "Dò vật thể thành bài toán dự đoán tập hợp, đơn giản hóa cả quy trình."
       },
+      "denoisingDiffusion": {
+        "title": "Mô hình khuếch tán khử nhiễu (DDPM)",
+        "summary": "Ho, Jain và Abbeel sinh ảnh bằng cách học đảo ngược từng bước quá trình thêm nhiễu, đạt chất lượng sánh ngang GAN.",
+        "impact": "Nền tảng của gần như mọi mô hình sinh ảnh và video hiện nay."
+      },
       "visionTransformer": {
         "title": "Vision Transformer (ViT)",
         "summary": "Ảnh được chia thành các ô 16×16 rồi đưa vào transformer như một chuỗi token, vượt CNN khi có đủ dữ liệu.",
         "impact": "Thị giác và ngôn ngữ dùng chung một kiến trúc, mở đường cho mô hình đa phương thức."
+      },
+      "dataEfficientTransformers": {
+        "title": "DeiT",
+        "summary": "Touvron và cộng sự huấn luyện ViT chỉ trên ImageNet-1k nhờ chưng cất tri thức và tăng cường dữ liệu mạnh.",
+        "impact": "Cho thấy transformer thị giác không nhất thiết cần dữ liệu khổng lồ, mở rộng cửa cho cộng đồng nghiên cứu."
+      },
+      "dallE": {
+        "title": "DALL·E",
+        "summary": "OpenAI sinh ảnh từ mô tả văn bản bằng một transformer tự hồi quy trên token văn bản và token ảnh.",
+        "impact": "Khởi đầu kỷ nguyên tạo ảnh từ văn bản trong mắt công chúng."
       },
       "clip": {
         "title": "CLIP",
         "summary": "Huấn luyện ảnh và văn bản trên 400 triệu cặp lấy từ web, phân loại được lớp mới mà không cần nhãn (zero-shot).",
         "impact": "Nền tảng cho tìm kiếm ảnh bằng ngôn ngữ tự nhiên và cho các mô hình sinh ảnh theo mô tả."
       },
+      "swinTransformer": {
+        "title": "Swin Transformer",
+        "summary": "Liu và cộng sự tính chú ý trong các cửa sổ dịch chuyển và xây dựng đặc trưng phân cấp như CNN.",
+        "impact": "Backbone transformer đa dụng cho dò vật thể và phân vùng, thắng giải bài báo xuất sắc ICCV 2021."
+      },
+      "dino": {
+        "title": "DINO",
+        "summary": "Caron và cộng sự huấn luyện ViT tự giám sát bằng chưng cất giữa mạng thầy và trò, không cần nhãn.",
+        "impact": "Bản đồ chú ý tự tách được vật thể khỏi nền, mở đầu dòng DINO làm đặc trưng thị giác đa dụng."
+      },
+      "segFormer": {
+        "title": "SegFormer",
+        "summary": "Xie và cộng sự kết hợp encoder transformer phân cấp với bộ giải mã MLP nhẹ cho phân vùng ngữ nghĩa.",
+        "impact": "Phân vùng bằng transformer vừa chính xác vừa đủ nhẹ để triển khai."
+      },
+      "maskedAutoencoders": {
+        "title": "Masked Autoencoders (MAE)",
+        "summary": "He và cộng sự che ngẫu nhiên 75% các ô ảnh và huấn luyện ViT khôi phục lại phần bị che.",
+        "impact": "Đưa cách tiền huấn luyện \"điền vào chỗ trống\" của BERT sang ảnh, đơn giản và mở rộng tốt."
+      },
+      "convNext": {
+        "title": "ConvNeXt",
+        "summary": "Liu và cộng sự hiện đại hóa ResNet theo từng lựa chọn thiết kế của transformer, đạt độ chính xác ngang Swin.",
+        "impact": "Cho thấy CNN thuần vẫn cạnh tranh được, khi được thiết kế lại với kinh nghiệm hiện đại."
+      },
       "latentDiffusion": {
         "title": "Khuếch tán tiềm ẩn và Stable Diffusion",
         "summary": "Rombach và cộng sự chạy quá trình khuếch tán trong không gian tiềm ẩn, giảm mạnh chi phí tính toán; mô hình được phát hành công khai năm 2022.",
         "impact": "Tạo ảnh từ văn bản thành công cụ đại chúng, chạy được trên một GPU phổ thông."
       },
-      "segmentAnything": {
-        "title": "Segment Anything (SAM)",
-        "summary": "Meta phát hành mô hình phân vùng điều khiển bằng gợi ý, kèm bộ dữ liệu hơn một tỉ mặt nạ.",
-        "impact": "Mô hình nền tảng đầu tiên cho phân vùng: dùng được ngay trên ảnh lạ, không cần huấn luyện lại."
+      "dallE2": {
+        "title": "DALL·E 2",
+        "summary": "OpenAI sinh ảnh bằng mô hình khuếch tán điều kiện trên nhúng ảnh CLIP, chất lượng và độ bám mô tả vượt bậc.",
+        "impact": "Đưa tạo ảnh từ văn bản thành sản phẩm đại chúng và khởi động cuộc đua mô hình sinh ảnh."
       },
-      "rtDetr": {
-        "title": "RT-DETR",
-        "summary": "Nhóm Baidu giới thiệu bộ dò vật thể transformer đầu cuối chạy thời gian thực: bộ mã hóa lai xử lý đặc trưng đa tỉ lệ hiệu quả, vẫn không cần bước NMS, vượt các mô hình YOLO cùng thời trên COCO về cả tốc độ lẫn độ chính xác.",
-        "impact": "Chứng minh dòng DETR đủ nhanh để triển khai thực tế, khép lại khoảng cách giữa transformer và YOLO trong dò vật thể thời gian thực."
+      "imagen": {
+        "title": "Imagen",
+        "summary": "Google cho thấy dùng bộ mã hóa ngôn ngữ lớn (T5) giúp ảnh sinh bám sát mô tả hơn là tăng cỡ mô hình ảnh.",
+        "impact": "Khẳng định vai trò của hiểu ngôn ngữ trong sinh ảnh; khuếch tán phân tầng nhiều độ phân giải."
       },
-      "gaussianSplatting": {
-        "title": "3D Gaussian Splatting",
-        "summary": "Biểu diễn cảnh bằng hàng triệu hạt Gaussian, dựng hình thời gian thực với chất lượng tương đương NeRF.",
-        "impact": "Đưa dựng cảnh 3D từ ảnh vào thời gian thực, đủ nhanh cho sản phẩm."
+      "laion5b": {
+        "title": "LAION-5B",
+        "summary": "Cộng đồng LAION công bố 5,85 tỉ cặp ảnh – văn bản lọc bằng CLIP từ web, mở cho nghiên cứu.",
+        "impact": "Dữ liệu huấn luyện Stable Diffusion và nhiều mô hình mở, đồng thời làm dấy lên tranh luận về bản quyền và nội dung không phù hợp."
+      },
+      "diffusionTransformers": {
+        "title": "Diffusion Transformer (DiT)",
+        "summary": "Peebles và Xie thay U-Net trong mô hình khuếch tán bằng transformer, chất lượng tăng đều khi tăng tính toán.",
+        "impact": "Kiến trúc nền của thế hệ mô hình sinh ảnh và video mới như Stable Diffusion 3 và Sora."
+      },
+      "blip2": {
+        "title": "BLIP-2",
+        "summary": "Salesforce nối bộ mã hóa ảnh và mô hình ngôn ngữ lớn đã đóng băng bằng một Q-Former nhỏ, huấn luyện rất rẻ.",
+        "impact": "Công thức ghép ảnh vào LLM mà nhiều mô hình thị giác – ngôn ngữ mở về sau kế thừa."
+      },
+      "controlNet": {
+        "title": "ControlNet",
+        "summary": "Zhang và cộng sự thêm điều kiện không gian (cạnh, tư thế, độ sâu) vào mô hình khuếch tán đã huấn luyện mà không làm hỏng nó.",
+        "impact": "Biến sinh ảnh thành công cụ điều khiển được cho thiết kế và sản xuất nội dung."
+      },
+      "sigLip": {
+        "title": "SigLIP",
+        "summary": "Zhai và cộng sự thay softmax trong huấn luyện kiểu CLIP bằng hàm sigmoid theo từng cặp, hiệu quả hơn ở lô nhỏ.",
+        "impact": "Bộ mã hóa ảnh được nhiều mô hình thị giác – ngôn ngữ mở hiện nay chọn dùng."
       },
       "multimodalAssistants": {
         "title": "Mô hình ngôn ngữ nhìn được ảnh",
         "summary": "Các mô hình ngôn ngữ lớn nhận thêm đầu vào ảnh, trả lời câu hỏi và suy luận trên nội dung hình ảnh.",
         "impact": "Thị giác chuyển từ danh sách nhãn cố định sang hội thoại mở về nội dung ảnh."
       },
+      "groundingDino": {
+        "title": "Grounding DINO",
+        "summary": "Liu và cộng sự kết hợp bộ dò DINO với ngôn ngữ để dò bất kỳ vật thể nào được mô tả bằng chữ.",
+        "impact": "Dò vật thể từ vốn nhãn cố định chuyển sang từ vựng mở."
+      },
+      "segmentAnything": {
+        "title": "Segment Anything (SAM)",
+        "summary": "Meta phát hành mô hình phân vùng điều khiển bằng gợi ý, kèm bộ dữ liệu hơn một tỉ mặt nạ.",
+        "impact": "Mô hình nền tảng đầu tiên cho phân vùng: dùng được ngay trên ảnh lạ, không cần huấn luyện lại."
+      },
+      "dinoV2": {
+        "title": "DINOv2",
+        "summary": "Meta huấn luyện tự giám sát trên 142 triệu ảnh được tuyển chọn, cho đặc trưng dùng được ngay cho phân loại, phân vùng và độ sâu.",
+        "impact": "Backbone thị giác đa dụng không cần nhãn, nền cho nhiều mô hình độ sâu và robot."
+      },
+      "rtDetr": {
+        "title": "RT-DETR",
+        "summary": "Nhóm Baidu giới thiệu bộ dò vật thể transformer đầu cuối chạy thời gian thực: bộ mã hóa lai xử lý đặc trưng đa tỉ lệ hiệu quả, vẫn không cần bước NMS, vượt các mô hình YOLO cùng thời trên COCO về cả tốc độ lẫn độ chính xác.",
+        "impact": "Chứng minh dòng DETR đủ nhanh để triển khai thực tế, khép lại khoảng cách giữa transformer và YOLO trong dò vật thể thời gian thực."
+      },
+      "llava": {
+        "title": "LLaVA",
+        "summary": "Liu và cộng sự tinh chỉnh LLM mở với dữ liệu hội thoại về ảnh do GPT-4 sinh ra, tạo trợ lý thị giác mã nguồn mở.",
+        "impact": "Mở đầu làn sóng mô hình thị giác – ngôn ngữ mở mà cộng đồng tự huấn luyện được."
+      },
+      "sdxl": {
+        "title": "SDXL",
+        "summary": "Stability AI phát hành mô hình khuếch tán mở lớn hơn với hai bộ mã hóa văn bản và mô hình tinh chỉnh, ảnh 1024 px.",
+        "impact": "Mô hình sinh ảnh mở được cộng đồng tinh chỉnh và dùng nhiều nhất một thời."
+      },
+      "gaussianSplatting": {
+        "title": "3D Gaussian Splatting",
+        "summary": "Biểu diễn cảnh bằng hàng triệu hạt Gaussian, dựng hình thời gian thực với chất lượng tương đương NeRF.",
+        "impact": "Đưa dựng cảnh 3D từ ảnh vào thời gian thực, đủ nhanh cho sản phẩm."
+      },
+      "dust3r": {
+        "title": "DUSt3R",
+        "summary": "Wang và cộng sự dự đoán trực tiếp bản đồ điểm 3D từ một cặp ảnh, không cần biết thông số camera.",
+        "impact": "Tái dựng 3D chuyển từ quy trình nhiều bước sang một mạng nơ-ron học đầu cuối."
+      },
+      "depthAnything": {
+        "title": "Depth Anything",
+        "summary": "Yang và cộng sự huấn luyện ước lượng độ sâu từ một ảnh trên hàng chục triệu ảnh không nhãn, gán nhãn giả bằng mô hình thầy.",
+        "impact": "Ước lượng độ sâu đơn ảnh dùng được cho mọi loại cảnh, như một mô hình nền tảng."
+      },
+      "yoloWorld": {
+        "title": "YOLO-World",
+        "summary": "Cheng và cộng sự đưa dò từ vựng mở vào kiến trúc YOLO, chạy thời gian thực với nhãn nhập bằng chữ.",
+        "impact": "Dò vật thể từ vựng mở trở nên đủ nhanh cho thiết bị biên."
+      },
+      "stableDiffusion3": {
+        "title": "Stable Diffusion 3 và rectified flow",
+        "summary": "Esser và cộng sự kết hợp rectified flow với transformer đa phương thức (MMDiT), cải thiện rõ khả năng viết chữ trong ảnh và bám mô tả.",
+        "impact": "Rectified flow và MMDiT trở thành công thức của nhiều mô hình sinh ảnh mới."
+      },
       "videoGeneration": {
         "title": "Sinh video",
         "summary": "Các mô hình khuếch tán mở rộng sang chiều thời gian, tạo được video ngắn có chuyển động nhất quán.",
         "impact": "Thách thức mới của ngành: giữ nhất quán theo thời gian và hiểu được vật lý của cảnh."
       },
+      "yoloV10": {
+        "title": "YOLOv10",
+        "summary": "Wang và cộng sự huấn luyện YOLO với gán nhãn kép để bỏ bước NMS, tiến tới dò đầu cuối thời gian thực.",
+        "impact": "Dòng YOLO tiếp thu ý tưởng không NMS của DETR, rút ngắn độ trễ khi triển khai."
+      },
+      "segmentAnything2": {
+        "title": "SAM 2",
+        "summary": "Meta mở rộng Segment Anything sang video bằng bộ nhớ theo thời gian, phân vùng và theo vết vật thể qua các khung hình.",
+        "impact": "Một mô hình nền tảng chung cho phân vùng ảnh và video."
+      },
+      "vggt": {
+        "title": "VGGT",
+        "summary": "Wang và cộng sự (Oxford, Meta) dự đoán camera, độ sâu, bản đồ điểm và vết điểm từ một đến hàng trăm ảnh trong một lần chạy mạng; giải bài báo xuất sắc CVPR 2025.",
+        "impact": "Mô hình nền tảng cho hình học 3D, thay thế phần lớn quy trình SfM truyền thống."
+      },
+      "dinoV3": {
+        "title": "DINOv3",
+        "summary": "Meta mở rộng học tự giám sát lên mô hình 7 tỉ tham số và 1,7 tỉ ảnh, cho đặc trưng dày chất lượng cao kể cả ảnh vệ tinh.",
+        "impact": "Đặc trưng thị giác không nhãn vượt nhiều mô hình chuyên biệt trên dò, phân vùng và độ sâu."
+      },
       "openVisionLanguage": {
         "title": "Mô hình thị giác – ngôn ngữ mở và thị giác hiện thân",
         "summary": "Nhiều mô hình thị giác – ngôn ngữ mở trọng số được phát hành, chạy được trên máy cá nhân và thiết bị biên; thị giác gắn với robot và tác tử trở thành hướng nghiên cứu chính.",
         "impact": "Phần lịch sử đang được viết. Mời bạn góp ý và đề xuất thêm mốc cho trang này."
+      },
+      "segmentAnything3": {
+        "title": "SAM 3",
+        "summary": "Meta cho phép phân vùng và theo vết mọi thực thể khớp một khái niệm mô tả bằng chữ hoặc ảnh mẫu, thay vì một điểm nhấp.",
+        "impact": "Phân vùng chuyển từ \"vật thể này\" sang \"mọi vật thể thuộc loại này\", hợp nhất dò, phân vùng và theo vết."
       }
     }
   },

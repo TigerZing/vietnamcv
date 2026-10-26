@@ -56,7 +56,7 @@ describe("roadmap data", () => {
     expect(span.years).toBe(span.to - span.from + 1);
   });
 
-  it("has copy in both languages for every era, milestone and kind", () => {
+  it("has copy in both languages for every era, milestone and topic", () => {
     for (const messages of [vi, en]) {
       const roadmap = messages.Roadmap as {
         eras: Record<string, { name: string; period: string; blurb: string }>;
@@ -64,7 +64,7 @@ describe("roadmap data", () => {
           string,
           { title: string; summary: string; impact: string }
         >;
-        kinds: Record<string, string>;
+        topics: Record<string, string>;
       };
       expect(Object.keys(roadmap.eras).sort()).toEqual(
         ERAS.map((era) => era.id).sort(),
@@ -73,7 +73,7 @@ describe("roadmap data", () => {
         MILESTONES.map((milestone) => milestone.id).sort(),
       );
       for (const milestone of MILESTONES) {
-        expect(roadmap.kinds[milestone.kind], milestone.kind).toBeTruthy();
+        expect(roadmap.topics[milestone.topic], milestone.topic).toBeTruthy();
         const entry = roadmap.milestones[milestone.id];
         expect(entry, milestone.id).toBeDefined();
         for (const field of ["title", "summary", "impact"] as const) {
