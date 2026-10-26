@@ -17,6 +17,7 @@
     "papers": "Papers",
     "openSource": "Open source",
     "news": "News",
+    "roadmap": "Roadmap",
     "tasks": "Tasks",
     "demos": "Demos",
     "search": "Search",
@@ -150,6 +151,249 @@
     "opensNewTab": "(opens in a new tab)",
     "emptyTitle": "No demo products yet",
     "emptyBody": "Demo products will appear here once they are added."
+  },
+  "Roadmap": {
+    "title": "The history of computer vision, 1957 to today",
+    "lead": "A timeline from the first digital image to today's foundation models. Every milestone links to the original work so you can read further.",
+    "stats": {
+      "milestones": "{count} milestones",
+      "eras": "{count} eras",
+      "span": "{from}–{to}"
+    },
+    "hero": {
+      "label": "The core problem: from pixels to meaning",
+      "steps": {
+        "pixels": "Pixels",
+        "edges": "Edges & features",
+        "features": "Learned features",
+        "meaning": "Meaning & generation"
+      }
+    },
+    "jumpLabel": "Jump to an era",
+    "timelineLabel": "Computer vision timeline",
+    "currentEra": "Viewing",
+    "milestoneCount": "{count, plural, one {# milestone} other {# milestones}}",
+    "detail": {
+      "show": "Why it matters",
+      "hide": "Collapse",
+      "source": "Read the original work",
+      "noSource": "No stable public record to link to yet."
+    },
+    "note": {
+      "title": "About this page",
+      "body": "VietnamCV compiled this timeline; each milestone links to the original work where a public record exists. The history of computer vision is wider than one page, so if an important milestone is missing, tell us and we will add it."
+    },
+    "kinds": {
+      "idea": "Idea",
+      "algorithm": "Algorithm",
+      "model": "Model",
+      "dataset": "Data & benchmark",
+      "generative": "Generative"
+    },
+    "eras": {
+      "origins": {
+        "name": "Origins",
+        "period": "1957 – 1969",
+        "blurb": "The first digital images, and a new question: can a machine see?"
+      },
+      "classical": {
+        "name": "Classical vision",
+        "period": "1970 – 1989",
+        "blurb": "Geometry, physics and mathematics, designed by hand one step at a time."
+      },
+      "features": {
+        "name": "Features & machine learning",
+        "period": "1990 – 2005",
+        "blurb": "Hand-crafted features plus statistical classifiers take vision out of the lab."
+      },
+      "deep": {
+        "name": "Big data & deep learning",
+        "period": "2006 – 2015",
+        "blurb": "ImageNet and GPUs make deep neural networks the default method."
+      },
+      "transformer": {
+        "name": "Transformers & multimodality",
+        "period": "2016 – 2021",
+        "blurb": "Attention replaces convolution; images and language share one space."
+      },
+      "generative": {
+        "name": "Generation & foundation models",
+        "period": "2022 – today",
+        "blurb": "Image, video and 3D generation, and foundation models shared across tasks."
+      }
+    },
+    "milestones": {
+      "firstDigitalImage": {
+        "title": "The first digital image",
+        "summary": "Russell Kirsch used the SEAC computer at the US National Bureau of Standards to scan a photo of his son into a 176×176 pixel grid.",
+        "impact": "For the first time an image existed in computer memory as numbers, the precondition for all later image processing."
+      },
+      "visualCortex": {
+        "title": "Simple and complex cells in the visual cortex",
+        "summary": "Hubel and Wiesel recorded cells in the cat visual cortex that fire only for edges at a specific orientation, organised in layers.",
+        "impact": "Layered receptive fields became the direct inspiration for convolutional networks."
+      },
+      "blocksWorld": {
+        "title": "Blocks world",
+        "summary": "Larry Roberts' MIT thesis recovered three-dimensional shape from a single two-dimensional photo of polyhedral blocks.",
+        "impact": "The foundation of 3D vision: inferring an object's geometry from a flat image."
+      },
+      "summerVisionProject": {
+        "title": "The MIT Summer Vision Project",
+        "summary": "Seymour Papert set a group of students the goal of solving segmentation and object recognition over a single summer.",
+        "impact": "A classic lesson: vision is far harder than human intuition suggests."
+      },
+      "neocognitron": {
+        "title": "Neocognitron",
+        "summary": "Kunihiko Fukushima built a layered network of S-cells and C-cells modelled on the visual cortex, recognising handwriting regardless of position.",
+        "impact": "The first convolution-and-downsampling architecture, the direct ancestor of the modern CNN."
+      },
+      "opticalFlow": {
+        "title": "Optical flow",
+        "summary": "Horn and Schunck, alongside Lucas and Kanade, showed how to estimate per-pixel motion between two frames.",
+        "impact": "Still the basis of object tracking, image stabilisation and video analysis today."
+      },
+      "marrVision": {
+        "title": "David Marr's three levels of analysis",
+        "summary": "The book Vision proposed splitting the problem into computational, representation-and-algorithm, and implementation levels.",
+        "impact": "A framework that turned vision into a structured science rather than a collection of tricks."
+      },
+      "backpropagation": {
+        "title": "Backpropagation",
+        "summary": "Rumelhart, Hinton and Williams popularised backpropagation for training multi-layer neural networks.",
+        "impact": "The same learning mechanism still sits underneath almost every vision model."
+      },
+      "cannyEdges": {
+        "title": "The Canny edge detector",
+        "summary": "John Canny framed edge detection as an optimisation with three criteria: few errors, accurate localisation, and one response per edge.",
+        "impact": "A classic image-processing algorithm that ships in every vision library to this day."
+      },
+      "eigenfaces": {
+        "title": "Eigenfaces",
+        "summary": "Turk and Pentland used principal component analysis to represent a face with a few dozen coefficients.",
+        "impact": "Face recognition that ran on ordinary computers, and an early move toward learning representations from data."
+      },
+      "lenet5": {
+        "title": "LeNet-5 and MNIST",
+        "summary": "Yann LeCun and colleagues trained a convolutional network to read handwritten digits, deployed commercially to process bank cheques.",
+        "impact": "Proof that CNNs worked in real products, more than a decade before the deep learning boom."
+      },
+      "sift": {
+        "title": "SIFT",
+        "summary": "David Lowe introduced local features invariant to scale and rotation, letting the same object be matched across different images.",
+        "impact": "The backbone of panorama stitching, SLAM and image retrieval throughout the 2000s."
+      },
+      "violaJones": {
+        "title": "Viola–Jones real-time face detection",
+        "summary": "A detector built from Haar features, AdaBoost and a cascade of classifiers, running in real time on the consumer CPUs of the day.",
+        "impact": "Put computer vision into consumer cameras and phones."
+      },
+      "hog": {
+        "title": "HOG features",
+        "summary": "Dalal and Triggs described objects with histograms of oriented gradients and paired them with an SVM to detect pedestrians.",
+        "impact": "The reference method for object detection throughout the pre-deep-learning era."
+      },
+      "pascalVoc": {
+        "title": "PASCAL VOC",
+        "summary": "An annual challenge with a shared dataset and evaluation protocol for classification, detection and segmentation.",
+        "impact": "Established the field's culture of fair measurement on public benchmarks."
+      },
+      "imagenet": {
+        "title": "ImageNet",
+        "summary": "Fei-Fei Li's group built a dataset of over 14 million images labelled along WordNet; the ILSVRC challenge started in 2010.",
+        "impact": "Data at this scale was the precondition for deep learning to show its strength."
+      },
+      "alexnet": {
+        "title": "AlexNet",
+        "summary": "Krizhevsky, Sutskever and Hinton trained a convolutional network on GPUs, cutting the ILSVRC 2012 top-5 error from around 26% to 15.3%.",
+        "impact": "The moment the whole field moved to deep learning, after a single competition."
+      },
+      "rcnn": {
+        "title": "R-CNN",
+        "summary": "Girshick and colleagues combined region proposals with CNN features, sharply improving detection accuracy.",
+        "impact": "The start of the two-stage detector line: Fast R-CNN, then Faster R-CNN."
+      },
+      "gan": {
+        "title": "Generative adversarial networks",
+        "summary": "Goodfellow and colleagues pitted a generator against a discriminator, producing new images that grew steadily more realistic.",
+        "impact": "Opened generative vision, the groundwork for AI image creation."
+      },
+      "unet": {
+        "title": "U-Net",
+        "summary": "An encoder–decoder architecture with skip connections that segments biomedical images accurately from very little training data.",
+        "impact": "Still the backbone of medical image segmentation, and of diffusion models."
+      },
+      "yolo": {
+        "title": "YOLO",
+        "summary": "Redmon and colleagues treated detection as a single regression over the whole image, reaching real-time speed.",
+        "impact": "Opened the way to vision on devices: security cameras, production lines, drones."
+      },
+      "resnet": {
+        "title": "ResNet",
+        "summary": "He and colleagues added residual skip connections, trained networks over 100 layers deep, and won ILSVRC 2015.",
+        "impact": "Residual connections became a standard component in almost every deep architecture since."
+      },
+      "maskRcnn": {
+        "title": "Mask R-CNN",
+        "summary": "Extended Faster R-CNN with a mask prediction branch, producing per-instance segmentation.",
+        "impact": "Unified detection and segmentation in one model, a reference for many industrial applications."
+      },
+      "transformerArchitecture": {
+        "title": "The Transformer architecture",
+        "summary": "The paper Attention Is All You Need dropped recurrence and convolution entirely in favour of self-attention.",
+        "impact": "Three years later the same architecture displaced CNNs in vision."
+      },
+      "nerf": {
+        "title": "NeRF",
+        "summary": "Represented a three-dimensional scene as a neural network, synthesising new viewpoints from only a few dozen photos.",
+        "impact": "Reshaped 3D vision: a scene became a learnable function rather than a polygon mesh."
+      },
+      "detr": {
+        "title": "DETR",
+        "summary": "Carion and colleagues detected objects with a transformer, removing anchors and the NMS post-processing step.",
+        "impact": "Detection became set prediction, which simplified the whole pipeline."
+      },
+      "visionTransformer": {
+        "title": "Vision Transformer (ViT)",
+        "summary": "An image is cut into 16×16 patches and fed to a transformer as a sequence of tokens, beating CNNs given enough data.",
+        "impact": "Vision and language came to share one architecture, opening the way to multimodal models."
+      },
+      "clip": {
+        "title": "CLIP",
+        "summary": "Trained on 400 million image–text pairs from the web, classifying unseen classes without labels (zero-shot).",
+        "impact": "The basis for searching images in natural language and for text-to-image generation."
+      },
+      "latentDiffusion": {
+        "title": "Latent diffusion and Stable Diffusion",
+        "summary": "Rombach and colleagues ran diffusion in a latent space, cutting compute cost sharply; the model was released publicly in 2022.",
+        "impact": "Text-to-image generation became a mainstream tool that runs on a single consumer GPU."
+      },
+      "segmentAnything": {
+        "title": "Segment Anything (SAM)",
+        "summary": "Meta released a promptable segmentation model together with a dataset of over a billion masks.",
+        "impact": "The first foundation model for segmentation: usable straight away on unfamiliar images, with no retraining."
+      },
+      "gaussianSplatting": {
+        "title": "3D Gaussian Splatting",
+        "summary": "Represents a scene as millions of Gaussian primitives, rendering in real time at quality comparable to NeRF.",
+        "impact": "Brought photo-based 3D reconstruction into real time, fast enough to ship."
+      },
+      "multimodalAssistants": {
+        "title": "Language models that see",
+        "summary": "Large language models took images as an extra input, answering questions and reasoning about visual content.",
+        "impact": "Vision moved from a fixed list of labels to open conversation about what an image contains."
+      },
+      "videoGeneration": {
+        "title": "Video generation",
+        "summary": "Diffusion models extended into the time dimension, producing short videos with coherent motion.",
+        "impact": "The field's new challenge: temporal consistency and an understanding of scene physics."
+      },
+      "openVisionLanguage": {
+        "title": "Open vision–language models and embodied vision",
+        "summary": "Many open-weight vision–language models were released that run on personal machines and edge devices, while vision for robots and agents became a main research direction.",
+        "impact": "This part of the history is still being written. Tell us which milestones this page should add."
+      }
+    }
   },
   "Comments": {
     "title": "Comments",
