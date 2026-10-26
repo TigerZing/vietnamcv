@@ -50,7 +50,9 @@ async def test_feed_paginates_with_cursor(client: AsyncClient) -> None:
 async def test_feed_filters(client: AsyncClient) -> None:
     by_region = (await client.get("/api/v1/news", params={"region": "vietnam"})).json()
     assert [item["slug"] for item in by_region["items"]] == ["older-post"]
-    by_category = (await client.get("/api/v1/news", params={"category": "research"})).json()
+    by_category = (
+        await client.get("/api/v1/news", params={"category": "models-open-source"})
+    ).json()
     assert [item["slug"] for item in by_category["items"]] == ["video-post"]
 
 
@@ -137,7 +139,7 @@ async def test_unpublished_content_is_hidden(client: AsyncClient, clean_database
 async def test_import_is_idempotent_and_audited(client: AsyncClient, clean_database: str) -> None:
     before = (await client.get("/api/v1/news/newest-post")).json()
     totals = await seed([FIXTURE], clean_database, client=FakeImageServer().client())
-    assert totals == {"created": 0, "updated": 3}
+    assert totals == {"created": 0, "updated": 3, "withdrawn": 0}
     after = (await client.get("/api/v1/news/newest-post")).json()
     assert after["published_at"] == before["published_at"]
 
@@ -147,6 +149,52 @@ async def test_import_is_idempotent_and_audited(client: AsyncClient, clean_datab
         actions = session.scalars(select(AuditEvent.action)).all()
     engine.dispose()
     assert actions == ["content.published"] * 3
+
+
+async def test_withdrawn_posts_are_archived_once(
+    client: AsyncClient, clean_database: str, tmp_path: Path
+) -> None:
+    data = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    video = next(item for item in data["items"] if item["slug"] == "video-post")
+    data["items"].remove(video)
+    data["withdrawn"] = [
+        {"source": "demo-lab", "external_id": "lab-1", "reason": "Not news"},
+        {"source": "demo-lab", "external_id": "never-imported", "reason": "Not news"},
+    ]
+    path = tmp_path / "news_withdrawn.json"
+    path.write_text(json.dumps(data), encoding="utf-8")
+    shutil.copytree(FIXTURE.parent / "images", tmp_path / "images")
+
+    totals = await seed([path], clean_database, client=FakeImageServer().client())
+    assert totals["withdrawn"] == 1
+    feed = (await client.get("/api/v1/news")).json()
+    assert [item["slug"] for item in feed["items"]] == ["newest-post", "older-post"]
+    assert (await client.get("/api/v1/news/video-post")).status_code == 404
+    again = await seed([path], clean_database, client=FakeImageServer().client())
+    assert again["withdrawn"] == 0
+
+    engine = create_engine(clean_database)
+    with Session(engine) as session:
+        actions = session.scalars(
+            select(AuditEvent.action).where(AuditEvent.action == "content.archived")
+        ).all()
+    engine.dispose()
+    assert actions == ["content.archived"]
+
+
+@pytest.mark.parametrize("category", ["research", "events"])
+def test_papers_and_competitions_are_not_collected(category: str) -> None:
+    data = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    data["items"][0]["category"] = category
+    with pytest.raises(ValueError, match="does not collect"):
+        CuratedNewsFile.model_validate(data)
+
+
+def test_a_post_cannot_be_both_listed_and_withdrawn() -> None:
+    data = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    data["withdrawn"] = [{"source": "demo-lab", "external_id": "lab-1", "reason": "x"}]
+    with pytest.raises(ValueError, match="both listed and withdrawn"):
+        CuratedNewsFile.model_validate(data)
 
 
 async def test_committed_seed_files_import(clean_database: str) -> None:

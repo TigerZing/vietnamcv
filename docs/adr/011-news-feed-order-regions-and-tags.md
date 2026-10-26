@@ -38,3 +38,15 @@ publishes a whole batch at once, so that order followed the file, not the news.
   taxonomy nodes instead of free strings.
 - `/api/v1/news/tags` is declared before `/api/v1/news/{slug}`, so no post can have the
   slug `tags`.
+
+## Amendment (2026-10-26)
+
+At the owner's request the News page drops its visible title, intro text and the hashtag
+bar; the region tabs lead the page and the list/card toggle is icon-only. Hashtags stay on
+posts and still filter the feed; an active hashtag shows once with a link that clears it.
+`GET /api/v1/news/tags` stays in the API, unused by the web app for now.
+
+News no longer carries research papers (they belong in Papers) or competitions and
+conference deadlines: the curated import rejects the `research` and `events` categories,
+and a curated file can list `withdrawn` posts, which the import archives (audited, kept in
+the database, gone from the site).

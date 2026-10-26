@@ -123,12 +123,11 @@
     "filters": {
       "regionsLabel": "Region",
       "all": "All",
-      "tagsLabel": "Technology",
       "clear": "Clear filters",
-      "activeTag": "Filtering by {tag}",
-      "tagCount": "{count, plural, one {# post} other {# posts}}",
       "emptyTitle": "No posts match these filters",
-      "emptyBody": "Try another region or remove the hashtag."
+      "emptyBody": "Try another region or remove the hashtag.",
+      "filteringBy": "Filtering by",
+      "clearTag": "Remove {tag} filter"
     },
     "time": {
       "today": "Today",

@@ -29,9 +29,10 @@ function Option({
       href={{ pathname: "/news", query: newsQuery(state, filters) }}
       aria-current={active ? "true" : undefined}
       aria-label={label}
+      title={label}
       scroll={false}
       className={cn(
-        "inline-flex min-h-9 min-w-9 items-center justify-center gap-1.5 rounded-md px-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+        "inline-flex min-h-9 min-w-9 items-center justify-center gap-1.5 rounded-md px-2.5 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
         active
           ? "bg-accent text-accent-foreground"
           : "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
@@ -58,18 +59,18 @@ export function FeedToolbar({
           <Option
             state={{ ...state, view: "list" }}
             filters={filters}
+            label={t("list")}
             active={state.view === "list"}
           >
             <List aria-hidden className="size-4" />
-            {t("list")}
           </Option>
           <Option
             state={{ ...state, view: "grid" }}
             filters={filters}
+            label={t("grid")}
             active={state.view === "grid"}
           >
             <LayoutGrid aria-hidden className="size-4" />
-            {t("grid")}
           </Option>
         </div>
       </nav>

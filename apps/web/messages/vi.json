@@ -123,12 +123,11 @@
     "filters": {
       "regionsLabel": "Khu vực",
       "all": "Tất cả",
-      "tagsLabel": "Công nghệ",
       "clear": "Bỏ lọc",
-      "activeTag": "Đang lọc theo {tag}",
-      "tagCount": "{count, plural, other {# bài}}",
       "emptyTitle": "Không có bài nào khớp bộ lọc",
-      "emptyBody": "Thử chọn khu vực khác hoặc bỏ hashtag đang lọc."
+      "emptyBody": "Thử chọn khu vực khác hoặc bỏ hashtag đang lọc.",
+      "filteringBy": "Đang lọc theo",
+      "clearTag": "Bỏ lọc {tag}"
     },
     "time": {
       "today": "Hôm nay",

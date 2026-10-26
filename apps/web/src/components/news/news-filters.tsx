@@ -2,7 +2,6 @@ import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
-import type { TagCount } from "@/lib/news";
 import {
   NEWS_REGIONS,
   newsQuery,
@@ -30,7 +29,7 @@ export function RegionTabs({
   return (
     <nav
       aria-label={t("filters.regionsLabel")}
-      className="border-b border-border"
+      className="flex-1 border-b border-border"
     >
       <ul className="-mb-px flex gap-1">
         {tabs.map(({ region, label }) => {
@@ -45,7 +44,7 @@ export function RegionTabs({
                 aria-current={active ? "page" : undefined}
                 scroll={false}
                 className={cn(
-                  "inline-flex min-h-11 items-center gap-2 border-b-2 px-3 text-sm font-medium transition-colors sm:px-4 sm:text-base",
+                  "inline-flex min-h-11 items-center gap-2 border-b-2 px-2 text-sm font-medium whitespace-nowrap transition-colors sm:px-4 sm:text-base",
                   active
                     ? "border-accent text-foreground"
                     : "border-transparent text-muted-foreground hover:text-foreground",
@@ -70,64 +69,31 @@ export function RegionTabs({
   );
 }
 
-/** The most used technology hashtags; choosing one filters the feed, again clears it. */
-export function TagBar({
-  tags,
+/** The hashtag the feed is filtered by, if any, with a link that clears it. */
+export function ActiveTag({
   state,
   filters,
 }: {
-  tags: TagCount[];
   state: NewsViewState;
   filters: NewsFilters;
 }) {
   const t = useTranslations("News.filters");
-  // The active tag stays visible even when the chosen region has no post with it.
-  const shown =
-    filters.tag && !tags.some(({ tag }) => tag === filters.tag)
-      ? [{ tag: filters.tag, count: 0 }, ...tags]
-      : tags;
-  if (shown.length === 0) return null;
+  if (!filters.tag) return null;
   return (
-    <nav aria-label={t("tagsLabel")} className="flex min-w-0 items-start gap-3">
-      <span className="mt-1.5 shrink-0 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-        {t("tagsLabel")}
-      </span>
-      <ul className="flex min-w-0 flex-wrap gap-1.5">
-        {shown.map(({ tag, count }) => {
-          const active = filters.tag === tag;
-          return (
-            <li key={tag}>
-              <Link
-                href={{
-                  pathname: "/news",
-                  query: newsQuery(state, {
-                    ...filters,
-                    tag: active ? null : tag,
-                  }),
-                }}
-                aria-current={active ? "true" : undefined}
-                scroll={false}
-                className={cn(
-                  "inline-flex min-h-8 items-center gap-1.5 rounded-full border px-3 font-mono text-xs transition-colors",
-                  active
-                    ? "border-accent bg-accent text-accent-foreground"
-                    : "border-border bg-surface text-foreground hover:border-accent/60",
-                )}
-              >
-                #{tag}
-                {active ? (
-                  <X aria-hidden className="size-3" />
-                ) : count > 0 ? (
-                  <span className="text-muted-foreground">
-                    <span className="sr-only">, </span>
-                    {t("tagCount", { count })}
-                  </span>
-                ) : null}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+    <p className="flex items-center gap-2 text-sm text-muted-foreground">
+      {t("filteringBy")}
+      <Link
+        href={{
+          pathname: "/news",
+          query: newsQuery(state, { ...filters, tag: null }),
+        }}
+        scroll={false}
+        aria-label={t("clearTag", { tag: `#${filters.tag}` })}
+        className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-accent bg-accent px-3 font-mono text-xs text-accent-foreground"
+      >
+        #{filters.tag}
+        <X aria-hidden className="size-3" />
+      </Link>
+    </p>
   );
 }

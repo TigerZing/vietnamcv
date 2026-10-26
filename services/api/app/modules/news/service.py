@@ -36,6 +36,7 @@ from app.modules.news.schemas import (
     CuratedImage,
     CuratedNewsFile,
     CuratedNewsItem,
+    CuratedWithdrawal,
     Image,
     Link,
     NewsDetail,
@@ -62,6 +63,7 @@ CURATED_TRUST_TIER = "curated"
 class ImportOutcome(StrEnum):
     CREATED = "created"
     UPDATED = "updated"
+    WITHDRAWN = "withdrawn"
 
 
 async def list_news(
@@ -359,6 +361,24 @@ async def import_item(
 
     await content_service.publish(session, content, actor_subject=CURATED_IMPORT_ACTOR)
     return outcome
+
+
+async def withdraw_item(
+    session: AsyncSession, entry: CuratedWithdrawal, sources: dict[str, Source]
+) -> bool:
+    """Archive a withdrawn post if it was imported; True when this run took it down."""
+    source = sources.get(entry.source)
+    if source is None:
+        raise ConflictError("Unknown source code", details={"source": entry.source})
+    link = await repository.find_link(session, source.id, entry.external_id)
+    if link is None:
+        return False
+    content = await repository.get_content(session, link.content_id)
+    assert content is not None  # noqa: S101 - FK guarantees the row exists
+    archived = await content_service.archive(session, content, actor_subject=CURATED_IMPORT_ACTOR)
+    if archived:
+        logger.info("news_withdrawn", slug=content.slug, reason=entry.reason)
+    return archived
 
 
 async def _import_image(

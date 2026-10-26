@@ -2,6 +2,7 @@
 
 Without arguments, imports every ``seed/news/*.json`` file. The import is idempotent:
 re-running it updates text and metadata of existing posts and never duplicates them.
+Posts listed under ``withdrawn`` are archived (taken off the site, kept in the database).
 Each post is committed separately so posts get distinct ``published_at`` values, older
 stories first, which keeps the feed in story order.
 
@@ -67,6 +68,12 @@ async def seed(
                     )
                     await session.commit()
                 totals[outcome.value] += 1
+            for withdrawal in data.withdrawn:
+                async with factory() as session:
+                    sources = await service.import_sources(session, data)
+                    if await service.withdraw_item(session, withdrawal, sources):
+                        totals[service.ImportOutcome.WITHDRAWN.value] += 1
+                    await session.commit()
             logger.info("news_seed_file_imported", file=path.name, items=len(data.items))
     finally:
         if client is None:

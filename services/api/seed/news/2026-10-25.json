@@ -1,5 +1,5 @@
 {
-  "description": "Rows approved (Duyệt) in the news sheet 'Tin tức CV 2026-10-25', exported 2026-10-25. Post text (Vietnamese and English) is written by VietnamCV from each source with AI assistance, never the full article. Images given by url are the source's own images (the lead image and, under figures, the images inside the article), shown with credit; their rights stay permission_pending until the owner agrees (ADR-010). Images given by file are VietnamCV's own illustrations.",
+  "description": "Rows approved (Duyệt) in the news sheet 'Tin tức CV 2026-10-25', exported 2026-10-25. Post text (Vietnamese and English) is written by VietnamCV from each source with AI assistance, never the full article. Images given by url are the source's own images (the lead image and, under figures, the images inside the article), shown with credit; their rights stay permission_pending until the owner agrees (ADR-010). Images given by file are VietnamCV's own illustrations. Posts under withdrawn were taken off the site: News does not carry research papers, competitions or conference deadlines.",
   "sources": [
     {
       "code": "vnexpress",
@@ -723,144 +723,6 @@
       ]
     },
     {
-      "slug": "eccv-2026-best-paper-heat-kernel-textures",
-      "title": "Computer Vision News - October 2026: ECCV 2026 Best Paper (Heat Kernel Textures)",
-      "text": {
-        "vi": {
-          "title": "Computer Vision News tháng 10/2026: Best Paper ECCV 2026 thuộc về Heat Kernel Textures",
-          "summary": "Giải Best Paper ECCV 2026 thuộc về Heat Kernel Textures của nhóm Imperial College London. Phương pháp thay UV mapping bằng heat kernel dị hướng đặt trực tiếp trên bề mặt lưới 3D, không dùng mạng nơ-ron và tốn ít bộ nhớ hơn phần lớn phương pháp so sánh.",
-          "body": "Số tháng 10/2026 của tạp chí Computer Vision News (RSIP Vision) giới thiệu bài báo đoạt giải Best Paper tại ECCV 2026: Heat Kernel Textures (HKTex) của Simone Foti, Caner Korkmaz, Tolga Birdal (Imperial College London) và Stefanos Zafeiriou.\n\n## Vấn đề với UV mapping\n\nĐể tô màu cho mô hình 3D, cách phổ biến là \"trải phẳng\" bề mặt lưới (mesh) lên một ảnh 2D, gọi là UV mapping. Cách này dễ gây đường nối, méo hình, lãng phí không gian texture và độ phân giải không đều trên bề mặt.\n\n## Ý tưởng của HKTex\n\nHKTex biểu diễn texture bằng các heat kernel dị hướng nằm ngay trên bề mặt lưới 3D. Có thể hình dung chúng là phiên bản \"trắc địa\" của các hàm Gauss: lan theo bề mặt thay vì lan trong không gian 3D xung quanh. Ý tưởng lấy cảm hứng từ Gaussian splatting, nhưng khắc phục điểm yếu là Gaussian splatting mang tính thể tích và không bám tự nhiên theo bề mặt.\n\nPhương pháp không có mạng nơ-ron nào được huấn luyện. Nó kết hợp heat kernel, tối ưu Riemann, đường trắc địa và kết xuất khả vi (differentiable rendering) để khôi phục màu bề mặt từ ảnh nhiều góc nhìn. Để chạy nhanh, nhóm tính trước phân rã riêng của toán tử Laplace-Beltrami dị hướng trên một lưới giá trị rồi nội suy, chỉ chọn các nguồn nhiệt gần nhất, và lấy mẫu từng điểm ảnh thay vì kết xuất cả ảnh.\n\n## Kết quả\n\n- Khi khớp texture UV có sẵn: chất lượng tái tạo cạnh tranh, dung lượng lưu trữ thấp hơn phần lớn phương pháp được thử.\n- Khi học từ ảnh nhiều góc nhìn: vượt các phương pháp dựa trên đỉnh lưới độ phân giải cao và phương pháp nơ-ron ở mọi chỉ số chất lượng ảnh được báo cáo, với dung lượng thấp hơn đáng kể.\n\nBài tạp chí không nêu con số cụ thể. Hướng phát triển tiếp theo là mở rộng cho độ nhám và phản xạ của bề mặt."
-        },
-        "en": {
-          "title": "Computer Vision News - October 2026: ECCV 2026 Best Paper (Heat Kernel Textures)",
-          "summary": "The ECCV 2026 Best Paper award went to Heat Kernel Textures from Imperial College London. The method replaces UV mapping with anisotropic heat kernels placed directly on the 3D mesh surface, uses no neural network and needs less storage than most compared methods.",
-          "body": "The October 2026 issue of Computer Vision News (RSIP Vision) features the ECCV 2026 Best Paper: Heat Kernel Textures (HKTex) by Simone Foti, Caner Korkmaz, Tolga Birdal (Imperial College London) and Stefanos Zafeiriou.\n\n## The trouble with UV mapping\n\nTo colour a 3D model, the usual approach is to unwrap the mesh surface onto a flat 2D image, called UV mapping. This tends to cause seams, distortion, wasted texture space and uneven resolution across the surface.\n\n## The HKTex idea\n\nHKTex represents texture with anisotropic heat kernels that live directly on the 3D mesh surface. Think of them as geodesic versions of Gaussians: they spread along the surface rather than through the surrounding 3D space. The idea is inspired by Gaussian splatting but addresses its weakness that splats are volumetric and do not naturally follow surfaces.\n\nThere is no trained neural network. The method combines heat kernels, Riemannian optimisation, geodesics and differentiable rendering to recover surface appearance from multi-view images. For speed, the team precomputes eigendecompositions of anisotropic Laplace-Beltrami operators on a grid of values and interpolates, keeps only the nearest heat sources, and samples individual pixels instead of rendering whole images.\n\n## Results\n\n- Fitting existing UV textures: competitive reconstruction quality with less storage than most tested methods.\n- Learning from multi-view images: better than high-resolution vertex-based and neural baselines on every reported image-quality metric, with substantially less storage.\n\nThe magazine article gives no specific numbers. Future work includes extending the representation to roughness and specular appearance."
-        }
-      },
-      "ai_assisted": true,
-      "source": "rsip-vision",
-      "external_id": "https://www.rsipvision.com/ComputerVisionNews-2026October/#eccv-2026-best-paper",
-      "url": "https://www.rsipvision.com/ComputerVisionNews-2026October/",
-      "collected_on": "2026-10-25",
-      "published_on": "2026-10-01",
-      "published_precision": "month",
-      "region": "international",
-      "category": "research",
-      "keywords": [
-        "ECCV 2026",
-        "best paper",
-        "texture 3D"
-      ],
-      "tags": [
-        "ECCV",
-        "3DVision",
-        "Texture"
-      ],
-      "original_language": "en",
-      "editor_note": "Tạp chí số tháng 10, không có ngày cụ thể",
-      "video": {
-        "provider": "youtube",
-        "id": "FA0QSIK1tNU",
-        "title": "ECCV 2026 [Long Oral]. Heat Kernel Textures: the Geodesic Gaussians That Do Not Splat"
-      },
-      "image": {
-        "url": "https://i.ytimg.com/vi/FA0QSIK1tNU/hqdefault.jpg",
-        "alt": "Ảnh đại diện video trình bày Heat Kernel Textures tại ECCV 2026",
-        "credit": "YouTube: ECCV 2026 Long Oral, Heat Kernel Textures",
-        "credit_url": "https://www.youtube.com/watch?v=FA0QSIK1tNU",
-        "rights": "permission_pending"
-      }
-    },
-    {
-      "slug": "feel-force-enhanced-egocentric-learning",
-      "title": "Computer Vision News - October 2026: FEEL (Force-Enhanced Egocentric Learning)",
-      "text": {
-        "vi": {
-          "title": "Computer Vision News tháng 10/2026: FEEL, học từ góc nhìn thứ nhất có thêm dữ liệu lực",
-          "summary": "Nhóm Đại học Maryland ghép găng tay cảm biến lực với kính Meta Aria để thu lực tác động phía sau hành động, giúp phát hiện tiếp xúc không cần gán nhãn thủ công và cải thiện nhận dạng hành động. Cùng số báo có MIMFlow (Đại học Nam Kinh), FID 2,50 trên ImageNet 256x256.",
-          "body": "Số tháng 10/2026 của Computer Vision News giới thiệu FEEL (Force-Enhanced Egocentric Learning), bài báo được chọn trình bày dạng long oral tại ECCV 2026 của Eadom Dessalene, người vừa bảo vệ tiến sĩ và tiếp tục làm nghiên cứu sau tiến sĩ với giáo sư Yiannis Aloimonos tại Đại học Maryland.\n\n## Thiết bị: găng tay đo lực và kính Meta Aria\n\nNhóm tự làm găng tay đo lực từ cảm biến rẻ tiền bán sẵn: mỗi đầu ngón tay một cảm biến và một cảm biến trải ngang lòng bàn tay. Găng tay được dùng cùng kính Meta Aria để ghi đồng thời video góc nhìn thứ nhất (egocentric) và lực mà bàn tay tác động lên đồ vật. Thu dữ liệu không dễ: găng tay hỏng vài lần và trục trặc trong lúc ghi, nhiều dữ liệu phải bỏ. Tác giả cho rằng găng tay độ phân giải cao hơn, đo được cả lực cắt sẽ tốt hơn.\n\n## Hai bài toán\n\n- Hiểu tiếp xúc: mô hình học khi nào bàn tay chạm vào vật và vật đó là gì.\n- Dự đoán lực như một nhiệm vụ tiền huấn luyện tự giám sát cho mô hình video.\n\n## Kết quả\n\n- Đạt kết quả tốt nhất (state-of-the-art) về phát hiện tiếp xúc theo thời gian trên nhiều bộ đánh giá mà không cần nhãn tiếp xúc gán tay.\n- Tiền huấn luyện bằng lực cải thiện nhận dạng hành động trên các bộ dữ liệu video quen thuộc.\n\nNghiên cứu tiếp theo, MotorSense, dùng vòng đeo đo điện cơ (EMG) ở hai cánh tay kết hợp với video.\n\n## Cùng số báo: MIMFlow\n\nMIMFlow của Yang Chen và giáo sư Limin Wang (Đại học Nam Kinh) kết hợp mô hình ảnh che mặt nạ (masked image modeling) với normalizing flow để sinh ảnh đầu-cuối. Bản MIMFlow-L đạt FID 2,50 trên ImageNet 256x256, tốt hơn một mô hình normalizing flow có kích thước tương đương, và độ chính xác linear probing 71,3%."
-        },
-        "en": {
-          "title": "Computer Vision News - October 2026: FEEL (Force-Enhanced Egocentric Learning)",
-          "summary": "A University of Maryland team paired force-sensing gloves with Meta Aria glasses to capture the forces behind actions, enabling contact detection without manual labels and better action recognition. The same issue covers MIMFlow (Nanjing University), with an FID of 2.50 on ImageNet 256x256.",
-          "body": "The October 2026 issue of Computer Vision News features FEEL (Force-Enhanced Egocentric Learning), selected for a long oral at ECCV 2026. Its author, Eadom Dessalene, recently defended his PhD and continues as a postdoc with Professor Yiannis Aloimonos at the University of Maryland.\n\n## Setup: force gloves and Meta Aria glasses\n\nThe team built force-sensing gloves from inexpensive off-the-shelf sensors: one on each fingertip and one across the palm. The gloves are worn with Meta Aria glasses to record first-person (egocentric) video together with the forces the hands apply to objects. Collecting data was hard: the gloves broke several times and malfunctioned during recording, and a lot of data had to be discarded. The author suggests higher-resolution gloves that also sense shear would work better.\n\n## Two tasks\n\n- Contact understanding: learning when a hand touches an object and which object it is.\n- Force prediction as a self-supervised pretraining task for video models.\n\n## Results\n\n- State-of-the-art temporal contact detection on several benchmarks without manually annotated contact labels.\n- Force-based pretraining improves action recognition on established video datasets.\n\nA follow-up project, MotorSense, uses EMG wristbands on both arms together with video.\n\n## Also in this issue: MIMFlow\n\nMIMFlow by Yang Chen and Professor Limin Wang (Nanjing University) combines masked image modelling with normalising flows for end-to-end image generation. MIMFlow-L reaches an FID of 2.50 on ImageNet 256x256, better than a similarly sized normalising-flow baseline, with 71.3% linear-probing accuracy."
-        }
-      },
-      "ai_assisted": true,
-      "source": "rsip-vision",
-      "external_id": "https://www.rsipvision.com/ComputerVisionNews-2026October/#feel",
-      "url": "https://www.rsipvision.com/ComputerVisionNews-2026October/",
-      "collected_on": "2026-10-25",
-      "published_on": "2026-10-01",
-      "published_precision": "month",
-      "region": "international",
-      "category": "datasets",
-      "keywords": [
-        "egocentric",
-        "cảm biến lực",
-        "Meta Aria"
-      ],
-      "tags": [
-        "EgocentricVision",
-        "Dataset",
-        "ForceSensing"
-      ],
-      "original_language": "en",
-      "editor_note": "Tạp chí số tháng 10, không có ngày cụ thể",
-      "image": {
-        "url": "https://www.rsipvision.com/ComputerVisionNews-2026October/files/assets/html/skin/images/fbThumb.jpg",
-        "alt": "Bìa tạp chí Computer Vision News số tháng 10/2026",
-        "credit": "Computer Vision News (RSIP Vision)",
-        "credit_url": "https://www.rsipvision.com/ComputerVisionNews-2026October/",
-        "rights": "permission_pending"
-      }
-    },
-    {
-      "slug": "cv-conference-deadlines-2026-2027",
-      "title": "CV Conference Deadlines 2026-2027: CVPR, ICCV",
-      "text": {
-        "vi": {
-          "title": "Hạn nộp bài các hội nghị thị giác máy tính 2026-2027: CVPR, ICCV và các hội nghị khác",
-          "summary": "Hạn gần nhất: WACV 2027 nộp bản camera-ready ngày 3/11/2026. CVPR 2027 (22-25/6/2027): đề xuất workshop 4/11, đăng ký bài 10/11, nộp toàn văn 16/11/2026 (giờ AoE, tức chiều hôm sau theo giờ Việt Nam). ICCV 2027 tại Hồng Kông, hạn nộp dự kiến đầu tháng 3/2027.",
-          "body": "Danh sách dưới đây tổng hợp các hạn nộp bài sắp tới cho người làm thị giác máy tính, theo trang theo dõi hạn hội nghị của Bibby truy cập ngày 25/10/2026.\n\n## Cách đọc giờ AoE\n\nNhiều hội nghị dùng giờ AoE (Anywhere on Earth, UTC-12). Hạn 23:59 AoE ngày X tương ứng 18:59 ngày X+1 theo giờ Việt Nam. Trang Bibby ghi chú CVPR có thể dùng giờ Thái Bình Dương, vì vậy hãy kiểm tra trên trang chính thức.\n\n## Hạn gần nhất\n\n- WACV 2027 (4-8/1/2027, Florida): nộp bản camera-ready ngày 3/11/2026.\n- CVPR 2027 (22-25/6/2027): đề xuất workshop 4/11, đăng ký bài 10/11, nộp toàn văn 16/11 và tài liệu bổ sung 23/11/2026.\n\n## Đầu năm 2027\n\n- ICME 2027: khoảng 16/12/2026 (ước tính).\n- MIDL 2027 (Porto, Bồ Đào Nha): khoảng 16/1/2027 (ước tính).\n- SIGGRAPH 2027: vòng 1 ngày 21/1/2027.\n- ICDAR 2027 (Kuala Lumpur): tóm tắt 1/2, toàn văn 21/2/2027.\n- ICIP 2027 (Singapore): khoảng 2/2/2027 (ước tính).\n- MICCAI 2027: khoảng 26/2/2027 (ước tính).\n- ICCV 2027 (2-8/10/2027, Hồng Kông): khoảng 6/3/2027, là ước tính cho tới khi có thông báo mời nộp bài chính thức.\n- ACM MM 2027: khoảng 9/4/2027 (ước tính).\n\nCác ngày ghi \"ước tính\" được suy ra từ lịch các năm trước. Trước khi nộp, hãy đối chiếu với trang chính thức của từng hội nghị."
-        },
-        "en": {
-          "title": "CV Conference Deadlines 2026-2027: CVPR, ICCV",
-          "summary": "Next up: WACV 2027 camera-ready on 3 November 2026. CVPR 2027 (22-25 June 2027): workshop proposals 4 November, paper registration 10 November, full papers 16 November 2026 (AoE). ICCV 2027 in Hong Kong has an estimated deadline in early March 2027.",
-          "body": "Below are upcoming submission deadlines for computer vision researchers, from Bibby's conference deadline tracker as accessed on 25 October 2026.\n\n## Reading AoE times\n\nMany conferences use AoE (Anywhere on Earth, UTC-12). A deadline of 23:59 AoE on day X is 18:59 on day X+1 in Vietnam. Bibby notes that CVPR may use Pacific time, so check the official site.\n\n## Coming up\n\n- WACV 2027 (4-8 January 2027, Florida): camera-ready due 3 November 2026.\n- CVPR 2027 (22-25 June 2027): workshop proposals 4 November, paper registration 10 November, full papers 16 November and supplementary material 23 November 2026.\n\n## Early 2027\n\n- ICME 2027: around 16 December 2026 (estimated).\n- MIDL 2027 (Porto, Portugal): around 16 January 2027 (estimated).\n- SIGGRAPH 2027: stage 1 on 21 January 2027.\n- ICDAR 2027 (Kuala Lumpur): abstracts 1 February, full papers 21 February 2027.\n- ICIP 2027 (Singapore): around 2 February 2027 (estimated).\n- MICCAI 2027: around 26 February 2027 (estimated).\n- ICCV 2027 (2-8 October 2027, Hong Kong): around 6 March 2027, an estimate until the official call for papers.\n- ACM MM 2027: around 9 April 2027 (estimated).\n\nDates marked \"estimated\" are projected from previous years. Always confirm on each conference's official site before submitting."
-        }
-      },
-      "ai_assisted": true,
-      "source": "trybibby",
-      "external_id": "https://trybibby.com/conference-deadlines/cv",
-      "url": "https://trybibby.com/conference-deadlines/cv",
-      "collected_on": "2026-10-25",
-      "published_on": "2026-10-25",
-      "published_precision": "day",
-      "region": "international",
-      "category": "events",
-      "keywords": [
-        "CVPR 2027",
-        "WACV 2027",
-        "ICCV 2027",
-        "hạn nộp bài"
-      ],
-      "tags": [
-        "CVPR",
-        "ICCV",
-        "WACV",
-        "Conferences"
-      ],
-      "original_language": "en",
-      "editor_note": "Ngày đăng là ngày truy cập. Cần đối chiếu với trang chính thức của hội nghị",
-      "image": {
-        "file": "images/cv-conference-deadlines.png",
-        "alt": "Minh họa lịch với các ngày hạn nộp bài được đánh dấu",
-        "credit": "VietnamCV",
-        "rights": "own"
-      }
-    },
-    {
       "slug": "computer-vision-jobs-vietnam-october-2026",
       "title": "198 computer vision Jobs in Vietnam, October 2026",
       "text": {
@@ -899,6 +761,23 @@
         "credit": "VietnamCV",
         "rights": "own"
       }
+    }
+  ],
+  "withdrawn": [
+    {
+      "source": "rsip-vision",
+      "external_id": "https://www.rsipvision.com/ComputerVisionNews-2026October/#eccv-2026-best-paper",
+      "reason": "Bài báo khoa học: thuộc mục Bài báo, không đăng ở Tin tức (chủ dự án, 2026-10-26)."
+    },
+    {
+      "source": "rsip-vision",
+      "external_id": "https://www.rsipvision.com/ComputerVisionNews-2026October/#feel",
+      "reason": "Bài báo khoa học (bộ dữ liệu FEEL): thuộc mục Bài báo, không đăng ở Tin tức (chủ dự án, 2026-10-26)."
+    },
+    {
+      "source": "trybibby",
+      "external_id": "https://trybibby.com/conference-deadlines/cv",
+      "reason": "Hạn nộp bài hội nghị và cuộc thi không được thu thập ở Tin tức (chủ dự án, 2026-10-26)."
     }
   ]
 }
