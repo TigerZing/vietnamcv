@@ -11,7 +11,6 @@ export type CommentOut = components["schemas"]["CommentOut"];
 export type CommentPage = components["schemas"]["CommentPage"];
 export type NewsCategory = NewsSummary["category"];
 export type NewsLanguage = NewsSummary["language"];
-export type TagCount = components["schemas"]["TagCount"];
 
 /** Posts per page of the news list. */
 export const NEWS_PAGE_SIZE = 15;
@@ -37,18 +36,6 @@ export async function listNews(query: {
   });
   if (!data) throw ApiError.fromEnvelope(response.status, error);
   return data;
-}
-
-/** Technology hashtags of published news, most used first. */
-export async function listTags(
-  region?: NewsSummary["region"],
-): Promise<TagCount[]> {
-  const { data, error, response } = await api.GET("/api/v1/news/tags", {
-    params: { query: { region } },
-    cache: "no-store",
-  });
-  if (!data) throw ApiError.fromEnvelope(response.status, error);
-  return data.items;
 }
 
 /** The published post, or null when it does not exist (404). */

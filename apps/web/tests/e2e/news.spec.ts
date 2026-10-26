@@ -8,16 +8,21 @@ test.describe("news", () => {
     page,
   }) => {
     await page.goto("/vi/news");
+    // The page title is for screen readers only; the region tabs lead the page.
     await expect(
       page.getByRole("heading", {
         level: 1,
         name: "Tin tức Thị giác máy tính",
       }),
-    ).toBeVisible();
+    ).toHaveClass(/sr-only/);
+    await expect(page.getByText(/được chọn lọc và viết lại/)).toHaveCount(0);
+    await expect(
+      page.getByRole("navigation", { name: "Công nghệ" }),
+    ).toHaveCount(0);
     const card = page
       .getByRole("article")
       .filter({ hasText: "Demo post with a video" });
-    await expect(card.getByText("Nghiên cứu")).toBeVisible();
+    await expect(card.getByText("Mô hình & mã nguồn mở")).toBeVisible();
     await expect(card.getByText("Có video", { exact: true })).toBeVisible();
     await expect(card.getByText("Demo Source")).toBeVisible();
   });
@@ -257,18 +262,12 @@ test.describe("news", () => {
       "2026-10-20",
     );
 
-    const tagBar = page.getByRole("navigation", { name: "Công nghệ" });
-    await tagBar.getByRole("link", { name: /#Drone/ }).click();
+    await card.getByRole("link", { name: "#Drone" }).click();
     await expect(page).toHaveURL(/tag=Drone/);
-    await expect(page).toHaveURL(/view=grid/);
     await expect(page.getByRole("article")).toHaveCount(1);
-    await expect(tagBar.getByRole("link", { name: /#Drone/ })).toHaveAttribute(
-      "aria-current",
-      "true",
-    );
 
-    // Choosing the active tag again clears it.
-    await tagBar.getByRole("link", { name: /#Drone/ }).click();
+    // The active hashtag shows once, with a link that clears it and keeps the layout.
+    await page.getByRole("link", { name: "Bỏ lọc #Drone" }).click();
     await expect(page).not.toHaveURL(/tag=/);
     await expect(page.getByRole("article")).toHaveCount(2);
   });
@@ -290,11 +289,9 @@ test.describe("news", () => {
     ).toBeVisible();
     // The active tag stays visible so it can be removed.
     await expect(
-      page
-        .getByRole("navigation", { name: "Công nghệ" })
-        .getByRole("link", { name: /#Drone/ }),
-    ).toHaveAttribute("aria-current", "true");
-    await page.getByRole("link", { name: "Bỏ lọc" }).click();
+      page.getByRole("link", { name: "Bỏ lọc #Drone" }),
+    ).toBeVisible();
+    await page.getByRole("link", { name: "Bỏ lọc", exact: true }).click();
     await expect(page).toHaveURL(/\/vi\/news$/);
     await expect(page.getByRole("article")).toHaveCount(2);
   });

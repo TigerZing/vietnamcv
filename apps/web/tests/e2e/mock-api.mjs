@@ -53,7 +53,7 @@ const news = [
     links: [
       { kind: "paper", label: "Demo paper", url: "https://example.com/paper" },
     ],
-    category: "research",
+    category: "models-open-source",
     region: "international",
     keywords: ["kiểm thử", "video"],
     tags: ["VLM", "Drone"],

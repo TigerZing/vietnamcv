@@ -163,6 +163,11 @@ class CuratedLink(BaseModel):
     url: HttpUrl
 
 
+# News covers products, applications, industry and the market. Research papers belong in
+# Papers, and competitions and conference deadlines are not collected (owner, 2026-10-26).
+EXCLUDED_CATEGORIES = frozenset({NewsCategory.RESEARCH, NewsCategory.EVENTS})
+
+
 class CuratedNewsItem(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -197,7 +202,21 @@ class CuratedNewsItem(BaseModel):
     def _vietnamese_text(self) -> CuratedNewsItem:
         if TextLanguage.VI not in self.text:
             raise ValueError("text.vi is required")
+        if self.category in EXCLUDED_CATEGORIES:
+            raise ValueError(
+                f"News does not collect '{self.category}' posts (papers, competitions, deadlines)"
+            )
         return self
+
+
+class CuratedWithdrawal(BaseModel):
+    """A post taken off the site; it stays in the database as archived."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    source: str = Field(description="Code of a source in the same file")
+    external_id: str = Field(min_length=1, max_length=500)
+    reason: str = Field(min_length=1, max_length=300)
 
 
 class CuratedNewsFile(BaseModel):
@@ -206,3 +225,12 @@ class CuratedNewsFile(BaseModel):
     description: str
     sources: list[CuratedSource]
     items: list[CuratedNewsItem]
+    withdrawn: list[CuratedWithdrawal] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def _withdrawn_not_listed(self) -> CuratedNewsFile:
+        listed = {(item.source, item.external_id) for item in self.items}
+        both = [w.external_id for w in self.withdrawn if (w.source, w.external_id) in listed]
+        if both:
+            raise ValueError(f"Posts both listed and withdrawn: {both}")
+        return self

@@ -103,6 +103,24 @@ async def publish(session: AsyncSession, content: Content, *, actor_subject: str
     )
 
 
+async def archive(session: AsyncSession, content: Content, *, actor_subject: str) -> bool:
+    """Take ``content`` off the site; returns False when it already was. Audited."""
+    if content.status == ContentStatus.ARCHIVED:
+        return False
+    before = content.status
+    content.status = ContentStatus.ARCHIVED
+    audit.record(
+        session,
+        actor_subject=actor_subject,
+        action="content.archived",
+        target_type="content",
+        target_id=content.id,
+        before={"status": before},
+        after={"status": content.status},
+    )
+    return True
+
+
 async def get_published(session: AsyncSession, content_type: str, slug: str) -> Content:
     content = await session.scalar(
         select(Content).where(
