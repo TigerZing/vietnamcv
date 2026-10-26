@@ -8,7 +8,13 @@ import {
 } from "@/components/roadmap/roadmap-timeline";
 import { VisionPipeline } from "@/components/roadmap/vision-pipeline";
 import type { Locale } from "@/i18n/routing";
-import { ERAS, MILESTONES, milestonesByEra, timelineSpan } from "@/lib/roadmap";
+import {
+  ERAS,
+  MILESTONE_ILLUSTRATIONS,
+  MILESTONES,
+  milestonesByEra,
+  timelineSpan,
+} from "@/lib/roadmap";
 
 export async function generateMetadata({
   params,
@@ -46,6 +52,10 @@ export default function Page() {
       summary: copy.milestones[milestone.id].summary,
       impact: copy.milestones[milestone.id].impact,
       source: milestone.source,
+      illustration: {
+        id: MILESTONE_ILLUSTRATIONS[milestone.id],
+        ...copy.illustrations[MILESTONE_ILLUSTRATIONS[milestone.id]],
+      },
     })),
   }));
 
@@ -93,6 +103,9 @@ export default function Page() {
           impact: t("detail.impact"),
           source: t("detail.source"),
           noSource: t("detail.noSource"),
+          illustrationTitle: t("illustration.title"),
+          illustrationShow: t("illustration.show"),
+          illustrationHide: t("illustration.hide"),
         }}
       />
 

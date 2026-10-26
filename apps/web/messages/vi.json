@@ -899,6 +899,285 @@
         "summary": "Meta cho phép segment và track mọi instance khớp một concept mô tả bằng text hoặc ảnh mẫu, thay vì một cú click.",
         "impact": "Từ \"vật thể này\" sang \"mọi vật thể loại này\": hợp nhất detection, segmentation, tracking."
       }
+    },
+    "illustration": {
+      "title": "Cách hoạt động",
+      "show": "Xem minh hoạ",
+      "hide": "Ẩn minh hoạ"
+    },
+    "illustrations": {
+      "pixelScan": {
+        "name": "Số hoá ảnh",
+        "caption": "Một scan line quét bức ảnh, mỗi ô lưới được ghi lại thành một giá trị độ sáng: ảnh trở thành ma trận số."
+      },
+      "perceptron": {
+        "name": "Perceptron học đường phân tách",
+        "caption": "Neuron cộng các input có trọng số; mỗi lần đoán sai, weight được chỉnh để đường phân tách xoay dần cho tới khi tách đúng hai lớp."
+      },
+      "orientationCell": {
+        "name": "Tế bào chọn hướng",
+        "caption": "Thanh sáng xoay trong receptive field; neuron chỉ phát spike dày đặc khi thanh nằm đúng hướng nó ưa thích."
+      },
+      "houghVoting": {
+        "name": "Hough voting",
+        "caption": "Mỗi điểm bỏ phiếu cho mọi đường thẳng đi qua nó (một đường cong trong không gian tham số); chỗ các đường cong giao nhau chính là đường thẳng trong ảnh."
+      },
+      "wireframe": {
+        "name": "Từ cạnh tới khối 3D",
+        "caption": "Ảnh được đọc thành cạnh và các điểm nối; từ cấu trúc đó máy suy ra một khối 3D có thể xoay và nhìn từ mọi phía."
+      },
+      "fourier": {
+        "name": "Phân tích tần số",
+        "caption": "Tín hiệu là tổng các sóng sin; càng cộng nhiều tần số thì càng khớp. Giữ lại các tần số mạnh nhất là ý tưởng nén ảnh của JPEG."
+      },
+      "shading": {
+        "name": "Shape from shading",
+        "caption": "Ánh sáng di chuyển và độ sáng trên bề mặt thay đổi theo hướng của nó; đảo ngược quan hệ này cho ra normal và hình dạng 3D."
+      },
+      "histogramThreshold": {
+        "name": "Ngưỡng từ histogram",
+        "caption": "Ngưỡng trượt trên histogram tới chỗ trũng giữa hai đỉnh, nơi tách tốt nhất foreground và background, rồi ảnh được nhị phân hoá."
+      },
+      "edgeDetect": {
+        "name": "Edge detection",
+        "caption": "Một filter gradient quét qua ảnh và chỉ giữ lại nơi độ sáng thay đổi đột ngột: đường viền của vật thể."
+      },
+      "scaleSpace": {
+        "name": "Scale space",
+        "caption": "Ảnh được làm mờ dần ở nhiều mức; mỗi blob được phát hiện ở đúng scale phù hợp với kích thước của nó."
+      },
+      "opticalFlow": {
+        "name": "Optical flow",
+        "caption": "Giữa hai frame, mỗi điểm ảnh nhận một vector cho biết nó di chuyển theo hướng nào và nhanh bao nhiêu."
+      },
+      "ransac": {
+        "name": "RANSAC",
+        "caption": "Chọn ngẫu nhiên hai điểm, dựng đường thẳng, đếm bao nhiêu điểm đồng ý; lặp lại vài lần và giữ giả thuyết có nhiều inlier nhất, bỏ qua outlier."
+      },
+      "twoView": {
+        "name": "Hình học hai view",
+        "caption": "Hai camera cùng nhìn một điểm; truy ngược hai tia sáng qua image plane, giao điểm của chúng chính là vị trí 3D."
+      },
+      "calibration": {
+        "name": "Camera calibration",
+        "caption": "Chụp bàn cờ ở nhiều góc, phát hiện các góc ô; vì biết hình dạng thật của bàn cờ, ta giải ra tiêu cự và độ méo của ống kính."
+      },
+      "snake": {
+        "name": "Active contour",
+        "caption": "Một đường cong mềm bị kéo về phía cạnh ảnh nhưng vẫn giữ độ trơn, co dần và ôm khít đường biên vật thể."
+      },
+      "keypoints": {
+        "name": "Keypoint và matching",
+        "caption": "Tìm các điểm đặc trưng ổn định với xoay và scale ở cả hai ảnh, mô tả chúng bằng descriptor, rồi nối các cặp giống nhau."
+      },
+      "lbp": {
+        "name": "Local Binary Pattern",
+        "caption": "So sánh 8 điểm lân cận với pixel trung tâm, mỗi so sánh cho một bit; chuỗi bit là mã texture, gom lại thành histogram."
+      },
+      "bagOfWords": {
+        "name": "Bag of visual words",
+        "caption": "Mỗi patch cục bộ được gán vào một \"từ\" gần nhất trong codebook; ảnh được biểu diễn bằng histogram đếm các từ đó."
+      },
+      "svmMargin": {
+        "name": "Margin lớn nhất",
+        "caption": "SVM đặt ranh giới sao cho khoảng trống tới điểm gần nhất của mỗi lớp là lớn nhất; chỉ vài support vector quyết định ranh giới."
+      },
+      "bilateral": {
+        "name": "Bilateral filter",
+        "caption": "Làm mượt bằng cách lấy trung bình lân cận, nhưng chỉ với những điểm có độ sáng tương tự, nên nhiễu biến mất mà cạnh vẫn sắc."
+      },
+      "particles": {
+        "name": "Particle filter",
+        "caption": "Tracker giữ một đám mây giả thuyết; mỗi frame chúng được dự đoán, chấm điểm theo ảnh và resample về chỗ có khả năng nhất."
+      },
+      "textureGrow": {
+        "name": "Texture synthesis",
+        "caption": "Texture mới được mọc ra từng điểm một bằng cách tìm trong mẫu vùng lân cận giống nhất và sao chép điểm tiếp theo."
+      },
+      "graphCut": {
+        "name": "Graph cut",
+        "caption": "Mỗi pixel là một node, các cạnh nối pixel giống nhau thì mạnh; nhát cắt rẻ nhất qua các liên kết yếu tách vật thể khỏi nền."
+      },
+      "eigenfaces": {
+        "name": "Eigenfaces",
+        "caption": "Mỗi khuôn mặt là khuôn mặt trung bình cộng vài eigenface có trọng số; nhận diện chỉ cần so sánh các trọng số đó."
+      },
+      "slidingWindow": {
+        "name": "Sliding window",
+        "caption": "Một cửa sổ cố định trượt khắp ảnh; ở mỗi vị trí classifier (Haar, HOG, part model) quyết định có vật thể hay không."
+      },
+      "meanShift": {
+        "name": "Mean shift",
+        "caption": "Mỗi điểm leo dần về nơi mật độ dày nhất xung quanh nó; các điểm dừng ở cùng một đỉnh thuộc cùng một cụm."
+      },
+      "seamlessBlend": {
+        "name": "Poisson blending",
+        "caption": "Vật thể được dán theo gradient chứ không theo màu, nên đường nối biến mất và màu sắc hoà vào nền mới."
+      },
+      "ssimCompare": {
+        "name": "SSIM",
+        "caption": "Hai ảnh được so sánh theo từng cửa sổ về độ sáng, độ tương phản và cấu trúc, cho ra bản đồ độ giống gần với cảm nhận của mắt người."
+      },
+      "convolution": {
+        "name": "Convolution",
+        "caption": "Một kernel nhỏ trượt qua ảnh; mỗi vị trí cho một giá trị của feature map. Xếp chồng nhiều lớp như vậy, mạng đi từ cạnh tới hình dạng tới nhãn."
+      },
+      "backprop": {
+        "name": "Backpropagation",
+        "caption": "Tín hiệu chạy xuôi tới output; sai số chạy ngược lại qua từng lớp và điều chỉnh mọi weight đã góp phần gây ra nó."
+      },
+      "autoencoder": {
+        "name": "Autoencoder",
+        "caption": "Ảnh bị nén qua một latent code hẹp rồi được dựng lại; để làm được, mạng phải học những đặc trưng quan trọng nhất."
+      },
+      "datasetGrid": {
+        "name": "Dataset có gán nhãn",
+        "caption": "Hàng nghìn tới hàng tỷ ảnh được thu thập và gán nhãn; dữ liệu và benchmark chung mới là thứ thúc đẩy model tiến bộ."
+      },
+      "multiView": {
+        "name": "Structure from motion",
+        "caption": "Nhiều ảnh từ nhiều góc được ghép lại: mỗi camera bắn tia tới các điểm chung, dựng dần point cloud 3D cùng vị trí camera."
+      },
+      "pose": {
+        "name": "Pose estimation",
+        "caption": "Cơ thể được biểu diễn bằng các keypoint ở khớp và các đoạn chi nối chúng, ước lượng lại trong từng frame, kể cả khi có nhiều người."
+      },
+      "regionProposals": {
+        "name": "Two-stage detection",
+        "caption": "Đầu tiên đề xuất nhiều region có thể chứa vật thể, sau đó phân loại từng region và tinh chỉnh bounding box cho khít."
+      },
+      "gridDetection": {
+        "name": "One-stage detection",
+        "caption": "Chỉ một lần nhìn: ảnh chia thành lưới, ô nào chứa tâm vật thể thì dự đoán box và class ngay, đủ nhanh cho real-time."
+      },
+      "faceEmbedding": {
+        "name": "Face embedding",
+        "caption": "Mỗi khuôn mặt được ánh xạ thành một điểm; khi train, ảnh cùng người bị kéo lại gần nhau và khác người bị đẩy xa ra."
+      },
+      "inception": {
+        "name": "Inception module",
+        "caption": "Nhiều kernel kích thước khác nhau cùng nhìn một input song song; kết quả được ghép lại, để mạng tự chọn scale phù hợp."
+      },
+      "superResolution": {
+        "name": "Super-resolution",
+        "caption": "Mạng học cách bổ sung chi tiết mà ảnh độ phân giải thấp đã mất, biến ảnh vỡ hạt thành ảnh sắc nét."
+      },
+      "batchNorm": {
+        "name": "Batch normalization",
+        "caption": "Phân phối activation bị trôi giữa các lớp được đưa về trung tâm và chuẩn hoá theo từng batch, giúp train nhanh và ổn định hơn."
+      },
+      "unet": {
+        "name": "U-Net",
+        "caption": "Encoder thu nhỏ ảnh để hiểu ngữ cảnh, decoder phóng to lại; skip connection mang chi tiết từ mỗi tầng sang để mask sắc nét."
+      },
+      "styleTransfer": {
+        "name": "Style transfer",
+        "caption": "Nội dung lấy từ một ảnh, texture và màu sắc lấy từ một bức tranh; ảnh đầu ra được tối ưu để khớp cả hai."
+      },
+      "residual": {
+        "name": "Residual connection",
+        "caption": "Mỗi block chỉ học phần chỉnh sửa cộng thêm vào một shortcut, nên tín hiệu và gradient đi xuyên qua được cả trăm lớp."
+      },
+      "tracking": {
+        "name": "Multi-object tracking",
+        "caption": "Mỗi vật thể được detect trong từng frame rồi nối với track cũ, giữ nguyên box và ID khi chúng di chuyển."
+      },
+      "imageTranslation": {
+        "name": "Image-to-image translation",
+        "caption": "Mạng học biến một loại ảnh thành loại khác (sketch thành ảnh thật) và, với CycleGAN, biến ngược lại để kiểm tra tính nhất quán."
+      },
+      "pyramid": {
+        "name": "Feature pyramid",
+        "caption": "Feature map ở nhiều scale được nối từ trên xuống: vật nhỏ được bắt ở tầng phân giải cao, vật lớn ở tầng thấp."
+      },
+      "instanceMask": {
+        "name": "Instance và panoptic segmentation",
+        "caption": "Mỗi vật thể có box rồi mask riêng của nó; panoptic gán nhãn thêm cả vùng nền như đường, trời."
+      },
+      "spatioTemporal": {
+        "name": "3D convolution",
+        "caption": "Kernel trượt cả trong không gian lẫn theo thời gian qua chồng frame, nên chuyển động trở thành một feature để nhận diện hành động."
+      },
+      "pixelMask": {
+        "name": "Semantic segmentation",
+        "caption": "Mọi pixel được gán class: ban đầu thô theo khối, sau đó được làm mịn tới đúng đường biên vật thể."
+      },
+      "gan": {
+        "name": "GAN",
+        "caption": "Generator tạo ảnh giả từ noise, discriminator học phân biệt thật giả; hai bên cạnh tranh khiến ảnh giả ngày càng chân thật."
+      },
+      "patchAttention": {
+        "name": "Self-attention trên patch",
+        "caption": "Ảnh được cắt thành patch như các token; mỗi patch nhìn vào mọi patch khác và quyết định nên chú ý bao nhiêu tới từng cái."
+      },
+      "contrastive": {
+        "name": "Self-supervised contrastive",
+        "caption": "Hai phiên bản augment của cùng một ảnh bị kéo lại gần trong embedding space, ảnh khác bị đẩy ra xa, không cần nhãn."
+      },
+      "nerfRays": {
+        "name": "NeRF",
+        "caption": "Từ camera, mỗi tia đi xuyên qua một không gian thể tích đã học; cộng dồn màu và mật độ dọc theo tia cho ra màu của một pixel."
+      },
+      "setPrediction": {
+        "name": "Set prediction với object query",
+        "caption": "Một số object query cố định, mỗi query nhận đúng một vật thể hoặc báo \"không có gì\"; không cần anchor hay NMS."
+      },
+      "diffusion": {
+        "name": "Diffusion",
+        "caption": "Bắt đầu từ noise thuần tuý, model khử nhiễu qua nhiều bước, được prompt dẫn hướng, cho tới khi ảnh hiện ra."
+      },
+      "imageTokens": {
+        "name": "Sinh ảnh theo token",
+        "caption": "Text và ảnh đều là chuỗi token; model viết ảnh ra từng token một, nối tiếp sau phần text mô tả."
+      },
+      "imageTextMatch": {
+        "name": "Image–text contrastive",
+        "caption": "Ảnh và caption được embed vào cùng một không gian; cặp đúng sáng dần trên đường chéo, cặp sai mờ đi. Từ đó có zero-shot classification."
+      },
+      "shiftedWindows": {
+        "name": "Shifted windows",
+        "caption": "Attention chỉ tính trong từng cửa sổ nhỏ để tiết kiệm; lớp kế tiếp dịch cửa sổ đi một nửa để thông tin truyền qua ranh giới."
+      },
+      "maskedPatches": {
+        "name": "Masked image modeling",
+        "caption": "Che đi khoảng 75% số patch, model phải vẽ lại phần bị che; để làm được nó phải hiểu ảnh."
+      },
+      "visualChat": {
+        "name": "Vision-language model",
+        "caption": "Ảnh được encode thành token đưa vào LLM; người dùng hỏi bằng lời, model nhìn đúng vùng liên quan và trả lời."
+      },
+      "controlNet": {
+        "name": "Conditional control",
+        "caption": "Một sketch, pose hay edge map dẫn hướng quá trình khử nhiễu, nên ảnh sinh ra tuân theo đúng cấu trúc đó."
+      },
+      "textGrounding": {
+        "name": "Open-vocabulary detection",
+        "caption": "Từng cụm từ trong prompt được nối với box tương ứng trong ảnh, kể cả với class chưa từng có trong tập train."
+      },
+      "promptMask": {
+        "name": "Promptable segmentation",
+        "caption": "Chỉ cần một click (hoặc box): model trả về mask của đúng vật thể dưới điểm click, với bất kỳ loại vật thể nào."
+      },
+      "splatting": {
+        "name": "Gaussian splatting",
+        "caption": "Một đám mây Gaussian mềm có màu được di chuyển và biến dạng cho tới khi render ra đúng cảnh, đủ nhanh để xem real-time."
+      },
+      "depthMap": {
+        "name": "Monocular depth",
+        "caption": "Chỉ từ một ảnh, model ước lượng khoảng cách của từng pixel: vật gần sáng, vật xa tối."
+      },
+      "videoFrames": {
+        "name": "Video generation",
+        "caption": "Các frame được khử nhiễu cùng nhau thay vì từng ảnh rời, nên chuyển động giữa chúng liền mạch theo thời gian."
+      },
+      "videoMask": {
+        "name": "Video segmentation có memory",
+        "caption": "Click vào vật thể ở frame đầu; một memory lưu lại đặc trưng của nó và mang mask qua mọi frame tiếp theo."
+      },
+      "conceptMask": {
+        "name": "Concept segmentation",
+        "caption": "Một cụm danh từ ngắn như \"cái cây\" tìm và tạo mask cho mọi instance của khái niệm đó, không chỉ một vật."
+      }
     }
   },
   "Comments": {

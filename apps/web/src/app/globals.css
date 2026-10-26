@@ -90,6 +90,14 @@
   }
 }
 
+/* The roadmap's "how it works" panel eases in next to its card. */
+@keyframes roadmap-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+}
+
 @layer base {
   /* The roadmap timeline animates its era markers in; honour reduced-motion requests. */
   @media (prefers-reduced-motion: reduce) {
