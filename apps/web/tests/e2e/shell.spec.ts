@@ -62,7 +62,7 @@ test.describe("layout shell", () => {
     });
     await expect(skipLink).toBeFocused();
 
-    if (viewport && viewport.width < 768) {
+    if (viewport && viewport.width < 1024) {
       const menu = page.getByRole("button", { name: "Mở menu" });
       await menu.focus();
       await page.keyboard.press("Enter");

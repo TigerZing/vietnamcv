@@ -19,6 +19,7 @@
     "news": "News",
     "roadmap": "Roadmap",
     "tasks": "Tasks",
+    "demos": "Demos",
     "search": "Search",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
@@ -137,6 +138,19 @@
       "new": "New"
     },
     "tags": "Technology hashtags"
+  },
+  "Demos": {
+    "title": "Demo products",
+    "lead": "Computer vision products and projects shared by the community. Press a video to watch it right here.",
+    "play": "Play video: {title}",
+    "open": "View post: {title}",
+    "close": "Close: {title}",
+    "playerTitle": "LinkedIn video: {title}",
+    "imageBadge": "Image",
+    "viewOnLinkedIn": "View on LinkedIn",
+    "opensNewTab": "(opens in a new tab)",
+    "emptyTitle": "No demo products yet",
+    "emptyBody": "Demo products will appear here once they are added."
   },
   "Roadmap": {
     "title": "The history of computer vision, 1957 to today",
