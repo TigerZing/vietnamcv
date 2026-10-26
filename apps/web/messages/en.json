@@ -359,6 +359,11 @@
         "summary": "Meta released a promptable segmentation model together with a dataset of over a billion masks.",
         "impact": "The first foundation model for segmentation: usable straight away on unfamiliar images, with no retraining."
       },
+      "rtDetr": {
+        "title": "RT-DETR",
+        "summary": "A Baidu team introduced an end-to-end transformer detector that runs in real time: a hybrid encoder processes multi-scale features efficiently, still with no NMS step, and it beat contemporary YOLO models on COCO in both speed and accuracy.",
+        "impact": "Showed the DETR line was fast enough to deploy, closing the gap between transformers and YOLO in real-time detection."
+      },
       "gaussianSplatting": {
         "title": "3D Gaussian Splatting",
         "summary": "Represents a scene as millions of Gaussian primitives, rendering in real time at quality comparable to NeRF.",
