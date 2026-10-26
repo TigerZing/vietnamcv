@@ -259,6 +259,13 @@ export const MILESTONES: readonly Milestone[] = [
     source: "https://arxiv.org/abs/2304.02643",
   },
   {
+    id: "rtDetr",
+    year: 2023,
+    era: "generative",
+    kind: "model",
+    source: "https://arxiv.org/abs/2304.08069",
+  },
+  {
     id: "gaussianSplatting",
     year: 2023,
     era: "generative",
