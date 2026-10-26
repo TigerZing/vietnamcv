@@ -3,7 +3,6 @@
 import {
   ArrowUpRight,
   Box,
-  ChevronDown,
   Database,
   Film,
   Layers,
@@ -45,8 +44,7 @@ export type TimelineLabels = {
   jump: string;
   timeline: string;
   current: string;
-  show: string;
-  hide: string;
+  impact: string;
   source: string;
   noSource: string;
 };
@@ -391,8 +389,6 @@ function MilestoneCard({
   milestone: TimelineMilestone;
   labels: TimelineLabels;
 }) {
-  const [open, setOpen] = useState(false);
-  const panelId = `milestone-${milestone.id}-detail`;
   const TopicIcon = TOPIC_ICONS[milestone.topic];
 
   return (
@@ -412,43 +408,26 @@ function MilestoneCard({
       <p className="mt-1.5 text-sm text-muted-foreground">
         {milestone.summary}
       </p>
-      <button
-        type="button"
-        onClick={() => setOpen((value) => !value)}
-        aria-expanded={open}
-        aria-controls={panelId}
-        className="mt-3 inline-flex items-center gap-1 rounded-md text-sm font-medium text-accent hover:underline"
+      <p
+        className="mt-3 border-l-2 pl-3 text-sm"
+        style={{ borderColor: "var(--era)" }}
       >
-        {open ? labels.hide : labels.show}
-        <ChevronDown
-          aria-hidden
-          className={cn(
-            "size-4 transition-transform duration-200",
-            open && "rotate-180",
-          )}
-        />
-      </button>
-      <div id={panelId} hidden={!open} className="mt-3 flex flex-col gap-2">
-        <p
-          className="border-l-2 pl-3 text-sm"
-          style={{ borderColor: "var(--era)" }}
+        <span className="font-medium">{labels.impact}: </span>
+        {milestone.impact}
+      </p>
+      {milestone.source ? (
+        <a
+          href={milestone.source}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-2 inline-flex w-fit items-center gap-1 text-sm text-accent hover:underline"
         >
-          {milestone.impact}
-        </p>
-        {milestone.source ? (
-          <a
-            href={milestone.source}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex w-fit items-center gap-1 text-sm text-accent hover:underline"
-          >
-            {labels.source}
-            <ArrowUpRight aria-hidden className="size-4" />
-          </a>
-        ) : (
-          <p className="text-sm text-muted-foreground">{labels.noSource}</p>
-        )}
-      </div>
+          {labels.source}
+          <ArrowUpRight aria-hidden className="size-4" />
+        </a>
+      ) : (
+        <p className="mt-2 text-xs text-muted-foreground">{labels.noSource}</p>
+      )}
     </article>
   );
 }

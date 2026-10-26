@@ -8,12 +8,12 @@ test.describe("roadmap", () => {
     if (viewport && viewport.width < 768) {
       await page.getByRole("button", { name: "Mở menu" }).click();
     }
-    await page.getByRole("link", { name: "Lộ trình" }).first().click();
+    await page.getByRole("link", { name: "Roadmap" }).first().click();
     await expect(page).toHaveURL(/\/vi\/roadmap$/);
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Lịch sử Thị giác máy tính/,
+        name: /Lịch sử Computer Vision/,
       }),
     ).toBeVisible();
   });
@@ -23,33 +23,29 @@ test.describe("roadmap", () => {
   }) => {
     await page.goto("/vi/roadmap");
     const timeline = page.getByRole("list", {
-      name: "Dòng thời gian Thị giác máy tính",
+      name: "Timeline Computer Vision",
     });
     await expect(timeline.locator("> li")).toHaveCount(6);
     await expect(
       page.getByRole("heading", { name: "Khởi nguyên" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "Bức ảnh số đầu tiên" }),
+      page.getByRole("heading", { name: "Ảnh số đầu tiên" }),
     ).toBeVisible();
     await expect(
       page.getByRole("heading", {
-        name: "Mô hình thị giác – ngôn ngữ mở và thị giác hiện thân",
+        name: "VLM mở và embodied vision",
       }),
     ).toBeVisible();
   });
 
-  test("expands a milestone and links to the original work", async ({
+  test("shows why a milestone matters and links to the paper", async ({
     page,
   }) => {
     await page.goto("/vi/roadmap");
     const card = page.locator("article").filter({ hasText: "AlexNet" }).first();
-    const toggle = card.getByRole("button").first();
-    await expect(toggle).toHaveAccessibleName("Vì sao quan trọng");
-    await expect(toggle).toHaveAttribute("aria-expanded", "false");
-    await toggle.click();
-    await expect(toggle).toHaveAttribute("aria-expanded", "true");
-    const source = card.getByRole("link", { name: "Đọc công trình gốc" });
+    await expect(card.getByText("Ý nghĩa:")).toBeVisible();
+    const source = card.getByRole("link", { name: "Paper gốc" });
     await expect(source).toBeVisible();
     await expect(source).toHaveAttribute("href", /^https:\/\//);
   });
@@ -57,32 +53,32 @@ test.describe("roadmap", () => {
   test("jumps to an era from the sticky bar", async ({ page }) => {
     await page.goto("/vi/roadmap");
     await page
-      .getByRole("navigation", { name: "Chuyển nhanh tới một thời kỳ" })
-      .getByRole("link", { name: /Sinh tạo & mô hình nền tảng/ })
+      .getByRole("navigation", { name: "Chuyển nhanh tới một giai đoạn" })
+      .getByRole("link", { name: /Generative AI & foundation model/ })
       .click();
     await expect(page).toHaveURL(/#era-generative$/);
     await expect(
-      page.getByRole("heading", { name: "Sinh tạo & mô hình nền tảng" }),
+      page.getByRole("heading", { name: "Generative AI & foundation model" }),
     ).toBeInViewport();
   });
 
   test("filters milestones by topic", async ({ page }) => {
     await page.goto("/vi/roadmap");
     const filter = page.getByRole("region", { name: "Lọc theo chủ đề" });
-    const detection = filter.getByRole("button", { name: "Dò vật thể" });
+    const detection = filter.getByRole("button", { name: "Object detection" });
     await detection.click();
     await expect(detection).toHaveAttribute("aria-pressed", "true");
     await expect(
       page.getByRole("heading", { name: "Faster R-CNN" }),
     ).toBeVisible();
     await expect(
-      page.getByRole("heading", { name: "Bộ dò cạnh Canny" }),
+      page.getByRole("heading", { name: "Canny edge detector" }),
     ).toBeHidden();
     // A second press on the same topic shows everything again.
     await detection.click();
     await expect(detection).toHaveAttribute("aria-pressed", "false");
     await expect(
-      page.getByRole("heading", { name: "Bộ dò cạnh Canny" }),
+      page.getByRole("heading", { name: "Canny edge detector" }),
     ).toBeVisible();
   });
 
@@ -117,11 +113,6 @@ test.describe("roadmap", () => {
         localStorage.setItem("vietnamcv-theme", value);
       }, theme);
       await page.goto("/vi/roadmap");
-      // Expand one card so the detail panel is in scope for the scan too.
-      await page
-        .getByRole("button", { name: "Vì sao quan trọng" })
-        .first()
-        .click();
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
         .analyze();

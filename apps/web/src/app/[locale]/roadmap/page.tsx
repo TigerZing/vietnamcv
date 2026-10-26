@@ -90,8 +90,7 @@ export default function Page() {
           jump: t("jumpLabel"),
           timeline: t("timelineLabel"),
           current: t("currentEra"),
-          show: t("detail.show"),
-          hide: t("detail.hide"),
+          impact: t("detail.impact"),
           source: t("detail.source"),
           noSource: t("detail.noSource"),
         }}
