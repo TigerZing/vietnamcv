@@ -17,6 +17,7 @@
     "papers": "Bài báo",
     "openSource": "Mã nguồn mở",
     "news": "Tin tức",
+    "roadmap": "Lộ trình",
     "tasks": "Chủ đề",
     "search": "Tìm kiếm",
     "openMenu": "Mở menu",
@@ -136,6 +137,249 @@
       "new": "Mới"
     },
     "tags": "Hashtag công nghệ"
+  },
+  "Roadmap": {
+    "title": "Lịch sử Thị giác máy tính, từ 1957 đến nay",
+    "lead": "Một dòng thời gian từ bức ảnh số đầu tiên đến các mô hình nền tảng hôm nay. Mỗi mốc đều dẫn về công trình gốc để bạn đọc sâu hơn.",
+    "stats": {
+      "milestones": "{count} mốc lịch sử",
+      "eras": "{count} thời kỳ",
+      "span": "{from}–{to}"
+    },
+    "hero": {
+      "label": "Bài toán cốt lõi: từ điểm ảnh tới ý nghĩa",
+      "steps": {
+        "pixels": "Điểm ảnh",
+        "edges": "Cạnh & đặc trưng",
+        "features": "Đặc trưng học được",
+        "meaning": "Ngữ nghĩa & sinh tạo"
+      }
+    },
+    "jumpLabel": "Chuyển nhanh tới một thời kỳ",
+    "timelineLabel": "Dòng thời gian Thị giác máy tính",
+    "currentEra": "Đang xem",
+    "milestoneCount": "{count, plural, other {# mốc}}",
+    "detail": {
+      "show": "Vì sao quan trọng",
+      "hide": "Thu gọn",
+      "source": "Đọc công trình gốc",
+      "noSource": "Chưa có bản ghi công khai ổn định để dẫn nguồn."
+    },
+    "note": {
+      "title": "Về trang này",
+      "body": "Dòng thời gian do VietnamCV biên soạn; mỗi mốc dẫn về công trình gốc khi có bản ghi công khai. Lịch sử thị giác máy tính rộng hơn một trang, nếu bạn thấy thiếu mốc quan trọng hãy góp ý để chúng tôi bổ sung."
+    },
+    "kinds": {
+      "idea": "Ý tưởng",
+      "algorithm": "Thuật toán",
+      "model": "Mô hình",
+      "dataset": "Dữ liệu & benchmark",
+      "generative": "Sinh tạo"
+    },
+    "eras": {
+      "origins": {
+        "name": "Khởi nguyên",
+        "period": "1957 – 1969",
+        "blurb": "Những bức ảnh số đầu tiên và một câu hỏi mới: liệu máy có thể nhìn?"
+      },
+      "classical": {
+        "name": "Thị giác cổ điển",
+        "period": "1970 – 1989",
+        "blurb": "Hình học, vật lý và toán học do con người thiết kế từng bước một."
+      },
+      "features": {
+        "name": "Đặc trưng & học máy",
+        "period": "1990 – 2005",
+        "blurb": "Đặc trưng thủ công kết hợp bộ phân loại thống kê, thị giác bước ra khỏi phòng thí nghiệm."
+      },
+      "deep": {
+        "name": "Dữ liệu lớn & học sâu",
+        "period": "2006 – 2015",
+        "blurb": "ImageNet và GPU biến mạng nơ-ron sâu thành phương pháp mặc định."
+      },
+      "transformer": {
+        "name": "Transformer & đa phương thức",
+        "period": "2016 – 2021",
+        "blurb": "Cơ chế chú ý thay thế tích chập; ảnh và ngôn ngữ về chung một không gian."
+      },
+      "generative": {
+        "name": "Sinh tạo & mô hình nền tảng",
+        "period": "2022 – nay",
+        "blurb": "Tạo ảnh, video, không gian 3D và những mô hình nền tảng dùng chung cho nhiều tác vụ."
+      }
+    },
+    "milestones": {
+      "firstDigitalImage": {
+        "title": "Bức ảnh số đầu tiên",
+        "summary": "Russell Kirsch dùng máy tính SEAC tại Cục Tiêu chuẩn Hoa Kỳ để quét ảnh con trai mình thành một lưới 176×176 điểm ảnh.",
+        "impact": "Lần đầu một hình ảnh tồn tại trong bộ nhớ máy tính dưới dạng số, điều kiện cần cho mọi xử lý ảnh về sau."
+      },
+      "visualCortex": {
+        "title": "Tế bào đơn giản và phức hợp trong vỏ não thị giác",
+        "summary": "Hubel và Wiesel ghi nhận các tế bào trong vỏ não thị giác của mèo chỉ phản ứng với cạnh có hướng xác định và được tổ chức theo nhiều lớp.",
+        "impact": "Ý tưởng trường cảm nhận phân lớp là nguồn cảm hứng trực tiếp cho mạng tích chập."
+      },
+      "blocksWorld": {
+        "title": "Thế giới khối hộp",
+        "summary": "Luận án của Larry Roberts tại MIT suy ra hình khối ba chiều từ một ảnh hai chiều của các khối đa diện.",
+        "impact": "Đặt nền cho thị giác 3D: từ ảnh phẳng suy ra cấu trúc hình học của vật thể."
+      },
+      "summerVisionProject": {
+        "title": "Dự án thị giác mùa hè ở MIT",
+        "summary": "Seymour Papert giao cho một nhóm sinh viên mục tiêu giải quyết phân vùng và nhận dạng vật thể trong một kỳ nghỉ hè.",
+        "impact": "Bài học kinh điển: thị giác khó hơn trực giác của con người rất nhiều."
+      },
+      "neocognitron": {
+        "title": "Neocognitron",
+        "summary": "Kunihiko Fukushima xây dựng mạng nhiều lớp với tế bào S và C mô phỏng vỏ não thị giác, nhận dạng chữ viết tay bất biến với dịch chuyển.",
+        "impact": "Kiến trúc tích chập và lấy mẫu xuống đầu tiên, tiền thân trực tiếp của CNN hiện đại."
+      },
+      "opticalFlow": {
+        "title": "Dòng quang học",
+        "summary": "Horn và Schunck, cùng với Lucas và Kanade, đưa ra cách ước lượng chuyển động của từng điểm ảnh giữa hai khung hình.",
+        "impact": "Nền tảng cho theo vết vật thể, ổn định hình ảnh và phân tích video đến hôm nay."
+      },
+      "marrVision": {
+        "title": "Ba mức phân tích của David Marr",
+        "summary": "Cuốn Vision đề xuất tách bài toán thị giác thành mức tính toán, mức biểu diễn – thuật toán và mức hiện thực.",
+        "impact": "Khung tư duy giúp thị giác máy tính thành một khoa học có cấu trúc, không chỉ là tập hợp mẹo kỹ thuật."
+      },
+      "backpropagation": {
+        "title": "Lan truyền ngược",
+        "summary": "Rumelhart, Hinton và Williams phổ biến thuật toán lan truyền ngược để huấn luyện mạng nơ-ron nhiều lớp.",
+        "impact": "Cơ chế học này vẫn nằm dưới gần như mọi mô hình thị giác hiện nay."
+      },
+      "cannyEdges": {
+        "title": "Bộ dò cạnh Canny",
+        "summary": "John Canny hình thức hóa dò cạnh thành bài toán tối ưu với ba tiêu chí: ít lỗi, định vị chính xác và một đáp ứng cho mỗi cạnh.",
+        "impact": "Thuật toán xử lý ảnh kinh điển, đến nay vẫn có trong mọi thư viện thị giác."
+      },
+      "eigenfaces": {
+        "title": "Eigenfaces",
+        "summary": "Turk và Pentland dùng phân tích thành phần chính để biểu diễn một khuôn mặt bằng vài chục hệ số.",
+        "impact": "Nhận dạng mặt chạy được trên máy tính thông thường, mở hướng học biểu diễn từ dữ liệu."
+      },
+      "lenet5": {
+        "title": "LeNet-5 và MNIST",
+        "summary": "Yann LeCun và cộng sự huấn luyện mạng tích chập đọc chữ số viết tay, được triển khai đọc chi phiếu ở quy mô thương mại.",
+        "impact": "Chứng minh CNN hoạt động trong sản phẩm thật, hơn một thập kỷ trước khi học sâu bùng nổ."
+      },
+      "sift": {
+        "title": "SIFT",
+        "summary": "David Lowe giới thiệu đặc trưng cục bộ bất biến với tỉ lệ và phép quay, cho phép khớp cùng một vật thể giữa các ảnh khác nhau.",
+        "impact": "Trụ cột của ghép ảnh toàn cảnh, SLAM và tìm kiếm ảnh trong suốt thập niên 2000."
+      },
+      "violaJones": {
+        "title": "Dò mặt thời gian thực Viola–Jones",
+        "summary": "Bộ dò dùng đặc trưng Haar, AdaBoost và các tầng phân loại xếp lớp, chạy thời gian thực trên CPU phổ thông thời đó.",
+        "impact": "Đưa thị giác máy tính vào máy ảnh số và điện thoại của người dùng cuối."
+      },
+      "hog": {
+        "title": "Đặc trưng HOG",
+        "summary": "Dalal và Triggs mô tả vật thể bằng biểu đồ hướng gradient, kết hợp với SVM để dò người đi bộ.",
+        "impact": "Chuẩn mực cho dò vật thể trong suốt giai đoạn trước học sâu."
+      },
+      "pascalVoc": {
+        "title": "PASCAL VOC",
+        "summary": "Cuộc thi thường niên với bộ dữ liệu và quy trình đánh giá dùng chung cho phân loại, dò vật thể và phân vùng.",
+        "impact": "Thiết lập văn hóa đo lường công bằng bằng benchmark công khai trong ngành."
+      },
+      "imagenet": {
+        "title": "ImageNet",
+        "summary": "Nhóm của Fei-Fei Li xây dựng bộ dữ liệu hơn 14 triệu ảnh gán nhãn theo WordNet; cuộc thi ILSVRC bắt đầu từ năm 2010.",
+        "impact": "Dữ liệu ở quy mô này là điều kiện cần để học sâu bộc lộ sức mạnh."
+      },
+      "alexnet": {
+        "title": "AlexNet",
+        "summary": "Krizhevsky, Sutskever và Hinton huấn luyện mạng tích chập trên GPU, giảm sai số top-5 của ILSVRC 2012 từ khoảng 26% xuống 15,3%.",
+        "impact": "Khoảnh khắc cả ngành chuyển sang học sâu, chỉ sau một cuộc thi."
+      },
+      "rcnn": {
+        "title": "R-CNN",
+        "summary": "Girshick và cộng sự kết hợp đề xuất vùng với đặc trưng CNN, nâng rõ rệt độ chính xác của dò vật thể.",
+        "impact": "Khởi đầu dòng mô hình dò vật thể hai giai đoạn: Fast R-CNN rồi Faster R-CNN."
+      },
+      "gan": {
+        "title": "Mạng đối sinh (GAN)",
+        "summary": "Goodfellow và cộng sự để hai mạng sinh và phân biệt cạnh tranh nhau, tạo ra ảnh mới ngày càng giống thật.",
+        "impact": "Mở nhánh thị giác sinh tạo, tiền đề cho việc tạo ảnh bằng AI."
+      },
+      "unet": {
+        "title": "U-Net",
+        "summary": "Kiến trúc encoder–decoder với kết nối tắt, phân vùng ảnh y sinh chính xác với rất ít dữ liệu huấn luyện.",
+        "impact": "Đến nay vẫn là xương sống của phân vùng ảnh y tế và của các mô hình khuếch tán."
+      },
+      "yolo": {
+        "title": "YOLO",
+        "summary": "Redmon và cộng sự coi dò vật thể là một bài toán hồi quy duy nhất trên toàn ảnh, đạt tốc độ thời gian thực.",
+        "impact": "Mở đường cho thị giác trên thiết bị: camera an ninh, dây chuyền sản xuất, drone."
+      },
+      "resnet": {
+        "title": "ResNet",
+        "summary": "He và cộng sự thêm kết nối tắt dư, huấn luyện được mạng sâu hơn 100 lớp và thắng ILSVRC 2015.",
+        "impact": "Kết nối dư thành thành phần tiêu chuẩn trong gần như mọi kiến trúc sâu về sau."
+      },
+      "maskRcnn": {
+        "title": "Mask R-CNN",
+        "summary": "Mở rộng Faster R-CNN bằng một nhánh dự đoán mặt nạ, cho ra phân vùng từng thực thể.",
+        "impact": "Thống nhất dò vật thể và phân vùng trong một mô hình, chuẩn mực cho nhiều ứng dụng công nghiệp."
+      },
+      "transformerArchitecture": {
+        "title": "Kiến trúc Transformer",
+        "summary": "Bài báo Attention Is All You Need bỏ hẳn hồi quy và tích chập, chỉ dùng cơ chế tự chú ý.",
+        "impact": "Ba năm sau, chính kiến trúc này thay thế CNN trong thị giác."
+      },
+      "nerf": {
+        "title": "NeRF",
+        "summary": "Biểu diễn một cảnh ba chiều bằng một mạng nơ-ron, tổng hợp góc nhìn mới chỉ từ vài chục ảnh.",
+        "impact": "Định hình lại thị giác 3D: cảnh vật thành một hàm số học được, không còn là lưới đa giác."
+      },
+      "detr": {
+        "title": "DETR",
+        "summary": "Carion và cộng sự dò vật thể bằng transformer, bỏ anchor và bước hậu xử lý NMS.",
+        "impact": "Dò vật thể thành bài toán dự đoán tập hợp, đơn giản hóa cả quy trình."
+      },
+      "visionTransformer": {
+        "title": "Vision Transformer (ViT)",
+        "summary": "Ảnh được chia thành các ô 16×16 rồi đưa vào transformer như một chuỗi token, vượt CNN khi có đủ dữ liệu.",
+        "impact": "Thị giác và ngôn ngữ dùng chung một kiến trúc, mở đường cho mô hình đa phương thức."
+      },
+      "clip": {
+        "title": "CLIP",
+        "summary": "Huấn luyện ảnh và văn bản trên 400 triệu cặp lấy từ web, phân loại được lớp mới mà không cần nhãn (zero-shot).",
+        "impact": "Nền tảng cho tìm kiếm ảnh bằng ngôn ngữ tự nhiên và cho các mô hình sinh ảnh theo mô tả."
+      },
+      "latentDiffusion": {
+        "title": "Khuếch tán tiềm ẩn và Stable Diffusion",
+        "summary": "Rombach và cộng sự chạy quá trình khuếch tán trong không gian tiềm ẩn, giảm mạnh chi phí tính toán; mô hình được phát hành công khai năm 2022.",
+        "impact": "Tạo ảnh từ văn bản thành công cụ đại chúng, chạy được trên một GPU phổ thông."
+      },
+      "segmentAnything": {
+        "title": "Segment Anything (SAM)",
+        "summary": "Meta phát hành mô hình phân vùng điều khiển bằng gợi ý, kèm bộ dữ liệu hơn một tỉ mặt nạ.",
+        "impact": "Mô hình nền tảng đầu tiên cho phân vùng: dùng được ngay trên ảnh lạ, không cần huấn luyện lại."
+      },
+      "gaussianSplatting": {
+        "title": "3D Gaussian Splatting",
+        "summary": "Biểu diễn cảnh bằng hàng triệu hạt Gaussian, dựng hình thời gian thực với chất lượng tương đương NeRF.",
+        "impact": "Đưa dựng cảnh 3D từ ảnh vào thời gian thực, đủ nhanh cho sản phẩm."
+      },
+      "multimodalAssistants": {
+        "title": "Mô hình ngôn ngữ nhìn được ảnh",
+        "summary": "Các mô hình ngôn ngữ lớn nhận thêm đầu vào ảnh, trả lời câu hỏi và suy luận trên nội dung hình ảnh.",
+        "impact": "Thị giác chuyển từ danh sách nhãn cố định sang hội thoại mở về nội dung ảnh."
+      },
+      "videoGeneration": {
+        "title": "Sinh video",
+        "summary": "Các mô hình khuếch tán mở rộng sang chiều thời gian, tạo được video ngắn có chuyển động nhất quán.",
+        "impact": "Thách thức mới của ngành: giữ nhất quán theo thời gian và hiểu được vật lý của cảnh."
+      },
+      "openVisionLanguage": {
+        "title": "Mô hình thị giác – ngôn ngữ mở và thị giác hiện thân",
+        "summary": "Nhiều mô hình thị giác – ngôn ngữ mở trọng số được phát hành, chạy được trên máy cá nhân và thiết bị biên; thị giác gắn với robot và tác tử trở thành hướng nghiên cứu chính.",
+        "impact": "Phần lịch sử đang được viết. Mời bạn góp ý và đề xuất thêm mốc cho trang này."
+      }
+    }
   },
   "Comments": {
     "title": "Bình luận",
