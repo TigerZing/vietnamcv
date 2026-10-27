@@ -51,18 +51,3 @@ export async function getNews(
   if (!data) throw ApiError.fromEnvelope(response.status, error);
   return data;
 }
-
-export async function listComments(
-  slug: string,
-  cursor?: string,
-): Promise<CommentPage> {
-  const { data, error, response } = await api.GET(
-    "/api/v1/news/{slug}/comments",
-    {
-      params: { path: { slug }, query: { limit: 30, cursor } },
-      cache: "no-store",
-    },
-  );
-  if (!data) throw ApiError.fromEnvelope(response.status, error);
-  return data;
-}

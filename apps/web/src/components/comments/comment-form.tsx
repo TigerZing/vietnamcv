@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useActionState, useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import type { CommentThread } from "@/lib/comments";
 import { cn } from "@/lib/utils";
 
 import { type CommentFormState, postComment } from "./actions";
@@ -35,13 +36,13 @@ function storeName(name: string) {
 }
 
 export function CommentForm({
-  slug,
+  thread,
   returnTo,
   viewer,
   googleEnabled,
   signInFailed,
 }: {
-  slug: string;
+  thread: CommentThread;
   returnTo: string;
   viewer: CommentViewer | null;
   googleEnabled: boolean;
@@ -49,7 +50,7 @@ export function CommentForm({
 }) {
   const t = useTranslations("Comments");
   const [state, action, pending] = useActionState<CommentFormState, FormData>(
-    postComment.bind(null, slug),
+    postComment.bind(null, thread),
     { status: "idle" },
   );
   const [mode, setMode] = useState<Mode>(viewer ? "account" : "anonymous");

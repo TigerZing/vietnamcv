@@ -206,7 +206,7 @@ EOF_CHANGED
     compose build "${services[@]}" || die "Build failed (see output above)"
   fi
   [ "$migrations" = "yes" ] && info "New migrations will be applied"
-  [ "$seed" = "yes" ] && info "News seed data changed; it will be re-imported"
+  [ "$seed" = "yes" ] && info "Seed data (news or demos) changed; it will be re-imported"
 
   info "Restarting changed services"
   compose up --detach --wait ||

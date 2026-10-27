@@ -1,6 +1,6 @@
 # ADR-012: Demo products page from curated LinkedIn posts
 
-- Status: Accepted
+- Status: Accepted; Data and Playback superseded by [ADR-013](013-demo-watch-page-and-comments.md)
 - Date: 2026-10-26
 
 ## Context

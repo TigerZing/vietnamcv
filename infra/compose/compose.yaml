@@ -57,10 +57,14 @@ services:
         condition: service_healthy
     restart: "no"
 
-  # Imports the editor-approved news in services/api/seed/news (idempotent).
+  # Imports the editor-approved news (services/api/seed/news) and the demo list
+  # (services/api/seed/demos.json). Both are idempotent.
   seed:
     <<: *api-image
-    command: ["python", "-m", "app.cli.seed_news"]
+    command:
+      - sh
+      - -c
+      - python -m app.cli.seed_news && python -m app.cli.seed_demos
     environment: *api-env
     depends_on:
       migrate:

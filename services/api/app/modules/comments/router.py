@@ -22,6 +22,7 @@ from app.modules.comments.schemas import (
     ModerationQueue,
     ModerationRequest,
 )
+from app.modules.content.models import ContentType
 from app.modules.news.schemas import SLUG_PATTERN
 
 router = APIRouter(tags=["comments"])
@@ -48,6 +49,15 @@ _ERRORS: dict[int | str, dict[str, object]] = {
 }
 
 
+_CREATE_DESCRIPTION = (
+    "Comments by signed-in users are published at once. Anonymous and guest comments "
+    "containing links are held for moderation (`status: pending`). Rate limited per "
+    "client and per account."
+)
+Redis_ = Annotated[Redis, Depends(_redis)]
+Fingerprint = Annotated[str, Depends(_fingerprint)]
+
+
 @router.get(
     "/news/{slug}/comments",
     response_model=CommentPage,
@@ -57,7 +67,7 @@ _ERRORS: dict[int | str, dict[str, object]] = {
 async def list_comments(
     session: DbSession, slug: Slug, limit: Limit = DEFAULT_LIMIT, cursor: Cursor = None
 ) -> CommentPage:
-    return await service.list_for_news(session, slug, limit=limit, cursor=cursor)
+    return await service.list_for(session, ContentType.NEWS, slug, limit=limit, cursor=cursor)
 
 
 @router.post(
@@ -65,11 +75,7 @@ async def list_comments(
     response_model=CommentOut,
     status_code=status.HTTP_201_CREATED,
     summary="Post a comment anonymously, with a display name, or as the signed-in user",
-    description=(
-        "Comments by signed-in users are published at once. Anonymous and guest comments "
-        "containing links are held for moderation (`status: pending`). Rate limited per "
-        "client and per account."
-    ),
+    description=_CREATE_DESCRIPTION,
     responses=_ERRORS,
 )
 async def create_comment(  # noqa: PLR0917 - FastAPI injects dependencies positionally
@@ -77,12 +83,52 @@ async def create_comment(  # noqa: PLR0917 - FastAPI injects dependencies positi
     slug: Slug,
     payload: CommentCreate,
     principal: OptionalPrincipal,
-    redis: Annotated[Redis, Depends(_redis)],
-    fingerprint: Annotated[str, Depends(_fingerprint)],
+    redis: Redis_,
+    fingerprint: Fingerprint,
 ) -> CommentOut:
-    return await service.create_for_news(
+    return await service.create_for(
         session,
         redis,
+        content_type=ContentType.NEWS,
+        slug=slug,
+        payload=payload,
+        principal=principal,
+        fingerprint=fingerprint,
+    )
+
+
+@router.get(
+    "/demos/{slug}/comments",
+    response_model=CommentPage,
+    summary="List published comments on a demo product, newest first",
+    responses={status.HTTP_404_NOT_FOUND: {"model": ErrorEnvelope}},
+)
+async def list_demo_comments(
+    session: DbSession, slug: Slug, limit: Limit = DEFAULT_LIMIT, cursor: Cursor = None
+) -> CommentPage:
+    return await service.list_for(session, ContentType.DEMO, slug, limit=limit, cursor=cursor)
+
+
+@router.post(
+    "/demos/{slug}/comments",
+    response_model=CommentOut,
+    status_code=status.HTTP_201_CREATED,
+    summary="Comment on a demo product, with the same rules as news comments",
+    description=_CREATE_DESCRIPTION,
+    responses=_ERRORS,
+)
+async def create_demo_comment(  # noqa: PLR0917 - FastAPI injects dependencies positionally
+    session: DbSession,
+    slug: Slug,
+    payload: CommentCreate,
+    principal: OptionalPrincipal,
+    redis: Redis_,
+    fingerprint: Fingerprint,
+) -> CommentOut:
+    return await service.create_for(
+        session,
+        redis,
+        content_type=ContentType.DEMO,
         slug=slug,
         payload=payload,
         principal=principal,
