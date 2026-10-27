@@ -102,6 +102,13 @@ const news = [
   },
 ];
 const comments = new Map(news.map((item) => [item.slug, []]));
+// Demo threads, keyed `demo-<id>` like services/api/seed/demos.json.
+const demoComments = new Map(
+  Array.from({ length: 19 }, (_, i) => [
+    `demo-${String(i + 1).padStart(2, "0")}`,
+    [],
+  ]),
+);
 
 /** The post as the API returns it in `lang`, falling back to Vietnamese. */
 function localize(item, lang) {
@@ -177,9 +184,12 @@ createServer(async (req, res) => {
     });
     return send(res, 200, { items, next_cursor: null });
   }
-  const commentsMatch = path.match(/^\/api\/v1\/news\/([a-z0-9-]+)\/comments$/);
+  const commentsMatch = path.match(
+    /^\/api\/v1\/(news|demos)\/([a-z0-9-]+)\/comments$/,
+  );
   if (commentsMatch) {
-    const list = comments.get(commentsMatch[1]);
+    const threads = commentsMatch[1] === "demos" ? demoComments : comments;
+    const list = threads.get(commentsMatch[2]);
     if (!list) return notFound(res);
     if (req.method === "POST") {
       let raw = "";

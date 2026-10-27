@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 import { describe, expect, it } from "vitest";
@@ -7,7 +7,9 @@ import {
   DEMOS,
   demoEmbedUrl,
   demoPublishedAt,
+  demoThread,
   demoThumbnail,
+  findDemo,
   formatDuration,
   isLinkedInUrn,
 } from "@/lib/demos";
@@ -20,9 +22,34 @@ describe("demos", () => {
       expect(isLinkedInUrn(demo.urn), demo.urn).toBe(true);
       expect(demo.title.vi.trim()).not.toBe("");
       expect(demo.title.en.trim()).not.toBe("");
+      expect(demo.description.vi.length, demo.id).toBeGreaterThan(80);
+      expect(demo.description.en.length, demo.id).toBeGreaterThan(80);
       const file = path.join(process.cwd(), "public", demoThumbnail(demo));
       expect(existsSync(file), file).toBe(true);
     }
+  });
+
+  it("matches the API seed that gives every demo a comment thread", () => {
+    const seed = JSON.parse(
+      readFileSync(
+        path.join(process.cwd(), "../../services/api/seed/demos.json"),
+        "utf8",
+      ),
+    ) as { items: { slug: string; urn: string; title: string }[] };
+    expect(
+      seed.items.map(({ slug, urn, title }) => ({ slug, urn, title })),
+    ).toEqual(
+      DEMOS.map((demo) => ({
+        slug: demoThread(demo).slug,
+        urn: demo.urn,
+        title: demo.title.vi,
+      })),
+    );
+  });
+
+  it("finds a demo by id", () => {
+    expect(findDemo("03")?.author).toBe("Areeba Shahid");
+    expect(findDemo("99")).toBeUndefined();
   });
 
   it("embeds the compact LinkedIn player", () => {

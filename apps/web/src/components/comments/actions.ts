@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 
 import { api } from "@/lib/api";
 import { getIdToken } from "@/lib/auth/session";
+import type { CommentThread } from "@/lib/comments";
 
 export type CommentFormState =
   | { status: "idle" }
@@ -26,7 +27,7 @@ const MODES = new Set(["anonymous", "guest", "account"]);
 
 /** Posts a comment through the API, forwarding the visitor's IP and Google token. */
 export async function postComment(
-  slug: string,
+  thread: CommentThread,
   _previous: CommentFormState,
   form: FormData,
 ): Promise<CommentFormState> {
@@ -46,20 +47,21 @@ export async function postComment(
     forwarded.Authorization = `Bearer ${token}`;
   }
 
-  const { data, error, response } = await api.POST(
-    "/api/v1/news/{slug}/comments",
-    {
-      params: { path: { slug } },
-      body: {
-        mode: mode as "anonymous" | "guest" | "account",
-        body: String(form.get("body") ?? ""),
-        display_name:
-          mode === "guest" ? String(form.get("display_name") ?? "") : null,
-        website: String(form.get("website") ?? "") || null,
-      },
-      headers: forwarded,
+  const options = {
+    params: { path: { slug: thread.slug } },
+    body: {
+      mode: mode as "anonymous" | "guest" | "account",
+      body: String(form.get("body") ?? ""),
+      display_name:
+        mode === "guest" ? String(form.get("display_name") ?? "") : null,
+      website: String(form.get("website") ?? "") || null,
     },
-  );
+    headers: forwarded,
+  };
+  const { data, error, response } =
+    thread.kind === "demos"
+      ? await api.POST("/api/v1/demos/{slug}/comments", options)
+      : await api.POST("/api/v1/news/{slug}/comments", options);
 
   if (data) {
     refresh();

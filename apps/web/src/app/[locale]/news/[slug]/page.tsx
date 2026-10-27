@@ -179,7 +179,8 @@ async function PostWithComments({ params, searchParams }: Props) {
         </h2>
         <Suspense fallback={<LoadingState label={loading("label")} rows={2} />}>
           <CommentSection
-            slug={slug}
+            thread={{ kind: "news", slug }}
+            path={`/${locale}/news/${slug}`}
             locale={locale as Locale}
             cursor={typeof query.c === "string" ? query.c : undefined}
             signIn={typeof query.signin === "string" ? query.signin : undefined}

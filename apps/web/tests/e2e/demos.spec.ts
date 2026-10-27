@@ -1,6 +1,11 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+const FIRST_EMBED =
+  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7520372769973350400?compact=1";
+const HERDSENSE_EMBED =
+  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7519706492808355840?compact=1";
+
 test.describe("demos", () => {
   test.beforeEach(async ({ page }) => {
     // Never reach LinkedIn from tests; the player only needs a frame to load.
@@ -9,7 +14,7 @@ test.describe("demos", () => {
     );
   });
 
-  test("shows a grid of demo cards from the nav", async ({
+  test("lists every demo next to the first one, from the nav", async ({
     page,
     viewport,
   }) => {
@@ -24,60 +29,115 @@ test.describe("demos", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: "Sản phẩm demo" }),
     ).toBeVisible();
-    await expect(page.getByRole("article")).toHaveCount(19);
-    // Nothing loads from LinkedIn before a viewer presses play.
+
+    const list = page.getByRole("navigation", {
+      name: "Danh sách sản phẩm demo",
+    });
+    await expect(list.getByRole("link")).toHaveCount(19);
+    await expect(list.locator("a[aria-current=page]")).toContainText(
+      "Đo tốc độ xe",
+    );
+    await expect(
+      page.getByRole("heading", { level: 2, name: /^Đo tốc độ xe/ }),
+    ).toBeVisible();
+    // Nothing loads from LinkedIn before a viewer asks for it.
     await expect(page.locator("iframe")).toHaveCount(0);
+    await page
+      .getByRole("button", { name: /^Phát video: Đo tốc độ xe/ })
+      .click();
+    await expect(page.locator("iframe:visible")).toHaveAttribute(
+      "src",
+      FIRST_EMBED,
+    );
+    await expect(page).toHaveURL(/\/vi\/demos$/);
   });
 
-  test("plays a video inside its card without leaving the page", async ({
+  test("choosing a demo plays it on the right with its details", async ({
     page,
   }) => {
     await page.goto("/vi/demos");
-    const card = page
-      .getByRole("article")
-      .filter({ hasText: "Đo tốc độ xe từ video giao thông" });
-    await card
-      .getByRole("button", { name: /^Phát video: Đo tốc độ xe/ })
-      .click();
+    const list = page.getByRole("navigation", {
+      name: "Danh sách sản phẩm demo",
+    });
+    await list.getByRole("link", { name: /HerdSense AI/ }).click();
 
-    const player = card.locator("iframe");
-    await expect(player).toHaveAttribute(
+    await expect(page).toHaveURL(/\/vi\/demos\/03$/);
+    await expect(page.locator("iframe:visible")).toHaveCount(1);
+    await expect(page.locator("iframe:visible")).toHaveAttribute(
       "src",
-      "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7520372769973350400?compact=1",
+      HERDSENSE_EMBED,
     );
-    await expect(page).toHaveURL(/\/vi\/demos$/);
-    await expect(page.locator("iframe")).toHaveCount(1);
+    await expect(list.locator("a[aria-current=page]")).toContainText(
+      "HerdSense AI",
+    );
+    await expect(
+      page.getByRole("heading", { level: 2, name: /^HerdSense AI/ }),
+    ).toBeVisible();
+    await expect(page.getByText(/đếm bò vào chuồng từ video/)).toBeVisible();
+    await expect(page.getByText("Areeba Shahid").first()).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: /Xem bài viết gốc trên LinkedIn/ }),
+    ).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/feed/update/urn:li:ugcPost:7519706492808355840/",
+    );
 
-    // Playing another demo stops the first one.
-    const other = page.getByRole("article").filter({ hasText: "HerdSense AI" });
-    await other.getByRole("button", { name: /^Phát video: HerdSense/ }).click();
-    await expect(page.locator("iframe")).toHaveCount(1);
-    await expect(other.locator("iframe")).toBeVisible();
-
-    await page.keyboard.press("Escape");
-    await expect(page.locator("iframe")).toHaveCount(0);
-
-    await card
-      .getByRole("button", { name: /^Phát video: Đo tốc độ xe/ })
-      .click();
-    await card.getByRole("button", { name: /^Đóng:/ }).click();
-    await expect(page.locator("iframe")).toHaveCount(0);
+    // Another pick swaps the player without a second frame.
+    await list.getByRole("link", { name: /InfiniSplat v2/ }).click();
+    await expect(page).toHaveURL(/\/vi\/demos\/08$/);
+    await expect(page.locator("iframe:visible")).toHaveCount(1);
+    await expect(page.locator("iframe:visible")).toHaveAttribute(
+      "src",
+      /urn:li:ugcPost:7518298679640825857/,
+    );
+    // The page left behind stays mounted but hidden; its player must stop.
+    await expect(
+      page.locator('iframe[src*="7519706492808355840"]'),
+    ).toHaveCount(0);
   });
 
-  test("has English titles and a link to the post", async ({ page }) => {
-    await page.goto("/en/demos");
+  test("credits the maker when someone else posted it", async ({ page }) => {
+    await page.goto("/vi/demos/07");
+    const credits = page.locator("dl");
+    await expect(credits).toContainText("Người làm:");
+    await expect(credits).toContainText("Otman Heddouch");
+    await expect(credits).toContainText("Computer Vision Store");
+  });
+
+  test("viewers can comment on a demo", async ({ page }) => {
+    await page.goto("/vi/demos/05");
+    const comments = page.locator("#comments");
+    await expect(
+      comments.getByRole("heading", { name: "Bình luận" }),
+    ).toBeVisible();
+    const body = `Demo rất hữu ích ${Date.now()}`;
+    await comments.getByLabel("Nội dung bình luận").fill(body);
+    await comments.getByRole("button", { name: "Gửi bình luận" }).click();
+    await expect(comments.getByText(body)).toBeVisible();
+
+    // Each demo has its own thread.
+    await page.goto("/vi/demos/06");
+    await expect(page.locator("#comments")).toBeVisible();
+    await expect(page.getByText(body)).toHaveCount(0);
+  });
+
+  test("has English text and a not-found page for unknown demos", async ({
+    page,
+  }) => {
+    await page.goto("/en/demos/01");
     await expect(
       page.getByRole("heading", { level: 1, name: "Demo products" }),
     ).toBeVisible();
-    const card = page
-      .getByRole("article")
-      .filter({ hasText: "Speed estimation from traffic video" });
     await expect(
-      card.getByRole("link", { name: /View on LinkedIn/ }),
-    ).toHaveAttribute(
-      "href",
-      "https://www.linkedin.com/feed/update/urn:li:ugcPost:7520372769973350400/",
-    );
+      page.getByRole("heading", { level: 2, name: /^Speed estimation/ }),
+    ).toBeVisible();
+    await expect(page.getByText("Made by:")).toBeVisible();
+    await expect(page.getByText(/becomes a speed camera/)).toBeVisible();
+
+    await page.goto("/en/demos/99");
+    await expect(
+      page.getByRole("heading", { name: "Page not found" }),
+    ).toBeVisible();
   });
 
   for (const theme of ["dark", "light"] as const) {
@@ -89,21 +149,25 @@ test.describe("demos", () => {
           localStorage.setItem("vietnamcv-theme", value);
         } catch {}
       }, theme);
-      await page.goto("/vi/demos");
-      await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
-      const overflow = await page.evaluate(
-        () =>
-          document.documentElement.scrollWidth -
-          document.documentElement.clientWidth,
-      );
-      expect(overflow).toBeLessThanOrEqual(0);
-      const results = await new AxeBuilder({ page })
-        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-        .analyze();
-      const serious = results.violations.filter((violation) =>
-        ["serious", "critical"].includes(violation.impact ?? ""),
-      );
-      expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
+      for (const path of ["/vi/demos", "/vi/demos/13"]) {
+        await page.goto(path);
+        await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+        await expect(page.locator("#comments form")).toBeVisible();
+        const overflow = await page.evaluate(
+          () =>
+            document.documentElement.scrollWidth -
+            document.documentElement.clientWidth,
+        );
+        expect(overflow).toBeLessThanOrEqual(0);
+        const results = await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .exclude("iframe")
+          .analyze();
+        const serious = results.violations.filter((violation) =>
+          ["serious", "critical"].includes(violation.impact ?? ""),
+        );
+        expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
+      }
     });
   }
 });

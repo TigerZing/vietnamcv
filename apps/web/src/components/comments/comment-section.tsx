@@ -6,19 +6,22 @@ import type { Locale } from "@/i18n/routing";
 import { buttonVariants } from "@/components/ui/button";
 import { getViewer } from "@/lib/auth/session";
 import { googleSignInEnabled } from "@/lib/env";
-import { listComments } from "@/lib/news";
+import { type CommentThread, listComments } from "@/lib/comments";
 
 import { CommentForm } from "./comment-form";
 import { CommentList } from "./comment-list";
 
 /** Comments and the comment form. Request-time: render inside <Suspense>. */
 export async function CommentSection({
-  slug,
+  thread,
+  path,
   locale,
   cursor,
   signIn,
 }: {
-  slug: string;
+  thread: CommentThread;
+  /** The page the thread is shown on, e.g. `/vi/news/<slug>`. */
+  path: string;
   locale: Locale;
   cursor?: string;
   signIn?: string;
@@ -26,13 +29,12 @@ export async function CommentSection({
   await connection();
   const t = await getTranslations({ locale, namespace: "Comments" });
   const viewer = await getViewer();
-  const path = `/${locale}/news/${slug}`;
-  const page = await listComments(slug, cursor).catch(() => null);
+  const page = await listComments(thread, cursor).catch(() => null);
 
   return (
     <div className="flex flex-col gap-6">
       <CommentForm
-        slug={slug}
+        thread={thread}
         returnTo={path}
         viewer={viewer ? { name: viewer.name, picture: viewer.picture } : null}
         googleEnabled={googleSignInEnabled}

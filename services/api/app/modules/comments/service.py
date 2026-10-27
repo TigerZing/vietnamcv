@@ -48,10 +48,16 @@ async def count_published(
     return await repository.count_published(session, content_ids)
 
 
-async def list_for_news(
-    session: AsyncSession, slug: str, *, limit: int, cursor: str | None
+async def list_for(
+    session: AsyncSession,
+    content_type: ContentType,
+    slug: str,
+    *,
+    limit: int,
+    cursor: str | None,
 ) -> CommentPage:
-    content = await content_service.get_published(session, ContentType.NEWS, slug)
+    """Published comments under a news post or a demo, newest first."""
+    content = await content_service.get_published(session, content_type, slug)
     rows = await repository.list_comments(
         session,
         status=CommentStatus.PUBLISHED,
@@ -66,16 +72,17 @@ async def list_for_news(
     )
 
 
-async def create_for_news(
+async def create_for(
     session: AsyncSession,
     redis: Redis,
     *,
+    content_type: ContentType,
     slug: str,
     payload: CommentCreate,
     principal: Principal | None,
     fingerprint: str,
 ) -> CommentOut:
-    content = await content_service.get_published(session, ContentType.NEWS, slug)
+    content = await content_service.get_published(session, content_type, slug)
 
     if payload.website:
         logger.info("comment_honeypot_triggered", content_id=str(content.id))

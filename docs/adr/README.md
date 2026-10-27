@@ -13,7 +13,8 @@
 | [009](009-google-sign-in-and-comments.md) | Google sign-in and comments on news posts | Accepted |
 | [010](010-post-text-images-and-rights.md) | Post text, stored images and image rights | Accepted |
 | [011](011-news-feed-order-regions-and-tags.md) | News feed order, region tabs and technology hashtags | Accepted |
-| [012](012-demo-products-page.md) | Demo products page from curated LinkedIn posts | Accepted |
+| [012](012-demo-products-page.md) | Demo products page from curated LinkedIn posts | Partly superseded by 013 |
+| [013](013-demo-watch-page-and-comments.md) | Demo watch page, descriptions and comments | Accepted |
 
 New ADRs copy the structure below: Context, Decision, Consequences. An ADR that changes a
 spec says which spec section it overrides.

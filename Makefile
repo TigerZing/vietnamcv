@@ -58,8 +58,8 @@ migrate: ## Apply all migrations to the database in DATABASE_URL
 	set -a && source .env && set +a && $(UV) run alembic upgrade head
 
 .PHONY: seed
-seed: ## Import editor-approved news (services/api/seed/news) into DATABASE_URL
-	set -a && source .env && set +a && $(UV) run python -m app.cli.seed_news
+seed: ## Import editor-approved news and the demo list (services/api/seed) into DATABASE_URL
+	set -a && source .env && set +a && $(UV) run python -m app.cli.seed_news && $(UV) run python -m app.cli.seed_demos
 
 .PHONY: seed-docker
 seed-docker: ## Re-run the news import inside the running Compose stack

@@ -1,0 +1,144 @@
+{
+  "description": "Demo products on /demos (ADR-013). Keep in step with apps/web/src/lib/demos.ts: one entry per demo, slug demo-<id>.",
+  "source": {
+    "code": "linkedin",
+    "name": "LinkedIn",
+    "kind": "social",
+    "base_url": "https://www.linkedin.com/"
+  },
+  "items": [
+    {
+      "slug": "demo-01",
+      "urn": "urn:li:ugcPost:7520372769973350400",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7520372769973350400/",
+      "title": "Đo tốc độ xe từ video giao thông với YOLOv8 + ByteTrack",
+      "published_on": "2026-10-26"
+    },
+    {
+      "slug": "demo-02",
+      "urn": "urn:li:ugcPost:7516749503794753536",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7516749503794753536/",
+      "title": "Dense4D: tương ứng 4D dày đặc cho người, quần áo và tóc từ ảnh RGB",
+      "published_on": "2026-10-16"
+    },
+    {
+      "slug": "demo-03",
+      "urn": "urn:li:ugcPost:7519706492808355840",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7519706492808355840/",
+      "title": "HerdSense AI: đếm bò vào chuồng với YOLO26 + BoT-SORT",
+      "published_on": "2026-10-24"
+    },
+    {
+      "slug": "demo-04",
+      "urn": "urn:li:ugcPost:7518024427263930368",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7518024427263930368/",
+      "title": "Phân tích quần vợt: theo dõi bóng, gọi bóng trong/ngoài, đo tốc độ cú đánh",
+      "published_on": "2026-10-19"
+    },
+    {
+      "slug": "demo-05",
+      "urn": "urn:li:ugcPost:7518068722809331712",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7518068722809331712/",
+      "title": "TrafficEye AI: phát hiện vi phạm mũ bảo hiểm và dây an toàn",
+      "published_on": "2026-10-19"
+    },
+    {
+      "slug": "demo-06",
+      "urn": "urn:li:ugcPost:7518962117631188992",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7518962117631188992/",
+      "title": "World model cho mô phỏng xe tự hành trung thực đến đâu?",
+      "published_on": "2026-10-22"
+    },
+    {
+      "slug": "demo-07",
+      "urn": "urn:li:ugcPost:7518918267059707904",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7518918267059707904/",
+      "title": "Phân tích trận quần vợt thời gian thực: người chơi, bóng và sân",
+      "published_on": "2026-10-22"
+    },
+    {
+      "slug": "demo-08",
+      "urn": "urn:li:ugcPost:7518298679640825857",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7518298679640825857/",
+      "title": "InfiniSplat v2: tái tạo cảnh 3D Gaussian thời gian thực từ nhiều góc nhìn",
+      "published_on": "2026-10-20"
+    },
+    {
+      "slug": "demo-09",
+      "urn": "urn:li:ugcPost:7518784168739139584",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7518784168739139584/",
+      "title": "lines-metis: phát hiện đoạn thẳng DeepLSD trên chip Axelera Metis",
+      "published_on": "2026-10-21"
+    },
+    {
+      "slug": "demo-10",
+      "urn": "urn:li:activity:7513670993253642240",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7513670993253642240/",
+      "title": "Kiểm tra chất lượng trứng với OpenAI Decisions API và RF-DETR",
+      "published_on": "2026-10-07"
+    },
+    {
+      "slug": "demo-11",
+      "urn": "urn:li:activity:7519295119473401856",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7519295119473401856/",
+      "title": "So sánh 11 bộ theo dõi của OpenCV cho motion capture khuôn mặt",
+      "published_on": "2026-10-23"
+    },
+    {
+      "slug": "demo-12",
+      "urn": "urn:li:ugcPost:7510926869781970944",
+      "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7510926869781970944/",
+      "title": "AI Junction Guard: phát hiện nút giao bị chặn từ video drone 4K",
+      "published_on": "2026-09-30"
+    },
+    {
+      "slug": "demo-13",
+      "urn": "urn:li:activity:7506375408326733825",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7506375408326733825/",
+      "title": "RelateAnything: nhận biết quan hệ giữa các vùng ảnh theo thời gian thực",
+      "published_on": "2026-09-17"
+    },
+    {
+      "slug": "demo-14",
+      "urn": "urn:li:activity:7496982021647257602",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7496982021647257602/",
+      "title": "4DAnyone: tạo người 4D từ một video quay bình thường",
+      "published_on": "2026-08-22"
+    },
+    {
+      "slug": "demo-15",
+      "urn": "urn:li:activity:7490421004859699200",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7490421004859699200/",
+      "title": "Gán nhãn 3D cho đám mây điểm LiDAR",
+      "published_on": "2026-08-04"
+    },
+    {
+      "slug": "demo-16",
+      "urn": "urn:li:activity:7489086030323798019",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7489086030323798019/",
+      "title": "Axolotl3D (NVIDIA): hoàn thiện hình dạng 3D bám sát phần quan sát được",
+      "published_on": "2026-07-31"
+    },
+    {
+      "slug": "demo-17",
+      "urn": "urn:li:activity:7488441474380886016",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7488441474380886016/",
+      "title": "GNM Head: mô hình 3D tham số của đầu người do Google mở mã nguồn",
+      "published_on": "2026-07-30"
+    },
+    {
+      "slug": "demo-18",
+      "urn": "urn:li:activity:7484596663014129665",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7484596663014129665/",
+      "title": "Khúc côn cầu trên bàn bằng AR với robot Vector",
+      "published_on": "2026-07-19"
+    },
+    {
+      "slug": "demo-19",
+      "urn": "urn:li:activity:7466129576381816832",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7466129576381816832/",
+      "title": "Sửa video bằng câu lệnh: thêm đám đông vào cảnh quay thật",
+      "published_on": "2026-05-29"
+    }
+  ]
+}
