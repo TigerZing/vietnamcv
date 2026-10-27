@@ -11,10 +11,8 @@ export default function DemosLayout({
   const t = useTranslations("Demos");
   return (
     <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold tracking-tight">{t("title")}</h1>
-        <p className="max-w-prose text-muted-foreground">{t("lead")}</p>
-      </header>
+      {/* No visible header: the nav names the tab. The heading stays for screen readers. */}
+      <h1 className="sr-only">{t("title")}</h1>
       {DEMOS.length === 0 ? (
         <EmptyState title={t("emptyTitle")} description={t("emptyBody")} />
       ) : (
