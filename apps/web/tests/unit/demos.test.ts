@@ -9,6 +9,7 @@ import {
   demoPublishedAt,
   demoThread,
   demoThumbnail,
+  demoVideoUrl,
   findDemo,
   formatDuration,
   isLinkedInUrn,
@@ -56,6 +57,19 @@ describe("demos", () => {
     expect(demoEmbedUrl(DEMOS[0]!)).toBe(
       "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7520372769973350400?compact=1",
     );
+  });
+
+  it("plays videos from our own copy, one file per video demo", () => {
+    for (const demo of DEMOS) {
+      const url = demoVideoUrl(demo);
+      if (demo.kind === "image") {
+        expect(url).toBeUndefined();
+        continue;
+      }
+      expect(url).toBe(`/demos/videos/${demo.id}.mp4`);
+      const file = path.join(process.cwd(), "public", url!);
+      expect(existsSync(file), file).toBe(true);
+    }
   });
 
   it("reads the publish time from the LinkedIn id", () => {

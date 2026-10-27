@@ -1,14 +1,19 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 
-const FIRST_EMBED =
-  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7520372769973350400?compact=1";
-const HERDSENSE_EMBED =
-  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7519706492808355840?compact=1";
+/** The visible player is our own clip, and it is playing. */
+async function expectPlaying(page: Page, id: string) {
+  const video = page.locator("video:visible");
+  await expect(video).toHaveCount(1);
+  await expect(video).toHaveAttribute("src", `/demos/videos/${id}.mp4`);
+  await expect
+    .poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused))
+    .toBe(true);
+}
 
 test.describe("demos", () => {
   test.beforeEach(async ({ page }) => {
-    // Never reach LinkedIn from tests; the player only needs a frame to load.
+    // Never reach LinkedIn from tests; image posts only need a frame to load.
     await page.route("https://www.linkedin.com/**", (route) =>
       route.fulfill({ contentType: "text/html", body: "<html></html>" }),
     );
@@ -40,15 +45,12 @@ test.describe("demos", () => {
     await expect(
       page.getByRole("heading", { level: 2, name: /^Đo tốc độ xe/ }),
     ).toBeVisible();
-    // Nothing loads from LinkedIn before a viewer asks for it.
-    await expect(page.locator("iframe")).toHaveCount(0);
+    // Nothing plays before a viewer asks for it.
+    await expect(page.locator("iframe, video")).toHaveCount(0);
     await page
       .getByRole("button", { name: /^Phát video: Đo tốc độ xe/ })
       .click();
-    await expect(page.locator("iframe:visible")).toHaveAttribute(
-      "src",
-      FIRST_EMBED,
-    );
+    await expectPlaying(page, "01");
     await expect(page).toHaveURL(/\/vi\/demos$/);
   });
 
@@ -62,11 +64,8 @@ test.describe("demos", () => {
     await list.getByRole("link", { name: /HerdSense AI/ }).click();
 
     await expect(page).toHaveURL(/\/vi\/demos\/03$/);
-    await expect(page.locator("iframe:visible")).toHaveCount(1);
-    await expect(page.locator("iframe:visible")).toHaveAttribute(
-      "src",
-      HERDSENSE_EMBED,
-    );
+    // Picking a card starts the video without a second click.
+    await expectPlaying(page, "03");
     await expect(list.locator("a[aria-current=page]")).toContainText(
       "HerdSense AI",
     );
@@ -85,15 +84,9 @@ test.describe("demos", () => {
     // Another pick swaps the player without a second frame.
     await list.getByRole("link", { name: /InfiniSplat v2/ }).click();
     await expect(page).toHaveURL(/\/vi\/demos\/08$/);
-    await expect(page.locator("iframe:visible")).toHaveCount(1);
-    await expect(page.locator("iframe:visible")).toHaveAttribute(
-      "src",
-      /urn:li:ugcPost:7518298679640825857/,
-    );
+    await expectPlaying(page, "08");
     // The page left behind stays mounted but hidden; its player must stop.
-    await expect(
-      page.locator('iframe[src*="7519706492808355840"]'),
-    ).toHaveCount(0);
+    await expect(page.locator('video[src$="/03.mp4"]')).toHaveCount(0);
   });
 
   test("credits the maker when someone else posted it", async ({ page }) => {

@@ -5,12 +5,17 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { type Demo, demoEmbedUrl, demoThumbnail } from "@/lib/demos";
+import {
+  type Demo,
+  demoEmbedUrl,
+  demoThumbnail,
+  demoVideoUrl,
+} from "@/lib/demos";
 
 /**
- * LinkedIn's embed player for one demo. With `autoplay` (the viewer picked this demo
- * from the list) the player loads at once; otherwise the thumbnail waits for a press,
- * so nothing loads from LinkedIn before the viewer asks for it.
+ * The player for one demo. Videos play from our own copy of the clip; image posts use
+ * LinkedIn's embed. With `autoplay` (the viewer picked this demo from the list) the
+ * video starts at once; otherwise the thumbnail waits for a press.
  */
 export function DemoPlayer({
   demo,
@@ -25,10 +30,12 @@ export function DemoPlayer({
   const [playing, setPlaying] = useState(autoplay);
   const frame = useRef<HTMLDivElement>(null);
   const player = useRef<HTMLIFrameElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
   const src = demoEmbedUrl(demo);
+  const clip = demoVideoUrl(demo);
 
-  // Next keeps recently left pages mounted but hidden, and a hidden iframe keeps
-  // playing. Blank the frame while hidden and restore it when shown again.
+  // Next keeps recently left pages mounted but hidden, and a hidden player keeps
+  // playing. Unload the player while hidden and restore it when shown again.
   useLayoutEffect(() => {
     const element = player.current;
     if (!element) return;
@@ -37,6 +44,23 @@ export function DemoPlayer({
       element.src = "about:blank";
     };
   }, [playing, src]);
+
+  useLayoutEffect(() => {
+    const element = video.current;
+    if (!element || !clip) return;
+    element.src = clip;
+    // A page opened straight from a link has had no click yet, so the browser only
+    // lets the clip start muted; the viewer can unmute it from the controls.
+    element.play().catch(() => {
+      element.muted = true;
+      element.play().catch(() => {});
+    });
+    return () => {
+      element.pause();
+      element.removeAttribute("src");
+      element.load();
+    };
+  }, [playing, clip]);
 
   // On narrow screens the list sits below the player: bring the player into view.
   useEffect(() => {
@@ -49,12 +73,23 @@ export function DemoPlayer({
       ref={frame}
       className="relative aspect-video scroll-mt-20 overflow-hidden rounded-xl bg-black"
     >
-      {playing ? (
+      {playing && clip ? (
+        <video
+          ref={video}
+          key={demo.id}
+          poster={demoThumbnail(demo)}
+          aria-label={t("playerTitle", { title })}
+          className="absolute inset-0 size-full object-contain"
+          controls
+          playsInline
+          preload="auto"
+        />
+      ) : playing ? (
         <iframe
           ref={player}
           key={demo.id}
           src={src}
-          title={t("playerTitle", { title })}
+          title={t("postTitle", { title })}
           className="absolute inset-0 size-full"
           allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
           referrerPolicy="strict-origin-when-cross-origin"

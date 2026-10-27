@@ -6,7 +6,9 @@ import type { CommentThread } from "@/lib/comments";
 /**
  * Demo products shown on /demos, curated by the owner in a Google Sheet of LinkedIn
  * posts (ADR-012). Thumbnails in `public/demos/` are frames taken from each post's video
- * (or its image, for `kind: "image"`); playback uses LinkedIn's embed player. Comments
+ * (or its image, for `kind: "image"`). Videos play from a copy of the clip in
+ * `public/demos/videos/` (credited and linked to the post); image posts use LinkedIn's
+ * embed player. Comments
  * hang off a published row per demo that `services/api/seed/demos.json` creates; keep
  * the two lists in step (ADR-013).
  */
@@ -331,6 +333,11 @@ export function demoEmbedUrl(demo: Demo): string {
 
 export function demoPostUrl(demo: Demo): string {
   return `https://www.linkedin.com/feed/update/${demo.urn}/`;
+}
+
+/** Our copy of the post's clip, played on the page; image posts have none. */
+export function demoVideoUrl(demo: Demo): string | undefined {
+  return demo.kind === "video" ? `/demos/videos/${demo.id}.mp4` : undefined;
 }
 
 export function demoThumbnail(demo: Demo): string {
