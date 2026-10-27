@@ -1,10 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const FIRST_EMBED =
-  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7520372769973350400?compact=1";
-const HERDSENSE_EMBED =
-  "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7519706492808355840?compact=1";
+const IMAGE_POST_EMBED =
+  "https://www.linkedin.com/embed/feed/update/urn:li:activity:7506375408326733825?compact=1";
 
 test.describe("demos", () => {
   test.beforeEach(async ({ page }) => {
@@ -40,15 +38,16 @@ test.describe("demos", () => {
     await expect(
       page.getByRole("heading", { level: 2, name: /^Đo tốc độ xe/ }),
     ).toBeVisible();
-    // Nothing loads from LinkedIn before a viewer asks for it.
+    // Landing on the tab plays nothing and loads no video until a press.
+    const video = page.locator("video:visible");
+    await expect(video).toHaveAttribute("preload", "none");
+    await expect(video).not.toHaveAttribute("controls", "");
     await expect(page.locator("iframe")).toHaveCount(0);
     await page
       .getByRole("button", { name: /^Phát video: Đo tốc độ xe/ })
       .click();
-    await expect(page.locator("iframe:visible")).toHaveAttribute(
-      "src",
-      FIRST_EMBED,
-    );
+    await expect(video).toHaveAttribute("src", "/demos/videos/01.mp4");
+    await expect(video).toHaveAttribute("controls", "");
     await expect(page).toHaveURL(/\/vi\/demos$/);
   });
 
@@ -62,10 +61,13 @@ test.describe("demos", () => {
     await list.getByRole("link", { name: /HerdSense AI/ }).click();
 
     await expect(page).toHaveURL(/\/vi\/demos\/03$/);
-    await expect(page.locator("iframe:visible")).toHaveCount(1);
-    await expect(page.locator("iframe:visible")).toHaveAttribute(
-      "src",
-      HERDSENSE_EMBED,
+    // A picked demo starts at once: no play button, the player has its controls.
+    const video = page.locator("video:visible");
+    await expect(video).toHaveCount(1);
+    await expect(video).toHaveAttribute("src", "/demos/videos/03.mp4");
+    await expect(video).toHaveAttribute("controls", "");
+    await expect(page.getByRole("button", { name: /^Phát video/ })).toHaveCount(
+      0,
     );
     await expect(list.locator("a[aria-current=page]")).toContainText(
       "HerdSense AI",
@@ -82,18 +84,25 @@ test.describe("demos", () => {
       "https://www.linkedin.com/feed/update/urn:li:ugcPost:7519706492808355840/",
     );
 
-    // Another pick swaps the player without a second frame.
+    // Another pick swaps the player.
     await list.getByRole("link", { name: /InfiniSplat v2/ }).click();
     await expect(page).toHaveURL(/\/vi\/demos\/08$/);
-    await expect(page.locator("iframe:visible")).toHaveCount(1);
+    await expect(video).toHaveCount(1);
+    await expect(video).toHaveAttribute("src", "/demos/videos/08.mp4");
+    // The page left behind stays mounted but hidden; its video must be paused.
+    const previous = page.locator('video[src="/demos/videos/03.mp4"]');
+    if ((await previous.count()) > 0)
+      expect(await previous.evaluate((v: HTMLVideoElement) => v.paused)).toBe(
+        true,
+      );
+
+    // Image posts have no video: they open LinkedIn's post embed instead.
+    await list.getByRole("link", { name: /RelateAnything/ }).click();
+    await expect(page).toHaveURL(/\/vi\/demos\/13$/);
     await expect(page.locator("iframe:visible")).toHaveAttribute(
       "src",
-      /urn:li:ugcPost:7518298679640825857/,
+      IMAGE_POST_EMBED,
     );
-    // The page left behind stays mounted but hidden; its player must stop.
-    await expect(
-      page.locator('iframe[src*="7519706492808355840"]'),
-    ).toHaveCount(0);
   });
 
   test("credits the maker when someone else posted it", async ({ page }) => {
