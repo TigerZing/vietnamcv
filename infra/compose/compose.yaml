@@ -61,7 +61,10 @@ services:
   # (services/api/seed/demos.json). Both are idempotent.
   seed:
     <<: *api-image
-    command: ["sh", "-c", "python -m app.cli.seed_news && python -m app.cli.seed_demos"]
+    command:
+      - sh
+      - -c
+      - python -m app.cli.seed_news && python -m app.cli.seed_demos
     environment: *api-env
     depends_on:
       migrate:
