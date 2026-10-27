@@ -180,7 +180,7 @@
     },
     "note": {
       "title": "About this page",
-      "body": "VietnamCV compiled this timeline; each milestone links to the original work where a public record exists. The history of computer vision is wider than one page, so if an important milestone is missing, tell us and we will add it."
+      "body": "A timeline curated by VietnamCV that keeps only the most important milestones, the ones that shaped the big ideas that came after; each links to the original work where a public record exists. If you think an important milestone is missing, let us know."
     },
     "topics": {
       "foundations": "Foundations & learning",
@@ -254,40 +254,15 @@
         "summary": "Paul Hough patented a way to find straight lines in bubble-chamber photos by letting each pixel vote in a parameter space.",
         "impact": "Still the standard way to find lines, circles and lanes."
       },
-      "blocksWorld": {
-        "title": "Blocks world",
-        "summary": "Larry Roberts' MIT thesis recovered three-dimensional shape from a single two-dimensional photo of polyhedral blocks.",
-        "impact": "The first 3D vision problem: geometry from a flat image."
-      },
-      "fastFourierTransform": {
-        "title": "The fast Fourier transform (FFT)",
-        "summary": "Cooley and Tukey published the FFT, cutting the cost of frequency analysis of signals and images from quadratic to near-linear.",
-        "impact": "Made frequency filtering, compression and fast convolution practical."
-      },
       "summerVisionProject": {
         "title": "The MIT Summer Vision Project",
         "summary": "Seymour Papert set a group of students the goal of solving segmentation and object recognition over a single summer.",
         "impact": "A classic lesson: vision is far harder than it looks."
       },
-      "shapeFromShading": {
-        "title": "Shape from shading",
-        "summary": "Berthold Horn's MIT thesis recovered the three-dimensional shape of a surface from the shading in a single image.",
-        "impact": "Started \"shape from X\" and depth estimation."
-      },
-      "otsuThreshold": {
-        "title": "Otsu thresholding",
-        "summary": "Nobuyuki Otsu chose the foreground/background threshold automatically by maximising the between-class variance of the histogram.",
-        "impact": "The default binarisation for OCR and inspection."
-      },
       "neocognitron": {
         "title": "Neocognitron",
         "summary": "Kunihiko Fukushima built a layered network of S-cells and C-cells modelled on the visual cortex, recognising handwriting regardless of position.",
         "impact": "The first convolution-plus-pooling design, ancestor of the CNN."
-      },
-      "marrHildreth": {
-        "title": "Marr–Hildreth edge detection",
-        "summary": "Marr and Hildreth located edges at zero crossings of the Laplacian of a Gaussian-smoothed image, at several scales.",
-        "impact": "Biology-inspired edges and the seed of multi-scale analysis."
       },
       "opticalFlow": {
         "title": "Optical flow",
@@ -299,25 +274,10 @@
         "summary": "Fischler and Bolles fitted models by sampling a few points at random, counting how many agree, and keeping the model with the most support.",
         "impact": "The standard outlier-robust fit for stitching and 3D."
       },
-      "generalizedHough": {
-        "title": "The generalised Hough transform",
-        "summary": "Dana Ballard extended the Hough transform to arbitrary shapes using a lookup table of edge-to-centre vectors.",
-        "impact": "One of the first shape-based detectors."
-      },
-      "essentialMatrix": {
-        "title": "The essential matrix and the eight-point algorithm",
-        "summary": "Longuet-Higgins showed that eight point correspondences between two images determine the relative camera motion and scene structure.",
-        "impact": "The maths of two-view geometry, SfM and SLAM."
-      },
       "marrVision": {
         "title": "David Marr's three levels of analysis",
         "summary": "The book Vision proposed splitting the problem into computational, representation-and-algorithm, and implementation levels.",
         "impact": "Turned vision into a structured science."
-      },
-      "scaleSpace": {
-        "title": "Scale-space theory",
-        "summary": "Witkin and Koenderink formalised looking at an image across a continuous range of Gaussian blurs, the scale space.",
-        "impact": "The theory behind SIFT and feature pyramids."
       },
       "backpropagation": {
         "title": "Backpropagation",
@@ -328,16 +288,6 @@
         "title": "The Canny edge detector",
         "summary": "John Canny framed edge detection as an optimisation with three criteria: few errors, accurate localisation, and one response per edge.",
         "impact": "A classic shipped in every vision library."
-      },
-      "tsaiCalibration": {
-        "title": "Tsai camera calibration",
-        "summary": "Roger Tsai gave an accurate calibration procedure, including lens distortion, for off-the-shelf cameras and lenses.",
-        "impact": "Brought camera-based 3D measurement to factories."
-      },
-      "activeContours": {
-        "title": "Active contours (snakes)",
-        "summary": "Kass, Witkin and Terzopoulos modelled an object boundary as an elastic curve that deforms to lock onto image edges.",
-        "impact": "Started energy-based segmentation."
       },
       "harrisCorner": {
         "title": "The Harris corner detector",
@@ -354,25 +304,10 @@
         "summary": "Turk and Pentland used principal component analysis to represent a face with a few dozen coefficients.",
         "impact": "Face recognition on ordinary computers."
       },
-      "jpeg": {
-        "title": "The JPEG standard",
-        "summary": "JPEG applied the discrete cosine transform to 8×8 blocks plus quantisation to compress photos by a factor of ten or more.",
-        "impact": "Made photos shareable and built the web's image data."
-      },
       "supportVectorMachines": {
         "title": "Support vector machines",
         "summary": "Cortes and Vapnik published the soft-margin SVM: a classifier that finds the hyperplane with the widest margin between classes.",
         "impact": "The default classifier for hand-crafted features until 2012."
-      },
-      "bilateralFilter": {
-        "title": "The bilateral filter",
-        "summary": "Tomasi and Manduchi smoothed images with weights based on both spatial distance and colour difference, preserving sharp edges.",
-        "impact": "The edge-preserving denoiser in every photo pipeline."
-      },
-      "condensation": {
-        "title": "CONDENSATION tracking",
-        "summary": "Isard and Blake used a particle filter to track object contours through cluttered video.",
-        "impact": "Brought probabilistic inference to tracking."
       },
       "lenet5": {
         "title": "LeNet-5 and MNIST",
@@ -384,60 +319,15 @@
         "summary": "David Lowe introduced local features invariant to scale and rotation, letting the same object be matched across different images.",
         "impact": "The backbone of stitching, SLAM and retrieval in the 2000s."
       },
-      "textureSynthesis": {
-        "title": "Efros–Leung texture synthesis",
-        "summary": "Efros and Leung grew new texture from a sample by filling in one pixel at a time from similar neighbourhoods in the source.",
-        "impact": "Early non-parametric generation, precursor of inpainting."
-      },
-      "normalizedCuts": {
-        "title": "Normalized cuts",
-        "summary": "Shi and Malik cast segmentation as cutting a graph of pixels, solved with eigenvectors.",
-        "impact": "Grounded graph-based segmentation."
-      },
-      "zhangCalibration": {
-        "title": "Zhang's camera calibration",
-        "summary": "Zhengyou Zhang calibrated a camera from a few photos of a flat checkerboard at different angles.",
-        "impact": "The calibration method built into OpenCV."
-      },
-      "multipleViewGeometry": {
-        "title": "Multiple View Geometry (the book)",
-        "summary": "Hartley and Zisserman gathered projective geometry, the fundamental matrix, triangulation and bundle adjustment in one book.",
-        "impact": "The standard 3D vision textbook."
-      },
       "violaJones": {
         "title": "Viola–Jones real-time face detection",
         "summary": "A detector built from Haar features, AdaBoost and a cascade of classifiers, running in real time on the consumer CPUs of the day.",
         "impact": "Put face detection into cameras and phones."
       },
-      "graphCuts": {
-        "title": "Energy minimisation with graph cuts",
-        "summary": "Boykov, Veksler and Zabih solved pixel-labelling problems (segmentation, stereo) quickly with max-flow algorithms.",
-        "impact": "The engine behind interactive cut-out tools like GrabCut."
-      },
-      "localBinaryPatterns": {
-        "title": "Local binary patterns (LBP)",
-        "summary": "Ojala and colleagues described texture by comparing each pixel with its neighbours, producing a brightness-invariant binary code.",
-        "impact": "A light, fast feature for faces and surface inspection."
-      },
-      "meanShift": {
-        "title": "Mean shift",
-        "summary": "Comaniciu and Meer used mean shift to find density peaks in colour-position space for segmentation and smoothing.",
-        "impact": "Clustering without a preset k, for segmentation and tracking."
-      },
       "bagOfVisualWords": {
         "title": "Bag of visual words (Video Google)",
         "summary": "Sivic and Zisserman quantised local features into \"visual words\" and searched images the way search engines search text.",
         "impact": "The dominant image representation for a decade."
-      },
-      "poissonEditing": {
-        "title": "Poisson image editing",
-        "summary": "Pérez, Gangnet and Blake blended a region seamlessly into another image by solving a Poisson equation on gradients.",
-        "impact": "The basis of seamless cloning and object removal."
-      },
-      "ssim": {
-        "title": "SSIM",
-        "summary": "Wang and colleagues measured image quality by structural, luminance and contrast similarity instead of per-pixel error.",
-        "impact": "The standard metric for compression and restoration."
       },
       "hog": {
         "title": "HOG features",
@@ -449,50 +339,20 @@
         "summary": "An annual challenge with a shared dataset and evaluation protocol for classification, detection and segmentation.",
         "impact": "Set the culture of public benchmarks."
       },
-      "deepAutoencoders": {
-        "title": "Layer-wise pre-trained deep networks",
-        "summary": "Hinton and Salakhutdinov trained deep networks by pre-training one layer at a time, compressing images far better than PCA.",
-        "impact": "Showed deep nets could be trained."
-      },
-      "surf": {
-        "title": "SURF",
-        "summary": "Bay, Tuytelaars and Van Gool sped up scale-invariant features with integral images and box filters.",
-        "impact": "Real-time feature matching for robotics and AR."
-      },
       "photoTourism": {
         "title": "Photo Tourism and large-scale SfM",
         "summary": "Snavely, Seitz and Szeliski reconstructed 3D scenes and camera positions from thousands of tourist photos on the Internet.",
         "impact": "3D from Internet photos, forerunner of COLMAP."
-      },
-      "deformablePartModels": {
-        "title": "Deformable part models (DPM)",
-        "summary": "Felzenszwalb and colleagues modelled objects as a root template plus parts that can shift, learned on HOG features.",
-        "impact": "The peak of pre-deep-learning detection."
       },
       "imagenet": {
         "title": "ImageNet",
         "summary": "Fei-Fei Li's group built a dataset of over 14 million images labelled along WordNet; the ILSVRC challenge started in 2010.",
         "impact": "The scale of data deep learning needed."
       },
-      "kinectPose": {
-        "title": "Human pose estimation on Kinect",
-        "summary": "Shotton and colleagues used random forests on depth images to recognise body parts in real time.",
-        "impact": "Pose estimation in millions of homes; the power of synthetic data."
-      },
-      "kittiBenchmark": {
-        "title": "The KITTI benchmark",
-        "summary": "Geiger, Lenz and Urtasun recorded a real car with stereo cameras, LiDAR and GPS, with benchmarks for stereo, optical flow, odometry and 3D detection.",
-        "impact": "The first real-road driving benchmark."
-      },
       "alexnet": {
         "title": "AlexNet",
         "summary": "Krizhevsky, Sutskever and Hinton trained a convolutional network on GPUs, cutting the ILSVRC 2012 top-5 error from around 26% to 15.3%.",
         "impact": "The moment the field switched to deep learning."
-      },
-      "visualizingConvnets": {
-        "title": "Visualising convolutional networks (ZFNet)",
-        "summary": "Zeiler and Fergus used deconvolutional networks to show what each CNN layer learns, from edges and textures to object parts.",
-        "impact": "Opened the CNN black box; won ILSVRC 2013."
       },
       "variationalAutoencoder": {
         "title": "Variational autoencoders (VAE)",
@@ -514,11 +374,6 @@
         "summary": "Microsoft COCO offered over 300,000 everyday-scene images with boxes, per-instance masks and sentence captions.",
         "impact": "Still the standard detection and segmentation benchmark."
       },
-      "deepFace": {
-        "title": "DeepFace",
-        "summary": "Facebook combined 3D face alignment with a deep network, reaching near-human accuracy on LFW.",
-        "impact": "Deep face recognition at product scale."
-      },
       "vggNet": {
         "title": "VGGNet",
         "summary": "Simonyan and Zisserman stacked nothing but 3×3 convolutions very deep and placed at the top of ILSVRC 2014.",
@@ -529,20 +384,10 @@
         "summary": "Szegedy and colleagues ran convolutions of several sizes in parallel inside Inception blocks and won ILSVRC 2014 with far fewer parameters.",
         "impact": "Architectures tuned for accuracy and compute."
       },
-      "superResolutionCnn": {
-        "title": "SRCNN: super-resolution with a CNN",
-        "summary": "Dong and colleagues used a small convolutional network to upscale images, beating traditional super-resolution methods.",
-        "impact": "Started deep image restoration."
-      },
       "fullyConvolutionalNetworks": {
         "title": "Fully convolutional networks (FCN)",
         "summary": "Long, Shelhamer and Darrell replaced fully connected layers with convolutions to predict a label for every pixel.",
         "impact": "The template for semantic segmentation."
-      },
-      "deepLab": {
-        "title": "DeepLab and atrous convolution",
-        "summary": "Chen and colleagues used dilated (atrous) convolution to widen the receptive field without losing resolution, plus a CRF to sharpen boundaries.",
-        "impact": "Led semantic segmentation for years."
       },
       "batchNormalization": {
         "title": "Batch normalisation",
@@ -553,16 +398,6 @@
         "title": "FaceNet",
         "summary": "Google learned a face embedding with a triplet loss, where distance reflects how alike two people are.",
         "impact": "Embeddings became standard for face recognition."
-      },
-      "fastRcnn": {
-        "title": "Fast R-CNN",
-        "summary": "Ross Girshick computed features once per image and pooled them per region with RoI pooling, making inference hundreds of times faster than R-CNN.",
-        "impact": "Two-stage detection, trained end to end."
-      },
-      "flowNet": {
-        "title": "FlowNet",
-        "summary": "Dosovitskiy and colleagues estimated optical flow directly with a CNN trained on the synthetic Flying Chairs data.",
-        "impact": "Moved optical flow to deep learning."
       },
       "unet": {
         "title": "U-Net",
@@ -579,50 +414,15 @@
         "summary": "Redmon and colleagues treated detection as a single regression over the whole image, reaching real-time speed.",
         "impact": "Opened detection on edge devices."
       },
-      "neuralStyleTransfer": {
-        "title": "Neural style transfer",
-        "summary": "Gatys, Ecker and Bethge separated content and style using CNN features and repainted photos in the style of a painting.",
-        "impact": "The public's first look at AI-made images."
-      },
-      "dcgan": {
-        "title": "DCGAN",
-        "summary": "Radford and colleagues set out convolutional design rules that made GANs train stably and produce sharp images.",
-        "impact": "Made GANs usable."
-      },
-      "ssdDetector": {
-        "title": "SSD",
-        "summary": "Liu and colleagues detected objects in a single stage on feature maps at several scales.",
-        "impact": "With YOLO, shaped mobile one-stage detectors."
-      },
       "resnet": {
         "title": "ResNet",
         "summary": "He and colleagues added residual skip connections, trained networks over 100 layers deep, and won ILSVRC 2015.",
         "impact": "Residual connections became universal."
       },
-      "denseNet": {
-        "title": "DenseNet",
-        "summary": "Huang and colleagues connected each layer to every later layer in a block, reusing features with few parameters.",
-        "impact": "Popular in medical imaging for its efficiency."
-      },
-      "sortTracking": {
-        "title": "SORT: multi-object tracking",
-        "summary": "Bewley and colleagues linked detector outputs across frames with a Kalman filter and the Hungarian algorithm, extremely simple and fast.",
-        "impact": "The tracking-by-detection template."
-      },
-      "cityscapes": {
-        "title": "The Cityscapes dataset",
-        "summary": "Cordts and colleagues annotated street scenes from 50 cities with fine per-pixel labels.",
-        "impact": "The urban segmentation benchmark."
-      },
       "openPose": {
         "title": "OpenPose",
         "summary": "Cao and colleagues estimated the skeletons of many people at once using part affinity fields, in real time.",
         "impact": "Widely used open-source pose estimation."
-      },
-      "pix2pix": {
-        "title": "pix2pix",
-        "summary": "Isola and colleagues used a conditional GAN for image-to-image translation: sketches to photos, maps to aerial views, day to night.",
-        "impact": "One framework for paired image-to-image tasks."
       },
       "featurePyramidNetworks": {
         "title": "Feature pyramid networks (FPN)",
@@ -639,16 +439,6 @@
         "summary": "Zhu and colleagues translated images between two domains without paired data, using a cycle-consistency constraint.",
         "impact": "Domain translation without paired data."
       },
-      "mobileNets": {
-        "title": "MobileNets",
-        "summary": "Howard and colleagues used depthwise separable convolutions to build small, fast networks for phones and embedded devices.",
-        "impact": "Put CNNs on phones and IoT."
-      },
-      "kineticsI3d": {
-        "title": "Kinetics and I3D",
-        "summary": "Carreira and Zisserman introduced the Kinetics action dataset and \"inflated\" 2D CNNs into 3D for action recognition in video.",
-        "impact": "Grounded deep action recognition."
-      },
       "transformerArchitecture": {
         "title": "The Transformer architecture",
         "summary": "The paper Attention Is All You Need dropped recurrence and convolution entirely in favour of self-attention.",
@@ -659,50 +449,15 @@
         "summary": "Lin and colleagues down-weighted easy background examples, letting a single-stage detector beat two-stage accuracy for the first time.",
         "impact": "The default loss for class imbalance."
       },
-      "panopticSegmentation": {
-        "title": "Panoptic segmentation",
-        "summary": "Kirillov and colleagues unified semantic (\"stuff\") and instance (\"things\") segmentation into one task and one metric, PQ.",
-        "impact": "Every pixel gets a class and an instance."
-      },
-      "arcFace": {
-        "title": "ArcFace",
-        "summary": "Deng and colleagues added an angular margin to the softmax loss, producing more discriminative face features.",
-        "impact": "The face recognition reference."
-      },
-      "yoloV3": {
-        "title": "YOLOv3",
-        "summary": "Redmon and Farhadi added multi-scale predictions and a Darknet-53 backbone, balancing speed and accuracy well.",
-        "impact": "Started the community YOLO ecosystem."
-      },
       "styleGan": {
         "title": "StyleGAN",
         "summary": "Karras and colleagues at NVIDIA controlled each level of detail through style vectors, generating faces almost indistinguishable from real ones.",
         "impact": "Peak GAN quality; the start of deepfake worries."
       },
-      "fcosAnchorFree": {
-        "title": "FCOS: anchor-free detection",
-        "summary": "Tian and colleagues predicted each location's distance to the four box sides, dropping anchors entirely.",
-        "impact": "Anchor-free design adopted by later YOLOs."
-      },
-      "efficientNet": {
-        "title": "EfficientNet",
-        "summary": "Tan and Le scaled depth, width and resolution together with one compound coefficient, on a base network found by architecture search.",
-        "impact": "High accuracy for far less compute."
-      },
       "momentumContrast": {
         "title": "MoCo: contrastive self-supervised learning",
         "summary": "He and colleagues learned image representations without labels by telling augmentations of one image apart from a queue of others.",
         "impact": "Self-supervised beat supervised pre-training."
-      },
-      "simClr": {
-        "title": "SimCLR",
-        "summary": "Chen and colleagues showed that strong augmentation, large batches and a projection head bring contrastive learning close to supervised results.",
-        "impact": "A simple recipe that spread self-supervision."
-      },
-      "raftFlow": {
-        "title": "RAFT",
-        "summary": "Teed and Deng estimated optical flow by repeatedly looking up a full all-pairs correlation volume; ECCV 2020 best paper.",
-        "impact": "The new optical-flow reference."
       },
       "nerf": {
         "title": "NeRF",
@@ -724,16 +479,6 @@
         "summary": "An image is cut into 16×16 patches and fed to a transformer as a sequence of tokens, beating CNNs given enough data.",
         "impact": "Vision and language share one architecture."
       },
-      "dataEfficientTransformers": {
-        "title": "DeiT",
-        "summary": "Touvron and colleagues trained ViTs on ImageNet-1k alone using distillation and strong augmentation.",
-        "impact": "ViTs without huge private data."
-      },
-      "dallE": {
-        "title": "DALL·E",
-        "summary": "OpenAI generated images from text descriptions with an autoregressive transformer over text and image tokens.",
-        "impact": "Started the text-to-image era."
-      },
       "clip": {
         "title": "CLIP",
         "summary": "Trained on 400 million image–text pairs from the web, classifying unseen classes without labels (zero-shot).",
@@ -749,35 +494,15 @@
         "summary": "Caron and colleagues trained ViTs without labels through self-distillation between teacher and student networks.",
         "impact": "Attention maps that segment objects on their own."
       },
-      "segFormer": {
-        "title": "SegFormer",
-        "summary": "Xie and colleagues paired a hierarchical transformer encoder with a light MLP decoder for semantic segmentation.",
-        "impact": "Transformer segmentation light enough to deploy."
-      },
       "maskedAutoencoders": {
         "title": "Masked autoencoders (MAE)",
         "summary": "He and colleagues masked 75% of image patches at random and trained a ViT to reconstruct them.",
         "impact": "BERT-style pre-training for images."
       },
-      "convNext": {
-        "title": "ConvNeXt",
-        "summary": "Liu and colleagues modernised ResNet step by step with transformer design choices and matched Swin's accuracy.",
-        "impact": "Pure CNNs still compete."
-      },
       "latentDiffusion": {
         "title": "Latent diffusion and Stable Diffusion",
         "summary": "Rombach and colleagues ran diffusion in a latent space, cutting compute cost sharply; the model was released publicly in 2022.",
         "impact": "Text-to-image on one consumer GPU."
-      },
-      "dallE2": {
-        "title": "DALL·E 2",
-        "summary": "OpenAI generated images with diffusion conditioned on CLIP image embeddings, with a leap in quality and prompt fidelity.",
-        "impact": "Text-to-image went mainstream."
-      },
-      "imagen": {
-        "title": "Imagen",
-        "summary": "Google showed that a large language encoder (T5) improves prompt fidelity more than a bigger image model.",
-        "impact": "Language understanding matters most."
       },
       "laion5b": {
         "title": "LAION-5B",
@@ -789,20 +514,10 @@
         "summary": "Peebles and Xie replaced the U-Net in diffusion models with a transformer whose quality scales steadily with compute.",
         "impact": "The backbone of SD3, Sora and newer generators."
       },
-      "blip2": {
-        "title": "BLIP-2",
-        "summary": "Salesforce bridged a frozen image encoder and a frozen LLM with a small Q-Former, very cheap to train.",
-        "impact": "A recipe many open VLMs inherited."
-      },
       "controlNet": {
         "title": "ControlNet",
         "summary": "Zhang and colleagues added spatial conditions (edges, pose, depth) to a trained diffusion model without damaging it.",
         "impact": "Made generation controllable."
-      },
-      "sigLip": {
-        "title": "SigLIP",
-        "summary": "Zhai and colleagues replaced the softmax in CLIP-style training with a pairwise sigmoid loss, more efficient at small batch sizes.",
-        "impact": "The image encoder many open VLMs use."
       },
       "multimodalAssistants": {
         "title": "Language models that see",
@@ -829,16 +544,6 @@
         "summary": "A Baidu team introduced an end-to-end transformer detector that runs in real time: a hybrid encoder processes multi-scale features efficiently, still with no NMS step, and it beat contemporary YOLO models on COCO in both speed and accuracy.",
         "impact": "DETR fast enough to deploy."
       },
-      "llava": {
-        "title": "LLaVA",
-        "summary": "Liu and colleagues fine-tuned an open LLM on image conversations generated by GPT-4, creating an open visual assistant.",
-        "impact": "Started the wave of open VLMs."
-      },
-      "sdxl": {
-        "title": "SDXL",
-        "summary": "Stability AI released a larger open diffusion model with two text encoders and a refiner, at 1024 px.",
-        "impact": "For a time the most fine-tuned open generator."
-      },
       "gaussianSplatting": {
         "title": "3D Gaussian Splatting",
         "summary": "Represents a scene as millions of Gaussian primitives, rendering in real time at quality comparable to NeRF.",
@@ -849,55 +554,15 @@
         "summary": "Wang and colleagues predicted 3D point maps directly from a pair of images, with no camera parameters needed.",
         "impact": "3D reconstruction as one network."
       },
-      "depthAnything": {
-        "title": "Depth Anything",
-        "summary": "Yang and colleagues trained monocular depth on tens of millions of unlabelled images pseudo-labelled by a teacher.",
-        "impact": "Monocular depth for any scene."
-      },
-      "yoloWorld": {
-        "title": "YOLO-World",
-        "summary": "Cheng and colleagues brought open-vocabulary detection into the YOLO architecture, in real time with text prompts.",
-        "impact": "Open-vocabulary detection on the edge."
-      },
-      "stableDiffusion3": {
-        "title": "Stable Diffusion 3 and rectified flow",
-        "summary": "Esser and colleagues combined rectified flow with a multimodal transformer (MMDiT), clearly improving text rendering and prompt fidelity.",
-        "impact": "The recipe of newer generators."
-      },
       "videoGeneration": {
         "title": "Video generation",
         "summary": "Diffusion models extended into the time dimension, producing short videos with coherent motion.",
         "impact": "New challenge: temporal consistency and physics."
       },
-      "yoloV10": {
-        "title": "YOLOv10",
-        "summary": "Wang and colleagues trained YOLO with dual label assignments to remove NMS, moving towards end-to-end real-time detection.",
-        "impact": "YOLO adopts DETR's NMS-free idea."
-      },
-      "segmentAnything2": {
-        "title": "SAM 2",
-        "summary": "Meta extended Segment Anything to video with a streaming memory, segmenting and tracking objects across frames.",
-        "impact": "One model for image and video segmentation."
-      },
-      "vggt": {
-        "title": "VGGT",
-        "summary": "Wang and colleagues (Oxford, Meta) predicted cameras, depth, point maps and point tracks from one to hundreds of images in a single forward pass; CVPR 2025 best paper.",
-        "impact": "A 3D geometry foundation model."
-      },
-      "dinoV3": {
-        "title": "DINOv3",
-        "summary": "Meta scaled self-supervised learning to a 7-billion-parameter model and 1.7 billion images, giving high-quality dense features, satellite imagery included.",
-        "impact": "Label-free features beating specialists."
-      },
       "openVisionLanguage": {
         "title": "Open vision–language models and embodied vision",
         "summary": "Many open-weight vision–language models were released that run on personal machines and edge devices, while vision for robots and agents became a main research direction.",
         "impact": "History still being written; suggest a milestone."
-      },
-      "segmentAnything3": {
-        "title": "SAM 3",
-        "summary": "Meta segmented and tracked every instance matching a concept given as text or an example image, instead of a single click.",
-        "impact": "From \"this object\" to \"every object of this kind\"."
       }
     },
     "illustration": {
@@ -926,25 +591,9 @@
         "name": "From edges to a 3D block",
         "caption": "The image is read as edges and junctions; from that structure the machine infers a solid it can turn and view from any side."
       },
-      "fourier": {
-        "name": "Frequency analysis",
-        "caption": "A signal is a sum of sine waves; the more frequencies you add, the closer the fit. Keeping only the strongest ones is how JPEG compresses."
-      },
-      "shading": {
-        "name": "Shape from shading",
-        "caption": "As the light moves, brightness follows the direction each surface faces; inverting that gives the normals and the 3D shape."
-      },
-      "histogramThreshold": {
-        "name": "Thresholding from the histogram",
-        "caption": "The threshold slides along the histogram to the valley between the two peaks, the best split of foreground and background, then the image is binarised."
-      },
       "edgeDetect": {
         "name": "Edge detection",
         "caption": "A gradient filter sweeps the image and keeps only where brightness changes sharply: the outlines of objects."
-      },
-      "scaleSpace": {
-        "name": "Scale space",
-        "caption": "The image is blurred more and more; each blob is detected at the scale that matches its size."
       },
       "opticalFlow": {
         "name": "Optical flow",
@@ -954,25 +603,9 @@
         "name": "RANSAC",
         "caption": "Pick two random points, fit a line, count who agrees; repeat a few times and keep the hypothesis with the most inliers, ignoring outliers."
       },
-      "twoView": {
-        "name": "Two-view geometry",
-        "caption": "Two cameras see the same point; tracing both rays back through the image planes, they meet at its 3D position."
-      },
-      "calibration": {
-        "name": "Camera calibration",
-        "caption": "Photograph a checkerboard from several angles and detect its corners; since its true shape is known, the lens focal length and distortion can be solved."
-      },
-      "snake": {
-        "name": "Active contour",
-        "caption": "A flexible curve is pulled towards image edges while staying smooth, shrinking until it hugs the object's boundary."
-      },
       "keypoints": {
         "name": "Keypoints and matching",
         "caption": "Find distinctive points that survive rotation and scale in both images, describe them, and link the pairs that match."
-      },
-      "lbp": {
-        "name": "Local Binary Patterns",
-        "caption": "Compare the 8 neighbours with the centre pixel, one bit each; the bits form a texture code, counted into a histogram."
       },
       "bagOfWords": {
         "name": "Bag of visual words",
@@ -982,22 +615,6 @@
         "name": "Maximum margin",
         "caption": "An SVM places the boundary so the gap to the nearest point of each class is as wide as possible; only a few support vectors decide it."
       },
-      "bilateral": {
-        "name": "Bilateral filter",
-        "caption": "Smooth by averaging neighbours, but only those with similar brightness, so noise disappears while edges stay sharp."
-      },
-      "particles": {
-        "name": "Particle filter",
-        "caption": "The tracker keeps a cloud of guesses; each frame they are predicted, scored against the image, and resampled towards the likeliest spot."
-      },
-      "textureGrow": {
-        "name": "Texture synthesis",
-        "caption": "New texture grows one pixel at a time by finding the best-matching neighbourhood in the sample and copying the next pixel."
-      },
-      "graphCut": {
-        "name": "Graph cut",
-        "caption": "Each pixel is a node and similar neighbours are strongly linked; the cheapest cut through the weak links separates object from background."
-      },
       "eigenfaces": {
         "name": "Eigenfaces",
         "caption": "Every face is the average face plus a few weighted eigenfaces; recognition just compares those weights."
@@ -1005,18 +622,6 @@
       "slidingWindow": {
         "name": "Sliding window",
         "caption": "A fixed window slides across the image; at every position a classifier (Haar, HOG, part model) decides whether the object is there."
-      },
-      "meanShift": {
-        "name": "Mean shift",
-        "caption": "Every point climbs towards the densest spot around it; points that stop at the same peak form one cluster."
-      },
-      "seamlessBlend": {
-        "name": "Poisson blending",
-        "caption": "The object is pasted by its gradients rather than its colours, so the seam vanishes and the colours blend into the new background."
-      },
-      "ssimCompare": {
-        "name": "SSIM",
-        "caption": "Two images are compared window by window on brightness, contrast and structure, giving a similarity map close to human perception."
       },
       "convolution": {
         "name": "Convolution",
@@ -1058,10 +663,6 @@
         "name": "Inception module",
         "caption": "Kernels of several sizes look at the same input in parallel; their outputs are concatenated so the network picks the right scale itself."
       },
-      "superResolution": {
-        "name": "Super-resolution",
-        "caption": "A network learns to fill in the detail a low-resolution image lost, turning blocky pixels into a sharp picture."
-      },
       "batchNorm": {
         "name": "Batch normalization",
         "caption": "Activations that drift between layers are re-centred and re-scaled every batch, making training faster and more stable."
@@ -1070,17 +671,9 @@
         "name": "U-Net",
         "caption": "The encoder shrinks the image to grasp context and the decoder grows it back; skip connections carry detail across so the mask stays sharp."
       },
-      "styleTransfer": {
-        "name": "Style transfer",
-        "caption": "Content comes from one image, texture and colour from a painting; the output is optimised to match both."
-      },
       "residual": {
         "name": "Residual connections",
         "caption": "Each block only learns a correction added on top of a shortcut, so signals and gradients pass through hundreds of layers."
-      },
-      "tracking": {
-        "name": "Multi-object tracking",
-        "caption": "Objects are detected in every frame and linked to existing tracks, keeping their box and ID as they move."
       },
       "imageTranslation": {
         "name": "Image-to-image translation",
@@ -1093,10 +686,6 @@
       "instanceMask": {
         "name": "Instance and panoptic segmentation",
         "caption": "Each object gets a box and then its own mask; panoptic segmentation also labels background stuff like road and sky."
-      },
-      "spatioTemporal": {
-        "name": "3D convolution",
-        "caption": "The kernel slides through space and time across a stack of frames, so motion itself becomes a feature for recognising actions."
       },
       "pixelMask": {
         "name": "Semantic segmentation",
@@ -1125,10 +714,6 @@
       "diffusion": {
         "name": "Diffusion",
         "caption": "Starting from pure noise, the model removes noise over many steps, steered by the prompt, until the image appears."
-      },
-      "imageTokens": {
-        "name": "Image generation as tokens",
-        "caption": "Text and image are both token sequences; the model writes the image out one token at a time after the text that describes it."
       },
       "imageTextMatch": {
         "name": "Image–text contrastive learning",
@@ -1162,21 +747,9 @@
         "name": "Gaussian splatting",
         "caption": "A cloud of soft coloured Gaussians is moved and reshaped until it renders the scene, fast enough to view in real time."
       },
-      "depthMap": {
-        "name": "Monocular depth",
-        "caption": "From a single photo the model estimates how far away every pixel is: near is bright, far is dark."
-      },
       "videoFrames": {
         "name": "Video generation",
         "caption": "Frames are denoised together rather than one by one, so the motion between them stays consistent over time."
-      },
-      "videoMask": {
-        "name": "Video segmentation with memory",
-        "caption": "Click the object in the first frame; a memory stores its features and carries the mask through every following frame."
-      },
-      "conceptMask": {
-        "name": "Concept segmentation",
-        "caption": "A short noun phrase such as \"tree\" finds and masks every instance of that concept, not just one."
       }
     }
   },

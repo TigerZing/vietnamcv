@@ -794,68 +794,6 @@ export const inception: Illustration = {
   },
 };
 
-/** A network learns to fill in the detail that a blocky, low-resolution image lost. */
-export const superResolution: Illustration = {
-  duration: 4500,
-  still: 0.6,
-  render: (p, uid) => {
-    const sweep = lerp(20, 220, step(p, 0.1, 0.8));
-    const blocks = 8;
-    const size = 200 / blocks;
-    return (
-      <g>
-        <clipPath id={`${uid}-sharp`}>
-          <rect x={20} y={10} width={sweep - 20} height={130} />
-        </clipPath>
-        <clipPath id={`${uid}-blocky`}>
-          <rect x={sweep} y={10} width={220 - sweep} height={130} />
-        </clipPath>
-        <g clipPath={`url(#${uid}-blocky)`}>
-          {Array.from({ length: blocks * 5 }, (_, index) => {
-            const col = index % blocks;
-            const row = Math.floor(index / blocks);
-            const x = 20 + col * size;
-            const y = 15 + row * size;
-            const inside = sceneObjectAt(
-              ((x + size / 2 - 20) / 200) * 110,
-              ((y + size / 2 - 15) / 125) * 90,
-            );
-            return (
-              <rect
-                key={index}
-                x={x}
-                y={y}
-                width={size}
-                height={size}
-                fill={inside >= 0 ? SCENE_OBJECTS[inside]!.hue : SOFT}
-              />
-            );
-          })}
-        </g>
-        <g clipPath={`url(#${uid}-sharp)`}>
-          <Scene x={20} y={15} scale={1.818} />
-        </g>
-        <rect
-          x={20}
-          y={15}
-          width={200}
-          height={125}
-          fill="none"
-          stroke={LINE}
-        />
-        <line
-          x1={sweep}
-          y1={8}
-          x2={sweep}
-          y2={142}
-          stroke={ERA}
-          strokeWidth={2.4}
-        />
-      </g>
-    );
-  },
-};
-
 /** Activations that drift between layers are re-centred and re-scaled every batch. */
 export const batchNorm: Illustration = {
   duration: 4500,
@@ -1002,49 +940,6 @@ export const unet: Illustration = {
   },
 };
 
-/** Content from one image is redrawn with the textures and colours of a painting. */
-export const styleTransfer: Illustration = {
-  duration: 5000,
-  still: 0.85,
-  render: (p, uid) => {
-    const mix = step(p, 0.2, 0.8);
-    const swirl = Array.from({ length: 10 }, (_, index) => (
-      <path
-        key={index}
-        d={`M${(index % 5) * 22 - 6} ${Math.floor(index / 5) * 44 + 10} q 12 -14 24 0 t 24 0`}
-        fill="none"
-        stroke={HUES[index % 4]}
-        strokeWidth={5}
-        strokeLinecap="round"
-      />
-    ));
-    return (
-      <g>
-        <defs>
-          <clipPath id={`${uid}-style`}>
-            <rect x={0} y={0} width={110} height={90} rx={6} />
-          </clipPath>
-        </defs>
-        <Scene x={8} y={12} scale={0.62} />
-        <text x={84} y={46} fontSize={16} fill={INK}>
-          +
-        </text>
-        <g transform="translate(8 82) scale(0.62)">
-          <rect width={110} height={90} rx={6} fill={SOFT} stroke={LINE} />
-          <g clipPath={`url(#${uid}-style)`}>{swirl}</g>
-        </g>
-        <Arrow x1={88} y1={96} x2={112} y2={84} />
-        <g transform="translate(118 30)">
-          <Scene x={0} y={0} />
-          <g clipPath={`url(#${uid}-style)`} opacity={mix * 0.6}>
-            {swirl}
-          </g>
-        </g>
-      </g>
-    );
-  },
-};
-
 /** Each block adds a correction on top of a shortcut, so very deep networks still train. */
 export const residual: Illustration = {
   duration: 3500,
@@ -1094,82 +989,6 @@ export const residual: Illustration = {
                   fill={ACCENT}
                 />
               ) : null}
-            </g>
-          );
-        })}
-      </g>
-    );
-  },
-};
-
-/** Each object keeps its box and its identity number as it moves through the frames. */
-export const tracking: Illustration = {
-  duration: 5000,
-  still: 0.4,
-  render: (p) => {
-    const paths = [
-      (t: number) => ({ x: 30 + t * 150, y: 40 + Math.sin(t * 6) * 10 }),
-      (t: number) => ({ x: 190 - t * 140, y: 96 + Math.cos(t * 5) * 8 }),
-    ];
-    return (
-      <g>
-        <Panel x={10} y={10} w={220} h={130} fill={PAPER} />
-        {paths.map((path, index) => {
-          const now = path(p);
-          return (
-            <g key={index}>
-              {Array.from({ length: 10 }, (_, back) => {
-                const t = p - back * 0.03;
-                if (t < 0) return null;
-                const point = path(t);
-                return (
-                  <circle
-                    key={back}
-                    cx={point.x + 12}
-                    cy={point.y + 14}
-                    r={1.6}
-                    fill={HUES[index]}
-                    opacity={1 - back / 10}
-                  />
-                );
-              })}
-              <rect
-                x={now.x}
-                y={now.y}
-                width={24}
-                height={28}
-                rx={4}
-                fill={HUES[index]}
-                opacity={0.3}
-              />
-              <rect
-                x={now.x - 3}
-                y={now.y - 3}
-                width={30}
-                height={34}
-                rx={3}
-                fill="none"
-                stroke={HUES[index]}
-                strokeWidth={2}
-              />
-              <rect
-                x={now.x - 3}
-                y={now.y - 13}
-                width={16}
-                height={10}
-                rx={2}
-                fill={HUES[index]}
-              />
-              <text
-                x={now.x + 5}
-                y={now.y - 5}
-                textAnchor="middle"
-                fontSize={8}
-                fontWeight={700}
-                fill={PAPER}
-              >
-                {index + 1}
-              </text>
             </g>
           );
         })}
@@ -1403,67 +1222,6 @@ export const instanceMask: Illustration = {
           </g>
         ))}
       </Scene>
-    );
-  },
-};
-
-/** A 3D filter moves through space and time, so motion itself becomes a feature. */
-export const spatioTemporal: Illustration = {
-  duration: 4500,
-  still: 0.5,
-  render: (p) => {
-    const frames = 5;
-    const position = ramp(p, 0.05, 0.85) * (frames - 2);
-    return (
-      <g>
-        {Array.from({ length: frames }, (_, index) => {
-          const x = 30 + index * 26;
-          const y = 26 + index * -4;
-          return (
-            <g key={index}>
-              <rect
-                x={x}
-                y={y}
-                width={70}
-                height={84}
-                rx={4}
-                fill={PAPER}
-                stroke={LINE}
-              />
-              <circle cx={x + 18 + index * 8} cy={y + 52} r={8} fill={MUTED} />
-            </g>
-          );
-        })}
-        <rect
-          x={30 + position * 26 + 20}
-          y={26 - position * 4 + 30}
-          width={30 + 52}
-          height={30}
-          rx={3}
-          fill={ERA}
-          opacity={0.22}
-          stroke={ERA}
-          strokeWidth={2}
-        />
-        <rect
-          x={204}
-          y={58}
-          width={26}
-          height={8}
-          rx={2}
-          fill={ERA}
-          opacity={step(p, 0.85, 0.95)}
-        />
-        <rect
-          x={204}
-          y={72}
-          width={14}
-          height={8}
-          rx={2}
-          fill={MUTED}
-          opacity={step(p, 0.85, 0.95)}
-        />
-      </g>
     );
   },
 };
