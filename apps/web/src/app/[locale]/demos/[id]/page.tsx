@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { connection } from "next/server";
+import { useTranslations } from "next-intl";
+import { Suspense } from "react";
 
 import { DemoView } from "@/components/demos/demo-view";
+import { LoadingState } from "@/components/states/loading-state";
 import type { Locale } from "@/i18n/routing";
 import { DEMOS, demoThumbnail, findDemo } from "@/lib/demos";
+import { listedDemos } from "@/lib/demos-listed";
 
 type Props = PageProps<"/[locale]/demos/[id]">;
 
@@ -31,10 +36,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-/** A demo picked from the list: the player starts right away. */
-export default async function Page({ params, searchParams }: Props) {
+/** Request-time: a demo an admin deleted is not found (ADR-015). */
+async function ListedDemo({ params, searchParams }: Props) {
+  await connection();
   const { locale, id } = await params;
-  const demo = findDemo(id);
+  const demo = (await listedDemos()).find((listed) => listed.id === id);
   if (!demo) notFound();
   return (
     <DemoView
@@ -44,5 +50,15 @@ export default async function Page({ params, searchParams }: Props) {
       autoplay
       searchParams={searchParams}
     />
+  );
+}
+
+/** A demo picked from the list: the player starts right away. */
+export default function Page(props: Props) {
+  const t = useTranslations("Loading");
+  return (
+    <Suspense fallback={<LoadingState label={t("label")} rows={3} />}>
+      <ListedDemo {...props} />
+    </Suspense>
   );
 }

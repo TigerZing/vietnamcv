@@ -62,6 +62,10 @@ The containers run the code baked into their images, so new commits need a rebui
 `scripts/run.sh update` pulls, rebuilds only the images whose inputs changed (API, web, or
 none for docs-only commits) and restarts them; migrations and the news import re-run.
 
+`scripts/run.sh admin` creates the administrator account (or sets a new password) and
+asks for the password; sign in at <http://localhost:3000/vi/admin> to delete news posts,
+demos or comments (ADR-015). Set `ADMIN_TOKEN_SECRET` in `.env` before deploying.
+
 ### Running services on the host
 
 For faster feedback, run only the databases in Docker and the apps locally:

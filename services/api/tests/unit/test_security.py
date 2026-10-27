@@ -1,16 +1,22 @@
+import time
 from collections.abc import Awaitable, Callable
 
+import jwt
 import pytest
 from fastapi import Depends, FastAPI
 from httpx import AsyncClient
+from pydantic import SecretStr
 
 from app.core.config import Settings
+from app.core.errors import UnauthorizedError
 from app.core.security import (
     DEV_PRINCIPAL_HEADER,
     CurrentPrincipal,
     Principal,
     Role,
+    issue_admin_token,
     require_role,
+    verify_admin_token,
 )
 from app.main import create_app
 
@@ -88,3 +94,52 @@ async def test_header_ignored_when_dev_auth_disabled(
 )
 def test_role_hierarchy(granted: Role, required: Role, allowed: bool) -> None:
     assert Principal(subject="s", roles=frozenset({granted})).has_role(required) is allowed
+
+
+async def test_admin_token_grants_admin(unit_settings: Settings, client_for: ClientFactory) -> None:
+    client = await client_for(build_app(unit_settings))
+    issued = issue_admin_token(unit_settings, account_id="abc", username="ho")
+    response = await client.get(
+        "/moderation-test", headers={"Authorization": f"Bearer {issued.token}"}
+    )
+    assert response.status_code == 200
+    assert response.json() == {"subject": "admin|abc"}
+
+
+def test_admin_token_signed_with_another_secret_is_rejected(unit_settings: Settings) -> None:
+    other = unit_settings.model_copy(update={"admin_token_secret": SecretStr("z" * 40)})
+    issued = issue_admin_token(other, account_id="abc", username="ho")
+    with pytest.raises(UnauthorizedError):
+        verify_admin_token(unit_settings, issued.token)
+
+
+def test_unsigned_admin_token_is_rejected(unit_settings: Settings) -> None:
+    forged = jwt.encode(
+        {
+            "iss": "vietnamcv-admin",
+            "aud": "vietnamcv-api",
+            "sub": "admin|x",
+            "iat": int(time.time()),
+            "exp": int(time.time()) + 60,
+        },
+        key="",
+        algorithm="none",
+    )
+    with pytest.raises(UnauthorizedError):
+        verify_admin_token(unit_settings, forged)
+
+
+def test_expired_admin_token_is_rejected(unit_settings: Settings) -> None:
+    expired = jwt.encode(
+        {
+            "iss": "vietnamcv-admin",
+            "aud": "vietnamcv-api",
+            "sub": "admin|x",
+            "iat": int(time.time()) - 7200,
+            "exp": int(time.time()) - 3600,
+        },
+        unit_settings.admin_token_secret.get_secret_value(),
+        algorithm="HS256",
+    )
+    with pytest.raises(UnauthorizedError):
+        verify_admin_token(unit_settings, expired)

@@ -151,9 +151,16 @@ async def moderation_queue(
         cursor=KeysetCursor.decode(cursor) if cursor else None,
     )
     page = rows[:limit]
+    refs = await content_service.refs(session, [comment.content_id for comment, _ in page])
     return ModerationQueue(
         items=[
-            QueuedComment(**_out(comment, user).model_dump(), content_id=comment.content_id)
+            QueuedComment(
+                **_out(comment, user).model_dump(),
+                content_id=comment.content_id,
+                content_type=refs[comment.content_id].type,
+                content_slug=refs[comment.content_id].slug,
+                content_title=refs[comment.content_id].title,
+            )
             for comment, user in page
         ],
         next_cursor=_next_cursor(rows, limit),
@@ -190,6 +197,30 @@ async def moderate(
         )
     await session.commit()
     return _out(comment, user)
+
+
+async def delete(session: AsyncSession, comment_id: uuid.UUID, *, principal: Principal) -> None:
+    """Delete a comment for good (ADR-015). The audit event keeps what it said."""
+    row = await repository.get_with_author(session, comment_id)
+    if row is None:
+        raise NotFoundError("Comment not found", details={"comment_id": str(comment_id)})
+    comment, _ = row
+    audit.record(
+        session,
+        actor_subject=principal.subject,
+        action="comment.deleted",
+        target_type="comment",
+        target_id=comment.id,
+        before={
+            "status": comment.status,
+            "content_id": str(comment.content_id),
+            "author_kind": comment.author_kind,
+            "body": comment.body,
+        },
+    )
+    await session.delete(comment)
+    await session.commit()
+    logger.info("comment_deleted", comment_id=str(comment_id))
 
 
 def _out(comment: Comment, user: User | None) -> CommentOut:

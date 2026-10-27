@@ -72,11 +72,31 @@ def test_fingerprint_secret_required_in_deployed_environments(
     env: pytest.MonkeyPatch, environment: str
 ) -> None:
     env.setenv("APP_ENV", environment)
+    env.setenv("ADMIN_TOKEN_SECRET", "x" * 40)
     env.delenv("CLIENT_FINGERPRINT_SECRET", raising=False)
     with pytest.raises(ConfigurationError, match="CLIENT_FINGERPRINT_SECRET"):
         load_settings()
     env.setenv("CLIENT_FINGERPRINT_SECRET", "a-real-secret")
     assert load_settings().environment.is_deployed
+
+
+@pytest.mark.parametrize("environment", ["staging", "production"])
+def test_admin_token_secret_required_in_deployed_environments(
+    env: pytest.MonkeyPatch, environment: str
+) -> None:
+    env.setenv("APP_ENV", environment)
+    env.setenv("CLIENT_FINGERPRINT_SECRET", "a-real-secret")
+    env.delenv("ADMIN_TOKEN_SECRET", raising=False)
+    with pytest.raises(ConfigurationError, match="ADMIN_TOKEN_SECRET"):
+        load_settings()
+    env.setenv("ADMIN_TOKEN_SECRET", "y" * 40)
+    assert load_settings().environment.is_deployed
+
+
+def test_admin_token_secret_must_be_long(env: pytest.MonkeyPatch) -> None:
+    env.setenv("ADMIN_TOKEN_SECRET", "too-short")
+    with pytest.raises(ConfigurationError, match="at least 32"):
+        load_settings()
 
 
 def test_google_client_id_shares_the_web_variable(env: pytest.MonkeyPatch) -> None:

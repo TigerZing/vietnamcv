@@ -110,6 +110,161 @@ const demoComments = new Map(
   ]),
 );
 
+// Admin (ADR-015). One fixed account; the token is an unsigned JWT-shaped string the
+// web only reads for display. Deletions are kept in `removed` and change the admin lists
+// only, so parallel public-page tests never see them; the real API's public effect is
+// covered by services/api/tests/integration/test_admin.py.
+const ADMIN = { username: "admin", password: "mock-admin-password" };
+const ADMIN_TOKEN = [
+  { alg: "none", typ: "JWT" },
+  { iss: "vietnamcv-admin", name: "admin", exp: 4102444800 },
+]
+  .map((part) => Buffer.from(JSON.stringify(part)).toString("base64url"))
+  .concat("mock")
+  .join(".");
+const removed = new Set();
+const contents = [
+  ...news.map((item) => ({
+    id: item.id,
+    type: "news",
+    slug: item.slug,
+    title: item.title,
+    published_at: item.published_at,
+    created_at: item.published_at,
+  })),
+  ...[...Array(19).keys()].map((i) => {
+    const id = String(i + 1).padStart(2, "0");
+    return {
+      id: `00000000-0000-0000-0000-0000000001${id}`,
+      type: "demo",
+      slug: `demo-${id}`,
+      title: `Demo ${id}`,
+      published_at: "2026-10-26T00:00:00Z",
+      created_at: "2026-10-26T00:00:00Z",
+    };
+  }),
+];
+
+function adminContent(item) {
+  const threads = item.type === "demo" ? demoComments : comments;
+  return {
+    ...item,
+    status: removed.has(item.id) ? "removed" : "published",
+    comment_count: threads.get(item.slug).length,
+  };
+}
+
+function unauthorized(res) {
+  send(res, 401, {
+    error: {
+      code: "UNAUTHENTICATED",
+      message: "Authentication required",
+      details: {},
+      request_id: null,
+    },
+  });
+}
+
+async function readJson(req) {
+  let raw = "";
+  for await (const chunk of req) raw += chunk;
+  return JSON.parse(raw || "{}");
+}
+
+/** Admin endpoints; returns false when `path` is not one of them. */
+async function admin(req, res, url) {
+  const path = url.pathname;
+  if (!path.startsWith("/api/v1/admin/")) return false;
+  if (path === "/api/v1/admin/auth/login" && req.method === "POST") {
+    const body = await readJson(req);
+    if (body.username !== ADMIN.username || body.password !== ADMIN.password) {
+      send(res, 401, {
+        error: {
+          code: "UNAUTHENTICATED",
+          message: "Wrong username or password",
+          details: {},
+          request_id: null,
+        },
+      });
+      return true;
+    }
+    send(res, 200, {
+      access_token: ADMIN_TOKEN,
+      token_type: "bearer",
+      expires_at: new Date(Date.now() + 8 * 3600 * 1000).toISOString(),
+      username: ADMIN.username,
+    });
+    return true;
+  }
+  if (req.headers.authorization !== `Bearer ${ADMIN_TOKEN}`) {
+    unauthorized(res);
+    return true;
+  }
+  if (path === "/api/v1/admin/contents") {
+    const type = url.searchParams.get("type");
+    const status = url.searchParams.get("status") ?? "published";
+    const items = contents
+      .map(adminContent)
+      .filter(
+        (item) => (!type || item.type === type) && item.status === status,
+      );
+    send(res, 200, { items, next_cursor: null });
+    return true;
+  }
+  const contentMatch = path.match(
+    /^\/api\/v1\/admin\/contents\/([0-9a-f-]+)(\/restore)?$/,
+  );
+  if (contentMatch) {
+    const item = contents.find((entry) => entry.id === contentMatch[1]);
+    if (!item) return (notFound(res), true);
+    if (contentMatch[2] && req.method === "POST") {
+      removed.delete(item.id);
+      send(res, 200, adminContent(item));
+    } else {
+      removed.add(item.id);
+      res.writeHead(204).end();
+    }
+    return true;
+  }
+  if (path === "/api/v1/admin/comments") {
+    const status = url.searchParams.get("status") ?? "pending";
+    const items = contents.flatMap((item) => {
+      const threads = item.type === "demo" ? demoComments : comments;
+      return threads
+        .get(item.slug)
+        .filter((comment) => comment.status === status)
+        .map((comment) => ({
+          ...comment,
+          content_id: item.id,
+          content_type: item.type,
+          content_slug: item.slug,
+          content_title: item.title,
+        }));
+    });
+    send(res, 200, { items, next_cursor: null });
+    return true;
+  }
+  const commentMatch = path.match(/^\/api\/v1\/admin\/comments\/([0-9a-f-]+)$/);
+  if (commentMatch && req.method === "DELETE") {
+    for (const threads of [comments, demoComments]) {
+      for (const list of threads.values()) {
+        const index = list.findIndex(
+          (comment) => comment.id === commentMatch[1],
+        );
+        if (index >= 0) {
+          list.splice(index, 1);
+          res.writeHead(204).end();
+          return true;
+        }
+      }
+    }
+    notFound(res);
+    return true;
+  }
+  notFound(res);
+  return true;
+}
+
 /** The post as the API returns it in `lang`, falling back to Vietnamese. */
 function localize(item, lang) {
   const { text_en: english, ...post } = item;
@@ -138,6 +293,10 @@ createServer(async (req, res) => {
   const path = url.pathname;
   const lang = url.searchParams.get("lang") ?? "vi";
   if (path === "/api/v1/health/live") return send(res, 200, { status: "ok" });
+  if (await admin(req, res, url)) return;
+  if (path === "/api/v1/demos") {
+    return send(res, 200, { items: [...demoComments.keys()] });
+  }
   if (path === `/api/v1/media/${IMAGE_ID}`) {
     res.writeHead(200, {
       "Content-Type": "image/png",

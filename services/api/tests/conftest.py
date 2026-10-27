@@ -117,6 +117,7 @@ CONTENT_TABLES = (
     "media_assets",
     "comments",
     "users",
+    "admin_accounts",
     "news_items",
     "content_sources",
     "contents",

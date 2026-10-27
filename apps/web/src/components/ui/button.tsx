@@ -12,6 +12,8 @@ export const buttonVariants = cva(
         outline:
           "border-border bg-surface text-foreground hover:bg-surface-muted border",
         ghost: "text-foreground hover:bg-surface-muted",
+        // accent-foreground flips with the theme, so it stays AA on --danger in both.
+        danger: "bg-danger text-accent-foreground hover:bg-danger/90",
       },
     },
     defaultVariants: { variant: "primary" },

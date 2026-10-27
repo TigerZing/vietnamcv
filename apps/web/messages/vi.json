@@ -804,5 +804,83 @@
       "signInRequired": "Phiên đăng nhập Google đã hết hạn. Vui lòng đăng nhập lại.",
       "error": "Không gửi được bình luận. Vui lòng thử lại sau."
     }
+  },
+  "Admin": {
+    "title": "Quản trị nội dung",
+    "signedInAs": "Đăng nhập với tài khoản quản trị {name}",
+    "logout": "Đăng xuất",
+    "tabsLabel": "Loại nội dung",
+    "tabs": {
+      "news": "Tin tức",
+      "demos": "Demo",
+      "comments": "Bình luận",
+      "removed": "Đã xoá"
+    },
+    "panels": {
+      "news": {
+        "title": "Tin tức",
+        "lead": "Mọi bài tin tức đang hiện trên trang, mới nhất trước.",
+        "empty": "Không có bài tin tức nào."
+      },
+      "demos": {
+        "title": "Demo sản phẩm",
+        "lead": "Mọi demo đang hiện ở mục Demo.",
+        "empty": "Không có demo nào."
+      },
+      "comments": {
+        "title": "Bình luận",
+        "lead": "Bình luận dưới các bài tin tức và demo. Xoá bình luận là xoá hẳn.",
+        "empty": "Không có bình luận nào ở trạng thái này."
+      },
+      "removed": {
+        "title": "Nội dung đã xoá",
+        "lead": "Bài và demo đã xoá không còn hiện trên trang, kể cả sau khi cập nhật dữ liệu. Bạn có thể khôi phục nếu xoá nhầm.",
+        "empty": "Chưa xoá nội dung nào."
+      }
+    },
+    "types": {
+      "news": "Tin tức",
+      "demo": "Demo"
+    },
+    "commentCount": "{count, plural, =0 {Chưa có bình luận} other {# bình luận}}",
+    "anonymous": "Ẩn danh",
+    "commentOn": "Trong bài:",
+    "commentStatusLabel": "Trạng thái bình luận",
+    "commentStatuses": {
+      "published": "Đang hiện",
+      "pending": "Chờ duyệt",
+      "hidden": "Đã ẩn"
+    },
+    "pagerLabel": "Phân trang",
+    "firstPage": "Về trang đầu",
+    "nextPage": "Trang sau",
+    "login": {
+      "title": "Đăng nhập quản trị",
+      "lead": "Chỉ dành cho quản trị viên VietnamCV.",
+      "username": "Tên đăng nhập",
+      "password": "Mật khẩu",
+      "submit": "Đăng nhập",
+      "submitting": "Đang đăng nhập…",
+      "errors": {
+        "invalid": "Sai tên đăng nhập hoặc mật khẩu.",
+        "rateLimited": "Bạn đã thử quá nhiều lần. Vui lòng thử lại sau {minutes} phút.",
+        "error": "Không đăng nhập được lúc này. Vui lòng thử lại sau."
+      }
+    },
+    "actions": {
+      "delete": "Xoá",
+      "deleteConfirm": "Xoá thật chứ?",
+      "deleteYes": "Xoá",
+      "restore": "Khôi phục",
+      "restoreConfirm": "Hiện lại trên trang?",
+      "restoreYes": "Khôi phục",
+      "cancel": "Huỷ",
+      "working": "Đang xử lý…",
+      "errors": {
+        "signedOut": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+        "notFound": "Mục này không còn nữa.",
+        "error": "Không thực hiện được. Vui lòng thử lại."
+      }
+    }
   }
 }

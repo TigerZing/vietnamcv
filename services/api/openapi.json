@@ -1,6 +1,178 @@
 {
   "components": {
     "schemas": {
+      "AdminContentItem": {
+        "properties": {
+          "comment_count": {
+            "title": "Comment Count",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published At"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ContentStatus"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/ContentType"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "slug",
+          "title",
+          "status",
+          "published_at",
+          "created_at",
+          "comment_count"
+        ],
+        "title": "AdminContentItem",
+        "type": "object"
+      },
+      "AdminContentPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminContentItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "AdminContentPage",
+        "type": "object"
+      },
+      "AdminContentStatus": {
+        "description": "The lists the admin dashboard shows.",
+        "enum": [
+          "published",
+          "removed",
+          "archived"
+        ],
+        "title": "AdminContentStatus",
+        "type": "string"
+      },
+      "AdminLoginRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "password": {
+            "maxLength": 256,
+            "minLength": 1,
+            "title": "Password",
+            "type": "string"
+          },
+          "username": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Username",
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "AdminLoginRequest",
+        "type": "object"
+      },
+      "AdminMe": {
+        "properties": {
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Username"
+          }
+        },
+        "required": [
+          "subject",
+          "username"
+        ],
+        "title": "AdminMe",
+        "type": "object"
+      },
+      "AdminSession": {
+        "properties": {
+          "access_token": {
+            "description": "Send as `Authorization: Bearer <token>`",
+            "title": "Access Token",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "token_type": {
+            "default": "bearer",
+            "title": "Token Type",
+            "type": "string"
+          },
+          "username": {
+            "title": "Username",
+            "type": "string"
+          }
+        },
+        "required": [
+          "access_token",
+          "expires_at",
+          "username"
+        ],
+        "title": "AdminSession",
+        "type": "object"
+      },
       "AuthorKind": {
         "enum": [
           "anonymous",
@@ -174,6 +346,26 @@
         "title": "CommentStatus",
         "type": "string"
       },
+      "ContentStatus": {
+        "enum": [
+          "draft",
+          "pending_review",
+          "published",
+          "rejected",
+          "archived",
+          "removed"
+        ],
+        "title": "ContentStatus",
+        "type": "string"
+      },
+      "ContentType": {
+        "enum": [
+          "news",
+          "demo"
+        ],
+        "title": "ContentType",
+        "type": "string"
+      },
       "DatePrecision": {
         "description": "How much of a source date is known. Monthly magazines only give the month.",
         "enum": [
@@ -182,6 +374,22 @@
         ],
         "title": "DatePrecision",
         "type": "string"
+      },
+      "DemoSlugs": {
+        "properties": {
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "DemoSlugs",
+        "type": "object"
       },
       "ErrorBody": {
         "properties": {
@@ -764,6 +972,19 @@
             "title": "Content Id",
             "type": "string"
           },
+          "content_slug": {
+            "title": "Content Slug",
+            "type": "string"
+          },
+          "content_title": {
+            "title": "Content Title",
+            "type": "string"
+          },
+          "content_type": {
+            "description": "`news` or `demo`",
+            "title": "Content Type",
+            "type": "string"
+          },
           "created_at": {
             "format": "date-time",
             "title": "Created At",
@@ -784,7 +1005,10 @@
           "body",
           "status",
           "created_at",
-          "content_id"
+          "content_id",
+          "content_type",
+          "content_slug",
+          "content_title"
         ],
         "title": "QueuedComment",
         "type": "object"
@@ -941,6 +1165,78 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/admin/auth/login": {
+      "post": {
+        "description": "Returns a signed session token carrying the admin role. Wrong credentials give 401 with the same message whether or not the username exists. Rate limited per client and per username.",
+        "operationId": "admin_login_api_v1_admin_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminLoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSession"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal error"
+          }
+        },
+        "summary": "Sign in as an administrator with username and password",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/comments": {
       "get": {
         "operationId": "moderation_queue_api_v1_admin_comments_get",
@@ -1026,6 +1322,62 @@
         ]
       }
     },
+    "/api/v1/admin/comments/{comment_id}": {
+      "delete": {
+        "operationId": "delete_comment_api_v1_admin_comments__comment_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "comment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Comment Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal error"
+          }
+        },
+        "summary": "Delete a comment for good (admins only, audited)",
+        "tags": [
+          "moderation"
+        ]
+      }
+    },
     "/api/v1/admin/comments/{comment_id}/moderate": {
       "post": {
         "operationId": "moderate_comment_api_v1_admin_comments__comment_id__moderate_post",
@@ -1096,6 +1448,318 @@
         "summary": "Publish or hide a comment (audited)",
         "tags": [
           "moderation"
+        ]
+      }
+    },
+    "/api/v1/admin/contents": {
+      "get": {
+        "operationId": "list_contents_api_v1_admin_contents_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/ContentType"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AdminContentStatus",
+              "default": "published"
+            }
+          },
+          {
+            "description": "Page size",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "description": "Page size",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Opaque cursor from `next_cursor`",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Opaque cursor from `next_cursor`",
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminContentPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal error"
+          }
+        },
+        "summary": "Content for the admin dashboard",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/contents/{content_id}": {
+      "delete": {
+        "operationId": "remove_content_api_v1_admin_contents__content_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "content_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Content Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal error"
+          }
+        },
+        "summary": "Delete a news post or demo from the site (audited; imports keep it deleted)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/contents/{content_id}/restore": {
+      "post": {
+        "operationId": "restore_content_api_v1_admin_contents__content_id__restore_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "content_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Content Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminContentItem"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Conflict"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal error"
+          }
+        },
+        "summary": "Publish deleted content again (audited)",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/me": {
+      "get": {
+        "operationId": "admin_me_api_v1_admin_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminMe"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal error"
+          }
+        },
+        "summary": "The signed-in administrator",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/demos": {
+      "get": {
+        "operationId": "list_demos_api_v1_demos_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoSlugs"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorEnvelope"
+                }
+              }
+            },
+            "description": "Internal error"
+          }
+        },
+        "summary": "Slugs of the published demos (`demo-<id>`)",
+        "tags": [
+          "demos"
         ]
       }
     },
