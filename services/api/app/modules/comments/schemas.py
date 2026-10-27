@@ -95,6 +95,9 @@ class ModerationRequest(BaseModel):
 
 class QueuedComment(CommentOut):
     content_id: uuid.UUID
+    content_type: str = Field(description="`news` or `demo`")
+    content_slug: str
+    content_title: str
 
 
 class ModerationQueue(BaseModel):

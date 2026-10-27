@@ -15,11 +15,12 @@ from app.modules.content.models import (
     ContentTranslation,
     Source,
 )
-from app.modules.identity.models import User
+from app.modules.identity.models import AdminAccount, User
 from app.modules.media.models import MediaAsset
 from app.modules.news.models import NewsItem
 
 __all__ = [
+    "AdminAccount",
     "AuditEvent",
     "Base",
     "Comment",

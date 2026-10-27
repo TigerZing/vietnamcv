@@ -7,11 +7,12 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import datetime
 
-from sqlalchemy import delete, exists, func, select
+from sqlalchemy import and_, delete, exists, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import ConflictError, NotFoundError
 from app.core.outbox import record_event
+from app.core.pagination import KeysetCursor
 from app.modules.audit import service as audit
 from app.modules.content.models import (
     Content,
@@ -68,9 +69,10 @@ async def publish(session: AsyncSession, content: Content, *, actor_subject: str
     """Publish ``content`` in the caller's transaction.
 
     Requires at least one provenance record, sets ``published_at`` on first publication,
-    writes an audit event and records a ``ContentPublished`` outbox event.
+    writes an audit event and records a ``ContentPublished`` outbox event. Content an admin
+    removed stays removed (imports call this on every run); :func:`restore` brings it back.
     """
-    if content.status == ContentStatus.PUBLISHED:
+    if content.status in {ContentStatus.PUBLISHED, ContentStatus.REMOVED}:
         return
     await session.flush()
     has_source = await session.scalar(
@@ -105,7 +107,7 @@ async def publish(session: AsyncSession, content: Content, *, actor_subject: str
 
 async def archive(session: AsyncSession, content: Content, *, actor_subject: str) -> bool:
     """Take ``content`` off the site; returns False when it already was. Audited."""
-    if content.status == ContentStatus.ARCHIVED:
+    if content.status in {ContentStatus.ARCHIVED, ContentStatus.REMOVED}:
         return False
     before = content.status
     content.status = ContentStatus.ARCHIVED
@@ -119,6 +121,120 @@ async def archive(session: AsyncSession, content: Content, *, actor_subject: str
         after={"status": content.status},
     )
     return True
+
+
+# --- Admin removal (ADR-015) ---
+
+
+@dataclass(frozen=True, slots=True)
+class ContentRef:
+    """What an admin list shows about the content a comment belongs to."""
+
+    type: str
+    slug: str
+    title: str
+
+
+async def get_for_update(session: AsyncSession, content_id: uuid.UUID) -> Content:
+    content = await session.scalar(
+        select(Content).where(Content.id == content_id).with_for_update()
+    )
+    if content is None:
+        raise NotFoundError("Content not found", details={"content_id": str(content_id)})
+    return content
+
+
+async def remove(
+    session: AsyncSession, content: Content, *, actor_subject: str, reason: str | None = None
+) -> bool:
+    """Delete ``content`` from the site for good; False when it already was. Audited.
+
+    The row is kept (with its comments and provenance) so the curated imports can tell it
+    was removed and do not publish it again, and so an admin can restore a mistake.
+    """
+    if content.status == ContentStatus.REMOVED:
+        return False
+    before = content.status
+    content.status = ContentStatus.REMOVED
+    audit.record(
+        session,
+        actor_subject=actor_subject,
+        action="content.removed",
+        target_type="content",
+        target_id=content.id,
+        reason=reason,
+        before={"status": before},
+        after={"status": content.status},
+    )
+    return True
+
+
+async def restore(session: AsyncSession, content: Content, *, actor_subject: str) -> None:
+    """Publish removed ``content`` again (audited as ``content.restored`` and published)."""
+    if content.status != ContentStatus.REMOVED:
+        raise ConflictError(
+            "Only removed content can be restored", details={"status": content.status}
+        )
+    content.status = ContentStatus.DRAFT
+    audit.record(
+        session,
+        actor_subject=actor_subject,
+        action="content.restored",
+        target_type="content",
+        target_id=content.id,
+        before={"status": ContentStatus.REMOVED.value},
+        after={"status": ContentStatus.DRAFT.value},
+    )
+    await publish(session, content, actor_subject=actor_subject)
+
+
+async def list_for_admin(
+    session: AsyncSession,
+    *,
+    content_type: str | None,
+    status: str,
+    limit: int,
+    cursor: KeysetCursor | None,
+) -> Sequence[Content]:
+    """Newest first by ``(created_at, id)``; fetches ``limit + 1`` rows to detect more."""
+    statement = (
+        select(Content)
+        .where(Content.status == status)
+        .order_by(Content.created_at.desc(), Content.id.desc())
+        .limit(limit + 1)
+    )
+    if content_type is not None:
+        statement = statement.where(Content.type == content_type)
+    if cursor is not None:
+        statement = statement.where(
+            or_(
+                Content.created_at < cursor.timestamp,
+                and_(Content.created_at == cursor.timestamp, Content.id < cursor.id),
+            )
+        )
+    return (await session.scalars(statement)).all()
+
+
+async def refs(
+    session: AsyncSession, content_ids: Sequence[uuid.UUID]
+) -> dict[uuid.UUID, ContentRef]:
+    if not content_ids:
+        return {}
+    rows = await session.execute(
+        select(Content.id, Content.type, Content.slug, Content.title).where(
+            Content.id.in_(set(content_ids))
+        )
+    )
+    return {row[0]: ContentRef(type=row[1], slug=row[2], title=row[3]) for row in rows.all()}
+
+
+async def published_slugs(session: AsyncSession, content_type: str) -> list[str]:
+    rows = await session.scalars(
+        select(Content.slug)
+        .where(Content.type == content_type, Content.status == ContentStatus.PUBLISHED)
+        .order_by(Content.slug)
+    )
+    return list(rows.all())
 
 
 async def get_published(session: AsyncSession, content_type: str, slug: str) -> Content:

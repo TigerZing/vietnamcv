@@ -7,6 +7,7 @@
 #   scripts/run.sh down       stop the stack (keeps database volumes)
 #   scripts/run.sh logs       follow logs from all services
 #   scripts/run.sh status     show container status
+#   scripts/run.sh admin [NAME]  create an admin account (default: admin) or set its password
 #
 # Works with Docker Desktop or Colima on macOS and with Docker Engine on Linux.
 # Written for bash 3.2 so it runs with the bash that ships with macOS.
@@ -33,7 +34,7 @@ die() {
   exit 1
 }
 
-usage() { sed -n '2,12p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,13p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
 compose() {
   if [ -f "$ENV_FILE" ]; then
@@ -217,16 +218,34 @@ EOF_CHANGED
   print_urls
 }
 
+# Creates the admin account that signs in at /vi/admin, or sets a new password on it.
+# The password is typed into the API container, never stored in a file (ADR-015).
+admin() {
+  local name="$1"
+  check_docker
+  [ -n "$(compose ps --status running --quiet api 2>/dev/null || true)" ] ||
+    die "The API is not running. Start the stack first: scripts/run.sh"
+  info "Admin account '$name': type a password (at least 10 characters)"
+  compose exec api python -m app.cli.create_admin "$name" ||
+    die "Could not save the admin account (see the message above)"
+  ok "Sign in at $WEB_URL/vi/admin"
+}
+
 main() {
   cd "$ROOT_DIR"
-  local cmd="up" open_browser="no" arg
+  local cmd="up" open_browser="no" admin_name="admin" arg
   for arg in "$@"; do
+    if [ "$cmd" = "admin" ] && [ "${arg#-}" = "$arg" ]; then
+      admin_name="$arg"
+      continue
+    fi
     case "$arg" in
       up | start) cmd="up" ;;
       down | stop) cmd="down" ;;
       update | pull) cmd="update" ;;
       logs) cmd="logs" ;;
       status | ps) cmd="status" ;;
+      admin) cmd="admin" ;;
       --open | -o) open_browser="yes" ;;
       -h | --help | help)
         usage
@@ -248,6 +267,7 @@ main() {
       ;;
     logs) compose logs -f ;;
     status) compose ps ;;
+    admin) admin "$admin_name" ;;
   esac
 }
 

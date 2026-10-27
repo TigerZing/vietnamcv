@@ -96,3 +96,7 @@ async def _import_one(session: AsyncSession, entry: CuratedDemo, source: Source)
         content.status = ContentStatus.DRAFT
     await content_service.publish(session, content, actor_subject=DEMO_IMPORT_ACTOR)
     return outcome
+
+
+async def published_slugs(session: AsyncSession) -> list[str]:
+    return await content_service.published_slugs(session, ContentType.DEMO)

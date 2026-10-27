@@ -35,6 +35,8 @@ class ContentStatus(StrEnum):
     PUBLISHED = "published"
     REJECTED = "rejected"
     ARCHIVED = "archived"
+    # Deleted by an admin (ADR-015): off the site, and imports never bring it back.
+    REMOVED = "removed"
 
 
 class DatePrecision(StrEnum):
@@ -105,7 +107,7 @@ class Content(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __table_args__ = (
         CheckConstraint("type IN ('news', 'demo')", name="type"),
         CheckConstraint(
-            "status IN ('draft', 'pending_review', 'published', 'rejected', 'archived')",
+            _in("status", ContentStatus),
             name="status",
         ),
         CheckConstraint("status <> 'published' OR published_at IS NOT NULL", name="published_at"),

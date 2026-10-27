@@ -23,6 +23,8 @@ from pydantic import (
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 _LOCAL_FINGERPRINT_SECRET = "local-only-fingerprint-secret"  # noqa: S105 - placeholder
+_LOCAL_ADMIN_TOKEN_SECRET = "local-only-admin-token-secret-change-me"  # noqa: S105 - placeholder
+_MIN_ADMIN_TOKEN_SECRET = 32
 
 
 class Environment(StrEnum):
@@ -70,6 +72,11 @@ class Settings(BaseSettings):
     # so raw IPs are never stored. Must be a real secret outside local/test.
     client_fingerprint_secret: SecretStr = SecretStr(_LOCAL_FINGERPRINT_SECRET)
 
+    # Signs the API's own admin session tokens (HS256, ADR-015). Changing it signs every
+    # admin out. Must be a real secret of at least 32 characters outside local/test.
+    admin_token_secret: SecretStr = SecretStr(_LOCAL_ADMIN_TOKEN_SECRET)
+    admin_token_ttl_seconds: int = Field(default=8 * 3600, ge=300, le=7 * 24 * 3600)
+
     @field_validator("database_url", mode="before")
     @classmethod
     def _use_psycopg_driver(cls, value: object) -> object:
@@ -96,6 +103,13 @@ class Settings(BaseSettings):
             and self.client_fingerprint_secret.get_secret_value() == _LOCAL_FINGERPRINT_SECRET
         ):
             raise ValueError("CLIENT_FINGERPRINT_SECRET must be set in staging and production")
+        admin_secret = self.admin_token_secret.get_secret_value()
+        if len(admin_secret) < _MIN_ADMIN_TOKEN_SECRET:
+            raise ValueError(
+                f"ADMIN_TOKEN_SECRET must be at least {_MIN_ADMIN_TOKEN_SECRET} characters"
+            )
+        if self.environment.is_deployed and admin_secret == _LOCAL_ADMIN_TOKEN_SECRET:
+            raise ValueError("ADMIN_TOKEN_SECRET must be set in staging and production")
         return self
 
     @property

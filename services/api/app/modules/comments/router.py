@@ -5,7 +5,7 @@ from __future__ import annotations
 import uuid
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Path, Query, Request, status
+from fastapi import APIRouter, Depends, Path, Query, Request, Response, status
 from redis.asyncio import Redis
 
 from app.core.db import DbSession
@@ -30,6 +30,7 @@ admin_router = APIRouter(prefix="/admin/comments", tags=["moderation"])
 
 Slug = Annotated[str, Path(max_length=200, pattern=SLUG_PATTERN)]
 Moderator = Annotated[Principal, Depends(require_role(Role.MODERATOR))]
+Admin = Annotated[Principal, Depends(require_role(Role.ADMIN))]
 
 
 def _redis(request: Request) -> Redis:
@@ -164,3 +165,16 @@ async def moderate_comment(
     return await service.moderate(
         session, comment_id, action=payload.action, reason=payload.reason, principal=moderator
     )
+
+
+@admin_router.delete(
+    "/{comment_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Delete a comment for good (admins only, audited)",
+    responses={status.HTTP_404_NOT_FOUND: {"model": ErrorEnvelope}},
+)
+async def delete_comment(
+    session: DbSession, admin: Admin, comment_id: Annotated[uuid.UUID, Path()]
+) -> Response:
+    await service.delete(session, comment_id, principal=admin)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

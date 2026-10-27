@@ -4,6 +4,26 @@
  */
 
 export interface paths {
+  "/api/v1/admin/auth/login": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Sign in as an administrator with username and password
+     * @description Returns a signed session token carrying the admin role. Wrong credentials give 401 with the same message whether or not the username exists. Rate limited per client and per username.
+     */
+    post: operations["admin_login_api_v1_admin_auth_login_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/admin/comments": {
     parameters: {
       query?: never;
@@ -21,6 +41,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/admin/comments/{comment_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Delete a comment for good (admins only, audited) */
+    delete: operations["delete_comment_api_v1_admin_comments__comment_id__delete"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/admin/comments/{comment_id}/moderate": {
     parameters: {
       query?: never;
@@ -32,6 +69,91 @@ export interface paths {
     put?: never;
     /** Publish or hide a comment (audited) */
     post: operations["moderate_comment_api_v1_admin_comments__comment_id__moderate_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/admin/contents": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Content for the admin dashboard */
+    get: operations["list_contents_api_v1_admin_contents_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/admin/contents/{content_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    /** Delete a news post or demo from the site (audited; imports keep it deleted) */
+    delete: operations["remove_content_api_v1_admin_contents__content_id__delete"];
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/admin/contents/{content_id}/restore": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Publish deleted content again (audited) */
+    post: operations["restore_content_api_v1_admin_contents__content_id__restore_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/admin/me": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** The signed-in administrator */
+    get: operations["admin_me_api_v1_admin_me_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/demos": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Slugs of the published demos (`demo-<id>`) */
+    get: operations["list_demos_api_v1_demos_get"];
+    put?: never;
+    post?: never;
     delete?: never;
     options?: never;
     head?: never;
@@ -186,6 +308,76 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    /** AdminContentItem */
+    AdminContentItem: {
+      /** Comment Count */
+      comment_count: number;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at: string;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /** Published At */
+      published_at: string | null;
+      /** Slug */
+      slug: string;
+      status: components["schemas"]["ContentStatus"];
+      /** Title */
+      title: string;
+      type: components["schemas"]["ContentType"];
+    };
+    /** AdminContentPage */
+    AdminContentPage: {
+      /** Items */
+      items: components["schemas"]["AdminContentItem"][];
+      /** Next Cursor */
+      next_cursor: string | null;
+    };
+    /**
+     * AdminContentStatus
+     * @description The lists the admin dashboard shows.
+     * @enum {string}
+     */
+    AdminContentStatus: "published" | "removed" | "archived";
+    /** AdminLoginRequest */
+    AdminLoginRequest: {
+      /** Password */
+      password: string;
+      /** Username */
+      username: string;
+    };
+    /** AdminMe */
+    AdminMe: {
+      /** Subject */
+      subject: string;
+      /** Username */
+      username: string | null;
+    };
+    /** AdminSession */
+    AdminSession: {
+      /**
+       * Access Token
+       * @description Send as `Authorization: Bearer <token>`
+       */
+      access_token: string;
+      /**
+       * Expires At
+       * Format: date-time
+       */
+      expires_at: string;
+      /**
+       * Token Type
+       * @default bearer
+       */
+      token_type: string;
+      /** Username */
+      username: string;
+    };
     /**
      * AuthorKind
      * @enum {string}
@@ -252,11 +444,32 @@ export interface components {
      */
     CommentStatus: "published" | "pending" | "hidden";
     /**
+     * ContentStatus
+     * @enum {string}
+     */
+    ContentStatus:
+      | "draft"
+      | "pending_review"
+      | "published"
+      | "rejected"
+      | "archived"
+      | "removed";
+    /**
+     * ContentType
+     * @enum {string}
+     */
+    ContentType: "news" | "demo";
+    /**
      * DatePrecision
      * @description How much of a source date is known. Monthly magazines only give the month.
      * @enum {string}
      */
     DatePrecision: "day" | "month";
+    /** DemoSlugs */
+    DemoSlugs: {
+      /** Items */
+      items: string[];
+    };
     /** ErrorBody */
     ErrorBody: {
       /**
@@ -507,6 +720,15 @@ export interface components {
        * Format: uuid
        */
       content_id: string;
+      /** Content Slug */
+      content_slug: string;
+      /** Content Title */
+      content_title: string;
+      /**
+       * Content Type
+       * @description `news` or `demo`
+       */
+      content_type: string;
       /**
        * Created At
        * Format: date-time
@@ -593,6 +815,66 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  admin_login_api_v1_admin_auth_login_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["AdminLoginRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["AdminSession"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Too Many Requests */
+      429: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
   moderation_queue_api_v1_admin_comments_get: {
     parameters: {
       query?: {
@@ -615,6 +897,53 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["ModerationQueue"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  delete_comment_api_v1_admin_comments__comment_id__delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        comment_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
         };
       };
       /** @description Validation error */
@@ -668,6 +997,232 @@ export interface operations {
         };
         content: {
           "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  list_contents_api_v1_admin_contents_get: {
+    parameters: {
+      query?: {
+        type?: components["schemas"]["ContentType"] | null;
+        status?: components["schemas"]["AdminContentStatus"];
+        /** @description Page size */
+        limit?: number;
+        /** @description Opaque cursor from `next_cursor` */
+        cursor?: string | null;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["AdminContentPage"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  remove_content_api_v1_admin_contents__content_id__delete: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        content_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  restore_content_api_v1_admin_contents__content_id__restore_post: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path: {
+        content_id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["AdminContentItem"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Conflict */
+      409: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  admin_me_api_v1_admin_me_get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["AdminMe"];
+        };
+      };
+      /** @description Validation error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+      /** @description Internal error */
+      500: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ErrorEnvelope"];
+        };
+      };
+    };
+  };
+  list_demos_api_v1_demos_get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["DemoSlugs"];
         };
       };
       /** @description Validation error */

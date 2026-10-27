@@ -122,6 +122,7 @@ async def test_deployed_environments_hide_images_pending_permission(
         APP_ENV=Environment.STAGING,
         dev_auth_enabled=False,
         client_fingerprint_secret="staging-test-secret",
+        admin_token_secret="staging-test-admin-token-secret-0123456789",
     )
     deployed = await client_for(create_app(staging))
     assert (await deployed.get("/api/v1/news/newest-post")).json()["image"] is None
@@ -201,6 +202,7 @@ async def test_deployed_environments_hide_figures_pending_permission(
         APP_ENV=Environment.STAGING,
         dev_auth_enabled=False,
         client_fingerprint_secret="staging-test-secret",
+        admin_token_secret="staging-test-admin-token-secret-0123456789",
     )
     deployed = await client_for(create_app(staging))
     post = (await deployed.get("/api/v1/news/newest-post")).json()
