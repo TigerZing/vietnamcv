@@ -333,6 +333,11 @@ export function demoPostUrl(demo: Demo): string {
   return `https://www.linkedin.com/feed/update/${demo.urn}/`;
 }
 
+/** The post's video, served from this site (ADR-014); only for `kind: "video"`. */
+export function demoVideo(demo: Demo): string {
+  return `/demos/videos/${demo.id}.mp4`;
+}
+
 export function demoThumbnail(demo: Demo): string {
   return `/demos/${demo.id}.webp`;
 }

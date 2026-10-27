@@ -9,6 +9,7 @@ import {
   demoPublishedAt,
   demoThread,
   demoThumbnail,
+  demoVideo,
   findDemo,
   formatDuration,
   isLinkedInUrn,
@@ -26,6 +27,10 @@ describe("demos", () => {
       expect(demo.description.en.length, demo.id).toBeGreaterThan(80);
       const file = path.join(process.cwd(), "public", demoThumbnail(demo));
       expect(existsSync(file), file).toBe(true);
+      if (demo.kind === "video") {
+        const video = path.join(process.cwd(), "public", demoVideo(demo));
+        expect(existsSync(video), video).toBe(true);
+      }
     }
   });
 
