@@ -1,0 +1,101 @@
+{
+  "description": "Mục Khám phá, đồng bộ từ Google Sheet \"Khám phá CV\" (tab Khám phá) trong thư mục 07_Khám phá (Discover). Chỉ gồm các dòng đã tích Duyệt. Xuất ngày 2026-10-28.",
+  "items": [
+    {
+      "id": "foundations-of-computer-vision",
+      "url": "https://visionbook.mit.edu/",
+      "kind": "book",
+      "addedOn": "2026-10-28",
+      "source": "MIT Press",
+      "title": {
+        "vi": "Foundations of Computer Vision: sách nền tảng của MIT, đọc miễn phí",
+        "en": "Foundations of Computer Vision: MIT's textbook, free to read"
+      },
+      "summary": {
+        "vi": "Sách của Antonio Torralba, Phillip Isola và William Freeman (MIT Press, 2024), đăng toàn văn trên web theo giấy phép CC BY-NC-ND. Đi từ tạo ảnh, lọc tuyến tính và đa tỉ lệ đến mạng tích chập, transformer, mô hình sinh, hình học nhiều góc nhìn, radiance field và chuyển động.",
+        "en": "A book by Antonio Torralba, Phillip Isola and William Freeman (MIT Press, 2024), with the full text online under CC BY-NC-ND. It runs from image formation, linear filters and multiscale representations to convolutional networks, transformers, generative models, multi-view geometry, radiance fields and motion."
+      },
+      "tags": ["Textbook", "Geometry", "DeepLearning"]
+    },
+    {
+      "id": "cs231n-notes",
+      "url": "https://cs231n.github.io/",
+      "kind": "course",
+      "addedOn": "2026-10-28",
+      "source": "Stanford University",
+      "title": {
+        "vi": "CS231n: ghi chú khóa Deep Learning for Computer Vision của Stanford",
+        "en": "CS231n: notes for Stanford's Deep Learning for Computer Vision"
+      },
+      "summary": {
+        "vi": "Bộ ghi chú đi kèm khóa CS231n, viết dễ hiểu từ k-NN, bộ phân loại tuyến tính, lan truyền ngược đến mạng tích chập và học chuyển giao. Có bài tập thực hành bằng NumPy và Colab về phân loại ảnh, batch norm, dropout, trực quan hóa mạng và chú thích ảnh.",
+        "en": "The notes that go with CS231n, clearly written from k-NN, linear classifiers and backpropagation through convolutional networks and transfer learning. Hands-on NumPy and Colab assignments cover image classification, batch norm, dropout, network visualisation and image captioning."
+      },
+      "tags": ["CNN", "Backpropagation", "TransferLearning"]
+    },
+    {
+      "id": "cnn-explainer",
+      "url": "https://poloclub.github.io/cnn-explainer/",
+      "kind": "interactive",
+      "addedOn": "2026-10-28",
+      "source": "Polo Club, Georgia Tech",
+      "title": {
+        "vi": "CNN Explainer: xem mạng tích chập hoạt động ngay trên trình duyệt",
+        "en": "CNN Explainer: watch a convolutional network work in your browser"
+      },
+      "summary": {
+        "vi": "Công cụ trực quan tương tác cho thấy một CNN nhỏ biến ảnh đầu vào thành dự đoán như thế nào. Bấm vào từng lớp để xem phép tích chập, ReLU, pooling và softmax tính trên dữ liệu thật, rất hợp để bắt đầu học hoặc để giảng dạy.",
+        "en": "An interactive visualisation showing how a small CNN turns an input image into a prediction. Click any layer to see convolution, ReLU, pooling and softmax computed on real data; a good starting point for learners and for teaching."
+      },
+      "tags": ["CNN", "Visualization"]
+    },
+    {
+      "id": "distill-feature-visualization",
+      "url": "https://distill.pub/2017/feature-visualization/",
+      "kind": "article",
+      "addedOn": "2026-10-28",
+      "source": "Distill",
+      "title": {
+        "vi": "Feature Visualization: mạng nơ-ron thật sự \"nhìn\" thấy gì?",
+        "en": "Feature Visualization: what does a neural network actually see?"
+      },
+      "summary": {
+        "vi": "Bài của Chris Olah, Alexander Mordvintsev và Ludwig Schubert (Distill, 2017) tối ưu ảnh đầu vào để kích hoạt mạnh từng nơ-ron hay kênh của GoogLeNet, qua đó lộ ra những gì mạng đã học. Bài giải thích vì sao việc này khó và các kỹ thuật như regularization, preconditioning và diversity giúp ảnh dễ hiểu hơn.",
+        "en": "Chris Olah, Alexander Mordvintsev and Ludwig Schubert (Distill, 2017) optimise input images to strongly activate individual neurons or channels of GoogLeNet, revealing what the network has learned. The article explains why this is hard and how regularisation, preconditioning and diversity terms make the images interpretable."
+      },
+      "tags": ["Interpretability", "CNN", "Visualization"]
+    },
+    {
+      "id": "what-are-diffusion-models",
+      "url": "https://lilianweng.github.io/posts/2021-07-11-diffusion-models/",
+      "kind": "article",
+      "addedOn": "2026-10-28",
+      "source": "Lil'Log (Lilian Weng)",
+      "title": {
+        "vi": "What are Diffusion Models? Bài tổng quan về mô hình khuếch tán",
+        "en": "What are Diffusion Models? An overview of diffusion models"
+      },
+      "summary": {
+        "vi": "Lilian Weng giải thích quá trình thêm nhiễu và học cách khử nhiễu để sinh ảnh từ nhiễu thuần, kèm đầy đủ công thức. Bài được cập nhật dần với guidance có và không có classifier, lấy mẫu nhanh (DDIM, distillation, consistency model), mô hình ẩn và các kiến trúc U-Net, Transformer.",
+        "en": "Lilian Weng explains how adding noise and learning to remove it lets a model generate images from pure noise, with the full derivations. The post has grown to cover classifier and classifier-free guidance, fast sampling (DDIM, distillation, consistency models), latent models and U-Net and Transformer backbones."
+      },
+      "tags": ["Diffusion", "GenerativeModels"]
+    },
+    {
+      "id": "roboflow-supervision",
+      "url": "https://github.com/roboflow/supervision",
+      "kind": "code",
+      "addedOn": "2026-10-28",
+      "source": "Roboflow",
+      "title": {
+        "vi": "supervision: bộ công cụ thị giác máy tính dùng lại được của Roboflow",
+        "en": "supervision: Roboflow's reusable computer vision tools"
+      },
+      "summary": {
+        "vi": "Thư viện Python mã nguồn mở (MIT) nối với các mô hình phát hiện và phân đoạn phổ biến, có sẵn annotator để vẽ kết quả, công cụ tải, chia, gộp và chuyển định dạng bộ dữ liệu, cùng đếm đối tượng theo vùng theo thời gian thực. Tiết kiệm nhiều mã lặp lại khi làm demo hay sản phẩm.",
+        "en": "An open-source (MIT) Python library with connectors for popular detection and segmentation models, ready-made annotators for drawing results, tools to load, split, merge and convert datasets, and real-time zone-based counting. It saves a lot of boilerplate when building demos or products."
+      },
+      "tags": ["ObjectDetection", "Tracking", "Python"]
+    }
+  ]
+}

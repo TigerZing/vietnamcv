@@ -100,6 +100,13 @@ Moderation has no UI yet. Locally, use the API docs with the `X-Dev-Principal: m
 header: `GET /api/v1/admin/comments` lists held comments and
 `POST /api/v1/admin/comments/{id}/moderate` publishes or hides one.
 
+### Discover picks
+
+The Discover tab (<http://localhost:3000/vi/discover>) lists links from the owner's
+`Khám phá CV` Google Sheet. Claude syncs the approved rows into
+`apps/web/src/content/discover.json` in a pull request (ADR-016); after merging, run
+`scripts/run.sh update`.
+
 ## Quality checks
 
 ```bash

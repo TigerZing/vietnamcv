@@ -17,6 +17,7 @@
 | [013](013-demo-watch-page-and-comments.md) | Demo watch page, descriptions and comments | Accepted; playback of videos superseded by 014 |
 | [014](014-self-hosted-demo-videos.md) | Self-hosted demo videos | Accepted |
 | [015](015-admin-dashboard-and-deletion.md) | Admin dashboard with password sign-in, and deleting content | Accepted |
+| [016](016-discover-picks-from-sheet.md) | Discover picks from the owner's Google Sheet | Accepted |
 
 New ADRs copy the structure below: Context, Decision, Consequences. An ADR that changes a
 spec says which spec section it overrides.
