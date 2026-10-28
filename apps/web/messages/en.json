@@ -159,6 +159,28 @@
     "emptyTitle": "No demo products yet",
     "emptyBody": "Demo products will appear here once they are added."
   },
+  "Discover": {
+    "title": "Discover",
+    "lead": "Hand-picked computer vision gems: articles, courses, books, interactive tools, code and more. Every pick links to its source.",
+    "listLabel": "Discover picks",
+    "filterLabel": "Filter by kind",
+    "all": "All ({count})",
+    "tags": "Tags",
+    "opensNewTab": "(opens in a new tab)",
+    "emptyTitle": "Nothing here yet",
+    "emptyBody": "Great articles, tools and resources will appear here once they are added.",
+    "kinds": {
+      "article": "Article",
+      "video": "Video",
+      "course": "Course",
+      "book": "Book",
+      "interactive": "Interactive tool",
+      "code": "Code",
+      "dataset": "Dataset",
+      "demo": "Demo",
+      "other": "Other"
+    }
+  },
   "Roadmap": {
     "title": "The history of computer vision, 1957 to today",
     "lead": "A timeline from the first digital image to today's foundation models. Every milestone links to the original work so you can read further.",

@@ -159,6 +159,28 @@
     "emptyTitle": "Chưa có sản phẩm demo",
     "emptyBody": "Các sản phẩm demo sẽ xuất hiện ở đây khi được thêm vào."
   },
+  "Discover": {
+    "title": "Khám phá",
+    "lead": "Những thứ hay ho về thị giác máy tính được chọn lọc: bài viết, khóa học, sách, công cụ tương tác, mã nguồn và hơn thế nữa. Mỗi mục dẫn về trang gốc.",
+    "listLabel": "Danh sách mục khám phá",
+    "filterLabel": "Lọc theo loại",
+    "all": "Tất cả ({count})",
+    "tags": "Thẻ",
+    "opensNewTab": "(mở thẻ mới)",
+    "emptyTitle": "Chưa có mục nào",
+    "emptyBody": "Các bài viết, công cụ và tài liệu hay sẽ xuất hiện ở đây khi được thêm vào.",
+    "kinds": {
+      "article": "Bài viết",
+      "video": "Video",
+      "course": "Khóa học",
+      "book": "Sách",
+      "interactive": "Công cụ tương tác",
+      "code": "Mã nguồn",
+      "dataset": "Bộ dữ liệu",
+      "demo": "Demo",
+      "other": "Khác"
+    }
+  },
   "Roadmap": {
     "title": "Lịch sử Computer Vision, từ 1957 đến nay",
     "lead": "Timeline từ bức ảnh số đầu tiên đến các foundation model hôm nay. Mỗi mốc đều dẫn về paper gốc để bạn đọc sâu hơn.",
