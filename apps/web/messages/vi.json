@@ -162,11 +162,6 @@
   "Roadmap": {
     "title": "Lịch sử Computer Vision, từ 1957 đến nay",
     "lead": "Timeline từ bức ảnh số đầu tiên đến các foundation model hôm nay. Mỗi mốc đều dẫn về paper gốc để bạn đọc sâu hơn.",
-    "stats": {
-      "milestones": "{count} mốc lịch sử",
-      "eras": "{count} thời kỳ",
-      "span": "{from}–{to}"
-    },
     "hero": {
       "label": "Bài toán cốt lõi: từ pixel tới semantics",
       "steps": {
