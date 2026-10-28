@@ -204,8 +204,8 @@
         "major": "Major milestones ({count})",
         "all": "All milestones ({count})"
       },
-      "label": "Filter by topic",
-      "all": "All",
+      "label": "Topic",
+      "all": "All topics",
       "showing": "{count, plural, one {Showing # milestone} other {Showing # milestones}}",
       "empty": "No milestones in this era for the selected topic."
     },

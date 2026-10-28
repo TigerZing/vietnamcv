@@ -204,8 +204,8 @@
         "major": "Mốc chính ({count})",
         "all": "Tất cả các mốc ({count})"
       },
-      "label": "Lọc theo chủ đề",
-      "all": "Tất cả",
+      "label": "Chủ đề",
+      "all": "Tất cả chủ đề",
       "showing": "{count, plural, other {Đang hiển thị # mốc}}",
       "empty": "Thời kỳ này chưa có mốc thuộc chủ đề đã chọn."
     },

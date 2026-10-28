@@ -115,19 +115,16 @@ test.describe("roadmap", () => {
 
   test("filters milestones by topic", async ({ page }) => {
     await page.goto("/vi/roadmap");
-    const filter = page.getByRole("region", { name: "Lọc theo chủ đề" });
-    const detection = filter.getByRole("button", { name: "Object detection" });
-    await detection.click();
-    await expect(detection).toHaveAttribute("aria-pressed", "true");
+    const topic = page.getByRole("combobox", { name: "Chủ đề" });
+    await topic.selectOption({ label: "Object detection" });
     await expect(
       page.getByRole("heading", { name: "Faster R-CNN" }),
     ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Canny edge detector" }),
     ).toBeHidden();
-    // A second press on the same topic shows everything again.
-    await detection.click();
-    await expect(detection).toHaveAttribute("aria-pressed", "false");
+    // Choosing every topic again shows everything.
+    await topic.selectOption({ label: "Tất cả chủ đề" });
     await expect(
       page.getByRole("heading", { name: "Canny edge detector" }),
     ).toBeVisible();

@@ -3,6 +3,7 @@
 import {
   ArrowUpRight,
   Box,
+  ChevronDown,
   Database,
   Film,
   Layers,
@@ -135,13 +136,16 @@ export function RoadmapTimeline({
 
   return (
     <div className="flex flex-col gap-6">
-      <ScopeToggle selected={scope} onSelect={setScope} counts={counts} />
-      <TopicFilter
-        topics={topics}
-        selected={topic}
-        onSelect={setTopic}
-        status={t("filter.showing", { count: visibleCount })}
-      />
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+        <ScopeToggle selected={scope} onSelect={setScope} counts={counts} />
+        <TopicFilter topics={topics} selected={topic} onSelect={setTopic} />
+        <p
+          aria-live="polite"
+          className="text-sm text-muted-foreground sm:ml-auto"
+        >
+          {t("filter.showing", { count: visibleCount })}
+        </p>
+      </div>
       <EraJumpBar eras={eras} currentEra={currentEra} labels={labels} />
       <ol aria-label={labels.timeline} className="flex flex-col gap-12">
         {visibleEras.map((era, index) => (
@@ -178,11 +182,8 @@ function ScopeToggle({
   ];
 
   return (
-    <section
-      aria-labelledby="roadmap-scope-label"
-      className="flex flex-wrap items-center gap-3"
-    >
-      <h2 id="roadmap-scope-label" className="text-sm font-semibold">
+    <section aria-labelledby="roadmap-scope-label">
+      <h2 id="roadmap-scope-label" className="sr-only">
         {t("label")}
       </h2>
       <ul className="inline-flex rounded-full border border-border bg-surface p-1">
@@ -212,69 +213,50 @@ function ScopeToggle({
   );
 }
 
-/** Narrows the timeline to one topic; a second press on the same chip clears it. */
+/** Narrows the timeline to one topic, or shows every topic. */
 function TopicFilter({
   topics,
   selected,
   onSelect,
-  status,
 }: {
   topics: readonly TimelineTopic[];
   selected: MilestoneTopic | null;
   onSelect: (topic: MilestoneTopic | null) => void;
-  status: string;
 }) {
   const t = useTranslations("Roadmap.filter");
-  const chip =
-    "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors";
-  const idle =
-    "border-border text-muted-foreground hover:bg-surface-muted hover:text-foreground";
-  const active = "border-accent bg-accent-soft text-foreground";
+  const Icon = selected ? TOPIC_ICONS[selected] : Layers;
 
   return (
-    <section
-      aria-labelledby="roadmap-filter-label"
-      className="flex flex-col gap-3"
-    >
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 id="roadmap-filter-label" className="text-sm font-semibold">
-          {t("label")}
-        </h2>
-        <p aria-live="polite" className="text-sm text-muted-foreground">
-          {status}
-        </p>
-      </div>
-      <ul className="flex flex-wrap gap-2">
-        <li>
-          <button
-            type="button"
-            aria-pressed={selected === null}
-            onClick={() => onSelect(null)}
-            className={cn(chip, selected === null ? active : idle)}
-          >
-            <Layers aria-hidden className="size-4" />
-            {t("all")}
-          </button>
-        </li>
-        {topics.map((topic) => {
-          const Icon = TOPIC_ICONS[topic.id];
-          const pressed = selected === topic.id;
-          return (
-            <li key={topic.id}>
-              <button
-                type="button"
-                aria-pressed={pressed}
-                onClick={() => onSelect(pressed ? null : topic.id)}
-                className={cn(chip, pressed ? active : idle)}
-              >
-                <Icon aria-hidden className="size-4" />
-                {topic.label}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    </section>
+    <label className="relative inline-flex items-center gap-2 text-sm">
+      <span className="font-medium">{t("label")}</span>
+      <span className="relative inline-flex items-center">
+        <Icon
+          aria-hidden
+          className="pointer-events-none absolute left-3 size-4 text-muted-foreground"
+        />
+        <select
+          value={selected ?? ""}
+          onChange={(event) =>
+            onSelect((event.target.value || null) as MilestoneTopic | null)
+          }
+          className={cn(
+            "appearance-none rounded-full border bg-surface py-1.5 pr-8 pl-9 text-sm transition-colors hover:bg-surface-muted",
+            selected ? "border-accent bg-accent-soft" : "border-border",
+          )}
+        >
+          <option value="">{t("all")}</option>
+          {topics.map((topic) => (
+            <option key={topic.id} value={topic.id}>
+              {topic.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDown
+          aria-hidden
+          className="pointer-events-none absolute right-3 size-4 text-muted-foreground"
+        />
+      </span>
+    </label>
   );
 }
 
@@ -326,19 +308,20 @@ function EraJumpBar({
   return (
     <nav
       aria-label={labels.jump}
-      className="sticky top-16 z-30 -mx-4 border-y border-border bg-surface/95 px-4 py-2 backdrop-blur"
+      className="sticky top-16 z-30 -mx-4 border-y border-border bg-surface/95 px-4 py-1.5 backdrop-blur"
     >
-      <ul className="flex snap-x gap-2 overflow-x-auto pb-1 xl:flex-wrap xl:overflow-visible">
+      <ul className="relative flex snap-x gap-1.5 overflow-x-auto">
         {eras.map((era) => {
           const active = era.id === currentEra;
           return (
             <li key={era.id} className="snap-start">
               <a
                 href={`#${eraSectionId(era.id)}`}
+                title={era.name}
                 style={eraStyle(era.id)}
                 aria-current={active ? "true" : undefined}
                 className={cn(
-                  "flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm whitespace-nowrap transition-colors",
+                  "flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs whitespace-nowrap tabular-nums transition-colors",
                   active
                     ? "border-[var(--era)] bg-surface-muted text-foreground"
                     : "border-border text-muted-foreground hover:bg-surface-muted hover:text-foreground",
@@ -348,10 +331,10 @@ function EraJumpBar({
                   aria-hidden
                   className="size-2 shrink-0 rounded-full bg-[var(--era)]"
                 />
-                <span className="font-medium">{era.name}</span>
-                <span className="text-xs text-muted-foreground tabular-nums">
-                  {era.period}
-                </span>
+                {/* Only the years are shown to keep the bar on one line; the name is still
+                    the link's accessible name and its tooltip. */}
+                <span className="sr-only">{era.name}</span>
+                <span className="font-medium">{era.period}</span>
                 {active ? (
                   <span className="sr-only">{labels.current}</span>
                 ) : null}
