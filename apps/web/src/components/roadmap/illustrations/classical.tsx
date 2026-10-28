@@ -15,6 +15,8 @@ import {
   pulse,
   rand,
   ramp,
+  Scene,
+  SceneObjectShape,
   SOFT,
   step,
   TAU,
@@ -363,6 +365,186 @@ export const wireframe: Illustration = {
   },
 };
 
+/** Any signal is a sum of waves; keeping the strongest frequencies keeps the picture. */
+export const fourier: Illustration = {
+  duration: 5000,
+  still: 0.85,
+  render: (p) => {
+    const terms = 1 + Math.min(3, Math.floor(ramp(p, 0, 0.8) * 4));
+    const shift = p * TAU;
+    const wave = (n: number, x: number) =>
+      Math.sin(n * ((x / 120) * TAU * 1.5 + shift)) / n;
+    const path = (fn: (x: number) => number, y0: number, amp: number) =>
+      Array.from({ length: 61 }, (_, index) => {
+        const x = index * 2;
+        return `${index === 0 ? "M" : "L"}${14 + x} ${y0 - fn(x) * amp}`;
+      }).join(" ");
+    const sum = (x: number) => {
+      let total = 0;
+      for (let k = 0; k < terms; k++) total += wave(2 * k + 1, x);
+      return total;
+    };
+    const square = (x: number) =>
+      Math.sign(Math.sin((x / 120) * TAU * 1.5 + shift)) * (Math.PI / 4);
+    return (
+      <g>
+        <Panel x={8} y={10} w={132} h={56} fill={PAPER} />
+        <path
+          d={path(square, 38, 22)}
+          fill="none"
+          stroke={LINE}
+          strokeWidth={2}
+        />
+        <path
+          d={path(sum, 38, 22)}
+          fill="none"
+          stroke={ERA}
+          strokeWidth={2.2}
+        />
+        {Array.from({ length: 4 }, (_, k) => (
+          <path
+            key={k}
+            d={path((x) => wave(2 * k + 1, x), 84 + k * 16, 14)}
+            fill="none"
+            stroke={k < terms ? ACCENT : LINE}
+            strokeWidth={1.4}
+            opacity={k < terms ? 0.9 : 0.5}
+          />
+        ))}
+        <Panel x={158} y={10} w={74} h={130} fill={PAPER} />
+        {Array.from({ length: 6 }, (_, k) => {
+          const height = (100 / (2 * k + 1)) * (k < terms ? 1 : 0.12);
+          return (
+            <rect
+              key={k}
+              x={166 + k * 11}
+              y={130 - height}
+              width={8}
+              height={height}
+              rx={2}
+              fill={k < terms ? ERA : MUTED}
+              opacity={k < terms ? 1 : 0.35}
+            />
+          );
+        })}
+      </g>
+    );
+  },
+};
+
+/**
+ * How bright a surface looks reveals which way it faces, and so its shape. The sphere is a
+ * fixed grey in both themes so that "bright" always means "facing the light".
+ */
+export const shading: Illustration = {
+  duration: 5000,
+  still: 0.3,
+  render: (p, uid) => {
+    const angle = p * TAU;
+    const lx = Math.cos(angle);
+    const ly = Math.sin(angle) * 0.6 - 0.3;
+    return (
+      <g>
+        <defs>
+          <radialGradient
+            id={`${uid}-light`}
+            cx={0.5 + lx * 0.3}
+            cy={0.5 + ly * 0.3}
+            r={0.75}
+          >
+            <stop offset="0" stopColor="#f8fafc" />
+            <stop offset="0.55" stopColor="#94a3b8" />
+            <stop offset="1" stopColor="#1e293b" />
+          </radialGradient>
+        </defs>
+        <Panel x={30} y={8} w={180} h={134} fill={SOFT} />
+        <circle cx={120} cy={78} r={44} fill={`url(#${uid}-light)`} />
+        {[-0.6, 0, 0.6].flatMap((u) =>
+          [-0.6, 0, 0.6].map((v) => {
+            const nz = Math.sqrt(Math.max(0, 1 - u * u - v * v));
+            return (
+              <Arrow
+                key={`${u}${v}`}
+                x1={120 + u * 44}
+                y1={78 + v * 44}
+                x2={120 + u * 44 + u * 16}
+                y2={78 + v * 44 + v * 16 - (1 - nz) * 2}
+                color={ERA}
+                width={1.4}
+              />
+            );
+          }),
+        )}
+        <circle cx={120 + lx * 78} cy={74 + ly * 70} r={7} fill={HUES[4]} />
+      </g>
+    );
+  },
+};
+
+/** A histogram of brightness; the threshold slides to the valley between the two peaks. */
+export const histogramThreshold: Illustration = {
+  duration: 5000,
+  still: 0.9,
+  render: (p) => {
+    const grid = 8;
+    const values = Array.from({ length: grid * grid }, (_, index) => {
+      const row = Math.floor(index / grid);
+      const col = index % grid;
+      const object = (col - 3.5) ** 2 + (row - 3.5) ** 2 < 7.5;
+      return clampValue((object ? 0.78 : 0.24) + (rand(index) - 0.5) * 0.3);
+    });
+    const threshold = lerp(0.12, 0.5, step(p, 0.08, 0.6));
+    const binary = step(p, 0.62, 0.7);
+    const bins = Array.from({ length: 12 }, () => 0);
+    for (const value of values)
+      bins[Math.min(11, Math.floor(value * 12))]! += 1;
+    return (
+      <g>
+        {values.map((value, index) => {
+          const above = value > threshold;
+          return (
+            <rect
+              key={index}
+              x={14 + (index % grid) * 13}
+              y={22 + Math.floor(index / grid) * 13}
+              width={12}
+              height={12}
+              rx={1.5}
+              fill={above && binary > 0.5 ? ERA : INK}
+              opacity={lerp(value * 0.9 + 0.05, above ? 1 : 0.06, binary)}
+            />
+          );
+        })}
+        <Panel x={128} y={22} w={104} h={104} fill={PAPER} />
+        {bins.map((count, index) => (
+          <rect
+            key={index}
+            x={134 + index * 8}
+            y={118 - count * 4}
+            width={6}
+            height={count * 4}
+            rx={1}
+            fill={(index + 0.5) / 12 > threshold ? ERA : MUTED}
+          />
+        ))}
+        <line
+          x1={134 + threshold * 96}
+          y1={30}
+          x2={134 + threshold * 96}
+          y2={120}
+          stroke={INK}
+          strokeWidth={2}
+          strokeDasharray="4 3"
+        />
+      </g>
+    );
+  },
+};
+
+function clampValue(value: number) {
+  return Math.min(1, Math.max(0, value));
+}
+
 /** A filter sweeps across the image and keeps only where brightness changes sharply. */
 export const edgeDetect: Illustration = {
   still: 0.55,
@@ -420,6 +602,73 @@ export const edgeDetect: Illustration = {
             )),
           )}
         </g>
+      </g>
+    );
+  },
+};
+
+/** The same image is blurred more and more; each blob is found at the scale that fits it. */
+export const scaleSpace: Illustration = {
+  duration: 5000,
+  still: 0.5,
+  render: (p, uid) => {
+    const levels = [0, 1.5, 3, 5];
+    const active = Math.min(3, Math.floor(p * 4));
+    const blobs = [
+      { x: 22, y: 26, r: 5, level: 0 },
+      { x: 62, y: 30, r: 9, level: 1 },
+      { x: 40, y: 58, r: 13, level: 2 },
+    ];
+    return (
+      <g>
+        <defs>
+          {levels.map((blur, index) => (
+            <filter key={index} id={`${uid}-blur${index}`}>
+              <feGaussianBlur stdDeviation={blur} />
+            </filter>
+          ))}
+        </defs>
+        {levels.map((_, index) => {
+          const x = 14 + index * 52;
+          const y = 26 + index * 6;
+          const scale = 1 - index * 0.1;
+          return (
+            <g key={index} transform={`translate(${x} ${y}) scale(${scale})`}>
+              <rect
+                width={88}
+                height={88}
+                rx={6}
+                fill={PAPER}
+                stroke={index === active ? ERA : LINE}
+                strokeWidth={index === active ? 2.5 : 1}
+              />
+              <g filter={`url(#${uid}-blur${index})`}>
+                {blobs.map((blob) => (
+                  <circle
+                    key={blob.x}
+                    cx={blob.x}
+                    cy={blob.y}
+                    r={blob.r}
+                    fill={INK}
+                  />
+                ))}
+              </g>
+              {blobs
+                .filter((blob) => blob.level === index && index === active)
+                .map((blob) => (
+                  <circle
+                    key={blob.x}
+                    cx={blob.x}
+                    cy={blob.y}
+                    r={blob.r + 6}
+                    fill="none"
+                    stroke={ERA}
+                    strokeWidth={2.5}
+                  />
+                ))}
+            </g>
+          );
+        })}
       </g>
     );
   },
@@ -543,6 +792,212 @@ export const ransac: Illustration = {
   },
 };
 
+/** Two cameras see the same point; tracing both rays back recovers where it is in 3D. */
+export const twoView: Illustration = {
+  duration: 5000,
+  still: 0.3,
+  render: (p) => {
+    const point = {
+      x: 120 + Math.sin(p * TAU) * 40,
+      y: 52 + Math.cos(p * TAU * 2) * 12,
+    };
+    const cameras = [
+      { x: 44, y: 124, angle: -0.95 },
+      { x: 196, y: 124, angle: -2.2 },
+    ];
+    return (
+      <g>
+        <line
+          x1={44}
+          y1={124}
+          x2={196}
+          y2={124}
+          stroke={LINE}
+          strokeDasharray="4 4"
+          strokeWidth={1.5}
+        />
+        {cameras.map((camera, index) => {
+          const plane = 26;
+          const dx = Math.cos(camera.angle);
+          const dy = Math.sin(camera.angle);
+          const px = camera.x + dx * plane;
+          const py = camera.y + dy * plane;
+          // Where the ray to the point crosses the image plane.
+          const rx = point.x - camera.x;
+          const ry = point.y - camera.y;
+          const along = (rx * dx + ry * dy) / plane;
+          const hit = { x: camera.x + rx / along, y: camera.y + ry / along };
+          return (
+            <g key={index}>
+              <line
+                x1={px - dy * 18}
+                y1={py + dx * 18}
+                x2={px + dy * 18}
+                y2={py - dx * 18}
+                stroke={INK}
+                strokeWidth={2.5}
+                strokeLinecap="round"
+              />
+              <line
+                x1={camera.x}
+                y1={camera.y}
+                x2={point.x}
+                y2={point.y}
+                stroke={ERA}
+                strokeWidth={1.5}
+                opacity={0.8}
+              />
+              <circle cx={hit.x} cy={hit.y} r={3} fill={ACCENT} />
+              <g
+                transform={`translate(${camera.x} ${camera.y}) rotate(${(camera.angle * 180) / Math.PI})`}
+              >
+                <path d="M4 0 L-10 -8 L-10 8 Z" fill={INK} />
+              </g>
+            </g>
+          );
+        })}
+        <circle cx={point.x} cy={point.y} r={6} fill={ERA} />
+        <circle
+          cx={point.x}
+          cy={point.y}
+          r={11}
+          fill="none"
+          stroke={ERA}
+          opacity={0.4}
+        />
+      </g>
+    );
+  },
+};
+
+/** Photos of a printed checkerboard from several angles pin down the camera's lens. */
+export const calibration: Illustration = {
+  duration: 6000,
+  still: 0.3,
+  render: (p) => {
+    const poses = [
+      [
+        [60, 30],
+        [170, 40],
+        [176, 118],
+        [52, 112],
+      ],
+      [
+        [82, 22],
+        [184, 34],
+        [160, 124],
+        [70, 112],
+      ],
+      [
+        [48, 40],
+        [152, 20],
+        [170, 104],
+        [62, 128],
+      ],
+    ] as const;
+    const phase = (p * 3) % 1;
+    const index = Math.floor(p * 3) % 3;
+    const from = poses[index]!;
+    const to = poses[(index + 1) % 3]!;
+    const move = step(phase, 0.75, 1);
+    const corners = from.map(([x, y], i) => [
+      lerp(x, to[i]![0], move),
+      lerp(y, to[i]![1], move),
+    ]);
+    const at = (u: number, v: number) => {
+      const [a, b, c, d] = corners as [number[], number[], number[], number[]];
+      const top = [lerp(a[0]!, b[0]!, u), lerp(a[1]!, b[1]!, u)];
+      const bottom = [lerp(d[0]!, c[0]!, u), lerp(d[1]!, c[1]!, u)];
+      return [
+        lerp(top[0]!, bottom[0]!, v),
+        lerp(top[1]!, bottom[1]!, v),
+      ] as const;
+    };
+    const cols = 6;
+    const rows = 5;
+    const found = ramp(phase, 0.15, 0.6) * (1 - step(phase, 0.72, 0.76));
+    return (
+      <g>
+        <Panel x={20} y={8} w={200} h={134} fill={PAPER} />
+        {Array.from({ length: cols * rows }, (_, cell) => {
+          const u = cell % cols;
+          const v = Math.floor(cell / cols);
+          const quad = [
+            at(u / cols, v / rows),
+            at((u + 1) / cols, v / rows),
+            at((u + 1) / cols, (v + 1) / rows),
+            at(u / cols, (v + 1) / rows),
+          ];
+          return (
+            <polygon
+              key={cell}
+              points={quad.map(([x, y]) => `${x},${y}`).join(" ")}
+              fill={(u + v) % 2 === 0 ? INK : SOFT}
+              opacity={0.85}
+            />
+          );
+        })}
+        {Array.from({ length: (cols - 1) * (rows - 1) }, (_, corner) => {
+          const u = (corner % (cols - 1)) + 1;
+          const v = Math.floor(corner / (cols - 1)) + 1;
+          const [x, y] = at(u / cols, v / rows);
+          return (
+            <circle
+              key={corner}
+              cx={x}
+              cy={y}
+              r={3}
+              fill={ERA}
+              stroke={PAPER}
+              strokeWidth={1}
+              opacity={corner / 16 < found ? 1 : 0}
+            />
+          );
+        })}
+      </g>
+    );
+  },
+};
+
+/** A flexible curve is pulled onto the object's boundary by image forces. */
+export const snake: Illustration = {
+  still: 0.75,
+  render: (p) => {
+    const shape = (theta: number) =>
+      34 + Math.sin(theta * 3) * 8 + Math.cos(theta * 2) * 5;
+    const fit = step(p, 0.1, 0.75);
+    const path = (radius: (theta: number) => number) =>
+      Array.from({ length: 73 }, (_, index) => {
+        const theta = (index / 72) * TAU;
+        const r = radius(theta);
+        return `${index === 0 ? "M" : "L"}${120 + Math.cos(theta) * r} ${76 + Math.sin(theta) * r}`;
+      }).join(" ") + " Z";
+    const contour = (theta: number) => lerp(62, shape(theta) + 1.5, fit);
+    return (
+      <g>
+        <Panel x={30} y={8} w={180} h={136} />
+        <path d={path(shape)} fill={MUTED} opacity={0.75} />
+        <path d={path(contour)} fill="none" stroke={ERA} strokeWidth={2.4} />
+        {Array.from({ length: 16 }, (_, index) => {
+          const theta = (index / 16) * TAU;
+          const r = contour(theta);
+          return (
+            <circle
+              key={index}
+              cx={120 + Math.cos(theta) * r}
+              cy={76 + Math.sin(theta) * r}
+              r={3}
+              fill={PAPER}
+              stroke={ERA}
+              strokeWidth={1.8}
+            />
+          );
+        })}
+      </g>
+    );
+  },
+};
+
 /** Distinctive points are found in two views of an object and matched across them. */
 export const keypoints: Illustration = {
   duration: 5000,
@@ -621,6 +1076,101 @@ export const keypoints: Illustration = {
                 />
               ) : null}
             </g>
+          );
+        })}
+      </g>
+    );
+  },
+};
+
+/** Each neighbour is compared with the centre pixel; the bits form a texture code. */
+export const lbp: Illustration = {
+  duration: 5000,
+  still: 0.85,
+  render: (p) => {
+    const values = [6, 8, 3, 9, 5, 2, 7, 4, 1];
+    const ring = [0, 1, 2, 5, 8, 7, 6, 3];
+    const done = Math.floor(ramp(p, 0.05, 0.75) * 8);
+    const bits = ring.map((cell) => (values[cell]! >= values[4]! ? 1 : 0));
+    return (
+      <g>
+        {values.map((value, index) => {
+          const x = 24 + (index % 3) * 30;
+          const y = 24 + Math.floor(index / 3) * 30;
+          const order = ring.indexOf(index);
+          const checked = order !== -1 && order < done;
+          const current = order === done;
+          return (
+            <g key={index}>
+              <rect
+                x={x}
+                y={y}
+                width={28}
+                height={28}
+                rx={4}
+                fill={
+                  index === 4
+                    ? ERA
+                    : checked
+                      ? bits[order]
+                        ? ACCENT
+                        : SOFT
+                      : PAPER
+                }
+                opacity={index === 4 ? 0.35 : 1}
+                stroke={current ? INK : LINE}
+                strokeWidth={current ? 2 : 1}
+              />
+              <text
+                x={x + 14}
+                y={y + 19}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill={INK}
+              >
+                {value}
+              </text>
+            </g>
+          );
+        })}
+        <Arrow x1={122} y1={69} x2={138} y2={69} />
+        {bits.map((bit, index) => (
+          <g key={index} opacity={index < done ? 1 : 0.2}>
+            <rect
+              x={144 + index * 11}
+              y={58}
+              width={10}
+              height={22}
+              rx={2}
+              fill={bit ? ACCENT : SOFT}
+              stroke={LINE}
+            />
+            <text
+              x={149 + index * 11}
+              y={73}
+              textAnchor="middle"
+              fontSize={10}
+              fontWeight={600}
+              fill={INK}
+            >
+              {bit}
+            </text>
+          </g>
+        ))}
+        {Array.from({ length: 8 }, (_, index) => {
+          const height =
+            [10, 24, 6, 30, 14, 8, 20, 12][index]! * step(p, 0.78, 0.95);
+          return (
+            <rect
+              key={index}
+              x={146 + index * 10}
+              y={130 - height}
+              width={8}
+              height={height}
+              rx={1.5}
+              fill={ERA}
+            />
           );
         })}
       </g>
@@ -803,6 +1353,273 @@ export const svmMargin: Illustration = {
   },
 };
 
+/** Noise is smoothed away, but only among similar neighbours, so the edge stays sharp. */
+export const bilateral: Illustration = {
+  still: 0.95,
+  render: (p) => {
+    const xs = Array.from({ length: 41 }, (_, index) => index);
+    const clean = (i: number) => (i < 20 ? 100 : 48);
+    const noisy = (i: number) => clean(i) + (rand(i) - 0.5) * 22;
+    const blurred = (i: number) => {
+      let total = 0;
+      let weight = 0;
+      for (let k = -4; k <= 4; k++) {
+        const j = Math.min(40, Math.max(0, i + k));
+        const w = Math.exp(-(k * k) / 8);
+        total += noisy(j) * w;
+        weight += w;
+      }
+      return total / weight;
+    };
+    const edgeAware = (i: number) => {
+      let total = 0;
+      let weight = 0;
+      for (let k = -4; k <= 4; k++) {
+        const j = Math.min(40, Math.max(0, i + k));
+        const w =
+          Math.exp(-(k * k) / 8) *
+          Math.exp(-((noisy(j) - noisy(i)) ** 2) / 300);
+        total += noisy(j) * w;
+        weight += w;
+      }
+      return total / weight;
+    };
+    const sweep = Math.floor(step(p, 0.05, 0.85) * 40);
+    const path = (fn: (i: number) => number, until = 40) =>
+      xs
+        .slice(0, until + 1)
+        .map((i) => `${i === 0 ? "M" : "L"}${20 + i * 5} ${fn(i)}`)
+        .join(" ");
+    return (
+      <g>
+        <Panel x={12} y={20} w={216} h={110} fill={PAPER} />
+        <path d={path(noisy)} fill="none" stroke={MUTED} strokeWidth={1.2} />
+        <path
+          d={path(blurred, sweep)}
+          fill="none"
+          stroke={LINE}
+          strokeWidth={2.4}
+          strokeDasharray="4 3"
+        />
+        <path
+          d={path(edgeAware, sweep)}
+          fill="none"
+          stroke={ERA}
+          strokeWidth={2.6}
+        />
+        <rect
+          x={Math.max(20, 20 + (sweep - 4) * 5)}
+          y={24}
+          width={40}
+          height={102}
+          rx={4}
+          fill={ERA}
+          opacity={0.1}
+        />
+      </g>
+    );
+  },
+};
+
+/** A tracker keeps a cloud of guesses, re-weights them each frame and resamples. */
+export const particles: Illustration = {
+  duration: 5000,
+  still: 0.4,
+  render: (p) => {
+    const t = p * TAU;
+    const target = { x: 120 + Math.cos(t) * 70, y: 76 + Math.sin(t * 2) * 34 };
+    const frame = Math.floor(p * 40);
+    const spread = 8 + (1 - ((p * 40) % 1)) * 10;
+    return (
+      <g>
+        <Panel x={10} y={14} w={220} h={124} fill={PAPER} />
+        {Array.from({ length: 36 }, (_, index) => {
+          const back = index / 36;
+          const tt = t - back * 0.9;
+          return index % 4 === 0 ? (
+            <circle
+              key={`trail${index}`}
+              cx={120 + Math.cos(tt) * 70}
+              cy={76 + Math.sin(tt * 2) * 34}
+              r={1.4}
+              fill={MUTED}
+              opacity={1 - back}
+            />
+          ) : null;
+        })}
+        {Array.from({ length: 40 }, (_, index) => {
+          const angle = rand(index + frame * 41) * TAU;
+          const distance = Math.sqrt(rand(index * 7 + frame)) * spread;
+          const weight = 1 - distance / 18;
+          return (
+            <circle
+              key={index}
+              cx={target.x + Math.cos(angle) * distance}
+              cy={target.y + Math.sin(angle) * distance}
+              r={1.5 + weight * 2}
+              fill={ERA}
+              opacity={0.25 + weight * 0.6}
+            />
+          );
+        })}
+        <circle
+          cx={target.x}
+          cy={target.y}
+          r={6}
+          fill="none"
+          stroke={INK}
+          strokeWidth={2}
+        />
+      </g>
+    );
+  },
+};
+
+/** New texture is grown pixel by pixel by copying the best-matching neighbourhood. */
+export const textureGrow: Illustration = {
+  duration: 5000,
+  still: 0.85,
+  render: (p) => {
+    const tile = (x: number, y: number, key: string, size = 8) => (
+      <g key={key}>
+        <rect
+          x={x}
+          y={y}
+          width={size}
+          height={size}
+          fill={
+            (Math.floor(x / size) + Math.floor(y / size)) % 3 === 0 ? ERA : SOFT
+          }
+        />
+        <circle
+          cx={x + size / 2}
+          cy={y + size / 2}
+          r={size / 4}
+          fill={
+            (Math.floor(x / size) * 2 + Math.floor(y / size)) % 4 === 0
+              ? ACCENT
+              : MUTED
+          }
+          opacity={0.8}
+        />
+      </g>
+    );
+    const cols = 13;
+    const rows = 12;
+    const grown = Math.floor(ramp(p, 0.05, 0.85) * cols * rows);
+    return (
+      <g>
+        <rect
+          x={14}
+          y={45}
+          width={52}
+          height={52}
+          rx={4}
+          fill={PAPER}
+          stroke={LINE}
+        />
+        {Array.from({ length: 36 }, (_, index) =>
+          tile(
+            18 + (index % 6) * 8,
+            49 + Math.floor(index / 6) * 8,
+            `s${index}`,
+          ),
+        )}
+        <Arrow x1={74} y1={71} x2={92} y2={71} />
+        <rect
+          x={100}
+          y={18}
+          width={cols * 8 + 8}
+          height={rows * 8 + 8}
+          rx={4}
+          fill={PAPER}
+          stroke={LINE}
+        />
+        {Array.from({ length: Math.min(grown, cols * rows) }, (_, index) =>
+          tile(
+            104 + (index % cols) * 8,
+            22 + Math.floor(index / cols) * 8,
+            `g${index}`,
+          ),
+        )}
+        {grown < cols * rows ? (
+          <rect
+            x={104 + (grown % cols) * 8 - 8}
+            y={22 + Math.floor(grown / cols) * 8 - 8}
+            width={24}
+            height={24}
+            fill="none"
+            stroke={INK}
+            strokeWidth={1.5}
+          />
+        ) : null}
+      </g>
+    );
+  },
+};
+
+/** Pixels become a graph; the cut through the weakest links separates the object. */
+export const graphCut: Illustration = {
+  duration: 5000,
+  still: 0.9,
+  render: (p) => {
+    const cols = 8;
+    const rows = 5;
+    const inside = (c: number, r: number) =>
+      (c - 4.2) ** 2 / 7 + (r - 2) ** 2 / 3 < 1;
+    const cut = step(p, 0.35, 0.65);
+    const label = step(p, 0.65, 0.8);
+    const node = (c: number, r: number) => ({ x: 36 + c * 24, y: 28 + r * 24 });
+    const edges: { a: [number, number]; b: [number, number] }[] = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (c + 1 < cols) edges.push({ a: [c, r], b: [c + 1, r] });
+        if (r + 1 < rows) edges.push({ a: [c, r], b: [c, r + 1] });
+      }
+    }
+    return (
+      <g>
+        {edges.map(({ a, b }, index) => {
+          const crosses = inside(...a) !== inside(...b);
+          const from = node(...a);
+          const to = node(...b);
+          return (
+            <line
+              key={index}
+              x1={from.x}
+              y1={from.y}
+              x2={to.x}
+              y2={to.y}
+              stroke={crosses ? ACCENT : LINE}
+              strokeWidth={crosses ? 1.2 : 2.4}
+              opacity={crosses ? 1 - cut : 1}
+              strokeDasharray={crosses ? "2 2" : undefined}
+            />
+          );
+        })}
+        {Array.from({ length: cols * rows }, (_, index) => {
+          const c = index % cols;
+          const r = Math.floor(index / cols);
+          const { x, y } = node(c, r);
+          const fore = inside(c, r);
+          return (
+            <circle
+              key={index}
+              cx={x}
+              cy={y}
+              r={6}
+              fill={fore ? ERA : MUTED}
+              opacity={lerp(0.55, fore ? 1 : 0.35, label)}
+              stroke={PAPER}
+              strokeWidth={1.5}
+            />
+          );
+        })}
+      </g>
+    );
+  },
+};
+
 /** Faces are built from an average face plus a few weighted "eigenfaces". */
 export const eigenfaces: Illustration = {
   duration: 5000,
@@ -940,6 +1757,735 @@ export const slidingWindow: Illustration = {
           strokeWidth={2}
           strokeDasharray="4 3"
         />
+      </g>
+    );
+  },
+};
+
+/** Every point climbs uphill in density until it reaches the peak of its cluster. */
+export const meanShift: Illustration = {
+  duration: 5000,
+  still: 0.85,
+  render: (p) => {
+    const modes = [
+      { x: 70, y: 52 },
+      { x: 168, y: 46 },
+      { x: 120, y: 112 },
+    ];
+    const climb = step(p, 0.1, 0.8);
+    return (
+      <g>
+        <Panel x={12} y={10} w={216} h={132} fill={PAPER} />
+        {modes.map((mode, index) => (
+          <circle
+            key={index}
+            cx={mode.x}
+            cy={mode.y}
+            r={26}
+            fill={HUES[index]}
+            opacity={0.12 + climb * 0.1}
+          />
+        ))}
+        {Array.from({ length: 36 }, (_, index) => {
+          const mode = modes[index % 3]!;
+          const angle = rand(index) * TAU;
+          const distance = 8 + rand(index + 50) * 20;
+          const start = {
+            x: mode.x + Math.cos(angle) * distance,
+            y: mode.y + Math.sin(angle) * distance,
+          };
+          const pull = climb * (0.75 + rand(index + 9) * 0.25);
+          const x = lerp(start.x, mode.x, pull);
+          const y = lerp(start.y, mode.y, pull);
+          return (
+            <g key={index}>
+              <line
+                x1={start.x}
+                y1={start.y}
+                x2={x}
+                y2={y}
+                stroke={HUES[index % 3]}
+                strokeWidth={1}
+                opacity={0.5}
+              />
+              <circle
+                cx={x}
+                cy={y}
+                r={2.8}
+                fill={climb > 0.6 ? HUES[index % 3] : INK}
+              />
+            </g>
+          );
+        })}
+      </g>
+    );
+  },
+};
+
+/** An object is pasted by its gradients, so its colours blend into the new background. */
+export const seamlessBlend: Illustration = {
+  duration: 5000,
+  still: 0.9,
+  render: (p) => {
+    const drop = step(p, 0.05, 0.35);
+    const blend = step(p, 0.45, 0.8);
+    const x = lerp(30, 136, drop);
+    const y = lerp(30, 60, drop);
+    return (
+      <g>
+        <rect
+          x={86}
+          y={18}
+          width={142}
+          height={116}
+          rx={6}
+          fill={HUES[0]}
+          opacity={0.35}
+        />
+        <rect
+          x={86}
+          y={18}
+          width={142}
+          height={116}
+          rx={6}
+          fill="none"
+          stroke={LINE}
+        />
+        <rect
+          x={12}
+          y={18}
+          width={60}
+          height={60}
+          rx={6}
+          fill={SOFT}
+          stroke={LINE}
+        />
+        <rect
+          x={x - 22}
+          y={y - 22}
+          width={44}
+          height={44}
+          rx={4}
+          fill={lerp(1, 0, blend) > 0.5 ? PAPER : HUES[0]}
+          opacity={lerp(1, 0.0, blend) * (drop > 0 ? 1 : 0.7)}
+          stroke={drop > 0.95 ? INK : "none"}
+          strokeDasharray="3 3"
+        />
+        <path
+          d={`M${x - 12} ${y + 10} L${x} ${y - 14} L${x + 12} ${y + 10} Z`}
+          fill={HUES[1]}
+          opacity={lerp(1, 0.85, blend)}
+        />
+        <circle cx={x} cy={y + 2} r={4} fill={ERA} opacity={blend} />
+      </g>
+    );
+  },
+};
+
+/** Two images are compared window by window on light, contrast and structure. */
+export const ssimCompare: Illustration = {
+  duration: 5000,
+  still: 0.9,
+  render: (p, uid) => {
+    const cells = 5;
+    const reached = Math.floor(ramp(p, 0.05, 0.85) * cells * cells);
+    const score = (index: number) => {
+      const c = index % cells;
+      const r = Math.floor(index / cells);
+      return 1 - Math.exp(-(((c - 3) ** 2 + (r - 1.5) ** 2) / 3)) * 0.8;
+    };
+    return (
+      <g>
+        <defs>
+          <filter id={`${uid}-blur`}>
+            <feGaussianBlur stdDeviation={2.2} />
+          </filter>
+        </defs>
+        <rect
+          x={10}
+          y={30}
+          width={66}
+          height={66}
+          rx={5}
+          fill={SOFT}
+          stroke={LINE}
+        />
+        <path d="M18 88 L40 46 L62 88 Z" fill={INK} opacity={0.7} />
+        <circle cx={58} cy={46} r={8} fill={HUES[4]} />
+        <rect
+          x={86}
+          y={30}
+          width={66}
+          height={66}
+          rx={5}
+          fill={SOFT}
+          stroke={LINE}
+        />
+        <g filter={`url(#${uid}-blur)`}>
+          <path d="M94 88 L116 46 L138 88 Z" fill={INK} opacity={0.7} />
+          <circle cx={134} cy={46} r={8} fill={HUES[4]} />
+        </g>
+        {[10, 86].map((x) => (
+          <rect
+            key={x}
+            x={x + 2 + (reached % cells) * 12.4}
+            y={32 + Math.floor(Math.min(reached, 24) / cells) * 12.4}
+            width={14}
+            height={14}
+            fill="none"
+            stroke={ERA}
+            strokeWidth={2}
+          />
+        ))}
+        {Array.from({ length: cells * cells }, (_, index) => (
+          <rect
+            key={index}
+            x={166 + (index % cells) * 13}
+            y={30 + Math.floor(index / cells) * 13}
+            width={12}
+            height={12}
+            rx={1.5}
+            fill={ERA}
+            opacity={index < reached ? score(index) : 0.08}
+          />
+        ))}
+        <rect x={166} y={102} width={64} height={6} rx={3} fill={SOFT} />
+        <rect
+          x={166}
+          y={102}
+          width={64 * 0.78 * ramp(p, 0.05, 0.85)}
+          height={6}
+          rx={3}
+          fill={ERA}
+        />
+      </g>
+    );
+  },
+};
+
+/** Predict, then correct with a noisy measurement: the uncertainty grows, then shrinks. */
+export const kalman: Illustration = {
+  duration: 6000,
+  still: 0.62,
+  render: (p) => {
+    const count = 6;
+    const truth = (x: number) => 78 - Math.sin((x - 30) / 50) * 32;
+    const xs = Array.from({ length: count }, (_, index) => 36 + index * 34);
+    const measured = xs.map((x, index) => ({
+      x: x + (rand(index) - 0.5) * 10,
+      y: truth(x) + (rand(index + 20) - 0.5) * 28,
+    }));
+    const estimates = xs.map((x, index) => ({
+      x: lerp(x, measured[index]!.x, 0.4),
+      y: lerp(truth(x), measured[index]!.y, 0.4),
+    }));
+    const current = Math.min(count - 1, Math.floor(p * count));
+    const t = p * count - current;
+    const grow = step(t, 0.05, 0.35);
+    const seen = step(t, 0.4, 0.5);
+    const correct = step(t, 0.6, 0.85);
+    const predicted = { x: xs[current]!, y: truth(xs[current]!) };
+    const estimate = {
+      x: lerp(predicted.x, estimates[current]!.x, correct),
+      y: lerp(predicted.y, estimates[current]!.y, correct),
+    };
+    const radius = lerp(lerp(6, 17, grow), 6, correct);
+    const previous = estimates[current - 1];
+    const path = Array.from({ length: 50 }, (_, index) => {
+      const x = 18 + index * 4.2;
+      return `${index === 0 ? "M" : "L"}${x} ${truth(x)}`;
+    }).join(" ");
+    const target = measured[current]!;
+    return (
+      <g>
+        <Panel x={10} y={14} w={220} h={124} fill={PAPER} />
+        <path
+          d={path}
+          fill="none"
+          stroke={LINE}
+          strokeWidth={1.5}
+          strokeDasharray="4 4"
+        />
+        {estimates.slice(0, current).map((point, index) => (
+          <g key={index}>
+            <circle
+              cx={measured[index]!.x}
+              cy={measured[index]!.y}
+              r={2}
+              fill={MUTED}
+              opacity={0.6}
+            />
+            {index > 0 ? (
+              <line
+                x1={estimates[index - 1]!.x}
+                y1={estimates[index - 1]!.y}
+                x2={point.x}
+                y2={point.y}
+                stroke={ERA}
+                strokeWidth={1.5}
+              />
+            ) : null}
+            <circle cx={point.x} cy={point.y} r={3} fill={ERA} />
+          </g>
+        ))}
+        {previous ? (
+          <line
+            x1={previous.x}
+            y1={previous.y}
+            x2={estimate.x}
+            y2={estimate.y}
+            stroke={ERA}
+            strokeWidth={1.5}
+            strokeDasharray="3 3"
+            opacity={grow}
+          />
+        ) : null}
+        <ellipse
+          cx={estimate.x}
+          cy={estimate.y}
+          rx={radius}
+          ry={radius * 0.8}
+          fill={ERA}
+          fillOpacity={0.15}
+          stroke={ERA}
+          strokeWidth={1.2}
+        />
+        <g stroke={INK} strokeWidth={1.6} opacity={seen}>
+          <line
+            x1={target.x - 4}
+            y1={target.y - 4}
+            x2={target.x + 4}
+            y2={target.y + 4}
+          />
+          <line
+            x1={target.x - 4}
+            y1={target.y + 4}
+            x2={target.x + 4}
+            y2={target.y - 4}
+          />
+        </g>
+        <circle cx={estimate.x} cy={estimate.y} r={3} fill={ERA} />
+      </g>
+    );
+  },
+};
+
+/** Points join their nearest centre, centres move to the mean; a few rounds and it settles. */
+export const kMeansClusters: Illustration = {
+  duration: 6000,
+  still: 0.9,
+  render: (p) => {
+    const means = [
+      { x: 66, y: 50 },
+      { x: 172, y: 56 },
+      { x: 116, y: 112 },
+    ];
+    const starts = [
+      { x: 104, y: 40 },
+      { x: 136, y: 46 },
+      { x: 150, y: 96 },
+    ];
+    const progress =
+      0.55 * step(p, 0.15, 0.3) +
+      0.3 * step(p, 0.42, 0.57) +
+      0.15 * step(p, 0.69, 0.8);
+    const centres = starts.map((start, index) => ({
+      x: lerp(start.x, means[index]!.x, progress),
+      y: lerp(start.y, means[index]!.y, progress),
+    }));
+    const coloured = step(p, 0.04, 0.1);
+    return (
+      <g>
+        <Panel x={12} y={10} w={216} h={132} fill={PAPER} />
+        {Array.from({ length: 36 }, (_, index) => {
+          const mean = means[index % 3]!;
+          const angle = rand(index) * TAU;
+          const distance = 4 + rand(index + 40) * 24;
+          const x = mean.x + Math.cos(angle) * distance;
+          const y = mean.y + Math.sin(angle) * distance * 0.8;
+          let nearest = 0;
+          centres.forEach((centre, which) => {
+            const best = centres[nearest]!;
+            if (
+              (centre.x - x) ** 2 + (centre.y - y) ** 2 <
+              (best.x - x) ** 2 + (best.y - y) ** 2
+            ) {
+              nearest = which;
+            }
+          });
+          return (
+            <circle
+              key={index}
+              cx={x}
+              cy={y}
+              r={2.8}
+              fill={coloured > 0.5 ? HUES[nearest] : INK}
+              opacity={0.85}
+            />
+          );
+        })}
+        {centres.map((centre, index) => (
+          <g key={index}>
+            <circle
+              cx={centre.x}
+              cy={centre.y}
+              r={7}
+              fill={PAPER}
+              stroke={HUES[index]}
+              strokeWidth={2.5}
+            />
+            <circle cx={centre.x} cy={centre.y} r={2.5} fill={INK} />
+          </g>
+        ))}
+      </g>
+    );
+  },
+};
+
+/** The same scene seen by two cameras: nearer objects shift more, so the shift is depth. */
+export const stereoDisparity: Illustration = {
+  duration: 5500,
+  still: 0.85,
+  render: (p) => {
+    const near = { x: 44, y: 44, shift: 20 };
+    const far = { x: 82, y: 36, shift: 6 };
+    const link = pulse(p, 0.1, 0.25, 0.55, 0.65);
+    const map = step(p, 0.45, 0.75);
+    const views = [
+      { x: 12, offset: 0 },
+      { x: 128, offset: 1 },
+    ];
+    return (
+      <g>
+        {views.map((view) => (
+          <g key={view.x}>
+            <Panel x={view.x} y={10} w={100} h={62} fill={SOFT} />
+            <rect
+              x={view.x + far.x - 14 - far.shift * view.offset}
+              y={far.y - 14}
+              width={22}
+              height={22}
+              rx={3}
+              fill={HUES[1]}
+            />
+            <circle
+              cx={view.x + near.x - near.shift * view.offset}
+              cy={near.y}
+              r={14}
+              fill={HUES[0]}
+            />
+          </g>
+        ))}
+        <g opacity={link} stroke={INK} strokeWidth={1.2} strokeDasharray="3 3">
+          <line
+            x1={12 + near.x}
+            y1={near.y}
+            x2={128 + near.x - near.shift}
+            y2={near.y}
+          />
+          <line
+            x1={12 + far.x - 3}
+            y1={far.y - 3}
+            x2={128 + far.x - 3 - far.shift}
+            y2={far.y - 3}
+          />
+        </g>
+        <Arrow x1={120} y1={78} x2={120} y2={92} opacity={map} />
+        <g opacity={map}>
+          <Panel x={70} y={96} w={100} h={46} />
+          <rect
+            x={70 + far.x * 0.62 - 9}
+            y={104}
+            width={14}
+            height={14}
+            rx={2}
+            fill={ERA}
+            opacity={0.4}
+          />
+          <circle cx={70 + near.x * 0.62} cy={119} r={10} fill={ERA} />
+        </g>
+      </g>
+    );
+  },
+};
+
+/** Marching squares: each cell links the edge crossings between inside and outside corners. */
+export const isoSurface: Illustration = {
+  duration: 5500,
+  still: 0.95,
+  render: (p) => {
+    const cols = 11;
+    const rows = 6;
+    const size = 18;
+    const x0 = 21;
+    const y0 = 21;
+    const field = (x: number, y: number) =>
+      Math.exp(-((x - 96) ** 2 / 1600 + (y - 76) ** 2 / 800)) +
+      0.9 * Math.exp(-((x - 162) ** 2 / 600 + (y - 70) ** 2 / 650));
+    const level = 0.5;
+    const value = (col: number, row: number) =>
+      field(x0 + col * size, y0 + row * size);
+    const sweep = ramp(p, 0.08, 0.85) * cols * rows;
+    const segments: {
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+      at: number;
+    }[] = [];
+    for (let row = 0; row < rows; row += 1) {
+      for (let col = 0; col < cols; col += 1) {
+        const corners = [
+          { x: col, y: row },
+          { x: col + 1, y: row },
+          { x: col + 1, y: row + 1 },
+          { x: col, y: row + 1 },
+        ];
+        const crossings: { x: number; y: number }[] = [];
+        corners.forEach((a, index) => {
+          const b = corners[(index + 1) % 4]!;
+          const va = value(a.x, a.y);
+          const vb = value(b.x, b.y);
+          if (va >= level === vb >= level) return;
+          const t = (level - va) / (vb - va);
+          crossings.push({
+            x: x0 + lerp(a.x, b.x, t) * size,
+            y: y0 + lerp(a.y, b.y, t) * size,
+          });
+        });
+        for (let index = 0; index + 1 < crossings.length; index += 2) {
+          segments.push({
+            x1: crossings[index]!.x,
+            y1: crossings[index]!.y,
+            x2: crossings[index + 1]!.x,
+            y2: crossings[index + 1]!.y,
+            at: row * cols + col,
+          });
+        }
+      }
+    }
+    const cursor = Math.min(cols * rows - 1, Math.floor(sweep));
+    return (
+      <g>
+        <Panel x={10} y={10} w={220} h={130} fill={PAPER} />
+        {sweep < cols * rows ? (
+          <rect
+            x={x0 + (cursor % cols) * size}
+            y={y0 + Math.floor(cursor / cols) * size}
+            width={size}
+            height={size}
+            fill={ERA}
+            opacity={0.2}
+          />
+        ) : null}
+        {Array.from({ length: (cols + 1) * (rows + 1) }, (_, index) => {
+          const col = index % (cols + 1);
+          const row = Math.floor(index / (cols + 1));
+          const inside = value(col, row) >= level;
+          return (
+            <circle
+              key={index}
+              cx={x0 + col * size}
+              cy={y0 + row * size}
+              r={inside ? 2.6 : 1.6}
+              fill={inside ? ERA : LINE}
+            />
+          );
+        })}
+        {segments
+          .filter((segment) => segment.at < sweep)
+          .map((segment, index) => (
+            <line
+              key={index}
+              x1={segment.x1}
+              y1={segment.y1}
+              x2={segment.x2}
+              y2={segment.y2}
+              stroke={INK}
+              strokeWidth={2}
+              strokeLinecap="round"
+            />
+          ))}
+      </g>
+    );
+  },
+};
+
+/** ICP: pair every point with its nearest neighbour, move, repeat until the clouds agree. */
+export const pointAlign: Illustration = {
+  duration: 6000,
+  still: 0.92,
+  render: (p) => {
+    const target = Array.from({ length: 16 }, (_, index) => {
+      const t = index / 15;
+      return { x: 70 + t * 110, y: 100 - Math.sin(t * Math.PI) * 50 };
+    });
+    const align =
+      0.55 * step(p, 0.18, 0.32) +
+      0.3 * step(p, 0.46, 0.6) +
+      0.15 * step(p, 0.72, 0.82);
+    const angle = lerp(0.6, 0, align);
+    const shift = { x: lerp(-30, 0, align), y: lerp(28, 0, align) };
+    const centre = { x: 125, y: 80 };
+    const source = target.map((point, index) => {
+      const dx = point.x - centre.x + (rand(index) - 0.5) * 4;
+      const dy = point.y - centre.y + (rand(index + 9) - 0.5) * 4;
+      return {
+        x: centre.x + shift.x + dx * Math.cos(angle) - dy * Math.sin(angle),
+        y: centre.y + shift.y + dx * Math.sin(angle) + dy * Math.cos(angle),
+      };
+    });
+    const pairs =
+      pulse(p, 0.04, 0.1, 0.16, 0.2) +
+      pulse(p, 0.34, 0.38, 0.44, 0.48) +
+      pulse(p, 0.62, 0.65, 0.7, 0.73);
+    return (
+      <g>
+        <Panel x={10} y={10} w={220} h={130} fill={PAPER} />
+        <g opacity={pairs} stroke={MUTED} strokeWidth={1}>
+          {source.map((point, index) => {
+            let nearest = target[0]!;
+            for (const candidate of target) {
+              if (
+                (candidate.x - point.x) ** 2 + (candidate.y - point.y) ** 2 <
+                (nearest.x - point.x) ** 2 + (nearest.y - point.y) ** 2
+              ) {
+                nearest = candidate;
+              }
+            }
+            return (
+              <line
+                key={index}
+                x1={point.x}
+                y1={point.y}
+                x2={nearest.x}
+                y2={nearest.y}
+              />
+            );
+          })}
+        </g>
+        {target.map((point, index) => (
+          <circle
+            key={`t${index}`}
+            cx={point.x}
+            cy={point.y}
+            r={3}
+            fill={HUES[1]}
+          />
+        ))}
+        {source.map((point, index) => (
+          <circle
+            key={`s${index}`}
+            cx={point.x}
+            cy={point.y}
+            r={2.6}
+            fill="none"
+            stroke={ERA}
+            strokeWidth={1.6}
+          />
+        ))}
+      </g>
+    );
+  },
+};
+
+/** Every pixel remembers its usual colour; whatever differs is marked as moving foreground. */
+export const backgroundModel: Illustration = {
+  duration: 5000,
+  still: 0.5,
+  render: (p, uid) => {
+    const offset = lerp(-34, 50, p);
+    return (
+      <g>
+        <Scene x={6} y={30} plain>
+          <g transform="translate(70 0)">
+            <SceneObjectShape object="tree" />
+          </g>
+          <g transform={`translate(${offset} 0)`}>
+            <SceneObjectShape object="person" />
+          </g>
+        </Scene>
+        <ClipRect uid={uid} x={124} y={30} w={110} h={90}>
+          <rect x={124} y={30} width={110} height={90} fill={SOFT} />
+          <g transform={`translate(${124 + offset} 30)`}>
+            <SceneObjectShape object="person" fill={ERA} />
+          </g>
+        </ClipRect>
+      </g>
+    );
+  },
+};
+
+/** Seam carving: remove the least detailed top-to-bottom path, again and again. */
+export const seamCarve: Illustration = {
+  duration: 6500,
+  still: 0.3,
+  render: (p) => {
+    const cols = 14;
+    const rows = 8;
+    const size = 12;
+    const x0 = 36;
+    const y0 = 27;
+    const seams = [
+      [2, 2, 3, 3, 2, 2, 1, 1],
+      [9, 9, 8, 8, 9, 9, 9, 9],
+      [3, 4, 4, 3, 3, 2, 2, 3],
+    ];
+    const colour = (col: number, row: number) => {
+      if (row === rows - 1) return LINE;
+      if (col >= 6 && col <= 8 && row >= 2) return HUES[0];
+      if (col >= 11 && col <= 12 && row >= 3) return HUES[2];
+      return SOFT;
+    };
+    return (
+      <g>
+        <Panel
+          x={30}
+          y={21}
+          w={cols * size + 12}
+          h={rows * size + 12}
+          fill={PAPER}
+        />
+        {Array.from({ length: rows }, (_, row) => {
+          let cells = Array.from({ length: cols }, (_, col) => col);
+          let highlight = -1;
+          let collapse = 0;
+          seams.forEach((seam, index) => {
+            const start = 0.08 + index * 0.28;
+            const done = step(p, start + 0.14, start + 0.24);
+            const seamCol = seam[row]!;
+            if (done >= 1) {
+              cells = cells.filter((_, position) => position !== seamCol);
+            } else if (p >= start) {
+              highlight = seamCol;
+              collapse = done;
+            }
+          });
+          return (
+            <g key={row}>
+              {cells.map((col, position) => {
+                const isSeam = position === highlight;
+                const x =
+                  x0 +
+                  (position -
+                    (highlight >= 0 && position > highlight ? collapse : 0)) *
+                    size;
+                return (
+                  <rect
+                    key={col}
+                    x={x + 0.5}
+                    y={y0 + row * size + 0.5}
+                    width={size - 1}
+                    height={size - 1}
+                    rx={1.5}
+                    fill={isSeam ? ERA : colour(col, row)}
+                    opacity={isSeam ? 1 - collapse : 1}
+                  />
+                );
+              })}
+            </g>
+          );
+        })}
       </g>
     );
   },

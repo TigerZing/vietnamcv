@@ -794,6 +794,68 @@ export const inception: Illustration = {
   },
 };
 
+/** A network learns to fill in the detail that a blocky, low-resolution image lost. */
+export const superResolution: Illustration = {
+  duration: 4500,
+  still: 0.6,
+  render: (p, uid) => {
+    const sweep = lerp(20, 220, step(p, 0.1, 0.8));
+    const blocks = 8;
+    const size = 200 / blocks;
+    return (
+      <g>
+        <clipPath id={`${uid}-sharp`}>
+          <rect x={20} y={10} width={sweep - 20} height={130} />
+        </clipPath>
+        <clipPath id={`${uid}-blocky`}>
+          <rect x={sweep} y={10} width={220 - sweep} height={130} />
+        </clipPath>
+        <g clipPath={`url(#${uid}-blocky)`}>
+          {Array.from({ length: blocks * 5 }, (_, index) => {
+            const col = index % blocks;
+            const row = Math.floor(index / blocks);
+            const x = 20 + col * size;
+            const y = 15 + row * size;
+            const inside = sceneObjectAt(
+              ((x + size / 2 - 20) / 200) * 110,
+              ((y + size / 2 - 15) / 125) * 90,
+            );
+            return (
+              <rect
+                key={index}
+                x={x}
+                y={y}
+                width={size}
+                height={size}
+                fill={inside >= 0 ? SCENE_OBJECTS[inside]!.hue : SOFT}
+              />
+            );
+          })}
+        </g>
+        <g clipPath={`url(#${uid}-sharp)`}>
+          <Scene x={20} y={15} scale={1.818} />
+        </g>
+        <rect
+          x={20}
+          y={15}
+          width={200}
+          height={125}
+          fill="none"
+          stroke={LINE}
+        />
+        <line
+          x1={sweep}
+          y1={8}
+          x2={sweep}
+          y2={142}
+          stroke={ERA}
+          strokeWidth={2.4}
+        />
+      </g>
+    );
+  },
+};
+
 /** Activations that drift between layers are re-centred and re-scaled every batch. */
 export const batchNorm: Illustration = {
   duration: 4500,
@@ -940,6 +1002,49 @@ export const unet: Illustration = {
   },
 };
 
+/** Content from one image is redrawn with the textures and colours of a painting. */
+export const styleTransfer: Illustration = {
+  duration: 5000,
+  still: 0.85,
+  render: (p, uid) => {
+    const mix = step(p, 0.2, 0.8);
+    const swirl = Array.from({ length: 10 }, (_, index) => (
+      <path
+        key={index}
+        d={`M${(index % 5) * 22 - 6} ${Math.floor(index / 5) * 44 + 10} q 12 -14 24 0 t 24 0`}
+        fill="none"
+        stroke={HUES[index % 4]}
+        strokeWidth={5}
+        strokeLinecap="round"
+      />
+    ));
+    return (
+      <g>
+        <defs>
+          <clipPath id={`${uid}-style`}>
+            <rect x={0} y={0} width={110} height={90} rx={6} />
+          </clipPath>
+        </defs>
+        <Scene x={8} y={12} scale={0.62} />
+        <text x={84} y={46} fontSize={16} fill={INK}>
+          +
+        </text>
+        <g transform="translate(8 82) scale(0.62)">
+          <rect width={110} height={90} rx={6} fill={SOFT} stroke={LINE} />
+          <g clipPath={`url(#${uid}-style)`}>{swirl}</g>
+        </g>
+        <Arrow x1={88} y1={96} x2={112} y2={84} />
+        <g transform="translate(118 30)">
+          <Scene x={0} y={0} />
+          <g clipPath={`url(#${uid}-style)`} opacity={mix * 0.6}>
+            {swirl}
+          </g>
+        </g>
+      </g>
+    );
+  },
+};
+
 /** Each block adds a correction on top of a shortcut, so very deep networks still train. */
 export const residual: Illustration = {
   duration: 3500,
@@ -989,6 +1094,82 @@ export const residual: Illustration = {
                   fill={ACCENT}
                 />
               ) : null}
+            </g>
+          );
+        })}
+      </g>
+    );
+  },
+};
+
+/** Each object keeps its box and its identity number as it moves through the frames. */
+export const tracking: Illustration = {
+  duration: 5000,
+  still: 0.4,
+  render: (p) => {
+    const paths = [
+      (t: number) => ({ x: 30 + t * 150, y: 40 + Math.sin(t * 6) * 10 }),
+      (t: number) => ({ x: 190 - t * 140, y: 96 + Math.cos(t * 5) * 8 }),
+    ];
+    return (
+      <g>
+        <Panel x={10} y={10} w={220} h={130} fill={PAPER} />
+        {paths.map((path, index) => {
+          const now = path(p);
+          return (
+            <g key={index}>
+              {Array.from({ length: 10 }, (_, back) => {
+                const t = p - back * 0.03;
+                if (t < 0) return null;
+                const point = path(t);
+                return (
+                  <circle
+                    key={back}
+                    cx={point.x + 12}
+                    cy={point.y + 14}
+                    r={1.6}
+                    fill={HUES[index]}
+                    opacity={1 - back / 10}
+                  />
+                );
+              })}
+              <rect
+                x={now.x}
+                y={now.y}
+                width={24}
+                height={28}
+                rx={4}
+                fill={HUES[index]}
+                opacity={0.3}
+              />
+              <rect
+                x={now.x - 3}
+                y={now.y - 3}
+                width={30}
+                height={34}
+                rx={3}
+                fill="none"
+                stroke={HUES[index]}
+                strokeWidth={2}
+              />
+              <rect
+                x={now.x - 3}
+                y={now.y - 13}
+                width={16}
+                height={10}
+                rx={2}
+                fill={HUES[index]}
+              />
+              <text
+                x={now.x + 5}
+                y={now.y - 5}
+                textAnchor="middle"
+                fontSize={8}
+                fontWeight={700}
+                fill={PAPER}
+              >
+                {index + 1}
+              </text>
             </g>
           );
         })}
@@ -1226,6 +1407,67 @@ export const instanceMask: Illustration = {
   },
 };
 
+/** A 3D filter moves through space and time, so motion itself becomes a feature. */
+export const spatioTemporal: Illustration = {
+  duration: 4500,
+  still: 0.5,
+  render: (p) => {
+    const frames = 5;
+    const position = ramp(p, 0.05, 0.85) * (frames - 2);
+    return (
+      <g>
+        {Array.from({ length: frames }, (_, index) => {
+          const x = 30 + index * 26;
+          const y = 26 + index * -4;
+          return (
+            <g key={index}>
+              <rect
+                x={x}
+                y={y}
+                width={70}
+                height={84}
+                rx={4}
+                fill={PAPER}
+                stroke={LINE}
+              />
+              <circle cx={x + 18 + index * 8} cy={y + 52} r={8} fill={MUTED} />
+            </g>
+          );
+        })}
+        <rect
+          x={30 + position * 26 + 20}
+          y={26 - position * 4 + 30}
+          width={30 + 52}
+          height={30}
+          rx={3}
+          fill={ERA}
+          opacity={0.22}
+          stroke={ERA}
+          strokeWidth={2}
+        />
+        <rect
+          x={204}
+          y={58}
+          width={26}
+          height={8}
+          rx={2}
+          fill={ERA}
+          opacity={step(p, 0.85, 0.95)}
+        />
+        <rect
+          x={204}
+          y={72}
+          width={14}
+          height={8}
+          rx={2}
+          fill={MUTED}
+          opacity={step(p, 0.85, 0.95)}
+        />
+      </g>
+    );
+  },
+};
+
 /** Every pixel gets a class colour: first coarse, then sharpened to the true outline. */
 export const pixelMask: Illustration = {
   duration: 5000,
@@ -1266,6 +1508,254 @@ export const pixelMask: Illustration = {
           ))}
         </g>
       </Scene>
+    );
+  },
+};
+
+/** Each training step switches off a random set of neurons, so no single path dominates. */
+export const dropoutNet: Illustration = {
+  duration: 5000,
+  still: 0.3,
+  render: (p) => {
+    const layers = [4, 5, 5, 2];
+    const xs = [40, 95, 150, 205];
+    const round = Math.floor(p * 5);
+    const nodes = layers.map((count, layer) =>
+      Array.from({ length: count }, (_, index) => ({
+        x: xs[layer]!,
+        y: 75 + (index - (count - 1) / 2) * 24,
+        off:
+          layer > 0 &&
+          layer < layers.length - 1 &&
+          rand(round * 17 + layer * 5 + index) < 0.4,
+      })),
+    );
+    const flash = 1 - ramp(p * 5 - round, 0, 0.25);
+    return (
+      <g>
+        <Panel x={10} y={10} w={220} h={130} fill={PAPER} />
+        {nodes
+          .slice(0, -1)
+          .map((layer, index) =>
+            layer.flatMap((from, a) =>
+              nodes[index + 1]!.map((to, b) => (
+                <line
+                  key={`${index}-${a}-${b}`}
+                  x1={from.x}
+                  y1={from.y}
+                  x2={to.x}
+                  y2={to.y}
+                  stroke={from.off || to.off ? LINE : ERA}
+                  strokeWidth={1}
+                  opacity={from.off || to.off ? 0.35 : 0.55}
+                />
+              )),
+            ),
+          )}
+        {nodes.flat().map((node, index) => (
+          <circle
+            key={index}
+            cx={node.x}
+            cy={node.y}
+            r={7}
+            fill={node.off ? PAPER : ERA}
+            stroke={node.off ? MUTED : ERA}
+            strokeWidth={1.5}
+            strokeDasharray={node.off ? "2 2" : undefined}
+            opacity={node.off ? 0.6 + flash * 0.4 : 1}
+          />
+        ))}
+      </g>
+    );
+  },
+};
+
+/** A shared per-point network, then a max over all points: order does not matter. */
+export const pointCloud: Illustration = {
+  duration: 6000,
+  still: 0.9,
+  render: (p) => {
+    const points = Array.from({ length: 12 }, (_, index) => ({
+      x: 22 + rand(index) * 52,
+      y: 36 + rand(index + 30) * 80,
+    }));
+    const features = Array.from({ length: 12 }, (_, row) =>
+      Array.from({ length: 5 }, (_, col) => rand(row * 7 + col + 3)),
+    );
+    const pooled = Array.from({ length: 5 }, (_, col) =>
+      Math.max(...features.map((row) => row[col]!)),
+    );
+    const pool = step(p, 0.66, 0.8);
+    const answer = step(p, 0.84, 0.92);
+    return (
+      <g>
+        <Panel x={12} y={26} w={68} h={100} fill={PAPER} />
+        {points.map((point, index) => (
+          <g key={index}>
+            <circle cx={point.x} cy={point.y} r={3} fill={ERA} />
+            <Travel
+              x1={point.x}
+              y1={point.y}
+              x2={104}
+              y2={76}
+              t={ramp(p, 0.04 + index * 0.03, 0.14 + index * 0.03)}
+              r={2}
+            />
+          </g>
+        ))}
+        <Block
+          x={94}
+          y={52}
+          w={22}
+          h={48}
+          active={pulse(p, 0.05, 0.15, 0.45, 0.55)}
+        />
+        {features.map((row, index) => {
+          const shown = step(p, 0.14 + index * 0.03, 0.18 + index * 0.03);
+          return row.map((value, col) => (
+            <rect
+              key={`${index}-${col}`}
+              x={128 + col * 9}
+              y={22 + index * 9}
+              width={8}
+              height={8}
+              rx={1.5}
+              fill={ERA}
+              opacity={shown * (0.15 + value * 0.85)}
+            />
+          ));
+        })}
+        <Arrow x1={176} y1={76} x2={190} y2={76} opacity={pool} />
+        {pooled.map((value, col) => (
+          <rect
+            key={col}
+            x={194}
+            y={54 + col * 9}
+            width={8}
+            height={8}
+            rx={1.5}
+            fill={ERA}
+            opacity={pool * (0.15 + value * 0.85)}
+          />
+        ))}
+        <rect
+          x={208}
+          y={68}
+          width={20}
+          height={16}
+          rx={4}
+          fill={HUES[1]}
+          opacity={answer}
+        />
+      </g>
+    );
+  },
+};
+
+/** The gradient of the predicted class lights up the image regions the model relied on. */
+export const saliencyHeatmap: Illustration = {
+  duration: 5000,
+  still: 0.85,
+  render: (p, uid) => {
+    const back = step(p, 0.15, 0.4);
+    const heat = step(p, 0.4, 0.7);
+    const id = `${uid}-heat`;
+    return (
+      <g>
+        <defs>
+          <radialGradient id={id}>
+            <stop offset="0%" stopColor={HUES[3]} stopOpacity={0.95} />
+            <stop offset="45%" stopColor={HUES[0]} stopOpacity={0.6} />
+            <stop offset="100%" stopColor={HUES[0]} stopOpacity={0} />
+          </radialGradient>
+        </defs>
+        <Scene x={20} y={30} scale={1.15}>
+          <ellipse
+            cx={82}
+            cy={57}
+            rx={32}
+            ry={22}
+            fill={`url(#${id})`}
+            opacity={heat}
+          />
+        </Scene>
+        <rect x={164} y={50} width={58} height={16} rx={8} fill={ERA} />
+        <rect x={172} y={56} width={30} height={4} rx={2} fill={PAPER} />
+        <Arrow
+          x1={170}
+          y1={74}
+          x2={lerp(170, 140, back)}
+          y2={lerp(74, 92, back)}
+          color={ERA}
+          opacity={back * (1 - heat * 0.6)}
+        />
+      </g>
+    );
+  },
+};
+
+/** Squeeze every channel to one number, learn a weight from them, rescale the channels. */
+export const channelAttention: Illustration = {
+  duration: 5500,
+  still: 0.9,
+  render: (p) => {
+    const weights = [0.9, 0.25, 0.7, 0.15, 1, 0.45];
+    const squeeze = step(p, 0.1, 0.3);
+    const think = pulse(p, 0.3, 0.4, 0.55, 0.62);
+    const scale = step(p, 0.55, 0.8);
+    return (
+      <g>
+        {weights.map((weight, index) => {
+          const y = 22 + index * 18;
+          return (
+            <g key={index}>
+              {Array.from({ length: 6 }, (_, col) => (
+                <rect
+                  key={col}
+                  x={14 + col * 11}
+                  y={y}
+                  width={10}
+                  height={14}
+                  rx={1.5}
+                  fill={HUES[index % HUES.length]}
+                  opacity={0.25 + rand(index * 9 + col) * 0.6}
+                />
+              ))}
+              <Travel
+                x1={82}
+                y1={y + 7}
+                x2={100}
+                y2={y + 7}
+                t={squeeze}
+                r={2}
+                color={MUTED}
+              />
+              <circle cx={106} cy={y + 7} r={4} fill={INK} opacity={squeeze} />
+              <rect
+                x={152}
+                y={y + 3}
+                width={lerp(0, 24, weight * scale)}
+                height={8}
+                rx={2}
+                fill={ERA}
+              />
+              {Array.from({ length: 3 }, (_, col) => (
+                <rect
+                  key={`o${col}`}
+                  x={184 + col * 15}
+                  y={y}
+                  width={14}
+                  height={14}
+                  rx={1.5}
+                  fill={HUES[index % HUES.length]}
+                  opacity={scale * (0.1 + weight * 0.85)}
+                />
+              ))}
+            </g>
+          );
+        })}
+        <Block x={118} y={40} w={26} h={72} active={think} />
+      </g>
     );
   },
 };

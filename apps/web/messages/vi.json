@@ -183,11 +183,12 @@
     "detail": {
       "impact": "Ý nghĩa",
       "source": "Paper gốc",
-      "noSource": "Chưa có bản ghi công khai ổn định để dẫn nguồn."
+      "noSource": "Chưa có bản ghi công khai ổn định để dẫn nguồn.",
+      "major": "Mốc chính"
     },
     "note": {
       "title": "Về trang này",
-      "body": "Dòng thời gian do VietnamCV biên soạn, chỉ giữ những mốc nổi bật nhất và có ảnh hưởng lớn tới các ý tưởng ra đời sau đó; mỗi mốc dẫn về công trình gốc khi có bản ghi công khai. Nếu bạn thấy thiếu một mốc quan trọng, hãy góp ý để chúng tôi bổ sung."
+      "body": "Dòng thời gian do VietnamCV biên soạn. Mặc định trang chỉ hiện các mốc chính, những công trình có ảnh hưởng lớn tới các ý tưởng ra đời sau đó; chọn \"Tất cả các mốc\" để xem đầy đủ. Mỗi mốc dẫn về công trình gốc khi có bản ghi công khai. Nếu bạn thấy thiếu một mốc quan trọng, hãy góp ý để chúng tôi bổ sung."
     },
     "topics": {
       "foundations": "Nền tảng",
@@ -203,6 +204,11 @@
       "data": "Dataset & benchmark"
     },
     "filter": {
+      "scope": {
+        "label": "Hiển thị",
+        "major": "Mốc chính ({count})",
+        "all": "Tất cả các mốc ({count})"
+      },
       "label": "Lọc theo chủ đề",
       "all": "Tất cả",
       "showing": "{count, plural, other {Đang hiển thị # mốc}}",
@@ -256,20 +262,90 @@
         "summary": "Hubel và Wiesel phát hiện neuron ở visual cortex của mèo chỉ phản ứng với cạnh theo một hướng nhất định, xếp thành nhiều tầng.",
         "impact": "Receptive field phân tầng là cảm hứng trực tiếp cho CNN."
       },
+      "kalmanFilter": {
+        "title": "Kalman filter",
+        "summary": "Rudolf Kálmán đưa ra cách ước lượng trạng thái từ phép đo nhiễu: dự đoán, rồi sửa lại bằng quan sát mới, lặp liên tục.",
+        "impact": "Nền của mọi hệ tracking, từ radar tới tracker vật thể trong video."
+      },
       "houghTransform": {
         "title": "Hough transform",
         "summary": "Paul Hough đăng ký patent phương pháp tìm đường thẳng: mỗi pixel vote trong không gian tham số.",
         "impact": "Vẫn là cách chuẩn để tìm đường thẳng, đường tròn, làn đường."
+      },
+      "blocksWorld": {
+        "title": "Blocks world",
+        "summary": "Luận án của Larry Roberts tại MIT suy ra hình khối 3D từ một ảnh 2D của các khối đa diện.",
+        "impact": "Bài toán 3D vision đầu tiên: từ ảnh phẳng suy ra hình học."
+      },
+      "fastFourierTransform": {
+        "title": "Fast Fourier Transform (FFT)",
+        "summary": "Cooley và Tukey công bố FFT, giảm chi phí phân tích tần số từ O(n²) xuống O(n log n).",
+        "impact": "Mở đường cho filtering miền tần số, nén ảnh và convolution nhanh."
       },
       "summerVisionProject": {
         "title": "MIT Summer Vision Project",
         "summary": "Seymour Papert giao cho nhóm sinh viên giải segmentation và object recognition trong một mùa hè.",
         "impact": "Bài học kinh điển: vision khó hơn nhiều so với trực giác."
       },
+      "kMeans": {
+        "title": "k-means",
+        "summary": "James MacQueen đặt tên và phân tích thuật toán k-means: gán mỗi điểm cho tâm gần nhất, rồi dời tâm về trung bình cụm.",
+        "impact": "Clustering đơn giản nhất, sau này dùng để lượng tử màu và xây codebook visual words."
+      },
+      "perceptronsBook": {
+        "title": "Sách Perceptrons",
+        "summary": "Minsky và Papert chứng minh perceptron một lớp không học được những hàm như XOR hay tính liên thông của hình.",
+        "impact": "Làm nguội nghiên cứu neural network gần hai thập kỷ, tới khi backpropagation ra đời."
+      },
+      "ccdSensor": {
+        "title": "Cảm biến CCD",
+        "summary": "Willard Boyle và George Smith ở Bell Labs phát minh charge-coupled device, chuyển ánh sáng thành điện tích đọc ra từng pixel; Nobel Vật lý 2009.",
+        "impact": "Mở đường cho camera số, nguồn ảnh của toàn bộ computer vision về sau."
+      },
+      "shapeFromShading": {
+        "title": "Shape from shading",
+        "summary": "Luận án của Berthold Horn tại MIT khôi phục hình dạng bề mặt 3D từ độ sáng tối của một ảnh.",
+        "impact": "Khởi đầu nhóm bài toán \"shape from X\" và depth estimation."
+      },
+      "dudaHartLines": {
+        "title": "Hough transform cho đường thẳng và đường tròn",
+        "summary": "Duda và Hart đổi Hough transform sang tham số (ρ, θ), tránh độ dốc vô hạn và mở rộng sang phát hiện đường tròn.",
+        "impact": "Dạng Hough transform mà mọi thư viện như OpenCV dùng tới hôm nay."
+      },
+      "pictorialStructures": {
+        "title": "Pictorial structures",
+        "summary": "Fischler và Elschlager mô tả vật thể là các bộ phận nối với nhau bằng lò xo, rồi tìm cách đặt chúng khớp ảnh nhất.",
+        "impact": "Gốc của part-based model: deformable part models và pose estimation đều kế thừa."
+      },
+      "cooperativeStereo": {
+        "title": "Stereo vision của Marr và Poggio",
+        "summary": "Marr và Poggio đề xuất thuật toán cooperative ghép điểm giữa hai ảnh mắt trái và phải để suy ra độ sâu, dựa trên ràng buộc duy nhất và liên tục.",
+        "impact": "Đặt bài toán stereo matching thành một lĩnh vực nghiên cứu riêng."
+      },
+      "otsuThreshold": {
+        "title": "Otsu thresholding",
+        "summary": "Nobuyuki Otsu tự chọn ngưỡng tách foreground/background bằng cách tối đa phương sai giữa hai lớp trên histogram.",
+        "impact": "Cách binarization mặc định trong OCR và kiểm tra công nghiệp."
+      },
+      "structureFromMotion": {
+        "title": "Structure from motion của Ullman",
+        "summary": "Shimon Ullman chứng minh ba view của bốn điểm không đồng phẳng đủ để khôi phục cấu trúc 3D và chuyển động.",
+        "impact": "Đặt nền lý thuyết cho structure from motion và SLAM."
+      },
       "neocognitron": {
         "title": "Neocognitron",
         "summary": "Kunihiko Fukushima xây mạng nhiều tầng gồm S-cell và C-cell mô phỏng visual cortex, nhận dạng chữ viết tay bất biến với dịch chuyển.",
         "impact": "Kiến trúc convolution + pooling đầu tiên, tiền thân của CNN."
+      },
+      "marrHildreth": {
+        "title": "Marr–Hildreth edge detection",
+        "summary": "Marr và Hildreth tìm cạnh tại zero-crossing của Laplacian of Gaussian, ở nhiều scale.",
+        "impact": "Đưa lý thuyết thị giác sinh học vào thuật toán, gieo mầm multi-scale."
+      },
+      "photometricStereo": {
+        "title": "Photometric stereo",
+        "summary": "Robert Woodham chụp một vật từ cùng góc dưới nhiều hướng sáng khác nhau và giải ra normal bề mặt cho từng pixel.",
+        "impact": "Vẫn là cách đo bề mặt chi tiết trong kiểm tra công nghiệp và số hoá di sản."
       },
       "opticalFlow": {
         "title": "Optical flow",
@@ -281,10 +357,40 @@
         "summary": "Fischler và Bolles fit model bằng cách lấy mẫu ngẫu nhiên vài điểm, đếm inlier và giữ model được nhiều điểm đồng thuận nhất.",
         "impact": "Cách chuẩn để chống outlier trong stitching, calibration, 3D reconstruction."
       },
+      "generalizedHough": {
+        "title": "Generalized Hough transform",
+        "summary": "Dana Ballard mở rộng Hough transform cho shape bất kỳ, dùng bảng vector từ cạnh tới tâm vật thể.",
+        "impact": "Một trong những detector dựa trên shape đầu tiên."
+      },
+      "essentialMatrix": {
+        "title": "Essential matrix và thuật toán 8 điểm",
+        "summary": "Longuet-Higgins chỉ ra từ 8 cặp điểm tương ứng giữa hai ảnh có thể tính chuyển động camera và cấu trúc cảnh.",
+        "impact": "Nền toán học của two-view geometry, SfM và SLAM."
+      },
+      "lucasKanade": {
+        "title": "Lucas–Kanade",
+        "summary": "Lucas và Kanade ước lượng dịch chuyển của một vùng ảnh nhỏ bằng phương pháp lặp dựa trên gradient, giả định chuyển động đều trong vùng.",
+        "impact": "Thuật toán optical flow và feature tracking (KLT) dùng nhiều nhất trong nhiều thập kỷ."
+      },
       "marrVision": {
         "title": "Ba mức phân tích của David Marr",
         "summary": "Cuốn Vision chia bài toán thị giác thành ba mức: computational, representation & algorithm, implementation.",
         "impact": "Biến computer vision thành một ngành khoa học có cấu trúc."
+      },
+      "laplacianPyramid": {
+        "title": "Laplacian pyramid",
+        "summary": "Burt và Adelson tách ảnh thành các tầng tần số theo nhiều độ phân giải, mỗi tầng chỉ giữ chi tiết mà tầng thô hơn thiếu.",
+        "impact": "Công cụ multi-scale cho blending, nén ảnh và về sau là feature pyramid."
+      },
+      "scaleSpace": {
+        "title": "Scale-space theory",
+        "summary": "Witkin và Koenderink hình thức hóa việc nhìn ảnh qua một dải Gaussian blur liên tục, gọi là scale space.",
+        "impact": "Cơ sở lý thuyết của SIFT và feature pyramid."
+      },
+      "markovRandomFields": {
+        "title": "Markov random field cho ảnh",
+        "summary": "Stuart và Donald Geman mô hình ảnh như MRF, mỗi pixel phụ thuộc hàng xóm, và khôi phục ảnh nhiễu bằng Gibbs sampling.",
+        "impact": "Khung xác suất cho denoising, segmentation và stereo suốt hai thập kỷ."
       },
       "backpropagation": {
         "title": "Backpropagation",
@@ -296,6 +402,21 @@
         "summary": "John Canny đặt edge detection thành bài toán tối ưu: ít lỗi, định vị chính xác, mỗi cạnh một response.",
         "impact": "Thuật toán kinh điển, có trong mọi thư viện vision."
       },
+      "tsaiCalibration": {
+        "title": "Tsai camera calibration",
+        "summary": "Roger Tsai đưa ra quy trình camera calibration chính xác, có tính lens distortion, cho camera thương mại.",
+        "impact": "Đưa đo lường 3D bằng camera vào nhà máy và robot."
+      },
+      "marchingCubes": {
+        "title": "Marching cubes",
+        "summary": "Lorensen và Cline biến dữ liệu thể tích (như ảnh CT) thành lưới tam giác bằng cách xét từng ô lập phương xem bề mặt đi qua thế nào.",
+        "impact": "Cách chuẩn để lấy mesh từ volume, dùng cả trong KinectFusion và NeRF."
+      },
+      "activeContours": {
+        "title": "Active contours (Snakes)",
+        "summary": "Kass, Witkin và Terzopoulos mô hình đường biên vật thể như một đường cong đàn hồi tự bám vào cạnh ảnh.",
+        "impact": "Mở đầu segmentation dựa trên năng lượng, dùng lâu dài trong ảnh y tế."
+      },
       "harrisCorner": {
         "title": "Harris corner detector",
         "summary": "Harris và Stephens dò corner từ ma trận gradient cục bộ, những điểm dễ tìm lại giữa các ảnh.",
@@ -306,15 +427,55 @@
         "summary": "Yann LeCun và cộng sự train CNN bằng backpropagation để đọc mã bưu chính viết tay.",
         "impact": "Lần đầu convolution, weight sharing và học end-to-end kết hợp: công thức CNN hiện đại."
       },
+      "peronaMalik": {
+        "title": "Anisotropic diffusion",
+        "summary": "Perona và Malik làm mờ ảnh như khuếch tán nhiệt nhưng chậm lại ở edge, nên nhiễu mất mà đường biên vẫn sắc.",
+        "impact": "Mở đầu dòng filter giữ edge: bilateral filter, total variation."
+      },
       "eigenfaces": {
         "title": "Eigenfaces",
         "summary": "Turk và Pentland dùng PCA biểu diễn khuôn mặt bằng vài chục hệ số.",
         "impact": "Face recognition chạy được trên máy tính thường, học representation từ dữ liệu."
       },
+      "jpeg": {
+        "title": "Chuẩn JPEG",
+        "summary": "JPEG dùng DCT trên từng block 8×8 cộng quantization để nén ảnh chụp hàng chục lần.",
+        "impact": "Ảnh số lan tỏa khắp web, tạo kho dữ liệu cho vision về sau."
+      },
+      "icp": {
+        "title": "Iterative Closest Point (ICP)",
+        "summary": "Besl và McKay căn chỉnh hai point cloud bằng cách lặp: ghép mỗi điểm với điểm gần nhất, tính phép quay và tịnh tiến tốt nhất.",
+        "impact": "Thuật toán registration 3D cơ bản trong scan 3D, robot và xe tự lái."
+      },
+      "goodFeatures": {
+        "title": "Good Features to Track",
+        "summary": "Shi và Tomasi chọn điểm để track dựa trên trị riêng nhỏ nhất của ma trận gradient, đúng tiêu chí mà Lucas–Kanade cần.",
+        "impact": "Hàm goodFeaturesToTrack trong OpenCV, nền của KLT tracker và visual odometry."
+      },
       "supportVectorMachines": {
         "title": "Support Vector Machine (SVM)",
         "summary": "Cortes và Vapnik công bố soft-margin SVM: classifier tìm siêu phẳng có margin lớn nhất.",
         "impact": "Classifier mặc định đi cùng feature thủ công đến năm 2012."
+      },
+      "facade": {
+        "title": "Façade: dựng kiến trúc từ ảnh",
+        "summary": "Debevec, Taylor và Malik kết hợp mô hình hình khối đơn giản với vài bức ảnh để dựng và render toà nhà một cách chân thực.",
+        "impact": "Khởi đầu image-based modeling and rendering, tiền thân của photogrammetry hiện đại."
+      },
+      "fisherfaces": {
+        "title": "Fisherfaces",
+        "summary": "Belhumeur, Hespanha và Kriegman dùng Linear Discriminant Analysis thay PCA, giữ các hướng phân biệt người với người và bỏ qua thay đổi ánh sáng.",
+        "impact": "Nhận dạng khuôn mặt bền hơn eigenfaces dưới điều kiện sáng khác nhau."
+      },
+      "bilateralFilter": {
+        "title": "Bilateral filter",
+        "summary": "Tomasi và Manduchi làm mịn ảnh với trọng số theo cả khoảng cách lẫn độ chênh màu, giữ cạnh sắc nét.",
+        "impact": "Bộ denoise giữ cạnh trong mọi app chỉnh ảnh và camera điện thoại."
+      },
+      "condensation": {
+        "title": "CONDENSATION tracking",
+        "summary": "Isard và Blake dùng particle filter để tracking đường viền vật thể trong video nhiều nhiễu nền.",
+        "impact": "Đưa suy luận xác suất vào tracking."
       },
       "lenet5": {
         "title": "LeNet-5 và MNIST",
@@ -326,15 +487,90 @@
         "summary": "David Lowe giới thiệu local feature bất biến với scale và rotation, cho phép matching cùng vật thể giữa các ảnh.",
         "impact": "Trụ cột của panorama stitching, SLAM và image retrieval thập niên 2000."
       },
+      "textureSynthesis": {
+        "title": "Efros–Leung texture synthesis",
+        "summary": "Efros và Leung sinh texture mới từ mẫu bằng cách điền từng pixel theo vùng lân cận tương tự.",
+        "impact": "Một trong những phương pháp sinh ảnh non-parametric đầu tiên, tiền đề của inpainting."
+      },
+      "backgroundSubtraction": {
+        "title": "Background subtraction bằng Gaussian mixture",
+        "summary": "Stauffer và Grimson mô hình mỗi pixel nền bằng hỗn hợp Gaussian cập nhật liên tục, nên tách được vật chuyển động dù cảnh thay đổi chậm.",
+        "impact": "Lõi của camera giám sát và đếm xe trong nhiều năm."
+      },
+      "morphableModel": {
+        "title": "3D Morphable Model",
+        "summary": "Blanz và Vetter học không gian tuyến tính của hình dạng và texture khuôn mặt 3D từ scan, rồi khớp nó với một bức ảnh duy nhất.",
+        "impact": "Nền của dựng mặt 3D, face animation và avatar."
+      },
+      "normalizedCuts": {
+        "title": "Normalized Cuts",
+        "summary": "Shi và Malik coi image segmentation là bài toán cắt đồ thị pixel, giải bằng eigenvector.",
+        "impact": "Nền của graph-based và spectral segmentation."
+      },
+      "zhangCalibration": {
+        "title": "Zhang camera calibration",
+        "summary": "Zhengyou Zhang calibrate camera chỉ từ vài ảnh chụp bàn cờ phẳng ở nhiều góc.",
+        "impact": "Cách calibration phổ biến nhất, có sẵn trong OpenCV và MATLAB."
+      },
+      "multipleViewGeometry": {
+        "title": "Sách Multiple View Geometry",
+        "summary": "Hartley và Zisserman gom projective geometry, fundamental matrix, triangulation, bundle adjustment vào một cuốn sách.",
+        "impact": "Giáo trình chuẩn của 3D vision."
+      },
       "violaJones": {
         "title": "Viola–Jones face detection",
         "summary": "Detector dùng Haar feature, AdaBoost và cascade classifier, chạy real-time trên CPU thời đó.",
         "impact": "Đưa face detection vào máy ảnh số và điện thoại."
       },
+      "graphCuts": {
+        "title": "Graph cuts",
+        "summary": "Boykov, Veksler và Zabih giải nhanh bài toán gán nhãn pixel (segmentation, stereo) bằng max-flow.",
+        "impact": "Lõi của công cụ cut-out tương tác như GrabCut."
+      },
+      "localBinaryPatterns": {
+        "title": "Local Binary Patterns (LBP)",
+        "summary": "Ojala và cộng sự mô tả texture bằng cách so sánh mỗi pixel với các pixel lân cận, tạo mã nhị phân bất biến độ sáng.",
+        "impact": "Feature nhẹ, nhanh cho face recognition và kiểm tra bề mặt."
+      },
+      "meanShift": {
+        "title": "Mean shift",
+        "summary": "Comaniciu và Meer dùng mean shift tìm đỉnh mật độ trong không gian màu – vị trí để segmentation và smoothing.",
+        "impact": "Clustering không cần biết trước số cụm, dùng cho segmentation và tracking."
+      },
+      "middleburyStereo": {
+        "title": "Benchmark stereo Middlebury",
+        "summary": "Scharstein và Szeliski phân loại các thuật toán stereo và đưa ra bộ ảnh có ground truth cùng bảng xếp hạng online.",
+        "impact": "Hình mẫu cho benchmark có leaderboard; stereo tiến bộ nhanh nhờ so sánh công bằng."
+      },
       "bagOfVisualWords": {
         "title": "Bag of Visual Words (Video Google)",
         "summary": "Sivic và Zisserman quantize local feature thành \"visual word\" và tìm ảnh như search engine tìm văn bản.",
         "impact": "Image representation chủ đạo cho classification và retrieval gần một thập kỷ."
+      },
+      "poissonEditing": {
+        "title": "Poisson image editing",
+        "summary": "Pérez, Gangnet và Blake ghép vùng ảnh liền mạch bằng cách giải phương trình Poisson trên gradient.",
+        "impact": "Nền của seamless cloning và object removal."
+      },
+      "ssim": {
+        "title": "SSIM",
+        "summary": "Wang và cộng sự đo chất lượng ảnh theo structural similarity thay vì sai số từng pixel.",
+        "impact": "Metric chuẩn cho compression, denoising, super-resolution."
+      },
+      "grabCut": {
+        "title": "GrabCut",
+        "summary": "Rother, Kolmogorov và Blake chỉ cần người dùng vẽ một khung quanh vật; graph cut lặp với model màu sẽ tách vật ra khỏi nền.",
+        "impact": "Công cụ cut-out tương tác có mặt trong Office, OpenCV và nhiều trình sửa ảnh."
+      },
+      "caltech101": {
+        "title": "Caltech 101",
+        "summary": "Fei-Fei, Fergus và Perona công bố dataset 101 lớp vật thể để thử học nhận dạng từ rất ít ví dụ.",
+        "impact": "Benchmark nhận dạng nhiều lớp phổ biến trước PASCAL VOC và ImageNet."
+      },
+      "graphSegmentation": {
+        "title": "Graph-based segmentation",
+        "summary": "Felzenszwalb và Huttenlocher gộp pixel thành vùng trên đồ thị, dừng khi khác biệt giữa hai vùng lớn hơn bên trong mỗi vùng; chạy gần tuyến tính.",
+        "impact": "Superpixel nhanh, nền cho Selective Search và R-CNN."
       },
       "hog": {
         "title": "HOG feature",
@@ -346,25 +582,100 @@
         "summary": "Challenge thường niên với dataset và protocol đánh giá chung cho classification, detection, segmentation.",
         "impact": "Thiết lập văn hóa benchmark công khai."
       },
+      "nonLocalMeans": {
+        "title": "Non-local means",
+        "summary": "Buades, Coll và Morel khử nhiễu mỗi pixel bằng cách lấy trung bình các patch giống nó ở bất kỳ đâu trong ảnh, không chỉ hàng xóm.",
+        "impact": "Mở ra thế hệ denoising dựa trên patch như BM3D."
+      },
+      "deepAutoencoders": {
+        "title": "Deep autoencoder pre-train từng tầng",
+        "summary": "Hinton và Salakhutdinov train mạng sâu bằng cách pre-train từng tầng, nén ảnh tốt hơn hẳn PCA.",
+        "impact": "Chứng minh mạng sâu train được, mở đầu làn sóng deep learning."
+      },
+      "surf": {
+        "title": "SURF",
+        "summary": "Bay, Tuytelaars và Van Gool tăng tốc feature bất biến scale bằng integral image và box filter.",
+        "impact": "Đưa feature matching lên real-time cho robot và AR."
+      },
       "photoTourism": {
         "title": "Photo Tourism và SfM quy mô lớn",
         "summary": "Snavely, Seitz và Szeliski reconstruct cảnh 3D và vị trí camera từ hàng nghìn ảnh du lịch trên Internet.",
         "impact": "Mở đường cho 3D reconstruction từ ảnh cộng đồng, tiền thân của COLMAP."
+      },
+      "spatialPyramid": {
+        "title": "Spatial pyramid matching",
+        "summary": "Lazebnik, Schmid và Ponce đếm visual word theo lưới ô ngày càng mịn, thêm thông tin vị trí cho bag of words.",
+        "impact": "Pipeline phân loại ảnh mạnh nhất trước deep learning."
+      },
+      "seamCarving": {
+        "title": "Seam carving",
+        "summary": "Avidan và Shamir thay đổi kích thước ảnh bằng cách lần lượt xoá các đường seam ít năng lượng nhất, giữ nguyên vật thể quan trọng.",
+        "impact": "Content-aware resize, có trong Photoshop; ví dụ sớm của chỉnh ảnh theo nội dung."
+      },
+      "ptam": {
+        "title": "PTAM",
+        "summary": "Klein và Murray tách tracking camera và xây bản đồ 3D thành hai luồng song song, chạy real-time trên laptop cho AR.",
+        "impact": "Kiến trúc mà mọi hệ visual SLAM về sau, như ORB-SLAM, đều theo."
+      },
+      "deformablePartModels": {
+        "title": "Deformable Part Models (DPM)",
+        "summary": "Felzenszwalb và cộng sự mô tả vật thể bằng root template và các part có thể xê dịch, học trên HOG.",
+        "impact": "Đỉnh cao object detection trước deep learning."
       },
       "imagenet": {
         "title": "ImageNet",
         "summary": "Nhóm của Fei-Fei Li xây dataset hơn 14 triệu ảnh gán nhãn theo WordNet; challenge ILSVRC bắt đầu năm 2010.",
         "impact": "Dữ liệu đủ lớn để deep learning bộc lộ sức mạnh."
       },
+      "patchMatch": {
+        "title": "PatchMatch",
+        "summary": "Barnes và cộng sự tìm patch giống nhau giữa hai ảnh rất nhanh bằng khởi tạo ngẫu nhiên rồi lan truyền kết quả tốt sang hàng xóm.",
+        "impact": "Content-aware fill trong Photoshop; ý tưởng lan truyền dùng lại trong stereo."
+      },
+      "kinectPose": {
+        "title": "Pose estimation trên Kinect",
+        "summary": "Shotton và cộng sự dùng random forest trên ảnh depth để nhận dạng bộ phận cơ thể real-time.",
+        "impact": "Pose estimation vào hàng triệu gia đình; sức mạnh của synthetic data."
+      },
+      "kinectFusion": {
+        "title": "KinectFusion",
+        "summary": "Newcombe và cộng sự dùng camera depth Kinect, ICP trên GPU và volume TSDF để dựng mô hình 3D của căn phòng real-time.",
+        "impact": "Đưa dense 3D reconstruction real-time tới đông đảo người dùng."
+      },
+      "orb": {
+        "title": "ORB",
+        "summary": "Rublee và cộng sự kết hợp FAST keypoint với descriptor nhị phân BRIEF có xoay, nhanh hơn SIFT hàng chục lần và miễn phí bản quyền.",
+        "impact": "Feature mặc định cho SLAM và ứng dụng trên điện thoại."
+      },
+      "kittiBenchmark": {
+        "title": "KITTI benchmark",
+        "summary": "Geiger, Lenz và Urtasun thu dữ liệu từ xe thật với stereo camera, LiDAR, GPS, kèm benchmark stereo, optical flow, odometry, 3D detection.",
+        "impact": "Benchmark đầu tiên cho autonomous driving trên đường thật."
+      },
       "alexnet": {
         "title": "AlexNet",
         "summary": "Krizhevsky, Sutskever và Hinton train CNN trên GPU, giảm top-5 error ILSVRC 2012 từ khoảng 26% xuống 15,3%.",
         "impact": "Khoảnh khắc cả ngành chuyển sang deep learning."
       },
+      "dropout": {
+        "title": "Dropout",
+        "summary": "Hinton và cộng sự tắt ngẫu nhiên một nửa neuron mỗi bước train, buộc mạng không phụ thuộc vào vài feature riêng lẻ.",
+        "impact": "Kỹ thuật regularization then chốt giúp AlexNet và các mạng lớn không overfit."
+      },
+      "visualizingConvnets": {
+        "title": "Visualizing CNN (ZFNet)",
+        "summary": "Zeiler và Fergus dùng deconvnet xem từng layer CNN học gì, từ cạnh, texture đến bộ phận vật thể.",
+        "impact": "Giúp hiểu và tune CNN; thắng ILSVRC 2013."
+      },
       "variationalAutoencoder": {
         "title": "Variational Autoencoder (VAE)",
         "summary": "Kingma và Welling kết hợp neural network với variational inference để học latent space liên tục, lấy mẫu được.",
         "impact": "Latent space của VAE sau này là phần nén ảnh trong Stable Diffusion."
+      },
+      "selectiveSearch": {
+        "title": "Selective Search",
+        "summary": "Uijlings và cộng sự gộp dần superpixel theo màu, texture và kích thước để sinh khoảng hai nghìn vùng có thể chứa vật thể.",
+        "impact": "Nguồn region proposal của R-CNN và Fast R-CNN."
       },
       "rcnn": {
         "title": "R-CNN",
@@ -381,6 +692,11 @@
         "summary": "Hơn 300 nghìn ảnh đời thường với bounding box, instance mask và caption.",
         "impact": "Benchmark chuẩn của detection, segmentation và captioning đến nay."
       },
+      "deepFace": {
+        "title": "DeepFace",
+        "summary": "Facebook kết hợp face alignment 3D với deep network, đạt độ chính xác gần con người trên LFW.",
+        "impact": "Face recognition bằng deep learning vào sản phẩm quy mô lớn."
+      },
       "vggNet": {
         "title": "VGGNet",
         "summary": "Simonyan và Zisserman chỉ xếp chồng conv 3×3 thật sâu, đạt top đầu ILSVRC 2014.",
@@ -391,10 +707,30 @@
         "summary": "Szegedy và cộng sự chạy song song nhiều nhánh conv trong Inception block, thắng ILSVRC 2014 với ít tham số hơn nhiều.",
         "impact": "Thiết kế kiến trúc tối ưu cả accuracy lẫn compute."
       },
+      "superResolutionCnn": {
+        "title": "SRCNN: super-resolution bằng CNN",
+        "summary": "Dong và cộng sự dùng CNN nhỏ để upscale ảnh, vượt các phương pháp truyền thống.",
+        "impact": "Mở đầu image restoration bằng deep learning."
+      },
       "fullyConvolutionalNetworks": {
         "title": "Fully Convolutional Networks (FCN)",
         "summary": "Long, Shelhamer và Darrell thay fully connected layer bằng convolution để dự đoán nhãn cho từng pixel.",
         "impact": "Khuôn mẫu của mọi mạng semantic segmentation."
+      },
+      "deepLab": {
+        "title": "DeepLab và atrous convolution",
+        "summary": "Chen và cộng sự dùng atrous (dilated) convolution mở rộng receptive field mà không giảm độ phân giải, thêm CRF làm mịn biên.",
+        "impact": "Dẫn đầu semantic segmentation nhiều năm."
+      },
+      "deepPose": {
+        "title": "DeepPose",
+        "summary": "Toshev và Szegedy (Google) cho CNN hồi quy trực tiếp toạ độ các khớp người, rồi tinh chỉnh qua một chuỗi CNN.",
+        "impact": "Lần đầu deep learning giải pose estimation, mở đường cho OpenPose."
+      },
+      "twoStream": {
+        "title": "Two-stream network cho nhận dạng hành động",
+        "summary": "Simonyan và Zisserman dùng một CNN cho frame RGB và một CNN cho optical flow, rồi gộp kết quả để nhận dạng hành động.",
+        "impact": "Kiến trúc chuẩn cho video recognition tới khi có 3D CNN lớn."
       },
       "batchNormalization": {
         "title": "Batch Normalization",
@@ -405,6 +741,16 @@
         "title": "FaceNet",
         "summary": "Google học face embedding bằng triplet loss, khoảng cách phản ánh mức giống nhau giữa hai người.",
         "impact": "Metric learning bằng embedding thành chuẩn cho face recognition."
+      },
+      "fastRcnn": {
+        "title": "Fast R-CNN",
+        "summary": "Ross Girshick tính feature một lần cho cả ảnh rồi cắt theo vùng bằng RoI pooling, inference nhanh hơn R-CNN hàng trăm lần.",
+        "impact": "Two-stage detection thành một mạng train end-to-end."
+      },
+      "flowNet": {
+        "title": "FlowNet",
+        "summary": "Dosovitskiy và cộng sự ước lượng optical flow trực tiếp bằng CNN, train trên dữ liệu synthetic Flying Chairs.",
+        "impact": "Optical flow chuyển sang deep learning."
       },
       "unet": {
         "title": "U-Net",
@@ -421,20 +767,75 @@
         "summary": "Redmon và cộng sự coi object detection là một bài toán regression trên toàn ảnh, đạt real-time.",
         "impact": "Mở đường cho detection trên edge device."
       },
+      "neuralStyleTransfer": {
+        "title": "Neural style transfer",
+        "summary": "Gatys, Ecker và Bethge tách content và style bằng feature CNN, vẽ lại ảnh theo phong cách một bức tranh.",
+        "impact": "Lần đầu công chúng thấy AI \"vẽ\" ảnh."
+      },
+      "dcgan": {
+        "title": "DCGAN",
+        "summary": "Radford và cộng sự đưa ra quy tắc kiến trúc convolution giúp GAN train ổn định, sinh ảnh rõ nét.",
+        "impact": "GAN thành công cụ dùng được; latent space có cấu trúc ngữ nghĩa."
+      },
+      "ssdDetector": {
+        "title": "SSD",
+        "summary": "Liu và cộng sự làm one-stage detection trên nhiều feature map ở các scale khác nhau.",
+        "impact": "Cùng YOLO định hình one-stage detector cho mobile."
+      },
       "resnet": {
         "title": "ResNet",
         "summary": "He và cộng sự thêm residual connection, train được mạng sâu hơn 100 layer và thắng ILSVRC 2015.",
         "impact": "Residual connection thành chuẩn trong mọi kiến trúc sâu."
+      },
+      "orbSlam": {
+        "title": "ORB-SLAM",
+        "summary": "Mur-Artal, Montiel và Tardós xây hệ SLAM hoàn chỉnh trên feature ORB: tracking, mapping, loop closing, chạy real-time với một camera.",
+        "impact": "Hệ visual SLAM mã nguồn mở được dùng nhiều nhất trong robot và AR."
+      },
+      "c3d": {
+        "title": "C3D",
+        "summary": "Tran và cộng sự (Facebook) train 3D convolution trên clip video lớn, cho feature chung mô tả cả hình lẫn chuyển động.",
+        "impact": "Chứng minh 3D CNN học được video feature, dẫn tới I3D."
+      },
+      "denseNet": {
+        "title": "DenseNet",
+        "summary": "Huang và cộng sự nối mỗi layer với mọi layer phía sau trong block, tái sử dụng feature với ít tham số.",
+        "impact": "Phổ biến trong ảnh y tế nhờ hiệu quả tham số."
+      },
+      "sortTracking": {
+        "title": "SORT: multi-object tracking",
+        "summary": "Bewley và cộng sự nối output detector qua các frame bằng Kalman filter và thuật toán Hungarian, rất đơn giản mà nhanh.",
+        "impact": "Khuôn mẫu tracking-by-detection; DeepSORT, ByteTrack phát triển từ đây."
+      },
+      "cityscapes": {
+        "title": "Cityscapes",
+        "summary": "Cordts và cộng sự gán nhãn pixel-level chi tiết cho ảnh đường phố của 50 thành phố.",
+        "impact": "Benchmark chuẩn cho urban scene segmentation."
       },
       "openPose": {
         "title": "OpenPose",
         "summary": "Cao và cộng sự ước lượng skeleton nhiều người cùng lúc bằng Part Affinity Fields, real-time.",
         "impact": "Open-source dùng rộng rãi cho thể thao, y tế, animation."
       },
+      "pix2pix": {
+        "title": "pix2pix",
+        "summary": "Isola và cộng sự dùng conditional GAN cho image-to-image translation: sketch thành ảnh, ngày thành đêm.",
+        "impact": "Một framework chung cho mọi bài toán image-to-image có cặp dữ liệu."
+      },
       "featurePyramidNetworks": {
         "title": "Feature Pyramid Network (FPN)",
         "summary": "Lin và cộng sự kết hợp feature sâu và nông theo đường top-down, detect tốt cả vật nhỏ lẫn lớn.",
         "impact": "Thành phần chuẩn của detector và segmentation model hiện đại."
+      },
+      "stackedHourglass": {
+        "title": "Stacked Hourglass",
+        "summary": "Newell, Yang và Deng xếp chồng các khối thu nhỏ rồi phóng to (hourglass) để dự đoán heatmap khớp, sửa dần qua từng tầng.",
+        "impact": "Backbone pose estimation chủ đạo trước HRNet."
+      },
+      "colmap": {
+        "title": "COLMAP: Structure-from-Motion Revisited",
+        "summary": "Schönberger và Frahm làm lại pipeline SfM gia tăng cho chính xác và bền hơn, phát hành thành phần mềm COLMAP.",
+        "impact": "Công cụ SfM mặc định, tạo pose camera cho gần như mọi bài NeRF và Gaussian Splatting."
       },
       "maskRcnn": {
         "title": "Mask R-CNN",
@@ -446,6 +847,16 @@
         "summary": "Zhu và cộng sự dịch ảnh giữa hai domain không cần dữ liệu cặp, nhờ cycle consistency.",
         "impact": "Domain translation khi không có paired data."
       },
+      "mobileNets": {
+        "title": "MobileNets",
+        "summary": "Howard và cộng sự dùng depthwise separable convolution để tạo mạng nhỏ, nhanh cho điện thoại.",
+        "impact": "Đưa CNN chạy trực tiếp trên mobile và IoT."
+      },
+      "kineticsI3d": {
+        "title": "Kinetics và I3D",
+        "summary": "Carreira và Zisserman giới thiệu dataset Kinetics và \"inflate\" CNN 2D thành 3D cho action recognition.",
+        "impact": "Nền tảng của action recognition bằng deep learning."
+      },
       "transformerArchitecture": {
         "title": "Transformer",
         "summary": "Bài báo Attention Is All You Need bỏ hẳn recurrence và convolution, chỉ dùng self-attention.",
@@ -456,15 +867,80 @@
         "summary": "Lin và cộng sự giảm trọng số các mẫu background dễ, giúp one-stage detector lần đầu vượt two-stage.",
         "impact": "Focal loss thành chuẩn cho dữ liệu mất cân bằng."
       },
+      "pointNet": {
+        "title": "PointNet",
+        "summary": "Qi và cộng sự (Stanford) xử lý point cloud trực tiếp: cùng một MLP cho từng điểm rồi max-pool, nên không phụ thuộc thứ tự điểm.",
+        "impact": "Deep learning trên dữ liệu 3D thô, nền cho LiDAR detection."
+      },
+      "gradCam": {
+        "title": "Grad-CAM",
+        "summary": "Selvaraju và cộng sự dùng gradient của lớp dự đoán trên feature map cuối để vẽ heatmap vùng ảnh model dựa vào.",
+        "impact": "Công cụ giải thích CNN phổ biến nhất, giúp phát hiện model học sai."
+      },
+      "seNet": {
+        "title": "Squeeze-and-Excitation Networks",
+        "summary": "Hu, Shen và Sun nén mỗi channel thành một số, rồi học trọng số để tăng channel hữu ích và giảm channel thừa; thắng ImageNet 2017.",
+        "impact": "Channel attention, khối được ghép vào hầu hết backbone hiện đại."
+      },
+      "panopticSegmentation": {
+        "title": "Panoptic segmentation",
+        "summary": "Kirillov và cộng sự hợp nhất semantic segmentation (\"stuff\") và instance segmentation (\"things\") với metric PQ.",
+        "impact": "Mỗi pixel có cả class lẫn instance ID."
+      },
+      "arcFace": {
+        "title": "ArcFace",
+        "summary": "Deng và cộng sự thêm angular margin vào softmax loss, tạo face feature phân biệt rõ hơn.",
+        "impact": "Chuẩn mực face recognition trong nghiên cứu và sản phẩm."
+      },
+      "yoloV3": {
+        "title": "YOLOv3",
+        "summary": "Redmon và Farhadi thêm multi-scale prediction và backbone Darknet-53, cân bằng tốt speed và accuracy.",
+        "impact": "Khởi đầu hệ sinh thái YOLO cộng đồng (v4, v5, v8…)."
+      },
       "styleGan": {
         "title": "StyleGAN",
         "summary": "NVIDIA điều khiển từng mức chi tiết qua style vector, sinh khuôn mặt giả gần như không phân biệt được.",
         "impact": "Đỉnh cao chất lượng GAN, khởi đầu mối lo deepfake."
       },
+      "bigGan": {
+        "title": "BigGAN",
+        "summary": "Brock, Donahue và Simonyan (DeepMind) scale GAN lên batch và model rất lớn, sinh ảnh ImageNet có điều kiện theo lớp với chất lượng chưa từng thấy.",
+        "impact": "Cho thấy scale là chìa khoá cho generative model."
+      },
+      "fcosAnchorFree": {
+        "title": "FCOS: anchor-free detection",
+        "summary": "Tian và cộng sự dự đoán khoảng cách từ mỗi điểm tới bốn cạnh box, bỏ hẳn anchor.",
+        "impact": "Hướng anchor-free được các YOLO đời sau áp dụng."
+      },
+      "efficientNet": {
+        "title": "EfficientNet",
+        "summary": "Tan và Le scale đồng thời depth, width và resolution theo một hệ số chung, base model tìm bằng NAS.",
+        "impact": "Accuracy cao với ít compute hơn nhiều."
+      },
       "momentumContrast": {
         "title": "MoCo",
         "summary": "He và cộng sự học representation không cần nhãn bằng contrastive learning với một queue các ảnh khác.",
         "impact": "Self-supervised lần đầu vượt supervised pre-training trên nhiều task."
+      },
+      "slowFast": {
+        "title": "SlowFast",
+        "summary": "Feichtenhofer và cộng sự (Facebook) dùng một nhánh chậm đọc ít frame để hiểu ngữ cảnh và một nhánh nhanh nhẹ để bắt chuyển động.",
+        "impact": "Kiến trúc video recognition hàng đầu, cảm hứng từ hệ thị giác sinh học."
+      },
+      "hrNet": {
+        "title": "HRNet",
+        "summary": "Sun và cộng sự (Microsoft) giữ một nhánh độ phân giải cao suốt mạng và trao đổi thông tin liên tục với các nhánh thấp hơn.",
+        "impact": "Backbone chuẩn cho pose estimation và dense prediction."
+      },
+      "simClr": {
+        "title": "SimCLR",
+        "summary": "Chen và cộng sự cho thấy augmentation mạnh, batch lớn và projection head đưa contrastive learning gần bằng supervised.",
+        "impact": "Công thức đơn giản giúp self-supervised learning phổ biến."
+      },
+      "raftFlow": {
+        "title": "RAFT",
+        "summary": "Teed và Deng ước lượng optical flow bằng cách lặp tra cứu all-pairs correlation volume; best paper ECCV 2020.",
+        "impact": "Chuẩn mới của optical flow, dùng trong frame interpolation."
       },
       "nerf": {
         "title": "NeRF",
@@ -486,6 +962,21 @@
         "summary": "Ảnh được chia thành patch 16×16 rồi đưa vào transformer như chuỗi token, vượt CNN khi đủ dữ liệu.",
         "impact": "Vision và language dùng chung một kiến trúc."
       },
+      "dataEfficientTransformers": {
+        "title": "DeiT",
+        "summary": "Touvron và cộng sự train ViT chỉ trên ImageNet-1k nhờ distillation và augmentation mạnh.",
+        "impact": "ViT không cần dataset khổng lồ."
+      },
+      "byol": {
+        "title": "BYOL",
+        "summary": "Grill và cộng sự (DeepMind) học representation bằng cách cho một mạng dự đoán output của bản sao trung bình động của chính nó, không cần negative pair.",
+        "impact": "Chứng minh self-supervised không cần negative, mở đường cho DINO."
+      },
+      "dallE": {
+        "title": "DALL·E",
+        "summary": "OpenAI sinh ảnh từ text bằng transformer autoregressive trên text token và image token.",
+        "impact": "Khởi đầu kỷ nguyên text-to-image."
+      },
       "clip": {
         "title": "CLIP",
         "summary": "Train image encoder và text encoder trên 400 triệu cặp ảnh – text từ web, phân loại zero-shot.",
@@ -501,15 +992,50 @@
         "summary": "Caron và cộng sự train ViT self-supervised bằng self-distillation teacher–student.",
         "impact": "Attention map tự tách vật thể khỏi background."
       },
+      "segFormer": {
+        "title": "SegFormer",
+        "summary": "Xie và cộng sự ghép hierarchical transformer encoder với MLP decoder nhẹ cho semantic segmentation.",
+        "impact": "Segmentation bằng transformer đủ nhẹ để deploy."
+      },
       "maskedAutoencoders": {
         "title": "Masked Autoencoders (MAE)",
         "summary": "He và cộng sự mask ngẫu nhiên 75% patch rồi train ViT khôi phục lại.",
         "impact": "Pre-training kiểu BERT cho ảnh, đơn giản và scale tốt."
       },
+      "vqgan": {
+        "title": "VQGAN",
+        "summary": "Esser, Rombach và Ommer nén ảnh thành lưới token rời rạc với loss GAN, rồi dùng Transformer sinh token để tạo ảnh độ phân giải cao.",
+        "impact": "Tokenizer ảnh và latent space mà Stable Diffusion kế thừa."
+      },
+      "byteTrack": {
+        "title": "ByteTrack",
+        "summary": "Zhang và cộng sự giữ cả box có điểm thấp để ghép vào track, thay vì bỏ đi, nên ít mất dấu vật bị che khuất.",
+        "impact": "Tracker đơn giản mà mạnh, mặc định trong nhiều pipeline YOLO."
+      },
+      "mask2Former": {
+        "title": "Mask2Former",
+        "summary": "Cheng và cộng sự (Meta) dùng mask query với masked attention để giải semantic, instance và panoptic segmentation trong một kiến trúc.",
+        "impact": "Một kiến trúc thống nhất cho mọi loại segmentation."
+      },
+      "convNext": {
+        "title": "ConvNeXt",
+        "summary": "Liu và cộng sự hiện đại hóa ResNet theo các lựa chọn thiết kế của transformer, accuracy ngang Swin.",
+        "impact": "CNN thuần vẫn cạnh tranh được."
+      },
       "latentDiffusion": {
         "title": "Latent Diffusion và Stable Diffusion",
         "summary": "Rombach và cộng sự chạy diffusion trong latent space, giảm mạnh compute; model được public năm 2022.",
         "impact": "Text-to-image chạy được trên một GPU phổ thông."
+      },
+      "dallE2": {
+        "title": "DALL·E 2",
+        "summary": "OpenAI sinh ảnh bằng diffusion có điều kiện trên CLIP image embedding, chất lượng và độ bám prompt vượt bậc.",
+        "impact": "Text-to-image thành sản phẩm đại chúng."
+      },
+      "imagen": {
+        "title": "Imagen",
+        "summary": "Google cho thấy text encoder lớn (T5) giúp ảnh bám prompt hơn là tăng cỡ image model.",
+        "impact": "Khẳng định vai trò của language understanding trong sinh ảnh."
       },
       "laion5b": {
         "title": "LAION-5B",
@@ -521,10 +1047,55 @@
         "summary": "Peebles và Xie thay U-Net trong diffusion model bằng transformer, chất lượng tăng đều theo compute.",
         "impact": "Backbone của SD3, Sora và thế hệ model sinh mới."
       },
+      "flamingo": {
+        "title": "Flamingo",
+        "summary": "DeepMind nối vision encoder vào LLM đóng băng bằng cross-attention, học từ ảnh và văn bản xen kẽ, làm được few-shot nhiều tác vụ.",
+        "impact": "Mẫu kiến trúc cho các vision-language model sau này."
+      },
+      "instantNgp": {
+        "title": "Instant-NGP",
+        "summary": "Müller và cộng sự (NVIDIA) dùng multiresolution hash encoding để train NeRF trong vài giây thay vì nhiều giờ.",
+        "impact": "Biến NeRF thành công cụ thực dụng; hash grid được dùng khắp nơi."
+      },
+      "yoloV7": {
+        "title": "YOLOv7",
+        "summary": "Wang, Bochkovskiy và Liao tối ưu kiến trúc và cách train (trainable bag-of-freebies), vượt mọi detector real-time thời đó.",
+        "impact": "Đẩy chuẩn tốc độ và độ chính xác cho detection real-time."
+      },
+      "classifierFreeGuidance": {
+        "title": "Classifier-free guidance",
+        "summary": "Ho và Salimans train cùng một model có và không có prompt, rồi đẩy kết quả xa khỏi dự đoán không điều kiện để ảnh bám prompt hơn.",
+        "impact": "Núm chỉnh guidance scale có trong mọi model text-to-image."
+      },
+      "dreamBooth": {
+        "title": "DreamBooth",
+        "summary": "Ruiz và cộng sự (Google) fine-tune model diffusion trên 3–5 ảnh của một chủ thể để sinh nó trong bối cảnh mới.",
+        "impact": "Mở ra cá nhân hoá model generative, cùng LoRA tạo nên cả hệ sinh thái."
+      },
+      "dreamFusion": {
+        "title": "DreamFusion",
+        "summary": "Poole và cộng sự (Google) tối ưu một NeRF để mọi góc render đều được model diffusion 2D chấm là khớp prompt (score distillation).",
+        "impact": "Text-to-3D không cần dữ liệu 3D."
+      },
+      "flowMatching": {
+        "title": "Flow matching",
+        "summary": "Lipman và cộng sự (Meta) train model học trường vận tốc đưa noise thẳng tới dữ liệu, đơn giản và ổn định hơn diffusion.",
+        "impact": "Nền của Stable Diffusion 3, FLUX và nhiều model video."
+      },
+      "blip2": {
+        "title": "BLIP-2",
+        "summary": "Salesforce nối image encoder và LLM đã freeze bằng một Q-Former nhỏ, train rất rẻ.",
+        "impact": "Công thức ghép ảnh vào LLM cho nhiều VLM mở."
+      },
       "controlNet": {
         "title": "ControlNet",
         "summary": "Zhang và cộng sự thêm điều kiện không gian (edge, pose, depth) vào diffusion model có sẵn mà không phá nó.",
         "impact": "Sinh ảnh thành công cụ điều khiển được."
+      },
+      "sigLip": {
+        "title": "SigLIP",
+        "summary": "Zhai và cộng sự thay softmax trong huấn luyện kiểu CLIP bằng sigmoid loss theo cặp, hiệu quả ở batch nhỏ.",
+        "impact": "Image encoder được nhiều VLM mở lựa chọn."
       },
       "multimodalAssistants": {
         "title": "LLM nhìn được ảnh",
@@ -551,6 +1122,16 @@
         "summary": "Nhóm Baidu đưa ra detector transformer end-to-end chạy real-time: hybrid encoder xử lý feature multi-scale, không cần NMS, vượt các YOLO cùng thời trên COCO.",
         "impact": "DETR đủ nhanh để deploy thực tế."
       },
+      "llava": {
+        "title": "LLaVA",
+        "summary": "Liu và cộng sự fine-tune LLM mở trên dữ liệu hội thoại về ảnh do GPT-4 sinh ra, tạo visual assistant open-source.",
+        "impact": "Mở đầu làn sóng VLM mở."
+      },
+      "sdxl": {
+        "title": "SDXL",
+        "summary": "Stability AI phát hành diffusion model mở lớn hơn với hai text encoder và refiner, ảnh 1024 px.",
+        "impact": "Model sinh ảnh mở được fine-tune nhiều nhất một thời."
+      },
       "gaussianSplatting": {
         "title": "3D Gaussian Splatting",
         "summary": "Biểu diễn cảnh bằng hàng triệu Gaussian, render real-time với chất lượng ngang NeRF.",
@@ -561,15 +1142,110 @@
         "summary": "Wang và cộng sự dự đoán trực tiếp pointmap 3D từ một cặp ảnh, không cần thông số camera.",
         "impact": "3D reconstruction thành một mạng end-to-end."
       },
+      "instructPix2Pix": {
+        "title": "InstructPix2Pix",
+        "summary": "Brooks, Holynski và Efros (Berkeley) dạy model diffusion sửa ảnh theo câu lệnh như \"biến trời thành hoàng hôn\", với dữ liệu train do GPT-3 và Stable Diffusion tạo.",
+        "impact": "Chỉnh sửa ảnh bằng ngôn ngữ tự nhiên."
+      },
+      "zero123": {
+        "title": "Zero-1-to-3",
+        "summary": "Liu và cộng sự (Columbia) fine-tune Stable Diffusion để sinh ảnh của một vật từ góc nhìn mới, chỉ từ một ảnh.",
+        "impact": "Từ một ảnh ra mô hình 3D, nền của các model image-to-3D."
+      },
+      "consistencyModels": {
+        "title": "Consistency models",
+        "summary": "Song và cộng sự (OpenAI) train model nhảy thẳng từ bất kỳ điểm nào trên quỹ đạo noise về ảnh sạch, sinh ảnh trong một hoặc vài bước.",
+        "impact": "Mở đường cho generation real-time thay vì hàng chục bước."
+      },
+      "coTracker": {
+        "title": "CoTracker",
+        "summary": "Karaev và cộng sự (Meta, Oxford) track hàng nghìn điểm cùng lúc qua video bằng Transformer, các điểm hỗ trợ nhau khi bị che khuất.",
+        "impact": "Point tracking dài hạn, dùng trong robot và chỉnh sửa video."
+      },
+      "depthAnything": {
+        "title": "Depth Anything",
+        "summary": "Yang và cộng sự train monocular depth trên hàng chục triệu ảnh không nhãn, pseudo-label bằng teacher model.",
+        "impact": "Depth estimation từ một ảnh dùng được cho mọi loại cảnh."
+      },
+      "yoloWorld": {
+        "title": "YOLO-World",
+        "summary": "Cheng và cộng sự đưa open-vocabulary detection vào YOLO, real-time với prompt bằng text.",
+        "impact": "Open-vocabulary detection đủ nhanh cho edge device."
+      },
+      "stableDiffusion3": {
+        "title": "Stable Diffusion 3 và rectified flow",
+        "summary": "Esser và cộng sự kết hợp rectified flow với MMDiT, cải thiện rõ khả năng viết chữ trong ảnh và bám prompt.",
+        "impact": "Rectified flow + MMDiT thành công thức của model sinh mới."
+      },
       "videoGeneration": {
         "title": "Video generation",
         "summary": "Diffusion model mở rộng sang chiều thời gian, tạo video ngắn có chuyển động nhất quán.",
         "impact": "Thách thức mới: temporal consistency và vật lý của cảnh."
       },
+      "yoloV10": {
+        "title": "YOLOv10",
+        "summary": "Wang và cộng sự train YOLO với dual label assignment để bỏ NMS, tiến tới detection end-to-end real-time.",
+        "impact": "YOLO tiếp thu ý tưởng NMS-free của DETR."
+      },
+      "segmentAnything2": {
+        "title": "SAM 2",
+        "summary": "Meta mở rộng SAM sang video bằng streaming memory, segmentation và tracking vật thể qua các frame.",
+        "impact": "Một foundation model cho cả image và video segmentation."
+      },
+      "sora": {
+        "title": "Sora",
+        "summary": "OpenAI giới thiệu diffusion Transformer trên patch không gian–thời gian, sinh video dài tới một phút từ văn bản.",
+        "impact": "Đưa video generation chất lượng cao và ý tưởng \"world simulator\" ra công chúng."
+      },
+      "florence2": {
+        "title": "Florence-2",
+        "summary": "Microsoft train một model nhỏ (dưới 1 tỉ tham số) làm captioning, detection, grounding, segmentation và OCR chỉ bằng thay prompt.",
+        "impact": "Một model gọn nhẹ thay nhiều model chuyên biệt."
+      },
+      "var": {
+        "title": "Visual Autoregressive Modeling (VAR)",
+        "summary": "Tian và cộng sự sinh ảnh theo \"next-scale prediction\": từ token map 1×1 lên dần độ phân giải cao, thay vì từng token một; best paper NeurIPS 2024.",
+        "impact": "Autoregressive vượt diffusion trên ImageNet và theo scaling law như LLM."
+      },
+      "mast3r": {
+        "title": "MASt3R",
+        "summary": "Leroy, Cabon và Revaud (Naver Labs) thêm descriptor matching vào DUSt3R, ghép điểm 3D giữa hai ảnh chính xác cả khi góc nhìn rất khác nhau.",
+        "impact": "Matching và reconstruction trong một model, thay keypoint thủ công."
+      },
+      "depthAnythingV2": {
+        "title": "Depth Anything V2",
+        "summary": "Yang và cộng sự train teacher trên ảnh tổng hợp có depth chính xác, rồi gán nhãn hàng chục triệu ảnh thật để train student.",
+        "impact": "Depth từ một ảnh sắc nét và bền, dùng rộng rãi làm điều kiện cho generation."
+      },
+      "vggt": {
+        "title": "VGGT",
+        "summary": "Wang và cộng sự (Oxford, Meta) dự đoán camera, depth, pointmap và point track từ một đến hàng trăm ảnh trong một lần forward; best paper CVPR 2025.",
+        "impact": "Foundation model cho 3D geometry, thay phần lớn pipeline SfM."
+      },
+      "dinoV3": {
+        "title": "DINOv3",
+        "summary": "Meta scale self-supervised learning lên model 7 tỉ tham số và 1,7 tỉ ảnh, cho dense feature chất lượng cao, kể cả ảnh vệ tinh.",
+        "impact": "Feature không nhãn vượt nhiều model chuyên biệt."
+      },
       "openVisionLanguage": {
         "title": "VLM mở và embodied vision",
         "summary": "Nhiều vision–language model mở trọng số chạy được trên máy cá nhân và edge device; vision cho robot và agent thành hướng chính.",
         "impact": "Phần lịch sử đang được viết, mời bạn góp ý thêm mốc."
+      },
+      "segmentAnything3": {
+        "title": "SAM 3",
+        "summary": "Meta cho phép segment và track mọi instance khớp một concept mô tả bằng text hoặc ảnh mẫu, thay vì một cú click.",
+        "impact": "Từ \"vật thể này\" sang \"mọi vật thể loại này\": hợp nhất detection, segmentation, tracking."
+      },
+      "sigLip2": {
+        "title": "SigLIP 2",
+        "summary": "Google kết hợp loss sigmoid với captioning, self-distillation và masked prediction, cho vision encoder đa ngôn ngữ mạnh hơn cả về hiểu ảnh lẫn định vị.",
+        "impact": "Vision encoder mặc định cho nhiều vision-language model mở."
+      },
+      "cosmos": {
+        "title": "NVIDIA Cosmos",
+        "summary": "NVIDIA phát hành bộ world foundation model mở, train trên hàng triệu giờ video để mô phỏng thế giới vật lý cho robot và xe tự lái.",
+        "impact": "Video generation trở thành simulator để train AI vật lý."
       }
     },
     "illustration": {
@@ -598,9 +1274,25 @@
         "name": "Từ cạnh tới khối 3D",
         "caption": "Ảnh được đọc thành cạnh và các điểm nối; từ cấu trúc đó máy suy ra một khối 3D có thể xoay và nhìn từ mọi phía."
       },
+      "fourier": {
+        "name": "Phân tích tần số",
+        "caption": "Tín hiệu là tổng các sóng sin; càng cộng nhiều tần số thì càng khớp. Giữ lại các tần số mạnh nhất là ý tưởng nén ảnh của JPEG."
+      },
+      "shading": {
+        "name": "Shape from shading",
+        "caption": "Ánh sáng di chuyển và độ sáng trên bề mặt thay đổi theo hướng của nó; đảo ngược quan hệ này cho ra normal và hình dạng 3D."
+      },
+      "histogramThreshold": {
+        "name": "Ngưỡng từ histogram",
+        "caption": "Ngưỡng trượt trên histogram tới chỗ trũng giữa hai đỉnh, nơi tách tốt nhất foreground và background, rồi ảnh được nhị phân hoá."
+      },
       "edgeDetect": {
         "name": "Edge detection",
         "caption": "Một filter gradient quét qua ảnh và chỉ giữ lại nơi độ sáng thay đổi đột ngột: đường viền của vật thể."
+      },
+      "scaleSpace": {
+        "name": "Scale space",
+        "caption": "Ảnh được làm mờ dần ở nhiều mức; mỗi blob được phát hiện ở đúng scale phù hợp với kích thước của nó."
       },
       "opticalFlow": {
         "name": "Optical flow",
@@ -610,9 +1302,25 @@
         "name": "RANSAC",
         "caption": "Chọn ngẫu nhiên hai điểm, dựng đường thẳng, đếm bao nhiêu điểm đồng ý; lặp lại vài lần và giữ giả thuyết có nhiều inlier nhất, bỏ qua outlier."
       },
+      "twoView": {
+        "name": "Hình học hai view",
+        "caption": "Hai camera cùng nhìn một điểm; truy ngược hai tia sáng qua image plane, giao điểm của chúng chính là vị trí 3D."
+      },
+      "calibration": {
+        "name": "Camera calibration",
+        "caption": "Chụp bàn cờ ở nhiều góc, phát hiện các góc ô; vì biết hình dạng thật của bàn cờ, ta giải ra tiêu cự và độ méo của ống kính."
+      },
+      "snake": {
+        "name": "Active contour",
+        "caption": "Một đường cong mềm bị kéo về phía cạnh ảnh nhưng vẫn giữ độ trơn, co dần và ôm khít đường biên vật thể."
+      },
       "keypoints": {
         "name": "Keypoint và matching",
         "caption": "Tìm các điểm đặc trưng ổn định với xoay và scale ở cả hai ảnh, mô tả chúng bằng descriptor, rồi nối các cặp giống nhau."
+      },
+      "lbp": {
+        "name": "Local Binary Pattern",
+        "caption": "So sánh 8 điểm lân cận với pixel trung tâm, mỗi so sánh cho một bit; chuỗi bit là mã texture, gom lại thành histogram."
       },
       "bagOfWords": {
         "name": "Bag of visual words",
@@ -622,6 +1330,22 @@
         "name": "Margin lớn nhất",
         "caption": "SVM đặt ranh giới sao cho khoảng trống tới điểm gần nhất của mỗi lớp là lớn nhất; chỉ vài support vector quyết định ranh giới."
       },
+      "bilateral": {
+        "name": "Bilateral filter",
+        "caption": "Làm mượt bằng cách lấy trung bình lân cận, nhưng chỉ với những điểm có độ sáng tương tự, nên nhiễu biến mất mà cạnh vẫn sắc."
+      },
+      "particles": {
+        "name": "Particle filter",
+        "caption": "Tracker giữ một đám mây giả thuyết; mỗi frame chúng được dự đoán, chấm điểm theo ảnh và resample về chỗ có khả năng nhất."
+      },
+      "textureGrow": {
+        "name": "Texture synthesis",
+        "caption": "Texture mới được mọc ra từng điểm một bằng cách tìm trong mẫu vùng lân cận giống nhất và sao chép điểm tiếp theo."
+      },
+      "graphCut": {
+        "name": "Graph cut",
+        "caption": "Mỗi pixel là một node, các cạnh nối pixel giống nhau thì mạnh; nhát cắt rẻ nhất qua các liên kết yếu tách vật thể khỏi nền."
+      },
       "eigenfaces": {
         "name": "Eigenfaces",
         "caption": "Mỗi khuôn mặt là khuôn mặt trung bình cộng vài eigenface có trọng số; nhận diện chỉ cần so sánh các trọng số đó."
@@ -629,6 +1353,18 @@
       "slidingWindow": {
         "name": "Sliding window",
         "caption": "Một cửa sổ cố định trượt khắp ảnh; ở mỗi vị trí classifier (Haar, HOG, part model) quyết định có vật thể hay không."
+      },
+      "meanShift": {
+        "name": "Mean shift",
+        "caption": "Mỗi điểm leo dần về nơi mật độ dày nhất xung quanh nó; các điểm dừng ở cùng một đỉnh thuộc cùng một cụm."
+      },
+      "seamlessBlend": {
+        "name": "Poisson blending",
+        "caption": "Vật thể được dán theo gradient chứ không theo màu, nên đường nối biến mất và màu sắc hoà vào nền mới."
+      },
+      "ssimCompare": {
+        "name": "SSIM",
+        "caption": "Hai ảnh được so sánh theo từng cửa sổ về độ sáng, độ tương phản và cấu trúc, cho ra bản đồ độ giống gần với cảm nhận của mắt người."
       },
       "convolution": {
         "name": "Convolution",
@@ -670,6 +1406,10 @@
         "name": "Inception module",
         "caption": "Nhiều kernel kích thước khác nhau cùng nhìn một input song song; kết quả được ghép lại, để mạng tự chọn scale phù hợp."
       },
+      "superResolution": {
+        "name": "Super-resolution",
+        "caption": "Mạng học cách bổ sung chi tiết mà ảnh độ phân giải thấp đã mất, biến ảnh vỡ hạt thành ảnh sắc nét."
+      },
       "batchNorm": {
         "name": "Batch normalization",
         "caption": "Phân phối activation bị trôi giữa các lớp được đưa về trung tâm và chuẩn hoá theo từng batch, giúp train nhanh và ổn định hơn."
@@ -678,9 +1418,17 @@
         "name": "U-Net",
         "caption": "Encoder thu nhỏ ảnh để hiểu ngữ cảnh, decoder phóng to lại; skip connection mang chi tiết từ mỗi tầng sang để mask sắc nét."
       },
+      "styleTransfer": {
+        "name": "Style transfer",
+        "caption": "Nội dung lấy từ một ảnh, texture và màu sắc lấy từ một bức tranh; ảnh đầu ra được tối ưu để khớp cả hai."
+      },
       "residual": {
         "name": "Residual connection",
         "caption": "Mỗi block chỉ học phần chỉnh sửa cộng thêm vào một shortcut, nên tín hiệu và gradient đi xuyên qua được cả trăm lớp."
+      },
+      "tracking": {
+        "name": "Multi-object tracking",
+        "caption": "Mỗi vật thể được detect trong từng frame rồi nối với track cũ, giữ nguyên box và ID khi chúng di chuyển."
       },
       "imageTranslation": {
         "name": "Image-to-image translation",
@@ -693,6 +1441,10 @@
       "instanceMask": {
         "name": "Instance và panoptic segmentation",
         "caption": "Mỗi vật thể có box rồi mask riêng của nó; panoptic gán nhãn thêm cả vùng nền như đường, trời."
+      },
+      "spatioTemporal": {
+        "name": "3D convolution",
+        "caption": "Kernel trượt cả trong không gian lẫn theo thời gian qua chồng frame, nên chuyển động trở thành một feature để nhận diện hành động."
       },
       "pixelMask": {
         "name": "Semantic segmentation",
@@ -721,6 +1473,10 @@
       "diffusion": {
         "name": "Diffusion",
         "caption": "Bắt đầu từ noise thuần tuý, model khử nhiễu qua nhiều bước, được prompt dẫn hướng, cho tới khi ảnh hiện ra."
+      },
+      "imageTokens": {
+        "name": "Sinh ảnh theo token",
+        "caption": "Text và ảnh đều là chuỗi token; model viết ảnh ra từng token một, nối tiếp sau phần text mô tả."
       },
       "imageTextMatch": {
         "name": "Image–text contrastive",
@@ -754,9 +1510,73 @@
         "name": "Gaussian splatting",
         "caption": "Một đám mây Gaussian mềm có màu được di chuyển và biến dạng cho tới khi render ra đúng cảnh, đủ nhanh để xem real-time."
       },
+      "depthMap": {
+        "name": "Monocular depth",
+        "caption": "Chỉ từ một ảnh, model ước lượng khoảng cách của từng pixel: vật gần sáng, vật xa tối."
+      },
       "videoFrames": {
         "name": "Video generation",
         "caption": "Các frame được khử nhiễu cùng nhau thay vì từng ảnh rời, nên chuyển động giữa chúng liền mạch theo thời gian."
+      },
+      "videoMask": {
+        "name": "Video segmentation có memory",
+        "caption": "Click vào vật thể ở frame đầu; một memory lưu lại đặc trưng của nó và mang mask qua mọi frame tiếp theo."
+      },
+      "conceptMask": {
+        "name": "Concept segmentation",
+        "caption": "Một cụm danh từ ngắn như \"cái cây\" tìm và tạo mask cho mọi instance của khái niệm đó, không chỉ một vật."
+      },
+      "kalman": {
+        "name": "Dự đoán và hiệu chỉnh",
+        "caption": "Mỗi bước, filter dự đoán vị trí mới và vùng không chắc chắn nở ra; khi có phép đo, ước lượng bị kéo về phía đó và vùng không chắc chắn co lại."
+      },
+      "kMeansClusters": {
+        "name": "Phân cụm k-means",
+        "caption": "Mỗi điểm lấy màu của tâm gần nhất, rồi mỗi tâm dời về trung bình các điểm của nó; lặp vài lần là các cụm ổn định."
+      },
+      "stereoDisparity": {
+        "name": "Stereo và disparity",
+        "caption": "Cùng một vật hiện lệch nhau giữa ảnh trái và phải; vật càng gần thì độ lệch càng lớn, nên bản đồ disparity chính là bản đồ độ sâu."
+      },
+      "isoSurface": {
+        "name": "Trích bề mặt từ lưới",
+        "caption": "Mỗi ô lưới được xét xem giá trị ở các góc nằm trong hay ngoài vật; nối các điểm cắt trên cạnh ô sẽ ra đường bao (3D: lưới tam giác)."
+      },
+      "pointAlign": {
+        "name": "Căn chỉnh point cloud",
+        "caption": "Mỗi điểm được nối với điểm gần nhất trong cloud kia; phép quay và tịnh tiến tốt nhất được áp dụng, lặp lại cho tới khi hai cloud khớp nhau."
+      },
+      "seamCarve": {
+        "name": "Seam carving",
+        "caption": "Tìm đường seam từ trên xuống dưới đi qua các pixel ít chi tiết nhất rồi xoá nó; ảnh hẹp lại mà vật thể chính không bị bóp méo."
+      },
+      "pointCloud": {
+        "name": "Học trên point cloud",
+        "caption": "Cùng một mạng nhỏ biến từng điểm thành vector feature; max-pool gộp tất cả thành một mô tả không phụ thuộc thứ tự, từ đó phân loại vật thể."
+      },
+      "saliencyHeatmap": {
+        "name": "Heatmap giải thích",
+        "caption": "Gradient của lớp dự đoán cho biết vùng nào trên feature map quan trọng; phủ lên ảnh, nó sáng lên đúng chỗ model nhìn vào."
+      },
+      "nextScale": {
+        "name": "Sinh ảnh theo từng tỉ lệ",
+        "caption": "Model đoán token map 1×1, rồi 2×2, 4×4, 8×8, mỗi tầng dựa trên các tầng thô hơn, nên bức ảnh nét dần từ tổng thể tới chi tiết."
+      },
+      "flowPaths": {
+        "name": "Đường đi từ noise tới ảnh",
+        "caption": "Mỗi mẫu noise đi theo một trường vận tốc đã học tới một ảnh thật; đường càng thẳng thì càng ít bước, tới mức chỉ cần một bước nhảy."
+      },
+      "backgroundModel": {
+        "name": "Tách nền",
+        "caption": "Mỗi pixel nhớ màu nền quen thuộc của nó; pixel nào khác hẳn mô hình nền thì được đánh dấu là vật đang chuyển động."
+      },
+      "dropoutNet": {
+        "name": "Dropout",
+        "caption": "Mỗi bước train, một nhóm neuron ngẫu nhiên bị tắt; mạng phải học nhiều đường dự phòng thay vì dựa vào vài neuron."
+      },
+      "channelAttention": {
+        "name": "Channel attention",
+        "caption": "Mỗi channel được nén thành một con số; một mạng nhỏ dùng các số đó để tăng channel hữu ích và giảm channel ít giá trị."
       }
     }
   },

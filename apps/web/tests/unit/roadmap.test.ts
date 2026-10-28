@@ -41,6 +41,18 @@ describe("roadmap data", () => {
     }
   });
 
+  it("marks the turning points as major, with some in every era", () => {
+    const major = MILESTONES.filter((milestone) => milestone.major);
+    expect(major.length).toBeGreaterThan(0);
+    expect(major.length).toBeLessThan(MILESTONES.length / 2);
+    for (const era of ERAS) {
+      expect(
+        milestonesByEra(era.id).some((milestone) => milestone.major),
+        era.id,
+      ).toBe(true);
+    }
+  });
+
   it("links sources over https only", () => {
     for (const milestone of MILESTONES) {
       if (!milestone.source) continue;

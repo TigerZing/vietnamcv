@@ -133,6 +133,32 @@ test.describe("roadmap", () => {
     ).toBeVisible();
   });
 
+  test("shows the major milestones by default and every one on request", async ({
+    page,
+  }) => {
+    await page.goto("/vi/roadmap");
+    const scope = page.getByRole("region", { name: "Hiển thị" });
+    const major = scope.getByRole("button", { name: /^Mốc chính/ });
+    const all = scope.getByRole("button", { name: /^Tất cả các mốc/ });
+    await expect(major).toHaveAttribute("aria-pressed", "true");
+    await expect(page.getByRole("heading", { name: "AlexNet" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Kalman filter" }),
+    ).toBeHidden();
+    await all.click();
+    await expect(all).toHaveAttribute("aria-pressed", "true");
+    await expect(
+      page.getByRole("heading", { name: "Kalman filter" }),
+    ).toBeVisible();
+    // In the full timeline the major milestones carry a badge.
+    const card = page.locator("article").filter({ hasText: "AlexNet" }).first();
+    await expect(card.getByText("Mốc chính", { exact: true })).toBeVisible();
+    await major.click();
+    await expect(
+      page.getByRole("heading", { name: "Kalman filter" }),
+    ).toBeHidden();
+  });
+
   test("has an English translation", async ({ page }) => {
     await page.goto("/en/roadmap");
     await expect(
@@ -164,7 +190,11 @@ test.describe("roadmap", () => {
         localStorage.setItem("vietnamcv-theme", value);
       }, theme);
       await page.goto("/vi/roadmap");
-      // Check with an illustration open, so the panel is audited too.
+      // Audit the full timeline, with its major-milestone badges and an illustration open.
+      await page
+        .getByRole("region", { name: "Hiển thị" })
+        .getByRole("button", { name: /^Tất cả các mốc/ })
+        .click();
       await page
         .locator("article")
         .filter({ hasText: "AlexNet" })
