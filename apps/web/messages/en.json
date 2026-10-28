@@ -162,11 +162,6 @@
   "Roadmap": {
     "title": "The history of computer vision, 1957 to today",
     "lead": "A timeline from the first digital image to today's foundation models. Every milestone links to the original work so you can read further.",
-    "stats": {
-      "milestones": "{count} milestones",
-      "eras": "{count} eras",
-      "span": "{from}–{to}"
-    },
     "hero": {
       "label": "The core problem: from pixels to meaning",
       "steps": {

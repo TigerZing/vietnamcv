@@ -13,7 +13,6 @@ import {
   MILESTONE_ILLUSTRATIONS,
   MILESTONES,
   milestonesByEra,
-  timelineSpan,
 } from "@/lib/roadmap";
 
 export async function generateMetadata({
@@ -36,7 +35,6 @@ export default function Page() {
   // The copy for each era and milestone is read from the message tree by id, so a new
   // milestone only needs a data entry plus its copy (the ids are typechecked in roadmap.ts).
   const copy = useMessages().Roadmap;
-  const span = timelineSpan();
 
   const eras: TimelineEra[] = ERAS.map((era) => ({
     id: era.id,
@@ -67,29 +65,12 @@ export default function Page() {
     )
     .map((topic) => ({ id: topic, label: copy.topics[topic] }));
 
-  const stats = [
-    t("stats.span", { from: span.from, to: span.to }),
-    t("stats.milestones", { count: MILESTONES.length }),
-    t("stats.eras", { count: ERAS.length }),
-  ];
-
   return (
     <div className="flex flex-col gap-8">
       <header className="flex flex-col gap-4">
         <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
           {t("title")}
         </h1>
-        <p className="max-w-2xl text-lg text-muted-foreground">{t("lead")}</p>
-        <ul className="flex flex-wrap gap-2">
-          {stats.map((stat) => (
-            <li
-              key={stat}
-              className="rounded-full border border-border bg-surface px-3 py-1 text-sm text-muted-foreground tabular-nums"
-            >
-              {stat}
-            </li>
-          ))}
-        </ul>
       </header>
 
       <VisionPipeline label={t("hero.label")} stepLabels={copy.hero.steps} />
