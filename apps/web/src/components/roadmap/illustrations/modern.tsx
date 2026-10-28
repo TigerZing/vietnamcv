@@ -19,6 +19,7 @@ import {
   Scene,
   SCENE,
   SCENE_OBJECTS,
+  sceneObjectAt,
   SceneObjectShape,
   SOFT,
   step,
@@ -478,6 +479,67 @@ export const diffusion: Illustration = {
             strokeWidth={0.5}
           />
         ))}
+      </g>
+    );
+  },
+};
+
+/** Text and image are both tokens; the image is written out one token after another. */
+export const imageTokens: Illustration = {
+  duration: 6000,
+  still: 0.9,
+  render: (p) => {
+    const cols = 10;
+    const rows = 8;
+    const written = Math.floor(ramp(p, 0.15, 0.9) * cols * rows);
+    const cellW = SCENE.width / cols;
+    const cellH = SCENE.height / rows;
+    return (
+      <g>
+        {Array.from({ length: 5 }, (_, index) => (
+          <rect
+            key={index}
+            x={14}
+            y={22 + index * 22}
+            width={36}
+            height={16}
+            rx={4}
+            fill={ERA}
+            opacity={step(p, index * 0.025, index * 0.025 + 0.03) * 0.75}
+          />
+        ))}
+        <Arrow x1={56} y1={75} x2={72} y2={75} />
+        <Scene x={80} y={18} scale={1.3} plain>
+          {Array.from({ length: written }, (_, index) => {
+            const col = index % cols;
+            const row = Math.floor(index / cols);
+            const object = sceneObjectAt(
+              col * cellW + cellW / 2,
+              row * cellH + cellH / 2,
+            );
+            return object < 0 ? null : (
+              <rect
+                key={index}
+                x={col * cellW}
+                y={row * cellH}
+                width={cellW + 0.2}
+                height={cellH + 0.2}
+                fill={SCENE_OBJECTS[object]!.hue}
+              />
+            );
+          })}
+          {written < cols * rows ? (
+            <rect
+              x={(written % cols) * cellW}
+              y={Math.floor(written / cols) * cellH}
+              width={cellW}
+              height={cellH}
+              fill="none"
+              stroke={ERA}
+              strokeWidth={1.2}
+            />
+          ) : null}
+        </Scene>
       </g>
     );
   },
@@ -1105,6 +1167,60 @@ export const splatting: Illustration = {
   },
 };
 
+/** From a single photo the model estimates how far away every pixel is. */
+export const depthMap: Illustration = {
+  duration: 5000,
+  still: 0.6,
+  render: (p, uid) => {
+    const sweep = lerp(0, SCENE.width, step(p, 0.1, 0.75));
+    const depth = { tree: 0.35, person: 0.65, car: 1 };
+    return (
+      <Scene x={42} y={10} scale={1.42}>
+        <defs>
+          <clipPath id={`${uid}-depth`}>
+            <rect x={0} y={0} width={sweep} height={SCENE.height} />
+          </clipPath>
+          <linearGradient id={`${uid}-ground`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor={ERA} stopOpacity={0.1} />
+            <stop offset="1" stopColor={ERA} stopOpacity={0.6} />
+          </linearGradient>
+        </defs>
+        <g clipPath={`url(#${uid}-depth)`}>
+          <rect
+            x={0}
+            y={0}
+            width={SCENE.width}
+            height={SCENE.height}
+            rx={6}
+            fill={INK}
+          />
+          <rect
+            x={0.5}
+            y={0.5}
+            width={SCENE.width - 1}
+            height={SCENE.height - 1}
+            rx={6}
+            fill={`url(#${uid}-ground)`}
+          />
+          {SCENE_OBJECTS.map((object) => (
+            <g key={object.key} opacity={depth[object.key]}>
+              <SceneObjectShape object={object.key} fill={ERA} />
+            </g>
+          ))}
+        </g>
+        <line
+          x1={sweep}
+          y1={0}
+          x2={sweep}
+          y2={SCENE.height}
+          stroke={ACCENT}
+          strokeWidth={1.4}
+        />
+      </Scene>
+    );
+  },
+};
+
 /** Frames are generated together from noise, so the motion stays consistent over time. */
 export const videoFrames: Illustration = {
   duration: 6000,
@@ -1167,6 +1283,275 @@ export const videoFrames: Illustration = {
         })}
         <rect x={10} y={96} width={220} height={6} rx={3} fill={SOFT} />
         <rect x={10} y={96} width={220 * play} height={6} rx={3} fill={ERA} />
+      </g>
+    );
+  },
+};
+
+/** Click an object once; a memory carries its mask through every following frame. */
+export const videoMask: Illustration = {
+  duration: 6000,
+  still: 0.9,
+  render: (p) => {
+    const frames = 3;
+    const clicked = step(p, 0.08, 0.15);
+    return (
+      <g>
+        {Array.from({ length: frames }, (_, index) => {
+          const x = 8 + index * 78;
+          const shift = index * 14 - 30;
+          const masked =
+            index === 0
+              ? clicked
+              : step(p, 0.25 + index * 0.2, 0.35 + index * 0.2);
+          return (
+            <g key={index}>
+              <g transform={`translate(${x} 30) scale(0.66)`}>
+                <rect
+                  width={110}
+                  height={90}
+                  rx={6}
+                  fill={SOFT}
+                  stroke={LINE}
+                />
+                <rect
+                  x={0.5}
+                  y={68}
+                  width={109}
+                  height={21.5}
+                  fill={LINE}
+                  opacity={0.6}
+                />
+                <g transform={`translate(${shift} 0)`}>
+                  <SceneObjectShape
+                    object="car"
+                    fill={masked > 0.5 ? ERA : undefined}
+                  />
+                </g>
+              </g>
+              {index > 0 ? (
+                <path
+                  d={`M${x - 14} 24 Q ${x - 6} 12 ${x + 2} 24`}
+                  fill="none"
+                  stroke={ACCENT}
+                  strokeWidth={1.6}
+                  opacity={masked}
+                />
+              ) : (
+                <circle
+                  cx={x + (82 + shift) * 0.66}
+                  cy={30 + 58 * 0.66}
+                  r={3}
+                  fill={ACCENT}
+                  stroke={PAPER}
+                  opacity={clicked}
+                />
+              )}
+            </g>
+          );
+        })}
+        <rect
+          x={40}
+          y={110}
+          width={160}
+          height={16}
+          rx={8}
+          fill={SOFT}
+          stroke={LINE}
+        />
+        {Array.from({ length: 3 }, (_, index) => (
+          <rect
+            key={index}
+            x={50 + index * 50}
+            y={115}
+            width={40}
+            height={6}
+            rx={3}
+            fill={ACCENT}
+            opacity={step(p, 0.15 + index * 0.2, 0.25 + index * 0.2)}
+          />
+        ))}
+      </g>
+    );
+  },
+};
+
+/** A short noun phrase finds and masks every instance of that concept, not just one. */
+export const conceptMask: Illustration = {
+  duration: 5000,
+  still: 0.9,
+  render: (p) => {
+    const masks = [0, 1, 2].map((index) =>
+      step(p, 0.35 + index * 0.05, 0.5 + index * 0.05),
+    );
+    const trees = [
+      { x: 30, y: 40, s: 1 },
+      { x: 92, y: 50, s: 0.8 },
+      { x: 170, y: 44, s: 0.95 },
+    ];
+    return (
+      <g>
+        <rect
+          x={80}
+          y={6}
+          width={80}
+          height={20}
+          rx={10}
+          fill={SOFT}
+          stroke={LINE}
+        />
+        <rect
+          x={94}
+          y={11}
+          width={52}
+          height={10}
+          rx={5}
+          fill={ERA}
+          opacity={step(p, 0.05, 0.2)}
+        />
+        <Panel x={10} y={32} w={220} h={110} />
+        <rect
+          x={11}
+          y={112}
+          width={218}
+          height={29}
+          fill={LINE}
+          opacity={0.6}
+        />
+        <g transform="translate(86 63) scale(0.8)">
+          <SceneObjectShape object="car" />
+        </g>
+        {trees.map((tree, index) => (
+          <g
+            key={index}
+            transform={`translate(${tree.x} ${tree.y}) scale(${tree.s * 1.5})`}
+          >
+            <SceneObjectShape
+              object="tree"
+              fill={masks[index]! > 0.5 ? ERA : undefined}
+            />
+            <rect
+              x={3}
+              y={24}
+              width={28}
+              height={45}
+              rx={2}
+              fill="none"
+              stroke={ERA}
+              strokeWidth={1.2}
+              opacity={masks[index]}
+            />
+          </g>
+        ))}
+      </g>
+    );
+  },
+};
+
+/** Next-scale prediction: a 1×1 token map, then 2×2, 4×4 and 8×8, each refining the last. */
+export const nextScale: Illustration = {
+  duration: 6000,
+  still: 0.9,
+  render: (p) => {
+    const sizes = [1, 2, 4, 8];
+    const side = 46;
+    const image = (u: number, v: number) =>
+      0.5 +
+      0.35 * Math.sin(u * 5 + 1) * Math.cos(v * 4) +
+      0.15 * Math.cos((u + v) * 9);
+    return (
+      <g>
+        {sizes.map((count, index) => {
+          const x = 10 + index * 58;
+          const y = 52;
+          const shown = step(p, 0.06 + index * 0.2, 0.2 + index * 0.2);
+          const cell = side / count;
+          return (
+            <g key={count}>
+              <Panel x={x} y={y} w={side} h={side} fill={SOFT} />
+              {Array.from({ length: count * count }, (_, at) => {
+                const col = at % count;
+                const row = Math.floor(at / count);
+                const reveal = ramp(shown * count * count - at, 0, 1);
+                return (
+                  <rect
+                    key={at}
+                    x={x + col * cell + 0.5}
+                    y={y + row * cell + 0.5}
+                    width={cell - 1}
+                    height={cell - 1}
+                    rx={Math.min(3, cell / 4)}
+                    fill={ERA}
+                    opacity={
+                      reveal *
+                      (0.15 +
+                        image((col + 0.5) / count, (row + 0.5) / count) * 0.8)
+                    }
+                  />
+                );
+              })}
+              {index > 0 ? (
+                <Arrow
+                  x1={x - 10}
+                  y1={y + side / 2}
+                  x2={x - 3}
+                  y2={y + side / 2}
+                  opacity={shown}
+                />
+              ) : null}
+            </g>
+          );
+        })}
+      </g>
+    );
+  },
+};
+
+/** Noise samples follow a learned velocity field to data; straight paths take few steps. */
+export const flowPaths: Illustration = {
+  duration: 5000,
+  still: 0.95,
+  render: (p) => {
+    const modes = [36, 76, 116];
+    const move = step(p, 0.15, 0.8);
+    return (
+      <g>
+        <Panel x={10} y={14} w={220} h={124} fill={PAPER} />
+        {Array.from({ length: 12 }, (_, index) => {
+          const from = { x: 32, y: 26 + rand(index) * 100 };
+          const to = {
+            x: 206 + (rand(index + 5) - 0.5) * 10,
+            y: modes[index % 3]! + (rand(index + 11) - 0.5) * 14,
+          };
+          const bend = (rand(index + 23) - 0.5) * 80;
+          return (
+            <g key={index}>
+              <path
+                d={`M${from.x} ${from.y} Q${(from.x + to.x) / 2} ${(from.y + to.y) / 2 + bend} ${to.x} ${to.y}`}
+                fill="none"
+                stroke={LINE}
+                strokeWidth={1}
+                strokeDasharray="3 3"
+              />
+              <line
+                x1={from.x}
+                y1={from.y}
+                x2={lerp(from.x, to.x, move)}
+                y2={lerp(from.y, to.y, move)}
+                stroke={ERA}
+                strokeWidth={1.2}
+                opacity={0.6}
+              />
+              <circle cx={from.x} cy={from.y} r={2.4} fill={MUTED} />
+              <circle
+                cx={lerp(from.x, to.x, move)}
+                cy={lerp(from.y, to.y, move)}
+                r={3}
+                fill={move > 0.95 ? HUES[index % 3] : ERA}
+              />
+            </g>
+          );
+        })}
       </g>
     );
   },

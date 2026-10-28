@@ -14,6 +14,7 @@ import {
   ScanSearch,
   Shapes,
   Sparkles,
+  Star,
   Tags,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -37,6 +38,8 @@ export type TimelineMilestone = {
   year: number;
   topic: MilestoneTopic;
   topicLabel: string;
+  /** Shown by default; the rest appear only under "all milestones". */
+  major: boolean;
   title: string;
   summary: string;
   impact: string;
@@ -61,6 +64,7 @@ export type TimelineLabels = {
   timeline: string;
   current: string;
   impact: string;
+  major: string;
   source: string;
   noSource: string;
   illustrationTitle: string;
@@ -69,6 +73,9 @@ export type TimelineLabels = {
 };
 
 export type TimelineTopic = { id: MilestoneTopic; label: string };
+
+/** Whether the timeline shows only the major milestones or every one of them. */
+type Scope = "major" | "all";
 
 const TOPIC_ICONS: Record<MilestoneTopic, typeof Lightbulb> = {
   foundations: Lightbulb,
@@ -99,18 +106,28 @@ export function RoadmapTimeline({
   labels: TimelineLabels;
 }) {
   const t = useTranslations("Roadmap");
+  const [scope, setScope] = useState<Scope>("major");
   const [topic, setTopic] = useState<MilestoneTopic | null>(null);
   const currentEra = useCurrentEra(eras);
   const visibleEras = useMemo(
     () =>
       eras.map((era) => ({
         ...era,
-        milestones: topic
-          ? era.milestones.filter((milestone) => milestone.topic === topic)
-          : era.milestones,
+        milestones: era.milestones.filter(
+          (milestone) =>
+            (scope === "all" || milestone.major) &&
+            (topic === null || milestone.topic === topic),
+        ),
       })),
-    [eras, topic],
+    [eras, scope, topic],
   );
+  const counts = useMemo(() => {
+    const all = eras.flatMap((era) => era.milestones);
+    return {
+      major: all.filter((milestone) => milestone.major).length,
+      all: all.length,
+    };
+  }, [eras]);
   const visibleCount = visibleEras.reduce(
     (total, era) => total + era.milestones.length,
     0,
@@ -118,6 +135,7 @@ export function RoadmapTimeline({
 
   return (
     <div className="flex flex-col gap-6">
+      <ScopeToggle selected={scope} onSelect={setScope} counts={counts} />
       <TopicFilter
         topics={topics}
         selected={topic}
@@ -134,11 +152,63 @@ export function RoadmapTimeline({
               countLabel={t("milestoneCount", { count: era.milestones.length })}
               emptyLabel={t("filter.empty")}
               labels={labels}
+              showMajorBadge={scope === "all"}
             />
           </li>
         ))}
       </ol>
     </div>
+  );
+}
+
+/** Major milestones only (the default) or the full timeline. */
+function ScopeToggle({
+  selected,
+  onSelect,
+  counts,
+}: {
+  selected: Scope;
+  onSelect: (scope: Scope) => void;
+  counts: Record<Scope, number>;
+}) {
+  const t = useTranslations("Roadmap.filter.scope");
+  const scopes: { id: Scope; icon: typeof Star }[] = [
+    { id: "major", icon: Star },
+    { id: "all", icon: Layers },
+  ];
+
+  return (
+    <section
+      aria-labelledby="roadmap-scope-label"
+      className="flex flex-wrap items-center gap-3"
+    >
+      <h2 id="roadmap-scope-label" className="text-sm font-semibold">
+        {t("label")}
+      </h2>
+      <ul className="inline-flex rounded-full border border-border bg-surface p-1">
+        {scopes.map(({ id, icon: Icon }) => {
+          const pressed = selected === id;
+          return (
+            <li key={id}>
+              <button
+                type="button"
+                aria-pressed={pressed}
+                onClick={() => onSelect(id)}
+                className={cn(
+                  "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm tabular-nums transition-colors",
+                  pressed
+                    ? "bg-accent-soft font-medium text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                <Icon aria-hidden className="size-4" />
+                {t(id, { count: counts[id] })}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }
 
@@ -300,12 +370,14 @@ function EraSection({
   countLabel,
   emptyLabel,
   labels,
+  showMajorBadge,
 }: {
   era: TimelineEra;
   index: number;
   countLabel: string;
   emptyLabel: string;
   labels: TimelineLabels;
+  showMajorBadge: boolean;
 }) {
   return (
     <section aria-labelledby={`${eraSectionId(era.id)}-heading`}>
@@ -365,6 +437,7 @@ function EraSection({
             milestone={milestone}
             alignEnd={position % 2 === 1}
             labels={labels}
+            showMajorBadge={showMajorBadge}
           />
         ))}
       </ol>
@@ -397,10 +470,12 @@ function MilestoneRow({
   milestone,
   alignEnd,
   labels,
+  showMajorBadge,
 }: {
   milestone: TimelineMilestone;
   alignEnd: boolean;
   labels: TimelineLabels;
+  showMajorBadge: boolean;
 }) {
   const wide = useWideLayout();
   const [hovered, setHovered] = useState(false);
@@ -464,6 +539,7 @@ function MilestoneRow({
         <MilestoneCard
           milestone={milestone}
           labels={labels}
+          showMajorBadge={showMajorBadge}
           illustration={{
             panelId,
             open,
@@ -553,10 +629,13 @@ function IllustrationPanel({
 function MilestoneCard({
   milestone,
   labels,
+  showMajorBadge,
   illustration,
 }: {
   milestone: TimelineMilestone;
   labels: TimelineLabels;
+  /** In the full timeline, mark the major milestones so they stand out. */
+  showMajorBadge: boolean;
   illustration: {
     panelId: string;
     open: boolean;
@@ -576,6 +655,15 @@ function MilestoneCard({
           <TopicIcon aria-hidden className="size-3.5" />
           {milestone.topicLabel}
         </span>
+        {showMajorBadge && milestone.major ? (
+          <span className="inline-flex items-center gap-1 rounded-full border border-[var(--era)] px-2 py-0.5 text-xs font-medium">
+            <Star
+              aria-hidden
+              className="size-3.5 fill-[var(--era)] text-[var(--era)]"
+            />
+            {labels.major}
+          </span>
+        ) : null}
       </div>
       <h4 className="mt-2 text-base font-semibold tracking-tight text-balance">
         {milestone.title}
