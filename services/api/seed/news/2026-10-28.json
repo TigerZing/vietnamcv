@@ -1,0 +1,345 @@
+{
+  "description": "Rows approved (Duyệt) in the news sheet 'Tin tức CV 2026-10-28', exported 2026-10-28. Post text (Vietnamese and English) is written by VietnamCV from each source with AI assistance, never the full article. Images given by url are the source's own images (the lead image and, under figures, the images inside the article), shown with credit; their rights stay permission_pending until the owner agrees (ADR-010).",
+  "sources": [
+    {
+      "code": "vnexpress",
+      "name": "VnExpress",
+      "kind": "news_site",
+      "base_url": "https://vnexpress.net/"
+    },
+    {
+      "code": "nvidia-blog",
+      "name": "NVIDIA Blog",
+      "kind": "company_blog",
+      "base_url": "https://blogs.nvidia.com/"
+    },
+    {
+      "code": "edge-ai-vision",
+      "name": "Edge AI and Vision Alliance",
+      "kind": "industry_site",
+      "base_url": "https://www.edge-ai-vision.com/"
+    },
+    {
+      "code": "google-deepmind",
+      "name": "Google DeepMind",
+      "kind": "company_blog",
+      "base_url": "https://deepmind.google/"
+    },
+    {
+      "code": "amazon",
+      "name": "About Amazon",
+      "kind": "company_blog",
+      "base_url": "https://www.aboutamazon.com/"
+    }
+  ],
+  "items": [
+    {
+      "slug": "nvidia-cosmos-data-factory-framework-world-models",
+      "title": "NVIDIA Cosmos Opens New Tools to Train, Evaluate and Deploy World Models",
+      "text": {
+        "vi": {
+          "title": "NVIDIA Cosmos mở công cụ huấn luyện, đánh giá và triển khai world model",
+          "summary": "NVIDIA ra Cosmos Data Factory với năm blueprint gán nhãn, tuyển chọn, tăng cường và sinh dữ liệu ảnh, video, cùng Cosmos Framework để huấn luyện và tối ưu world model. Cosmos 3 Nano có biến thể mô phỏng đa camera để kiểm thử xe tự hành và robot, còn blueprint phân tích video VSS 3.3 theo dõi được nhiều hơn 40% luồng video trên cùng GPU.",
+          "body": "NVIDIA công bố tại GTC Berlin một loạt công cụ mở quanh nền tảng world model Cosmos, nhắm vào khâu tốn công nhất của AI vật lý và thị giác máy tính: chuẩn bị dữ liệu ảnh, video và kiểm thử mô hình trước khi ra thực tế.\n\n## Cosmos Data Factory\n\nĐây là năm blueprint chạy trên đám mây để gán nhãn, tuyển chọn, tăng cường và sinh dữ liệu tổng hợp:\n\n- sinh bộ dữ liệu cho xe tự hành;\n- tăng cường thuộc tính ảnh (đổi điều kiện, ngoại cảnh);\n- sinh video sự kiện;\n- sinh ảnh lỗi sản phẩm cho kiểm tra công nghiệp;\n- tăng cường dữ liệu video.\n\nCosmos Curator, công cụ tuyển chọn dữ liệu, nay nhận đầu vào đa phương thức, đa cảm biến. Ví dụ NVIDIA nêu: Ultralytics huấn luyện lại YOLO với ảnh lỗi tổng hợp; ANYbotics sinh hơn 1.500 đoạn video tổng hợp về tình huống bất thường và kiểm tra bằng nền tảng của Encord; Porsche dùng Voxel51 trên Azure để tìm và tăng cường dữ liệu lái xe, kỳ vọng giảm tới 90% số lần chạy thử thực tế lặp lại.\n\n{{figure:1}}\n\n## Cosmos Framework và Cosmos 3\n\nCosmos Framework gom công cụ và công thức huấn luyện, tinh chỉnh, học tăng cường và tối ưu suy luận, đóng gói thành agent skill để tác tử AI dùng được. Framework làm việc với Cosmos 3 và các mô hình mở khác như GR00T, Alpamayo, Qwen, Pi0.5. Cosmos 3 Nano có thêm biến thể mô phỏng để đánh giá chính sách điều khiển trong kịch bản nhiều camera, nhiều cảm biến, kèm mã huấn luyện và đánh giá cho xe tự hành và robot hai tay. MicroAGI đã chưng cất mô hình suy luận 32 tỷ tham số xuống bản Nano 8 tỷ tham số. Vi dịch vụ Cosmos 3 NIM mới suy luận nhanh tới 2 lần ở các cấu hình đã kiểm chứng.\n\n## Phân tích video\n\nBlueprint Metropolis cho tìm kiếm và tóm tắt video (VSS) 3.3 xây trên Cosmos NIM; NVIDIA cho biết nó giúp theo dõi nhiều hơn 40% luồng video trên cùng một GPU. Fogsphere dùng nền tảng MistIQ để phát hiện nguy cơ an toàn theo thời gian thực tại 65 cơ sở của ADNOC.\n\nBài viết không nêu giấy phép của các mô hình; cần xem trang mô hình và kho mã trước khi dùng cho sản phẩm thương mại."
+        },
+        "en": {
+          "title": "NVIDIA Cosmos opens tools to train, evaluate and deploy world models",
+          "summary": "NVIDIA released Cosmos Data Factory, five blueprints for labelling, curating, augmenting and generating image and video data, and Cosmos Framework for training and optimising world models. Cosmos 3 Nano adds multi-camera simulation variants for testing autonomous vehicles and robots, and the VSS 3.3 video analytics blueprint handles 40% more video streams on the same GPU.",
+          "body": "At GTC Berlin NVIDIA announced a set of open tools around its Cosmos world model platform, aimed at the most labour-intensive part of physical AI and computer vision: preparing image and video data and testing models before they reach the real world.\n\n## Cosmos Data Factory\n\nFive cloud blueprints for labelling, curation, augmentation and synthetic data generation:\n\n- autonomous-vehicle dataset generation;\n- image attribute augmentation (changing conditions and surroundings);\n- event video generation;\n- defect image generation for industrial inspection;\n- video data augmentation.\n\nCosmos Curator, the data curation tool, now accepts multimodal, multi-sensor input. NVIDIA's examples: Ultralytics retrained YOLO with synthetic defect images; ANYbotics generated more than 1,500 synthetic anomaly clips and validated them with Encord's platform; Porsche uses Voxel51 on Azure to search and augment driving data and expects up to 90% fewer repeated physical test drives.\n\n{{figure:1}}\n\n## Cosmos Framework and Cosmos 3\n\nCosmos Framework collects tools and recipes for training, fine-tuning, reinforcement learning and inference optimisation, packaged as agent skills so AI agents can use them. It works with Cosmos 3 and other open models such as GR00T, Alpamayo, Qwen and Pi0.5. Cosmos 3 Nano gains simulation variants for evaluating policies in multi-camera, multi-sensor scenarios, with training and evaluation code for autonomous vehicles and bimanual robots. MicroAGI distilled a 32-billion-parameter reasoner into an 8-billion-parameter Nano model. Updated Cosmos 3 NIM microservices run inference up to 2x faster in validated configurations.\n\n## Video analytics\n\nThe Metropolis blueprint for video search and summarisation (VSS) 3.3 is built on Cosmos NIM; NVIDIA says it monitors 40% more video streams on the same GPU. Fogsphere uses its MistIQ platform to detect safety hazards in real time across 65 ADNOC sites.\n\nThe post does not state the model licences; check the model pages and repositories before commercial use."
+        }
+      },
+      "ai_assisted": true,
+      "source": "nvidia-blog",
+      "external_id": "https://blogs.nvidia.com/blog/cosmos-open-train-evaluate-deploy-world-models/",
+      "url": "https://blogs.nvidia.com/blog/cosmos-open-train-evaluate-deploy-world-models/",
+      "collected_on": "2026-10-28",
+      "published_on": "2026-10-22",
+      "published_precision": "day",
+      "region": "international",
+      "category": "models-open-source",
+      "keywords": [
+        "world model",
+        "dữ liệu tổng hợp",
+        "phân tích video"
+      ],
+      "tags": [
+        "WorldModel",
+        "SyntheticData",
+        "VideoAnalytics",
+        "AutonomousDriving",
+        "DataCuration"
+      ],
+      "original_language": "en",
+      "image": {
+        "url": "https://blogs.nvidia.com/wp-content/uploads/2026/10/NVIDIA-Cosmos-New-Tools-2026-1280x720.jpg",
+        "alt": "Ảnh giới thiệu các công cụ mới của NVIDIA Cosmos",
+        "credit": "NVIDIA",
+        "credit_url": "https://blogs.nvidia.com/blog/cosmos-open-train-evaluate-deploy-world-models/",
+        "rights": "permission_pending"
+      },
+      "figures": [
+        {
+          "url": "https://blogs.nvidia.com/wp-content/uploads/2026/10/Cosmos-Framework-960x538.png",
+          "alt": "Sơ đồ tác tử xây mô hình dùng skill và mô hình mở để chuẩn bị dữ liệu, huấn luyện, tinh chỉnh và tối ưu world model",
+          "alt_en": "Diagram of a model-builder agent using skills and open model backbones to prepare data, train, fine-tune and optimise world models",
+          "caption": "Cosmos Framework: bộ công cụ mở, dạng mô-đun để huấn luyện và tối ưu world model.",
+          "caption_en": "Cosmos Framework: an open, modular set of tools for training and optimising world models.",
+          "credit": "NVIDIA",
+          "credit_url": "https://blogs.nvidia.com/blog/cosmos-open-train-evaluate-deploy-world-models/",
+          "rights": "permission_pending"
+        }
+      ],
+      "links": [
+        {
+          "kind": "code",
+          "label": "GitHub: NVIDIA/cosmos-data-factory",
+          "url": "https://github.com/NVIDIA/cosmos-data-factory"
+        },
+        {
+          "kind": "code",
+          "label": "GitHub: NVIDIA/cosmos-framework",
+          "url": "https://github.com/NVIDIA/cosmos-framework"
+        },
+        {
+          "kind": "model",
+          "label": "Hugging Face: Cosmos 3 examples",
+          "url": "https://huggingface.co/collections/nvidia/cosmos3-examples"
+        },
+        {
+          "kind": "official",
+          "label": "NVIDIA Build: Video Search and Summarization",
+          "url": "https://build.nvidia.com/nvidia/video-search-and-summarization"
+        }
+      ]
+    },
+    {
+      "slug": "yole-robotaxi-market-2026",
+      "title": "Robotaxi: The Comeback of a Market on the Road to scale",
+      "text": {
+        "vi": {
+          "title": "Yole: robotaxi trở lại, hướng tới quy mô hai triệu xe",
+          "summary": "Yole Group dự báo đội robotaxi toàn cầu đạt 331.000 xe năm 2031 và khoảng hai triệu xe năm 2035, nhờ chi phí xe giảm tới 70% và thuật toán end-to-end. Thị trường cảm biến và bộ xử lý cho robo-X ước khoảng 4,4 và 4 tỷ USD năm 2035, dùng chung chuỗi cung ứng với ADAS L2+.",
+          "body": "Theo báo cáo Robotaxi 2026 của Yole Group, ngành robotaxi đã chuyển từ chứng minh công nghệ chạy được sang chứng minh mô hình kinh doanh có lãi.\n\n## Số liệu chính\n\n- Đội robotaxi toàn cầu dự kiến đạt 331.000 xe năm 2031, tăng trung bình 78% mỗi năm, và khoảng hai triệu xe năm 2035 (tăng trưởng kép 57%). Số liệu không tính xe tải và xe buýt tự hành.\n- Chi phí linh kiện và sản xuất xe đã giảm tới 70% trên nhiều mẫu.\n- Đến 2035, robotaxi có thể chiếm khoảng 4% doanh số xe hạng nhẹ mới ở Trung Quốc và 1% ở Mỹ.\n- Thị trường cảm biến và bộ xử lý cho các loại robo-X ước khoảng 4,4 tỷ USD và 4 tỷ USD năm 2035.\n\n## Vì sao quan trọng với người làm thị giác máy tính\n\nYole chỉ ra các động lực: thuật toán end-to-end, vận hành lai giữa robotaxi và xe có tài xế, và sự hội tụ giữa ngăn xếp công nghệ L2+ và L4. Điều này cho phép dùng lượng lớn dữ liệu camera và cảm biến từ xe L2+ để huấn luyện hệ thống tự lái. Robotaxi không tạo chuỗi cung ứng bán dẫn riêng mà mở rộng chuỗi ADAS sẵn có, nên cùng các nhà cung cấp cảm biến và chip phục vụ cả hai thị trường.\n\n## Các bên chính\n\n- Waymo dẫn đầu về đội xe không người giám sát, tự làm TPU, lidar và radar; đang thử nghiệm ở Anh và Nhật.\n- Apollo Go có đội xe lớn nhất; Pony.ai, WeRide và Zoox (robovan chuyên dụng) mở rộng dịch vụ thương mại.\n- Tesla (Cybercab) và XPeng tự phát triển SoC; Geely cung cấp xe nền cho Waymo.\n- Uber hợp tác với nhiều hãng thay vì tự phát triển; DiDi đồng thiết kế xe với GAC."
+        },
+        "en": {
+          "title": "Yole: robotaxis are back, heading for two million vehicles",
+          "summary": "Yole Group forecasts the global robotaxi fleet at 331,000 vehicles in 2031 and about two million in 2035, driven by vehicle costs down as much as 70% and end-to-end algorithms. Sensor and processor markets for robo-X are put at about USD 4.4 billion and USD 4 billion in 2035, sharing the ADAS L2+ supply chain.",
+          "body": "According to Yole Group's Robotaxi 2026 report, the industry has moved from proving that the technology works to proving that the business works.\n\n## Key figures\n\n- The global robotaxi fleet is forecast to reach 331,000 vehicles in 2031, growing 78% a year on average, and about two million vehicles in 2035 (57% CAGR). Robotrucks and robobuses are excluded.\n- Vehicle bill-of-materials and manufacturing costs have fallen by up to 70% on several models.\n- By 2035 robotaxis could account for about 4% of new light-vehicle sales in China and 1% in the US.\n- Sensor and processor markets for robo-X are expected to reach about USD 4.4 billion and USD 4 billion in 2035.\n\n## Why it matters for computer vision engineers\n\nYole cites end-to-end algorithms, hybrid operation of robotaxis alongside driver-based ride-hailing, and convergence of the L2+ and L4 technology stacks. That convergence lets large volumes of camera and sensor data from L2+ cars be used to train self-driving systems. Robotaxis do not create a separate semiconductor supply chain; they extend the ADAS one, so the same sensor and chip suppliers serve both markets.\n\n## Main players\n\n- Waymo leads in unsupervised fleet size and builds its own TPU, lidar and radar; it is testing in the UK and Japan.\n- Apollo Go has the largest fleet; Pony.ai, WeRide and Zoox (a purpose-built robovan) are expanding commercial service.\n- Tesla (Cybercab) and XPeng design their own SoCs; Geely supplies the base car for Waymo.\n- Uber partners with several players rather than building its own stack; DiDi co-designs vehicles with GAC."
+        }
+      },
+      "ai_assisted": true,
+      "source": "edge-ai-vision",
+      "external_id": "https://www.edge-ai-vision.com/2026/10/robotaxi-the-comeback-of-a-market-on-the-road-to-scale/",
+      "url": "https://www.edge-ai-vision.com/2026/10/robotaxi-the-comeback-of-a-market-on-the-road-to-scale/",
+      "collected_on": "2026-10-28",
+      "published_on": "2026-10-26",
+      "published_precision": "day",
+      "region": "international",
+      "category": "market",
+      "keywords": [
+        "robotaxi",
+        "xe tự hành",
+        "cảm biến"
+      ],
+      "tags": [
+        "Robotaxi",
+        "AutonomousDriving",
+        "MarketReport",
+        "ADAS"
+      ],
+      "original_language": "en",
+      "image": {
+        "url": "https://www.edge-ai-vision.com/wp-content/uploads/2026/10/Robotaxi-BD-1024x597.jpg",
+        "alt": "Ảnh minh họa báo cáo thị trường robotaxi của Yole Group",
+        "credit": "Yole Group / Edge AI and Vision Alliance",
+        "credit_url": "https://www.edge-ai-vision.com/2026/10/robotaxi-the-comeback-of-a-market-on-the-road-to-scale/",
+        "rights": "permission_pending"
+      }
+    },
+    {
+      "slug": "google-deepmind-genie-4-world-model",
+      "title": "Genie 4: A new generation of world simulation",
+      "text": {
+        "vi": {
+          "title": "Google DeepMind ra Genie 4, world model mô phỏng tương tác thời gian thực",
+          "summary": "Genie 4 sinh cảnh tương tác theo thời gian thực kèm âm thanh và lời thoại, điều khiển bằng bàn phím và câu lệnh văn bản, có thể bắt đầu từ một ảnh tham chiếu. Mô hình đang ở dạng xem trước cho người thử nghiệm và được DeepMind thử làm môi trường huấn luyện cho robot.",
+          "body": "Google DeepMind giới thiệu Genie 4, thế hệ mới của dòng world model Genie. Mô hình sinh cảnh tương tác theo thời gian thực, đồng thời tạo hình ảnh, âm thanh nền, nhạc và lời thoại của nhân vật.\n\n## Cách điều khiển\n\n- Bàn phím để di chuyển và điều khiển góc camera trong cảnh.\n- Câu lệnh văn bản để dựng và sửa cảnh ngay khi đang chạy.\n- Một ảnh tham chiếu có thể làm khung hình đầu tiên.\n\nCác mô hình Gemini giúp giữ cảnh nhất quán và gần với vẻ ngoài, hành vi ngoài đời thực. Gemini còn đóng vai tác tử dẫn dắt: quan sát cảnh, chia mục tiêu thành từng bước, kiểm tra tiến độ và đổi kế hoạch khi thế giới thay đổi hoặc người dùng can thiệp.\n\n## Liên quan tới robot và thị giác\n\nDeepMind cho thấy Genie 4 có thể làm môi trường huấn luyện cho robot và tác tử, ví dụ cảnh robot hình người Apollo của Apptronik chơi cờ đam được mô phỏng theo chỉ dẫn bằng văn bản. Người thử nghiệm còn dùng mô hình để dựng trước cảnh quay, tái hiện cảnh lịch sử, làm mẫu game và tạo kịch bản cho doanh nghiệp.\n\n## Giới hạn và cách tiếp cận\n\nDeepMind gọi đây là mô hình thử nghiệm giai đoạn đầu: chi tiết hình ảnh và tính bền vững của vật thể có thể trôi sau phiên dài hoặc nhiều lần sửa câu lệnh; tương tác vật lý phức tạp, chữ trong ảnh, độ chính xác không gian và nhất quán dài hạn vẫn đang nghiên cứu. Trang công bố không nêu độ phân giải, tốc độ khung hình hay thời lượng tối đa. Mọi video và âm thanh sinh ra đều gắn watermark SynthID. Genie 4 hiện chỉ mở cho nhóm người thử nghiệm tin cậy; DeepMind dự kiến mở cho thuê bao Google AI Ultra qua Project Genie và đối tác sớm của Gemini API, Google AI Studio. Trọng số mô hình không được công bố."
+        },
+        "en": {
+          "title": "Google DeepMind releases Genie 4, a real-time interactive world model",
+          "summary": "Genie 4 generates interactive scenes in real time with sound and dialogue, steered by keyboard and text prompts, and can start from a reference image. It is a research preview for trusted testers, and DeepMind is trying it as a training environment for robots.",
+          "body": "Google DeepMind introduced Genie 4, the new generation of its Genie world models. It generates interactive scenes in real time, producing visuals, ambient sound, music and character dialogue together.\n\n## How it is controlled\n\n- Keyboard controls for moving and steering the camera in the scene.\n- Text prompts to set up and change the scene while it runs.\n- A reference image can serve as the first frame.\n\nGemini models keep scenes coherent and close to real-world appearance and behaviour. Gemini also acts as a guiding agent: it observes the scene, breaks goals into steps, checks progress and adapts its plan when the world changes or the user steps in.\n\n## Relevance to robotics and vision\n\nDeepMind shows Genie 4 as a training environment for robots and agents, for example a simulation of Apptronik's Apollo humanoid playing checkers, steered by text. Testers have also used it for pre-visualisation, historical scene recreation, game prototyping and enterprise scenario generation.\n\n## Limits and rollout\n\nDeepMind calls it an early, experimental model: visual detail and object permanence can drift in long sessions or after many prompt edits, and complex physical interactions, legible text, spatial accuracy and long-term consistency are still under research. The announcement gives no resolution, frame rate or maximum duration. All generated video and audio carries a SynthID watermark. Genie 4 is open only to trusted testers for now; DeepMind plans to offer it to Google AI Ultra subscribers through Project Genie and to early-access partners of the Gemini API and Google AI Studio. The model weights are not released."
+        }
+      },
+      "ai_assisted": true,
+      "source": "google-deepmind",
+      "external_id": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+      "url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+      "collected_on": "2026-10-28",
+      "published_on": "2026-10-27",
+      "published_precision": "day",
+      "region": "international",
+      "category": "models-open-source",
+      "keywords": [
+        "world model",
+        "sinh video",
+        "mô phỏng robot"
+      ],
+      "tags": [
+        "WorldModel",
+        "VideoGeneration",
+        "Simulation",
+        "Robotics"
+      ],
+      "original_language": "en",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/i7iotPkcMbMubxRzAdriO5wsIsowROonBvjLNnmPbOaRgEb1k4LKTBqay5VrcPpZi0R4il_bYCCsPYQ0Gy_-XbAw66azAGEfE-E6_9Izz5apP0BMJVE=w1200-h630-n-nu-rw",
+        "alt": "Ảnh giới thiệu Genie 4 của Google DeepMind",
+        "credit": "Google DeepMind",
+        "credit_url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/",
+        "rights": "permission_pending"
+      },
+      "editor_note": "Bản xem trước nghiên cứu; trang công bố không nêu thông số kỹ thuật và không phát hành trọng số."
+    },
+    {
+      "slug": "robot-danh-co-nhay-mua-tren-pho-di-bo-nguyen-hue",
+      "title": "Robot đánh cờ, nhảy múa trên phố đi bộ Nguyễn Huệ",
+      "text": {
+        "vi": {
+          "title": "Robot đánh cờ, nhảy múa trên phố đi bộ Nguyễn Huệ",
+          "summary": "Khu trưng bày robot khoảng 600 m² tại GRECO 2026 ở TP HCM có robot hình người dùng camera nhận diện khuôn mặt và cử chỉ, robot đánh cờ của SenseTime dùng camera để đi quân thật, cùng các sản phẩm của sinh viên Việt Nam. Triển lãm mở cửa miễn phí đến 29/10.",
+          "body": "Triển lãm Sản phẩm và Dịch vụ Tăng trưởng xanh TP HCM lần thứ tư (GRECO 2026) khai mạc tối 26/10 trên phố đi bộ Nguyễn Huệ, trong khuôn khổ Diễn đàn Kinh tế Mùa thu 2026 (AEF 2026, 26 đến 29/10). Khu Công nghệ Robot rộng khoảng 600 m² do AICAP phối hợp với AIBrain, AIRobo và Liên minh Phát triển Công nghiệp Robot Trung Quốc (CDRA) tổ chức, quy tụ hơn 30 doanh nghiệp và viện nghiên cứu robot, AI của Trung Quốc.\n\n{{figure:1}}\n\n## Robot nhìn và phản hồi con người\n\nRobot hình người AgiBot Lingxi X2 cao khoảng 1,31 m, nặng 35 đến 39 kg, có tới 30 bậc tự do và đi được 1,8 m/giây. Robot dùng camera, cảm biến và AI đa phương thức để nhận diện khuôn mặt và cử chỉ, phản hồi bằng giọng nói và hơn 30 biểu cảm trên màn hình. Pin dùng khoảng 2 giờ khi đi ở tốc độ 0,5 m/giây. Một mẫu robot hình người khác được điều khiển từ xa để nhảy và bắt tay khách, giá khoảng 180 triệu đến 1 tỷ đồng.\n\n{{figure:2}}\n\n## Robot đánh cờ dùng camera\n\nSenseTime mang tới robot chơi cờ vây, cờ vua và cờ tướng. Bản cờ tướng dùng camera để đọc bàn cờ và cánh tay máy để đi quân thật, có 26 cấp độ, hơn 100 thế cờ tàn và chơi trực tuyến. Đây là bài toán thị giác máy tính quen thuộc: nhận dạng vị trí từng quân trên bàn thật rồi chuyển thành trạng thái ván cờ cho bộ máy chơi cờ.\n\n{{figure:3}}\n\n## Các sản phẩm khác\n\n- Robot bốn chân Unitree nặng khoảng 15 kg, chạy tối đa 3,7 m/giây, leo dốc 40 độ, mang được 12 kg, hướng tới trình diễn, tuần tra và cứu hộ.\n- Robot cạo mủ cao su thế hệ mới cao 2,1 m, định vị bằng laser, làm việc liên tục tới 12 giờ, khoảng 800 cây mỗi ca, giá khoảng 400 triệu đồng.\n- Nhóm sinh viên Trường Đại học Quốc tế (ĐHQG TP HCM) giới thiệu robot nhận diện cảm xúc qua giọng nói và văn bản tiếng Việt, độ chính xác khoảng 80%, huấn luyện trên bộ dữ liệu SentiV hơn 471,8 giờ âm thanh.\n- Cũng từ trường này: lót giày thông minh hiển thị bản đồ nhiệt áp lực bàn chân và hệ thống xử lý tín hiệu điện não EEG thời gian thực, điều khiển con trỏ theo 8 hướng cho người hạn chế vận động.\n\nCùng dịp, AICAP ký thỏa thuận hợp tác với CDRA, AIBrain và Trường Đại học Công nghệ TP HCM (HUTECH), trong đó có thỏa thuận mua tập trung dự kiến 1.000 robot để thương mại hóa tại Việt Nam, chủ yếu robot lau sàn cho khách sạn, trung tâm thương mại và khu công nghiệp."
+        },
+        "en": {
+          "title": "Robots play chess and dance on Nguyen Hue walking street",
+          "summary": "A robotics showcase of about 600 m² at GRECO 2026 in Ho Chi Minh City features humanoids that use cameras to recognise faces and gestures, SenseTime chess robots that use a camera to move real pieces, and products from Vietnamese students. The exhibition is free and runs until 29 October.",
+          "body": "The fourth Ho Chi Minh City Green Growth Products and Services Exhibition (GRECO 2026) opened on the evening of 26 October on Nguyen Hue walking street, as part of the Autumn Economic Forum 2026 (AEF 2026, 26 to 29 October). The robotics area of about 600 m² was organised by AICAP with AIBrain, AIRobo and the China Development and Reform Alliance for Robotics Industry (CDRA), and brings together more than 30 Chinese robotics and AI companies and research institutes.\n\n{{figure:1}}\n\n## Robots that see and respond to people\n\nThe AgiBot Lingxi X2 humanoid is about 1.31 m tall, weighs 35 to 39 kg, has up to 30 degrees of freedom and walks at 1.8 m/s. It uses cameras, sensors and multimodal AI to recognise faces and gestures, and responds with speech and more than 30 on-screen expressions. The battery lasts about 2 hours when walking at 0.5 m/s. Another humanoid, remotely controlled, dances and shakes hands with visitors and costs about 180 million to 1 billion VND.\n\n{{figure:2}}\n\n## Chess robots with cameras\n\nSenseTime shows robots that play Go, chess and xiangqi. The xiangqi version uses a camera to read the board and a robot arm to move real pieces, with 26 difficulty levels, more than 100 endgame positions and online play. It is a familiar computer vision task: recognise where each piece sits on a physical board and turn that into a game state for the chess engine.\n\n{{figure:3}}\n\n## Other exhibits\n\n- A Unitree quadruped of about 15 kg runs at up to 3.7 m/s, climbs 40-degree slopes and carries 12 kg, aimed at demonstrations, patrol and rescue.\n- A new rubber-tapping robot, 2.1 m tall with laser positioning, works up to 12 hours and about 800 trees per shift, priced at about 400 million VND.\n- A student team from International University (VNU-HCM) shows a robot that recognises emotion in Vietnamese speech and text with about 80% accuracy, trained on the SentiV dataset of more than 471.8 hours of audio.\n- The same university shows a smart insole that maps foot pressure as a heat map and a real-time EEG system that moves a cursor in 8 directions for people with limited mobility.\n\nAt the same event AICAP signed a cooperation agreement with CDRA, AIBrain and Ho Chi Minh City University of Technology (HUTECH), including a centralised purchase of an expected 1,000 robots to commercialise in Vietnam, mainly floor-cleaning robots for hotels, malls and industrial parks."
+        }
+      },
+      "ai_assisted": true,
+      "source": "vnexpress",
+      "external_id": "https://vnexpress.net/robot-danh-co-nhay-mua-tren-pho-di-bo-nguyen-hue-5137218.html",
+      "url": "https://vnexpress.net/robot-danh-co-nhay-mua-tren-pho-di-bo-nguyen-hue-5137218.html",
+      "collected_on": "2026-10-28",
+      "published_on": "2026-10-27",
+      "published_precision": "day",
+      "region": "vietnam",
+      "category": "robotics",
+      "keywords": [
+        "robot hình người",
+        "nhận diện khuôn mặt",
+        "robot đánh cờ"
+      ],
+      "tags": [
+        "Humanoid",
+        "FaceRecognition",
+        "GestureRecognition",
+        "RobotVision"
+      ],
+      "original_language": "vi",
+      "image": {
+        "url": "https://i2-vnexpress.vnecdn.net/2026/10/27/wm1-2aobor8e6kt4l8uivnmtb7tyj6we8ohryhiinrk8-1793061260-1793061560.jpg?w=1200&h=675&q=100&dpr=1&fit=crop&s=3seTPyPjmIFP69SK0S3_lg",
+        "alt": "Khai mạc triển lãm GRECO 2026 trên phố đi bộ Nguyễn Huệ, TP HCM",
+        "credit": "VnExpress",
+        "credit_url": "https://vnexpress.net/robot-danh-co-nhay-mua-tren-pho-di-bo-nguyen-hue-5137218.html",
+        "rights": "permission_pending"
+      },
+      "figures": [
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/27/233A7316-1793054450-1793054869-1793062750-1793063029.jpg?w=1200&h=0&q=100&dpr=2&fit=crop&s=itnTjb0iBoig-397cQKThA",
+          "alt": "Robot hình người AgiBot Lingxi X2 biểu diễn trên sân khấu",
+          "alt_en": "AgiBot Lingxi X2 humanoid performing on stage",
+          "caption": "Robot hình người AgiBot Lingxi X2 biểu diễn tại GRECO 2026.",
+          "caption_en": "The AgiBot Lingxi X2 humanoid performing at GRECO 2026.",
+          "credit": "VnExpress",
+          "credit_url": "https://vnexpress.net/robot-danh-co-nhay-mua-tren-pho-di-bo-nguyen-hue-5137218.html",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/27/wm1-233a7207-1793062676-1793063028.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=IgegLoTfIBGpEUKKHWoquA",
+          "alt": "Robot đánh cờ của SenseTime tại khu trưng bày robot",
+          "alt_en": "SenseTime chess-playing robot in the robotics area",
+          "caption": "Robot đánh cờ của SenseTime chơi được cờ vây, cờ vua và cờ tướng.",
+          "caption_en": "SenseTime's chess robot plays Go, chess and xiangqi.",
+          "credit": "VnExpress",
+          "credit_url": "https://vnexpress.net/robot-danh-co-nhay-mua-tren-pho-di-bo-nguyen-hue-5137218.html",
+          "rights": "permission_pending"
+        },
+        {
+          "url": "https://vcdn1-vnexpress.vnecdn.net/2026/10/27/wm1-233a7210-1793062637-1793063029.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=8oYeKZUM9fIERf9za7DHMA",
+          "alt": "Robot cờ tướng dùng cánh tay máy để đi quân",
+          "alt_en": "Xiangqi robot moving a piece with its robot arm",
+          "caption": "Bản cờ tướng dùng camera đọc bàn cờ và cánh tay máy để đi quân thật.",
+          "caption_en": "The xiangqi version reads the board with a camera and moves real pieces with a robot arm.",
+          "credit": "VnExpress",
+          "credit_url": "https://vnexpress.net/robot-danh-co-nhay-mua-tren-pho-di-bo-nguyen-hue-5137218.html",
+          "rights": "permission_pending"
+        }
+      ],
+      "links": [
+        {
+          "kind": "reference",
+          "label": "VietNamNet: Một công ty Việt Nam dự kiến mua 1.000 robot từ Trung Quốc",
+          "url": "https://vietnamnet.vn/mot-cong-ty-viet-nam-du-kien-mua-1000-robot-tu-trung-quoc-2568848.html"
+        }
+      ]
+    },
+    {
+      "slug": "amazon-echo-show-16-camera-visual-id",
+      "title": "Echo Show 16 smart display",
+      "text": {
+        "vi": {
+          "title": "Amazon Echo Show 16: camera 13 MP, nhận ra người dùng từ xa 5 mét",
+          "summary": "Echo Show 16 có camera góc rộng 13 MP, tự căn khung khi gọi video và lần đầu có quay đêm trên dòng Echo Show. Tính năng Visual ID nay nhận ra người dùng ở khoảng cách tới 17 feet (khoảng 5,2 m), gấp hơn hai lần trước đây.",
+          "body": "Amazon giới thiệu Echo Show 16, màn hình thông minh 16 inch cho nhà ở. Phần đáng chú ý với người làm thị giác máy tính nằm ở camera và các tính năng nhìn.\n\n{{figure:1}}\n\n## Camera và nhận diện\n\n- Camera góc rộng 13 MP, trường nhìn rộng nhất Amazon từng đưa lên Echo Show.\n- Tự động căn khung để giữ người trong hình khi họ di chuyển trong cuộc gọi video.\n- Quay đêm lần đầu có trên dòng Echo Show, xem trực tiếp qua ứng dụng Alexa.\n- Visual ID, tính năng nhận ra từng người dùng để cá nhân hóa nội dung, tăng tầm nhận diện từ 8 feet lên 17 feet (khoảng 2,4 m lên 5,2 m), đủ để nhận ra người ở phía bên kia phòng.\n\nAmazon không nói việc nhận diện chạy trên thiết bị hay trên đám mây.\n\n## Quyền riêng tư\n\nMáy có nút tắt cả micro và camera, đèn báo khi Alexa đang hoạt động, và bảng Alexa Privacy để xem, xóa lịch sử tương tác.\n\n## Bản đồ nhà 3D\n\nAlexa Home Map là bản đồ 3D tương tác của ngôi nhà, đặt từng thiết bị kết nối (gồm camera) đúng vị trí thực để xem và điều khiển.\n\n## Giá\n\nBản thường 499,99 USD, bản màn hình Nanomatte 569,99 USD, giảm 100 USD khi đặt trước. Máy nhận đặt trước từ 28/10 và giao cuối năm; một số tính năng cần Alexa+."
+        },
+        "en": {
+          "title": "Amazon Echo Show 16: a 13 MP camera that recognises users from 5 metres",
+          "summary": "Echo Show 16 has a 13 MP wide-angle camera, auto-framing for video calls and, for the first time in the Echo Show line, night vision. Visual ID now recognises users at up to 17 feet (about 5.2 m), more than twice the previous range.",
+          "body": "Amazon introduced Echo Show 16, a 16-inch smart display for the home. For computer vision engineers the interesting part is the camera and its vision features.\n\n{{figure:1}}\n\n## Camera and recognition\n\n- A 13 MP wide-angle camera, the widest field of view Amazon has put on an Echo Show.\n- Auto-framing keeps people in view as they move during video calls.\n- Night vision, new to the Echo Show line, works with Live View in the Alexa app.\n- Visual ID, which recognises individual users to personalise content, extends its range from 8 feet to 17 feet (about 2.4 m to 5.2 m), enough to recognise someone across a room.\n\nAmazon does not say whether recognition runs on the device or in the cloud.\n\n## Privacy\n\nA button disables both microphones and camera, a light shows when Alexa is active, and the Alexa Privacy dashboard lets users review and delete interactions.\n\n## 3D home map\n\nAlexa Home Map is an interactive 3D map of the home that places each connected device, cameras included, at its real location for viewing and control.\n\n## Price\n\nThe standard model is USD 499.99 and the Nanomatte display USD 569.99, with USD 100 off for preorders. Preorders opened on 28 October with shipping later in the year; some features require Alexa+."
+        }
+      },
+      "ai_assisted": true,
+      "source": "amazon",
+      "external_id": "https://www.aboutamazon.com/news/devices/echo-show-16-smart-display",
+      "url": "https://www.aboutamazon.com/news/devices/echo-show-16-smart-display",
+      "collected_on": "2026-10-28",
+      "published_on": "2026-10-28",
+      "published_precision": "day",
+      "region": "international",
+      "category": "edge-hardware",
+      "keywords": [
+        "camera thông minh",
+        "nhận diện người dùng",
+        "Visual ID"
+      ],
+      "tags": [
+        "SmartCamera",
+        "PersonRecognition",
+        "AutoFraming",
+        "NightVision"
+      ],
+      "original_language": "en",
+      "image": {
+        "url": "https://assets.aboutamazon.com/dims4/default/092f6c4/2147483647/strip/true/crop/1600x800+0+68/resize/1200x600!/quality/90/?url=https%3A%2F%2Fassets.aboutamazon.com%2F7f%2F79%2Ff56c293c42fe9d939af99112925a%2Fechoshow16-inline-amazonnews-ck101526.png",
+        "alt": "Màn hình thông minh Amazon Echo Show 16",
+        "credit": "Amazon",
+        "credit_url": "https://www.aboutamazon.com/news/devices/echo-show-16-smart-display",
+        "rights": "permission_pending"
+      },
+      "figures": [
+        {
+          "url": "https://assets.aboutamazon.com/dims4/default/992039f/2147483647/strip/true/crop/1600x900+0+0/resize/1320x743!/quality/90/?url=https%3A%2F%2Fassets.aboutamazon.com%2F65%2Ff3%2F79b9644f442ab9c9ba764d85a6cc%2Fechoshow16-stand-inline-amazonnews-ck102526.png",
+          "alt": "Echo Show 16 đặt trên chân đế",
+          "alt_en": "Echo Show 16 on its stand",
+          "caption": "Echo Show 16 với chân đế bán kèm.",
+          "caption_en": "Echo Show 16 with the optional stand.",
+          "credit": "Amazon",
+          "credit_url": "https://www.aboutamazon.com/news/devices/echo-show-16-smart-display",
+          "rights": "permission_pending"
+        }
+      ]
+    }
+  ],
+  "withdrawn": []
+}
