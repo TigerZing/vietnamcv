@@ -68,6 +68,22 @@ test.describe("knowledge", () => {
     await expect(playground).toHaveAttribute("aria-busy", "false");
   });
 
+  test("keeps the network white and darkens only the playground in dark mode", async ({
+    page,
+  }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem("vietnamcv-theme", "dark");
+    });
+    await page.goto("/vi/knowledge/cnn");
+    const roots = page.locator(".cnn-explainer");
+    await expect(roots).toHaveCount(2);
+    await expect(roots.first()).toHaveCSS("filter", "none");
+    await expect(page.locator(".cnn-explainer.follows-theme")).toHaveCSS(
+      "filter",
+      /invert/,
+    );
+  });
+
   test("lists the sections in the contents and jumps to one", async ({
     page,
   }) => {

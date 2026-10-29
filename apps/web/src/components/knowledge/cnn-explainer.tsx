@@ -97,7 +97,7 @@ function LoadingOverlay({
 /**
  * The interactive overview of CNN Explainer (Polo Club, MIT License), built from its
  * source by `tools/cnn-explainer/build.sh` and mounted straight into this page. Its styles
- * are scoped under `.cnn-explainer` and follow the site's dark theme.
+ * are scoped under `.cnn-explainer`; it keeps its original white background.
  */
 export function CnnExplainer() {
   const t = useTranslations("Knowledge.cnn.explainer");
@@ -182,7 +182,7 @@ export function CnnHyperparameters() {
         aria-busy={state === "loading"}
         className="relative min-h-[280px] overflow-hidden rounded-xl border border-border"
       >
-        <div className="cnn-explainer">
+        <div className="cnn-explainer follows-theme">
           <div ref={target} className="min-w-[640px]" />
         </div>
         <LoadingOverlay

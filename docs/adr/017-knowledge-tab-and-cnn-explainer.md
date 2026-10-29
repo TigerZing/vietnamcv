@@ -53,9 +53,11 @@ inline:
 - **Hyperparameter playground.** The same bundle also exposes
   `mountHyperparameters`, the convolution hyperparameter widget from the upstream
   article, which the CNN page shows inside its convolution section.
-- **Dark theme.** Under the site's dark theme the scoped CSS inverts the visualization
-  (`invert(1) hue-rotate(180deg)`) and inverts photos, feature maps and the network's
-  colour legends back, so they keep their real colours on a black background.
+- **Dark theme.** The network overview keeps its original white background in both
+  site themes (the owner preferred it). The hyperparameter playground opts in with
+  `follows-theme`: under the dark theme the scoped CSS inverts it
+  (`invert(1) hue-rotate(180deg)`) onto black, inverting photos and colour legends back
+  so they keep their real colours.
 - **Attribution.** The authors, the MIT licence, the paper, the source and the original
   site are credited directly under the visualization. The axe checks exclude
   `.cnn-explainer`: it is third-party markup we do not modify.
