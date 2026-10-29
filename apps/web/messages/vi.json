@@ -18,6 +18,7 @@
     "openSource": "Mã nguồn mở",
     "news": "Tin tức",
     "roadmap": "Roadmap",
+    "knowledge": "Kiến thức",
     "tasks": "Chủ đề",
     "demos": "Sản phẩm demo",
     "search": "Tìm kiếm",
@@ -1594,6 +1595,155 @@
       "channelAttention": {
         "name": "Channel attention",
         "caption": "Mỗi channel được nén thành một con số; một mạng nhỏ dùng các số đó để tăng channel hữu ích và giảm channel ít giá trị."
+      }
+    }
+  },
+  "Knowledge": {
+    "title": "Kiến thức",
+    "lead": "Kiến thức nền tảng của thị giác máy tính, giải thích từng bước kèm minh hoạ tương tác. Bắt đầu với hai họ kiến trúc quan trọng nhất: CNN và Transformer.",
+    "topicsLabel": "Chủ đề kiến thức",
+    "sectionCount": "{count} phần",
+    "read": "Đọc chủ đề",
+    "breadcrumb": "Đường dẫn",
+    "contents": "Mục lục",
+    "references": "Tài liệu gốc và đọc thêm",
+    "referencesLead": "Bài báo và bài viết mà các phần trên dựa vào. Mỗi liên kết mở trang gốc.",
+    "otherTopic": "Chủ đề tiếp theo",
+    "illustrationLabel": "Minh hoạ: {name}",
+    "note": {
+      "title": "Về nội dung này",
+      "body": "Phần giải thích do biên tập viên VietnamCV soạn với sự hỗ trợ của AI và đối chiếu với các tài liệu gốc ở cuối trang. Nếu bạn thấy chỗ nào chưa chính xác, hãy góp ý để chúng tôi sửa."
+    },
+    "topics": {
+      "cnn": {
+        "name": "Convolutional Neural Network (CNN)",
+        "short": "CNN",
+        "summary": "Mạng tích chập: kernel trượt qua ảnh, chia sẻ weight, xếp lớp từ cạnh tới vật thể. Kèm CNN Explainer để xem từng phép tính trên một mạng thật.",
+        "lead": "CNN là họ mô hình đã đưa deep learning vào thị giác máy tính từ AlexNet năm 2012 và vẫn là backbone của rất nhiều hệ thống chạy thực tế. Trang này đi từ phép convolution tới các kiến trúc nổi tiếng; phần minh hoạ tương tác cho bạn xem từng neuron của một CNN nhỏ đang phân loại ảnh."
+      },
+      "transformer": {
+        "name": "Transformer và Vision Transformer",
+        "short": "Transformer",
+        "summary": "Self-attention: mỗi token (hoặc patch ảnh) nhìn vào mọi token khác. Từ bài báo năm 2017 tới ViT, Swin, DETR, CLIP và các mô hình nền tảng hiện nay.",
+        "lead": "Transformer ra đời cho dịch máy năm 2017 và từ 2020 trở thành kiến trúc chủ đạo của thị giác máy tính, từ phân loại ảnh tới detection, segmentation và mô hình vision–language. Trang này giải thích self-attention từng bước, kèm một bảng thử để bạn tự xem các patch ảnh chú ý tới nhau thế nào."
+      }
+    },
+    "cnn": {
+      "explainer": {
+        "title": "Minh hoạ tương tác: CNN Explainer",
+        "body": "Một CNN nhỏ (TinyVGG, 10 lớp) chạy ngay trong trình duyệt của bạn bằng TensorFlow.js. Chọn một ảnh mẫu hoặc tải ảnh của bạn lên, rồi bấm vào từng neuron để xem convolution, ReLU, max pooling và softmax được tính thế nào. Bên dưới phần minh hoạ (cuộn trong khung) là bài giải thích chi tiết bằng tiếng Anh của tác giả.",
+        "frameTitle": "CNN Explainer: minh hoạ tương tác một mạng CNN",
+        "narrowHint": "CNN Explainer được thiết kế cho màn hình rộng. Trên điện thoại, hãy mở toàn màn hình và xoay ngang.",
+        "openFull": "Mở toàn màn hình",
+        "openOriginal": "Trang gốc",
+        "credit": "CNN Explainer của Zijie J. Wang, Robert Turko, Omar Shaikh, Haekyu Park, Nilaksh Das, Fred Hohman, Minsuk Kahng và Polo Chau (Polo Club of Data Science, Georgia Tech), phát hành theo giấy phép MIT. VietnamCV lưu một bản sao nguyên vẹn để nhúng vào trang này.",
+        "license": "Giấy phép MIT",
+        "paper": "Bài báo (IEEE VIS 2020)",
+        "source": "Mã nguồn"
+      },
+      "sections": {
+        "why": {
+          "title": "Vì sao cần CNN?",
+          "body": "Với máy tính, ảnh màu là một tensor H × W × 3: chiều cao, chiều rộng và 3 kênh màu RGB, mỗi ô là một con số. Ảnh 224 × 224 đã có 150.528 con số.\n\nNếu đưa thẳng tensor đó vào một mạng fully connected, mỗi neuron của lớp đầu tiên cần 150.528 weight; một lớp 1.000 neuron đã tốn khoảng 150 triệu tham số, vừa nặng vừa dễ overfit. Tệ hơn, mạng phải học lại từ đầu việc nhận ra một con mèo ở góc trái và ở góc phải.\n\nCNN dựa trên ba nhận xét về ảnh:\n- Tính cục bộ: một pixel liên quan chặt nhất tới các pixel quanh nó, nên mỗi neuron chỉ cần nhìn một vùng nhỏ (receptive field).\n- Chia sẻ weight: một bộ lọc phát hiện cạnh dọc dùng được ở mọi vị trí, nên cùng một kernel được trượt khắp ảnh.\n- Tính phân cấp: cạnh ghép thành hoa văn, hoa văn ghép thành bộ phận, bộ phận ghép thành vật thể.\n\nNhờ vậy CNN có ít tham số hơn nhiều và có translation equivariance: vật dịch đi bao nhiêu thì feature map dịch đi bấy nhiêu."
+        },
+        "convolution": {
+          "title": "Phép convolution",
+          "body": "Một kernel (bộ lọc) là một ma trận weight nhỏ, thường 3 × 3, có độ sâu bằng số kênh của input. Kernel trượt qua ảnh; ở mỗi vị trí, ta nhân từng phần tử của kernel với vùng ảnh nằm dưới nó, cộng tất cả lại và thêm bias. Kết quả là một giá trị của feature map (activation map).\n\nMột lớp convolution có nhiều kernel; mỗi kernel cho một feature map, xếp chồng lại thành output nhiều kênh. Ví dụ lớp có 64 kernel 3 × 3 trên ảnh RGB có 3 × 3 × 3 × 64 + 64 = 1.792 tham số, dù ảnh lớn bao nhiêu.\n\nBa siêu tham số quyết định kích thước output:\n- Kernel size K: vùng mỗi lần nhìn (3 × 3, 5 × 5, 7 × 7).\n- Stride S: bước trượt; stride 2 làm output nhỏ đi một nửa.\n- Padding P: số hàng/cột số 0 thêm quanh viền, để giữ kích thước và không bỏ sót pixel ở rìa.\n\nTrong CNN Explainer, bấm vào một neuron của lớp conv để xem kernel trượt qua input và từng phép nhân cộng.",
+          "formula": "Output = (W − K + 2P) / S + 1"
+        },
+        "activation": {
+          "title": "Hàm kích hoạt ReLU",
+          "body": "Sau mỗi convolution là một hàm phi tuyến, phổ biến nhất là ReLU: giữ nguyên giá trị dương, đưa giá trị âm về 0.\n\nNếu không có phi tuyến, xếp bao nhiêu lớp convolution thì cả mạng vẫn chỉ tương đương một phép biến đổi tuyến tính, không học được những ranh giới phức tạp. ReLU vừa rẻ để tính vừa giảm hiện tượng vanishing gradient so với sigmoid hay tanh, nên đã trở thành mặc định từ AlexNet. Các mạng mới hơn còn dùng biến thể như Leaky ReLU, GELU hay SiLU.",
+          "formula": "ReLU(x) = max(0, x)"
+        },
+        "pooling": {
+          "title": "Pooling và downsampling",
+          "body": "Pooling thu nhỏ feature map để giảm tính toán và để các lớp sau nhìn được vùng rộng hơn của ảnh gốc. Max pooling 2 × 2, stride 2 lấy giá trị lớn nhất trong mỗi ô 2 × 2, nên chiều cao và chiều rộng giảm một nửa còn số kênh giữ nguyên.\n\nPooling không có tham số để học và giúp mạng chịu được những dịch chuyển nhỏ của vật thể. Nhiều kiến trúc hiện đại thay max pooling bằng convolution stride 2, và cuối mạng dùng global average pooling: lấy trung bình mỗi feature map thành một số, thay cho lớp fully connected khổng lồ."
+        },
+        "hierarchy": {
+          "title": "Từ cạnh tới vật thể: đặc trưng phân cấp",
+          "body": "Khi xếp chồng conv, ReLU và pooling, receptive field của mỗi neuron lớn dần: neuron ở lớp sâu \"nhìn\" thấy một vùng lớn của ảnh gốc dù kernel của nó chỉ 3 × 3.\n\nZeiler và Fergus (2013) trực quan hoá một CNN đã train và thấy các lớp đầu phát hiện cạnh và mảng màu, các lớp giữa phát hiện hoa văn và bộ phận (mắt, bánh xe), các lớp cuối phản ứng với cả vật thể. Mạng tự học thứ tự này từ dữ liệu, không ai lập trình sẵn.\n\nĐây cũng là lý do transfer learning hiệu quả: các lớp đầu của một mạng train trên ImageNet học những đặc trưng chung, dùng lại được cho bài toán khác."
+        },
+        "head": {
+          "title": "Phân loại: flatten, fully connected và softmax",
+          "body": "Cuối mạng, feature map được làm phẳng (flatten) hoặc global average pooling thành một vector, rồi qua một hoặc vài lớp fully connected để ra một điểm số (logit) cho mỗi lớp.\n\nSoftmax biến các logit thành xác suất: mọi giá trị nằm trong (0, 1) và tổng bằng 1. Lớp có xác suất cao nhất là dự đoán của mạng. Khi train, cross-entropy loss phạt mạng theo −log của xác suất gán cho đáp án đúng.\n\nTrong CNN Explainer, bấm vào lớp output để xem softmax được tính từ các logit.",
+          "formula": "softmax(z)ᵢ = exp(zᵢ) / Σⱼ exp(zⱼ)"
+        },
+        "training": {
+          "title": "Huấn luyện một CNN",
+          "body": "Mọi kernel và weight ban đầu là số ngẫu nhiên. Mỗi bước train, mạng dự đoán trên một batch ảnh, tính loss, rồi backpropagation lan sai số ngược qua từng lớp để biết nên chỉnh mỗi weight theo hướng nào; optimizer như SGD hoặc AdamW cập nhật weight theo hướng đó.\n\nNhững kỹ thuật gần như luôn có:\n- Data augmentation: lật, cắt, xoay, đổi màu ảnh để mạng không học thuộc.\n- Batch normalization: chuẩn hoá activation giữa các lớp, giúp train nhanh và ổn định.\n- Regularization: weight decay, dropout.\n- Transfer learning: bắt đầu từ weight đã train trên ImageNet rồi fine-tune trên dữ liệu của bạn, thường cần ít dữ liệu hơn hẳn."
+        },
+        "architectures": {
+          "title": "Các kiến trúc CNN nổi tiếng",
+          "body": "- LeNet-5 (1998): đọc chữ số viết tay trên séc ngân hàng; khuôn mẫu conv → pool → fully connected.\n- AlexNet (2012): thắng ImageNet với khoảng cách lớn nhờ GPU, ReLU và dropout, mở đầu kỷ nguyên deep learning.\n- VGG (2014): chỉ dùng kernel 3 × 3 xếp thật sâu (16–19 lớp); đơn giản và dễ hiểu.\n- GoogLeNet / Inception (2014): nhiều kích thước kernel song song trong một module, tiết kiệm tính toán.\n- ResNet (2015): residual connection y = F(x) + x cho phép train mạng hơn 100 lớp; đến nay vẫn là backbone phổ biến.\n- MobileNet, EfficientNet (2017–2019): depthwise separable convolution và scale cân bằng độ sâu, độ rộng, độ phân giải, chạy được trên điện thoại.\n- ConvNeXt (2022): hiện đại hoá ResNet bằng các thiết kế học từ Transformer, cho thấy CNN vẫn cạnh tranh ngang ngửa."
+        },
+        "tasks": {
+          "title": "CNN trong các bài toán thị giác",
+          "body": "Phần thân (backbone) của CNN biến ảnh thành feature map giàu thông tin; từng bài toán gắn thêm một phần đầu (head) riêng:\n- Phân loại ảnh: global pooling + softmax như trên.\n- Object detection: dự đoán box và lớp cho từng vật thể, như Faster R-CNN (hai giai đoạn) hay YOLO (một giai đoạn, real-time).\n- Segmentation: gán nhãn cho từng pixel, như U-Net trong ảnh y tế hay Mask R-CNN cho từng instance.\n- Các bài toán khác: nhận diện khuôn mặt, ước lượng tư thế, OCR, ước lượng độ sâu.\n\nTrong sản phẩm thực tế, CNN vẫn được ưa chuộng nhờ nhanh, nhẹ và dễ tối ưu cho thiết bị biên như camera hay điện thoại."
+        }
+      }
+    },
+    "transformer": {
+      "playground": {
+        "title": "Bảng thử: self-attention trên các patch ảnh",
+        "body": "Ảnh đồ chơi dưới đây được chia thành 4 × 4 = 16 patch. Chọn một patch làm query: mỗi ô hiện trọng số attention mà patch đó dành cho ô ấy, ô càng đậm thì càng được chú ý. Điểm số là tích vô hướng giữa các vector của patch (q · k / √d) rồi qua softmax, nên tổng mọi ô luôn bằng 100%.",
+        "gridLabel": "Lưới patch: chọn một patch làm query",
+        "patchLabel": "Patch hàng {row}, cột {col}: {kind}, nhận {weight}% attention",
+        "queryLabel": "Query",
+        "positionToggle": "Thêm relative position bias (ưu tiên patch ở gần)",
+        "summary": "Patch {kind} ở hàng {row}, cột {col} chú ý nhiều nhất tới: {top}.",
+        "topItem": "{kind} ({weight}%)",
+        "explain": "Không có position bias, patch chỉ dựa vào nội dung: một patch con mèo chú ý tới các patch con mèo khác dù chúng ở đâu, vì vậy attention nhìn được toàn cục ngay từ lớp đầu. Bật position bias, các patch ở gần được cộng thêm điểm, giống relative position bias trong Swin Transformer.",
+        "toy": "Đây là ví dụ đồ chơi với vector viết tay, không phải mô hình đã train. Trong ViT thật, mỗi patch là vector 768 chiều và q, k được tính qua các ma trận học được.",
+        "kinds": {
+          "sky": "bầu trời",
+          "sun": "mặt trời",
+          "cat": "con mèo",
+          "tree": "cái cây",
+          "grass": "bãi cỏ"
+        }
+      },
+      "sections": {
+        "why": {
+          "title": "Từ attention tới Transformer",
+          "body": "Trước 2017, mô hình xử lý chuỗi (dịch máy, nhận dạng giọng nói) chủ yếu là RNN và LSTM: đọc từng từ một, khó song song hoá và dễ quên thông tin ở xa. Bài báo \"Attention Is All You Need\" (Vaswani và cộng sự, 2017) bỏ hẳn phần hồi quy, chỉ giữ cơ chế attention: mọi vị trí nhìn trực tiếp vào mọi vị trí khác trong một bước.\n\nKiến trúc đó, Transformer, train song song tốt trên GPU và càng nhiều dữ liệu càng mạnh. Nó trở thành nền của BERT, GPT và các mô hình ngôn ngữ lớn. Năm 2020, Vision Transformer (ViT) cho thấy chỉ cần coi ảnh như một chuỗi patch, Transformer cũng đạt kết quả hàng đầu trong thị giác máy tính."
+        },
+        "tokens": {
+          "title": "Token và embedding: biến ảnh thành chuỗi",
+          "body": "Transformer làm việc trên một chuỗi token, mỗi token là một vector D chiều. Với văn bản, token là từ hoặc mảnh từ. Với ảnh, ViT cắt ảnh thành các patch vuông không chồng nhau: ảnh 224 × 224 với patch 16 × 16 cho 14 × 14 = 196 patch.\n\nMỗi patch (16 × 16 × 3 = 768 con số) được nhân với một ma trận học được (linear projection, tương đương một convolution có kernel và stride bằng kích thước patch) để thành embedding D chiều, ví dụ D = 768 ở ViT-Base. ViT còn thêm một token đặc biệt [CLS] ở đầu chuỗi; output của token này dùng để phân loại.\n\nPatch nhỏ hơn giữ nhiều chi tiết hơn nhưng chuỗi dài hơn, và chi phí attention tăng theo bình phương độ dài chuỗi.",
+          "formula": "N = (H / P) × (W / P)   ·   224 / 16 = 14  →  N = 196"
+        },
+        "attention": {
+          "title": "Self-attention: Query, Key, Value",
+          "body": "Từ mỗi token x, ba ma trận học được tạo ra ba vector:\n- Query q: \"tôi đang tìm gì?\"\n- Key k: \"tôi chứa gì?\"\n- Value v: \"thông tin tôi gửi đi\".\n\nĐiểm số giữa token i và token j là tích vô hướng qᵢ · kⱼ, chia cho √dₖ để giá trị không quá lớn khi số chiều lớn (nếu không softmax sẽ quá nhọn và gradient gần như bằng 0). Softmax theo hàng biến điểm số thành trọng số có tổng bằng 1, và output của token i là tổng có trọng số của mọi value.\n\nMa trận attention có N × N phần tử, nên chi phí tính toán và bộ nhớ tăng theo N². Đó là lý do ảnh độ phân giải cao cần các biến thể như Swin (attention trong cửa sổ) hoặc FlashAttention (tính chính xác nhưng tiết kiệm bộ nhớ).",
+          "formula": "Attention(Q, K, V) = softmax(Q Kᵀ / √dₖ) · V"
+        },
+        "multihead": {
+          "title": "Multi-head attention",
+          "body": "Một phép attention chỉ học được một kiểu quan hệ. Multi-head attention chạy h phép attention song song (ví dụ h = 12 ở ViT-Base), mỗi head có ma trận Q, K, V riêng với số chiều dₖ = D / h. Output của các head được nối lại và nhân với ma trận W_O.\n\nCác head khác nhau thường chuyên một kiểu: head chú ý vùng lân cận, head nối các phần của cùng một vật thể, head bám theo đường biên. Tổng chi phí xấp xỉ một head lớn, nhưng mô hình biểu diễn được nhiều quan hệ cùng lúc.",
+          "formula": "MultiHead(X) = Concat(head₁, …, headₕ) · W_O"
+        },
+        "position": {
+          "title": "Thông tin vị trí",
+          "body": "Bản thân self-attention không biết thứ tự: đảo các token thì output cũng chỉ bị đảo theo. Muốn mô hình biết patch nào ở đâu, ta phải đưa thông tin vị trí vào:\n- Sinusoidal encoding (Transformer gốc): cộng vào embedding các sóng sin, cos với nhiều tần số.\n- Learned position embedding (ViT): mỗi vị trí có một vector học được, cộng vào embedding của patch.\n- Relative position bias (Swin, T5): cộng vào điểm attention một giá trị phụ thuộc khoảng cách giữa hai token.\n- RoPE: xoay vector q, k theo vị trí, được nhiều mô hình mới dùng vì dễ mở rộng sang độ dài và độ phân giải khác.\n\nỞ bảng thử phía trên, nút position bias minh hoạ đúng kiểu thứ ba."
+        },
+        "block": {
+          "title": "Một block Transformer",
+          "body": "Encoder của ViT là L block giống hệt nhau xếp chồng (L = 12 ở ViT-Base). Mỗi block gồm hai lớp con, mỗi lớp con có LayerNorm phía trước và residual connection bao quanh (kiểu pre-norm):\n- Multi-head self-attention: trộn thông tin giữa các token.\n- MLP: hai lớp fully connected (mở rộng lên 4D rồi thu về D, kích hoạt GELU), xử lý riêng từng token.\n\nResidual connection, giống ResNet, giúp gradient đi xuyên qua mạng sâu. Transformer gốc còn có decoder dùng masked self-attention (chỉ nhìn các token trước) và cross-attention (nhìn vào output của encoder); DETR dùng chính decoder này để sinh ra các vật thể.",
+          "formula": "x ← x + MSA(LN(x))   ·   x ← x + MLP(LN(x))"
+        },
+        "vit": {
+          "title": "Vision Transformer (ViT)",
+          "body": "Ghép các phần trên lại: ảnh → patch → linear projection → cộng position embedding → thêm [CLS] → L block encoder → lấy output của [CLS] → lớp phân loại.\n\nViT không có sẵn các giả định về ảnh như CNN (tính cục bộ, chia sẻ weight), nên khi train trên ImageNet-1k thuần nó thua ResNet. Nhưng khi pre-train trên dữ liệu rất lớn (ImageNet-21k, JFT-300M), ViT vượt qua CNN: nó tự học được cả quan hệ cục bộ lẫn toàn cục. DeiT (2021) sau đó cho thấy với augmentation mạnh và distillation, ViT train tốt chỉ với ImageNet-1k.\n\nNgày nay ViT là backbone của nhiều mô hình nền tảng: CLIP, DINOv2, SAM và phần thị giác của các mô hình vision–language."
+        },
+        "variants": {
+          "title": "Họ Transformer trong thị giác máy tính",
+          "body": "- Swin Transformer (2021): attention trong cửa sổ nhỏ, cửa sổ dịch đi ở lớp sau; feature map phân cấp như CNN, chi phí tuyến tính theo kích thước ảnh, hợp với detection và segmentation.\n- DETR (2020): detection như một bài toán dự đoán tập hợp; các object query qua decoder, mỗi query ra một vật thể, không cần anchor hay NMS.\n- MAE (2021): che 75% patch và bắt mô hình vẽ lại; một cách self-supervised pre-training rất hiệu quả.\n- CLIP (2021): học ảnh và văn bản trong cùng một không gian embedding từ 400 triệu cặp ảnh–caption, mở ra zero-shot classification.\n- SAM (2023), DINOv2 (2023): mô hình nền tảng cho segmentation theo prompt và cho đặc trưng thị giác tổng quát.\n- Mô hình vision–language: ViT mã hoá ảnh thành token, đưa cùng văn bản vào một mô hình ngôn ngữ lớn để trả lời câu hỏi về ảnh."
+        },
+        "compare": {
+          "title": "CNN hay Transformer?",
+          "body": "Không có đáp án chung, nhưng có vài quy tắc thực tế:\n- Inductive bias: CNN có sẵn tính cục bộ nên học tốt với ít dữ liệu; Transformer linh hoạt hơn nhưng cần nhiều dữ liệu hoặc pre-train.\n- Ngữ cảnh: attention nhìn toàn ảnh ngay từ lớp đầu; CNN phải xếp nhiều lớp mới có receptive field lớn.\n- Chi phí: attention tăng theo bình phương số token; CNN tăng tuyến tính theo số pixel, nên dễ chạy ở độ phân giải cao và trên thiết bị biên.\n- Triển khai: CNN được tối ưu sẵn trên hầu hết phần cứng và công cụ (TensorRT, ONNX, NPU di động).\n\nRanh giới ngày càng mờ: ConvNeXt mượn thiết kế của Transformer, còn Swin hay các mô hình hybrid mượn tính cục bộ của CNN. Nếu dữ liệu ít hoặc cần chạy nhanh trên thiết bị, bắt đầu với CNN đã pre-train; nếu cần mô hình nền tảng mạnh hoặc kết hợp văn bản, chọn ViT đã pre-train."
+        }
       }
     }
   },

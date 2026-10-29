@@ -45,7 +45,7 @@ export function NavLinksView({
               onClick={onNavigate}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "block rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+                "block rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors lg:px-2 xl:px-3",
                 active
                   ? "bg-accent-soft text-foreground"
                   : "text-muted-foreground hover:bg-surface-muted hover:text-foreground",

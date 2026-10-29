@@ -15,6 +15,8 @@ const eslintConfig = defineConfig([
     // Generated Playwright output.
     "playwright-report/**",
     "test-results/**",
+    // Vendored CNN Explainer build (MIT, Polo Club); see its README.
+    "public/cnn-explainer/**",
   ]),
 ]);
 

@@ -4,3 +4,5 @@ services/
 .next/
 node_modules/
 *.md
+# Vendored CNN Explainer build (MIT, Polo Club); kept byte-for-byte.
+apps/web/public/cnn-explainer/
