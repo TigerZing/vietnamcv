@@ -1,0 +1,3 @@
+# VieNeu-TTS SDK (Apache-2.0). The CPU install is torch-free (ONNX Runtime); it brings
+# soundfile, whose bundled libsndfile writes MP3.
+vieneu==3.8.3

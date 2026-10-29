@@ -8,6 +8,7 @@
 #   scripts/run.sh logs       follow logs from all services
 #   scripts/run.sh status     show container status
 #   scripts/run.sh admin [NAME]  create an admin account (default: admin) or set its password
+#   scripts/run.sh tts [ARGS]    record the Knowledge read-aloud audio with VieNeu-TTS (ADR-018)
 #
 # Works with Docker Desktop or Colima on macOS and with Docker Engine on Linux.
 # Written for bash 3.2 so it runs with the bash that ships with macOS.
@@ -34,7 +35,7 @@ die() {
   exit 1
 }
 
-usage() { sed -n '2,13p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,14p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
 compose() {
   if [ -f "$ENV_FILE" ]; then
@@ -231,9 +232,52 @@ admin() {
   ok "Sign in at $WEB_URL/vi/admin"
 }
 
+# Renders the read-aloud MP3s of the Knowledge articles on this computer (CPU is enough;
+# no GPU needed) into apps/web/public/knowledge/audio. Only changed sections are redone.
+# Arguments go to tools/knowledge-tts/generate.py, e.g. --locale vi en, --voice "Hải Đăng".
+tts() {
+  local dir="$ROOT_DIR/tools/knowledge-tts" python="" candidate
+  for candidate in python3.13 python3.12 python3.11 python3.10 python3; do
+    if command -v "$candidate" >/dev/null 2>&1 &&
+      "$candidate" -c 'import sys; sys.exit(sys.version_info < (3, 10))' 2>/dev/null; then
+      python="$candidate"
+      break
+    fi
+  done
+  [ -n "$python" ] || die "Python 3.10 or newer not found. On macOS: brew install python@3.12"
+
+  if [ ! -x "$dir/.venv/bin/python" ]; then
+    info "Creating a Python environment for VieNeu-TTS in tools/knowledge-tts/.venv"
+    "$python" -m venv "$dir/.venv" || die "Could not create the virtual environment"
+  fi
+  info "Installing VieNeu-TTS (first time only, a few minutes)"
+  "$dir/.venv/bin/python" -m pip install --quiet --upgrade pip
+  "$dir/.venv/bin/python" -m pip install --quiet -r "$dir/requirements.txt" ||
+    die "pip install failed (see the output above)"
+
+  info "Recording the Knowledge sections"
+  "$dir/.venv/bin/python" "$dir/generate.py" "$@" || die "Recording failed (see the output above)"
+  ok "Audio saved in apps/web/public/knowledge/audio"
+
+  # The web image bakes public/ in, so a running stack needs the web image rebuilt.
+  if command -v docker >/dev/null 2>&1 &&
+    [ -n "$(compose ps --status running --quiet web 2>/dev/null || true)" ]; then
+    info "Rebuilding the web image so the site plays the new audio"
+    compose build web || die "Build failed (see output above)"
+    compose up --detach --wait web || die "Restarting web failed (scripts/run.sh status)"
+    wait_for "$WEB_URL/vi/knowledge/cnn" "Web"
+  fi
+  ok "Commit the audio with: git add apps/web/public/knowledge apps/web/src/content/knowledge-audio.json"
+}
+
 main() {
   cd "$ROOT_DIR"
   local cmd="up" open_browser="no" admin_name="admin" arg
+  if [ "${1:-}" = "tts" ]; then
+    shift
+    tts "$@"
+    return
+  fi
   for arg in "$@"; do
     if [ "$cmd" = "admin" ] && [ "${arg#-}" = "$arg" ]; then
       admin_name="$arg"

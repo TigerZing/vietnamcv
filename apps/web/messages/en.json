@@ -1610,6 +1610,25 @@
     "referencesLead": "The papers and articles the sections above draw on. Each link opens the original.",
     "otherTopic": "Next topic",
     "illustrationLabel": "Illustration: {name}",
+    "readAloud": {
+      "toggle": "Read aloud",
+      "player": "Article reader",
+      "playPage": "Read the whole page",
+      "pause": "Pause",
+      "resume": "Resume",
+      "previous": "Previous section",
+      "next": "Next section",
+      "close": "Turn off read aloud",
+      "speed": "Speed",
+      "idle": "Press “Read the whole page”, or the speaker button next to a heading to hear one section.",
+      "reading": "Reading {current}/{total}: {title}",
+      "paused": "Paused at {current}/{total}: {title}",
+      "readSection": "Listen to “{title}”",
+      "stopSection": "Stop reading “{title}”",
+      "voiceRecorded": "VieNeu-TTS voice: {voice}",
+      "voiceBrowser": "Your browser's voice",
+      "unsupported": "This browser cannot read aloud."
+    },
     "note": {
       "title": "About this content",
       "body": "These explanations were written by VietnamCV editors with AI assistance and checked against the sources at the end of the page. If something looks wrong, tell us and we will fix it."

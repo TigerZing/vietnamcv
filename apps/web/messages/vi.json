@@ -1610,6 +1610,25 @@
     "referencesLead": "Bài báo và bài viết mà các phần trên dựa vào. Mỗi liên kết mở trang gốc.",
     "otherTopic": "Chủ đề tiếp theo",
     "illustrationLabel": "Minh hoạ: {name}",
+    "readAloud": {
+      "toggle": "Đọc to",
+      "player": "Trình đọc bài",
+      "playPage": "Đọc toàn bài",
+      "pause": "Tạm dừng",
+      "resume": "Tiếp tục",
+      "previous": "Phần trước",
+      "next": "Phần sau",
+      "close": "Tắt đọc to",
+      "speed": "Tốc độ",
+      "idle": "Bấm “Đọc toàn bài”, hoặc nút loa cạnh tiêu đề để nghe một phần.",
+      "reading": "Đang đọc {current}/{total}: {title}",
+      "paused": "Đã dừng ở phần {current}/{total}: {title}",
+      "readSection": "Nghe phần “{title}”",
+      "stopSection": "Dừng đọc phần “{title}”",
+      "voiceRecorded": "Giọng VieNeu-TTS: {voice}",
+      "voiceBrowser": "Giọng đọc của trình duyệt",
+      "unsupported": "Trình duyệt này không hỗ trợ đọc to."
+    },
     "note": {
       "title": "Về nội dung này",
       "body": "Phần giải thích do biên tập viên VietnamCV soạn với sự hỗ trợ của AI và đối chiếu với các tài liệu gốc ở cuối trang. Nếu bạn thấy chỗ nào chưa chính xác, hãy góp ý để chúng tôi sửa."
