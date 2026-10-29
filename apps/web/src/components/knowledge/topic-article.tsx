@@ -18,6 +18,8 @@ export type ArticleSection = {
   body: string;
   formula?: string;
   illustration?: IllustrationId;
+  /** Extra ids that should land on this section, e.g. links from an embedded tool. */
+  anchors?: readonly string[];
 };
 
 /**
@@ -201,8 +203,16 @@ function TopicSection({
     <section
       id={section.id}
       aria-labelledby={`${section.id}-title`}
-      className="flex scroll-mt-24 flex-col gap-4"
+      className="relative flex scroll-mt-24 flex-col gap-4"
     >
+      {section.anchors?.map((anchor) => (
+        <span
+          key={anchor}
+          id={anchor}
+          aria-hidden
+          className="absolute top-0 scroll-mt-24"
+        />
+      ))}
       <h2
         id={`${section.id}-title`}
         className="flex items-baseline gap-3 text-xl font-semibold tracking-tight sm:text-2xl"

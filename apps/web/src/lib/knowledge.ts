@@ -57,6 +57,18 @@ export const SECTION_ILLUSTRATIONS: {
   },
 };
 
+/**
+ * Element ids CNN Explainer scrolls to when a layer name is clicked ("move to article
+ * section"), placed on the CNN sections that explain those layers.
+ */
+export const CNN_EXPLAINER_ANCHORS: Partial<Record<CnnSectionId, string[]>> = {
+  why: ["article-input"],
+  convolution: ["article-convolution"],
+  activation: ["article-relu"],
+  pooling: ["article-pooling"],
+  head: ["article-flatten", "article-softmax"],
+};
+
 export type Reference = {
   /** Citation as published (titles are not translated). */
   title: string;
@@ -188,9 +200,19 @@ export const REFERENCES: Record<TopicId, readonly Reference[]> = {
   ],
 };
 
-/** Paths of the vendored CNN Explainer copy and its upstream (see its README). */
+/**
+ * The CNN Explainer overview built by `tools/cnn-explainer/build.sh` into
+ * `public/cnn-explainer`, and its upstream. Scripts load in order: the embed expects d3,
+ * TensorFlow.js and Font Awesome as globals.
+ */
 export const CNN_EXPLAINER = {
-  embed: "/cnn-explainer/index.html",
+  stylesheet: "/cnn-explainer/embed.css",
+  scripts: [
+    "/cnn-explainer/vendor/d3-5.16.0.min.js",
+    "/cnn-explainer/vendor/tfjs-1.0.0.min.js",
+    "/cnn-explainer/vendor/fontawesome-5.3.1.min.js",
+    "/cnn-explainer/embed.js",
+  ],
   original: "https://poloclub.github.io/cnn-explainer/",
   source: "https://github.com/poloclub/cnn-explainer",
   license: "https://github.com/poloclub/cnn-explainer/blob/master/LICENSE",
