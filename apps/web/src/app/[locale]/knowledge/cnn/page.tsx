@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { useMessages } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
-import { CnnExplainer } from "@/components/knowledge/cnn-explainer";
+import {
+  CnnExplainer,
+  CnnHyperparameters,
+} from "@/components/knowledge/cnn-explainer";
 import {
   type ArticleSection,
   TopicArticle,
@@ -34,6 +37,7 @@ export default function Page() {
     ...sections[id],
     illustration: SECTION_ILLUSTRATIONS.cnn[id],
     anchors: CNN_EXPLAINER_ANCHORS[id],
+    interactive: id === "convolution" ? <CnnHyperparameters /> : undefined,
   }));
 
   return (

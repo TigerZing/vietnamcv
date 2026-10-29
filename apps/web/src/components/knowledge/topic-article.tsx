@@ -20,6 +20,8 @@ export type ArticleSection = {
   illustration?: IllustrationId;
   /** Extra ids that should land on this section, e.g. links from an embedded tool. */
   anchors?: readonly string[];
+  /** An interactive piece shown under the section's text, across its full width. */
+  interactive?: React.ReactNode;
 };
 
 /**
@@ -259,6 +261,7 @@ function TopicSection({
           </figure>
         ) : null}
       </div>
+      {section.interactive}
     </section>
   );
 }

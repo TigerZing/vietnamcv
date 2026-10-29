@@ -50,6 +50,12 @@ inline:
   of the document. The embed replaces it with a stub that only performs the "move to
   article section" scrolls, and the CNN page puts the `#article-*` ids those scrolls look
   for on its own Vietnamese/English sections.
+- **Hyperparameter playground.** The same bundle also exposes
+  `mountHyperparameters`, the convolution hyperparameter widget from the upstream
+  article, which the CNN page shows inside its convolution section.
+- **Dark theme.** Under the site's dark theme the scoped CSS inverts the visualization
+  (`invert(1) hue-rotate(180deg)`) and inverts photos, feature maps and the network's
+  colour legends back, so they keep their real colours on a black background.
 - **Attribution.** The authors, the MIT licence, the paper, the source and the original
   site are credited directly under the visualization. The axe checks exclude
   `.cnn-explainer`: it is third-party markup we do not modify.

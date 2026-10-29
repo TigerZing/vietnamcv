@@ -1642,6 +1642,10 @@
         "source": "Mã nguồn",
         "openOriginal": "Trang gốc"
       },
+      "hyperparameters": {
+        "label": "Bảng thử siêu tham số của convolution",
+        "caption": "Bảng thử từ CNN Explainer: kéo thanh trượt để đổi kích thước input, padding (các ô viền có màu khác), kernel size và stride, rồi rê chuột lên ma trận để dời kernel (ô đỏ). Output bên phải nhỏ đi hay giữ nguyên đúng theo công thức ở trên; stride không hợp lệ (kernel không trượt đều tới mép) sẽ được báo. Nhãn trong bảng giữ nguyên tiếng Anh."
+      },
       "sections": {
         "why": {
           "title": "Vì sao cần CNN?",

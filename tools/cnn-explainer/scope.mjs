@@ -39,5 +39,22 @@ ${root} {
 ${root} img, ${root} svg, ${root} canvas { display: inline; max-width: none; }
 /* Upstream sizes the network to the viewport (100vw); here it fills the root. */
 ${root} #cnn-svg { width: 100%; }
+
+/*
+ * Dark theme of the site (data-theme="dark" on <html>): invert the drawing's whites and
+ * greys (hue-rotate keeps red red and blue blue), then invert the pictures, the feature
+ * maps and the network's colour legends back so they keep their real colours (line icons
+ * stay inverted so they show on the dark background). Matrices
+ * and legends inside the detail cards (.box) stay inverted together, so they still match.
+ */
+[data-theme="dark"] ${root} {
+  background: transparent;
+  color-scheme: light;
+  filter: invert(1) hue-rotate(180deg);
+}
+[data-theme="dark"] ${root} :is(img:not([src$=".svg"]), image:not([*|href$=".svg"]), canvas),
+[data-theme="dark"] ${root} rect:is([fill^="url"], [style*="url("]):not(.box *) {
+  filter: invert(1) hue-rotate(180deg);
+}
 `;
 fs.writeFileSync(out, result.css + host);

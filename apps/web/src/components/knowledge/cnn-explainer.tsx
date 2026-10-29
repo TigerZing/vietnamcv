@@ -8,9 +8,11 @@ import { CNN_EXPLAINER } from "@/lib/knowledge";
 
 declare global {
   interface Window {
-    CnnExplainer?: { mount: (target: HTMLElement) => () => void };
+    CnnExplainer?: Record<MountKind, (target: HTMLElement) => () => void>;
   }
 }
+
+type MountKind = "mount" | "mountHyperparameters";
 
 let loading: Promise<void> | null = null;
 
@@ -41,13 +43,11 @@ function loadCnnExplainer(): Promise<void> {
 }
 
 /**
- * The interactive overview of CNN Explainer (Polo Club, MIT License), built from its
- * source by `tools/cnn-explainer/build.sh` and mounted straight into this page. Its styles
- * are scoped under `.cnn-explainer`; the element it mounts into belongs to it, so React
- * renders nothing inside that element.
+ * Mounts one CNN Explainer component (Svelte) into the returned element once the scripts
+ * have loaded, and unmounts it with the React component. The element belongs to the
+ * Svelte app, so React must render nothing inside it.
  */
-export function CnnExplainer() {
-  const t = useTranslations("Knowledge.cnn.explainer");
+function useCnnExplainer(kind: MountKind) {
   const target = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
 
@@ -56,8 +56,9 @@ export function CnnExplainer() {
     let cancelled = false;
     loadCnnExplainer()
       .then(() => {
-        if (cancelled || !target.current || !window.CnnExplainer) return;
-        destroy = window.CnnExplainer.mount(target.current);
+        const mount = window.CnnExplainer?.[kind];
+        if (cancelled || !target.current || !mount) return;
+        destroy = mount(target.current);
         setState("ready");
       })
       .catch(() => {
@@ -67,7 +68,40 @@ export function CnnExplainer() {
       cancelled = true;
       destroy?.();
     };
-  }, []);
+  }, [kind]);
+
+  return { target, state };
+}
+
+function LoadingOverlay({
+  state,
+  labels,
+}: {
+  state: "loading" | "ready" | "error";
+  labels: { loading: string; error: string };
+}) {
+  if (state === "ready") return null;
+  return (
+    <p
+      role={state === "error" ? "alert" : "status"}
+      className="absolute inset-0 flex items-center justify-center gap-2 bg-surface text-sm text-muted-foreground"
+    >
+      {state === "loading" ? (
+        <LoaderCircle aria-hidden className="size-4 animate-spin" />
+      ) : null}
+      {labels[state]}
+    </p>
+  );
+}
+
+/**
+ * The interactive overview of CNN Explainer (Polo Club, MIT License), built from its
+ * source by `tools/cnn-explainer/build.sh` and mounted straight into this page. Its styles
+ * are scoped under `.cnn-explainer` and follow the site's dark theme.
+ */
+export function CnnExplainer() {
+  const t = useTranslations("Knowledge.cnn.explainer");
+  const { target, state } = useCnnExplainer("mount");
 
   return (
     <section
@@ -98,17 +132,10 @@ export function CnnExplainer() {
         <div className="cnn-explainer">
           <div ref={target} className="min-w-[1100px]" />
         </div>
-        {state !== "ready" ? (
-          <p
-            role={state === "error" ? "alert" : "status"}
-            className="absolute inset-0 flex items-center justify-center gap-2 bg-surface text-sm text-muted-foreground"
-          >
-            {state === "loading" ? (
-              <LoaderCircle aria-hidden className="size-4 animate-spin" />
-            ) : null}
-            {t(state)}
-          </p>
-        ) : null}
+        <LoadingOverlay
+          state={state}
+          labels={{ loading: t("loading"), error: t("error") }}
+        />
       </div>
 
       <p className="text-xs leading-5 text-muted-foreground">
@@ -136,5 +163,39 @@ export function CnnExplainer() {
         </span>
       </p>
     </section>
+  );
+}
+
+/**
+ * CNN Explainer's convolution hyperparameter playground (input size, padding, kernel
+ * size, stride), shown inside the convolution section.
+ */
+export function CnnHyperparameters() {
+  const t = useTranslations("Knowledge.cnn");
+  const { target, state } = useCnnExplainer("mountHyperparameters");
+
+  return (
+    <figure className="flex flex-col gap-3">
+      <div
+        role="region"
+        aria-label={t("hyperparameters.label")}
+        aria-busy={state === "loading"}
+        className="relative min-h-[280px] overflow-hidden rounded-xl border border-border"
+      >
+        <div className="cnn-explainer">
+          <div ref={target} className="min-w-[640px]" />
+        </div>
+        <LoadingOverlay
+          state={state}
+          labels={{
+            loading: t("explainer.loading"),
+            error: t("explainer.error"),
+          }}
+        />
+      </div>
+      <figcaption className="text-sm leading-6 text-muted-foreground">
+        {t("hyperparameters.caption")}
+      </figcaption>
+    </figure>
   );
 }

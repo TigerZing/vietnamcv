@@ -223,20 +223,37 @@ export type BodyBlock =
   { kind: "paragraph"; text: string } | { kind: "list"; items: string[] };
 
 /**
- * Splits a section body into blocks: paragraphs are separated by a blank line, and a
- * block whose lines all start with "- " is a bulleted list.
+ * Splits a section body into blocks: paragraphs are separated by a blank line, and lines
+ * starting with "- " are list items; a run of them becomes a bulleted list, so a list may
+ * follow its lead-in sentence directly.
  */
 export function bodyBlocks(body: string): BodyBlock[] {
-  return body
-    .split(/\n\s*\n/)
-    .map((block) => block.trim())
-    .filter(Boolean)
-    .map((block) => {
-      const lines = block.split("\n").map((line) => line.trim());
-      return lines.every((line) => line.startsWith("- "))
-        ? { kind: "list", items: lines.map((line) => line.slice(2).trim()) }
-        : { kind: "paragraph", text: lines.join(" ") };
-    });
+  const blocks: BodyBlock[] = [];
+  for (const chunk of body.split(/\n\s*\n/)) {
+    let text: string[] = [];
+    let items: string[] = [];
+    const flush = () => {
+      if (text.length) blocks.push({ kind: "paragraph", text: text.join(" ") });
+      if (items.length) blocks.push({ kind: "list", items });
+      text = [];
+      items = [];
+    };
+    for (const line of chunk.split("\n").map((value) => value.trim())) {
+      if (!line) continue;
+      if (line.startsWith("- ")) {
+        if (text.length) {
+          blocks.push({ kind: "paragraph", text: text.join(" ") });
+          text = [];
+        }
+        items.push(line.slice(2).trim());
+      } else {
+        if (items.length) flush();
+        text.push(line);
+      }
+    }
+    flush();
+  }
+  return blocks;
 }
 
 /** Neighbouring topic for the "next topic" link, wrapping around. */
