@@ -5,11 +5,15 @@ Records the sections of the Knowledge articles with
 pnnbao97; model `pnnbao-ump/VieNeu-TTS-v3-Turbo`). See ADR-018.
 
 ```bash
-scripts/run.sh tts                       # Vietnamese, voice "Mai Anh"
+scripts/run.sh tts                       # Vietnamese, voice "Minh Triết" (male, Southern)
 scripts/run.sh tts --locale vi en        # also English
-scripts/run.sh tts --voice "Hải Đăng" --force
+scripts/run.sh tts --voice "Thái Sơn"  # another Southern male voice
 scripts/run.sh tts --list-voices
 ```
+
+Southern voices: male "Minh Triết" (news, the default), "Thái Sơn" (storytelling),
+"Đức Trí" (reading), "Adam" (natural); female "Thùy Dung" (news), "Thục Đoan",
+"Mỹ Duyên", "Kim Thanh". Changing the voice re-records every section.
 
 Needs Python 3.10+ and about 1.5 GB of disk for the packages and model; a CPU is
 enough. The first run downloads the model from Hugging Face. Only sections whose text
