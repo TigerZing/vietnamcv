@@ -11,6 +11,7 @@ export const NAV_ITEMS: ReadonlyArray<{ href: string; key: NavKey }> = [
   { href: "/open-source", key: "openSource" },
   { href: "/news", key: "news" },
   { href: "/roadmap", key: "roadmap" },
+  { href: "/knowledge", key: "knowledge" },
   { href: "/tasks", key: "tasks" },
   { href: "/demos", key: "demos" },
 ];

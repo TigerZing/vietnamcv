@@ -107,6 +107,13 @@ The Discover tab (<http://localhost:3000/vi/discover>) lists links from the owne
 `apps/web/src/content/discover.json` in a pull request (ADR-016); after merging, run
 `scripts/run.sh update`.
 
+### Knowledge
+
+The Knowledge tab (<http://localhost:3000/vi/knowledge>) explains CNNs and Transformers.
+The CNN page embeds a copy of [CNN Explainer](https://github.com/poloclub/cnn-explainer)
+(MIT License) served from `apps/web/public/cnn-explainer/`; see its `README.md` and
+ADR-017.
+
 ## Quality checks
 
 ```bash

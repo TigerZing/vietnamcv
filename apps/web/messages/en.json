@@ -18,6 +18,7 @@
     "openSource": "Open source",
     "news": "News",
     "roadmap": "Roadmap",
+    "knowledge": "Knowledge",
     "tasks": "Tasks",
     "demos": "Demos",
     "search": "Search",
@@ -1594,6 +1595,155 @@
       "channelAttention": {
         "name": "Channel attention",
         "caption": "Each channel is squeezed to one number; a small network uses those numbers to boost useful channels and damp the rest."
+      }
+    }
+  },
+  "Knowledge": {
+    "title": "Knowledge",
+    "lead": "The foundations of computer vision, explained step by step with interactive illustrations. We start with the two most important architecture families: CNNs and Transformers.",
+    "topicsLabel": "Knowledge topics",
+    "sectionCount": "{count} sections",
+    "read": "Read topic",
+    "breadcrumb": "Breadcrumb",
+    "contents": "Contents",
+    "references": "Sources and further reading",
+    "referencesLead": "The papers and articles the sections above draw on. Each link opens the original.",
+    "otherTopic": "Next topic",
+    "illustrationLabel": "Illustration: {name}",
+    "note": {
+      "title": "About this content",
+      "body": "These explanations were written by VietnamCV editors with AI assistance and checked against the sources at the end of the page. If something looks wrong, tell us and we will fix it."
+    },
+    "topics": {
+      "cnn": {
+        "name": "Convolutional Neural Networks (CNN)",
+        "short": "CNN",
+        "summary": "Convolutional networks: kernels slide over the image, weights are shared, and layers build up from edges to objects. With CNN Explainer to watch every computation in a real network.",
+        "lead": "CNNs brought deep learning to computer vision with AlexNet in 2012 and are still the backbone of many production systems. This page goes from the convolution operation to the well-known architectures; the interactive illustration lets you inspect every neuron of a small CNN as it classifies an image."
+      },
+      "transformer": {
+        "name": "Transformers and Vision Transformers",
+        "short": "Transformer",
+        "summary": "Self-attention: every token (or image patch) looks at every other token. From the 2017 paper to ViT, Swin, DETR, CLIP and today's foundation models.",
+        "lead": "The Transformer was introduced for machine translation in 2017 and since 2020 has become the dominant architecture in computer vision, from image classification to detection, segmentation and vision–language models. This page explains self-attention step by step, with a playground where you can see for yourself how image patches attend to each other."
+      }
+    },
+    "cnn": {
+      "explainer": {
+        "title": "Interactive illustration: CNN Explainer",
+        "body": "A small CNN (TinyVGG, 10 classes) runs right in your browser with TensorFlow.js. Pick a sample image or upload your own, then click any neuron to see how convolution, ReLU, max pooling and softmax are computed. Below the visualization (scroll inside the frame) is the authors' detailed explanation.",
+        "frameTitle": "CNN Explainer: an interactive visualization of a CNN",
+        "narrowHint": "CNN Explainer is designed for wide screens. On a phone, open it full screen and turn the phone sideways.",
+        "openFull": "Open full screen",
+        "openOriginal": "Original site",
+        "credit": "CNN Explainer by Zijie J. Wang, Robert Turko, Omar Shaikh, Haekyu Park, Nilaksh Das, Fred Hohman, Minsuk Kahng and Polo Chau (Polo Club of Data Science, Georgia Tech), released under the MIT License. VietnamCV keeps an unmodified copy to embed on this page.",
+        "license": "MIT License",
+        "paper": "Paper (IEEE VIS 2020)",
+        "source": "Source code"
+      },
+      "sections": {
+        "why": {
+          "title": "Why CNNs?",
+          "body": "To a computer, a colour image is an H × W × 3 tensor: height, width and three RGB channels, each cell a number. A 224 × 224 image already holds 150,528 numbers.\n\nFeed that tensor straight into a fully connected network and every neuron in the first layer needs 150,528 weights; a 1,000-neuron layer costs about 150 million parameters, which is heavy and overfits easily. Worse, the network has to learn separately that a cat in the top-left corner is the same as a cat in the bottom-right.\n\nCNNs rest on three observations about images:\n- Locality: a pixel is most related to the pixels around it, so each neuron only needs to look at a small region (its receptive field).\n- Weight sharing: a filter that detects vertical edges is useful everywhere, so the same kernel slides across the whole image.\n- Hierarchy: edges combine into textures, textures into parts, parts into objects.\n\nAs a result CNNs need far fewer parameters and are translation equivariant: when an object moves, its feature map moves with it."
+        },
+        "convolution": {
+          "title": "The convolution operation",
+          "body": "A kernel (filter) is a small matrix of weights, usually 3 × 3, as deep as the input has channels. The kernel slides over the image; at each position we multiply each kernel entry with the image region under it, add everything up and add a bias. The result is one value of the feature map (activation map).\n\nA convolution layer has many kernels; each produces one feature map, and they are stacked into a multi-channel output. A layer of 64 kernels of size 3 × 3 on an RGB image has 3 × 3 × 3 × 64 + 64 = 1,792 parameters, however large the image.\n\nThree hyperparameters set the output size:\n- Kernel size K: the region seen at once (3 × 3, 5 × 5, 7 × 7).\n- Stride S: the step size; stride 2 halves the output.\n- Padding P: rows and columns of zeros added around the border to keep the size and not lose edge pixels.\n\nIn CNN Explainer, click a neuron in a conv layer to watch the kernel slide over the input, multiply and add.",
+          "formula": "Output = (W − K + 2P) / S + 1"
+        },
+        "activation": {
+          "title": "The ReLU activation",
+          "body": "Each convolution is followed by a non-linear function, most often ReLU: positive values pass through, negative values become 0.\n\nWithout a non-linearity, any stack of convolution layers is still equivalent to a single linear transformation and cannot learn complex decision boundaries. ReLU is cheap to compute and suffers less from vanishing gradients than sigmoid or tanh, so it has been the default since AlexNet. Newer networks also use variants such as Leaky ReLU, GELU and SiLU.",
+          "formula": "ReLU(x) = max(0, x)"
+        },
+        "pooling": {
+          "title": "Pooling and downsampling",
+          "body": "Pooling shrinks feature maps to save computation and to let later layers see a wider region of the original image. 2 × 2 max pooling with stride 2 keeps the largest value of each 2 × 2 block, halving height and width while keeping the number of channels.\n\nPooling has no parameters to learn and makes the network tolerant of small shifts. Many modern architectures replace max pooling with stride-2 convolutions, and end with global average pooling: each feature map is averaged into a single number instead of feeding a huge fully connected layer."
+        },
+        "hierarchy": {
+          "title": "From edges to objects: hierarchical features",
+          "body": "As conv, ReLU and pooling layers stack up, each neuron's receptive field grows: a neuron deep in the network \"sees\" a large part of the original image even though its kernel is only 3 × 3.\n\nZeiler and Fergus (2013) visualized a trained CNN and found that early layers detect edges and colour blobs, middle layers detect textures and parts (eyes, wheels), and the last layers respond to whole objects. The network learns this order from data; nobody programs it.\n\nThis is also why transfer learning works so well: the early layers of a network trained on ImageNet learn general features that carry over to other problems."
+        },
+        "head": {
+          "title": "Classification: flatten, fully connected and softmax",
+          "body": "At the end of the network, the feature maps are flattened or global-average-pooled into a vector, which passes through one or a few fully connected layers to produce a score (logit) per class.\n\nSoftmax turns the logits into probabilities: every value lies in (0, 1) and they sum to 1. The class with the highest probability is the prediction. During training, the cross-entropy loss penalizes the network by −log of the probability it gave the correct answer.\n\nIn CNN Explainer, click the output layer to see softmax computed from the logits.",
+          "formula": "softmax(z)ᵢ = exp(zᵢ) / Σⱼ exp(zⱼ)"
+        },
+        "training": {
+          "title": "Training a CNN",
+          "body": "All kernels and weights start out random. At each training step the network predicts on a batch of images and computes the loss; backpropagation sends the error back through every layer to find which way each weight should move, and an optimizer such as SGD or AdamW updates the weights accordingly.\n\nTechniques you will almost always see:\n- Data augmentation: flipping, cropping, rotating and recolouring images so the network does not memorize them.\n- Batch normalization: normalizing activations between layers for faster, more stable training.\n- Regularization: weight decay, dropout.\n- Transfer learning: starting from weights trained on ImageNet and fine-tuning on your data, which usually needs far less data."
+        },
+        "architectures": {
+          "title": "Well-known CNN architectures",
+          "body": "- LeNet-5 (1998): read handwritten digits on bank cheques; established the conv → pool → fully connected pattern.\n- AlexNet (2012): won ImageNet by a wide margin thanks to GPUs, ReLU and dropout, starting the deep learning era.\n- VGG (2014): only 3 × 3 kernels, stacked deep (16–19 layers); simple and easy to understand.\n- GoogLeNet / Inception (2014): several kernel sizes in parallel inside one module, saving computation.\n- ResNet (2015): the residual connection y = F(x) + x made networks of more than 100 layers trainable; still a popular backbone.\n- MobileNet, EfficientNet (2017–2019): depthwise separable convolutions and balanced scaling of depth, width and resolution, fast enough for phones.\n- ConvNeXt (2022): modernizes ResNet with design choices borrowed from Transformers, showing CNNs remain fully competitive."
+        },
+        "tasks": {
+          "title": "CNNs across vision tasks",
+          "body": "A CNN backbone turns an image into rich feature maps; each task adds its own head:\n- Image classification: global pooling + softmax as above.\n- Object detection: a box and a class for every object, as in Faster R-CNN (two-stage) or YOLO (one-stage, real-time).\n- Segmentation: a label for every pixel, as in U-Net for medical images or Mask R-CNN for individual instances.\n- Other tasks: face recognition, pose estimation, OCR, depth estimation.\n\nIn real products CNNs remain popular because they are fast, light and easy to optimize for edge devices such as cameras and phones."
+        }
+      }
+    },
+    "transformer": {
+      "playground": {
+        "title": "Playground: self-attention over image patches",
+        "body": "The toy image below is split into 4 × 4 = 16 patches. Pick a patch as the query: each cell shows the attention weight the query gives it, and darker cells get more attention. Scores are dot products between the patches' vectors (q · k / √d) passed through softmax, so all cells always add up to 100%.",
+        "gridLabel": "Patch grid: pick a patch as the query",
+        "patchLabel": "Patch row {row}, column {col}: {kind}, receives {weight}% attention",
+        "queryLabel": "Query",
+        "positionToggle": "Add relative position bias (favour nearby patches)",
+        "summary": "The {kind} patch at row {row}, column {col} attends most to: {top}.",
+        "topItem": "{kind} ({weight}%)",
+        "explain": "Without position bias, a patch relies only on content: a cat patch attends to the other cat patches wherever they are, which is why attention sees the whole image from the very first layer. With position bias on, nearby patches get extra score, like the relative position bias in Swin Transformer.",
+        "toy": "This is a toy example with hand-written vectors, not a trained model. In a real ViT each patch is a 768-dimensional vector and q and k come from learned matrices.",
+        "kinds": {
+          "sky": "sky",
+          "sun": "sun",
+          "cat": "cat",
+          "tree": "tree",
+          "grass": "grass"
+        }
+      },
+      "sections": {
+        "why": {
+          "title": "From attention to the Transformer",
+          "body": "Before 2017, sequence models (machine translation, speech recognition) were mostly RNNs and LSTMs: they read one word at a time, were hard to parallelize and forgot distant information. \"Attention Is All You Need\" (Vaswani et al., 2017) dropped recurrence entirely and kept only attention: every position looks directly at every other position in a single step.\n\nThat architecture, the Transformer, trains in parallel on GPUs and keeps improving with more data. It became the basis of BERT, GPT and today's large language models. In 2020 the Vision Transformer (ViT) showed that by treating an image as a sequence of patches, a Transformer also reaches the state of the art in computer vision."
+        },
+        "tokens": {
+          "title": "Tokens and embeddings: turning an image into a sequence",
+          "body": "A Transformer works on a sequence of tokens, each a D-dimensional vector. For text, tokens are words or word pieces. For images, ViT cuts the image into non-overlapping square patches: a 224 × 224 image with 16 × 16 patches gives 14 × 14 = 196 patches.\n\nEach patch (16 × 16 × 3 = 768 numbers) is multiplied by a learned matrix (a linear projection, equivalent to a convolution whose kernel and stride equal the patch size) to become a D-dimensional embedding, for example D = 768 in ViT-Base. ViT also prepends a special [CLS] token; its output is used for classification.\n\nSmaller patches keep more detail but make the sequence longer, and the cost of attention grows with the square of the sequence length.",
+          "formula": "N = (H / P) × (W / P)   ·   224 / 16 = 14  →  N = 196"
+        },
+        "attention": {
+          "title": "Self-attention: queries, keys and values",
+          "body": "From each token x, three learned matrices produce three vectors:\n- Query q: \"what am I looking for?\"\n- Key k: \"what do I contain?\"\n- Value v: \"the information I pass on\".\n\nThe score between tokens i and j is the dot product qᵢ · kⱼ, divided by √dₖ so values do not grow too large in high dimensions (otherwise softmax becomes too peaked and gradients nearly vanish). A row-wise softmax turns the scores into weights that sum to 1, and token i's output is the weighted sum of all values.\n\nThe attention matrix has N × N entries, so compute and memory grow with N². That is why high-resolution images need variants such as Swin (attention within windows) or FlashAttention (exact but memory-efficient).",
+          "formula": "Attention(Q, K, V) = softmax(Q Kᵀ / √dₖ) · V"
+        },
+        "multihead": {
+          "title": "Multi-head attention",
+          "body": "A single attention can only learn one kind of relationship. Multi-head attention runs h attentions in parallel (h = 12 in ViT-Base), each head with its own Q, K and V matrices of dimension dₖ = D / h. The heads' outputs are concatenated and multiplied by a matrix W_O.\n\nDifferent heads often specialize: one attends to the neighbourhood, one links the parts of the same object, one follows boundaries. The total cost is about that of one large head, yet the model can represent several relationships at once.",
+          "formula": "MultiHead(X) = Concat(head₁, …, headₕ) · W_O"
+        },
+        "position": {
+          "title": "Position information",
+          "body": "Self-attention by itself has no notion of order: shuffle the tokens and the output is merely shuffled the same way. For the model to know where each patch is, position information has to be added:\n- Sinusoidal encoding (original Transformer): sine and cosine waves of many frequencies added to the embeddings.\n- Learned position embeddings (ViT): one learned vector per position, added to the patch embedding.\n- Relative position bias (Swin, T5): a value that depends on the distance between two tokens, added to the attention score.\n- RoPE: rotates q and k according to position; used by many recent models because it extends well to other lengths and resolutions.\n\nIn the playground above, the position bias switch illustrates exactly the third kind."
+        },
+        "block": {
+          "title": "A Transformer block",
+          "body": "A ViT encoder is L identical blocks stacked (L = 12 in ViT-Base). Each block has two sublayers, each with a LayerNorm in front and a residual connection around it (pre-norm):\n- Multi-head self-attention: mixes information between tokens.\n- MLP: two fully connected layers (expanding to 4D then back to D, with GELU), applied to each token separately.\n\nThe residual connections, as in ResNet, let gradients flow through deep networks. The original Transformer also has a decoder with masked self-attention (only looking at earlier tokens) and cross-attention (looking at the encoder output); DETR uses this decoder to produce objects.",
+          "formula": "x ← x + MSA(LN(x))   ·   x ← x + MLP(LN(x))"
+        },
+        "vit": {
+          "title": "The Vision Transformer (ViT)",
+          "body": "Putting it together: image → patches → linear projection → add position embeddings → prepend [CLS] → L encoder blocks → take the [CLS] output → classification layer.\n\nViT lacks the built-in assumptions about images that CNNs have (locality, weight sharing), so trained on ImageNet-1k alone it loses to ResNet. Pre-trained on very large datasets (ImageNet-21k, JFT-300M), however, ViT overtakes CNNs: it learns both local and global relationships by itself. DeiT (2021) then showed that with strong augmentation and distillation ViT trains well on ImageNet-1k alone.\n\nToday ViT is the backbone of many foundation models: CLIP, DINOv2, SAM and the vision side of vision–language models."
+        },
+        "variants": {
+          "title": "The Transformer family in computer vision",
+          "body": "- Swin Transformer (2021): attention within small windows that shift in the next layer; hierarchical feature maps like a CNN and cost linear in image size, well suited to detection and segmentation.\n- DETR (2020): detection as set prediction; object queries pass through a decoder and each yields one object, with no anchors or NMS.\n- MAE (2021): mask 75% of the patches and make the model redraw them; a very effective form of self-supervised pre-training.\n- CLIP (2021): learns images and text in one embedding space from 400 million image–caption pairs, enabling zero-shot classification.\n- SAM (2023), DINOv2 (2023): foundation models for promptable segmentation and for general-purpose visual features.\n- Vision–language models: a ViT encodes the image into tokens that a large language model reads together with text to answer questions about the image."
+        },
+        "compare": {
+          "title": "CNN or Transformer?",
+          "body": "There is no single answer, but a few practical rules:\n- Inductive bias: CNNs have locality built in and learn well from little data; Transformers are more flexible but need lots of data or pre-training.\n- Context: attention sees the whole image from the first layer; a CNN needs many layers to build a large receptive field.\n- Cost: attention grows with the square of the number of tokens; a CNN grows linearly with the number of pixels, so it is easier to run at high resolution and on edge devices.\n- Deployment: CNNs are already optimized on almost every hardware and toolchain (TensorRT, ONNX, mobile NPUs).\n\nThe line keeps blurring: ConvNeXt borrows Transformer design, while Swin and hybrid models borrow CNN locality. With little data or a need for fast on-device inference, start from a pre-trained CNN; when you need a strong foundation model or a link to text, choose a pre-trained ViT."
+        }
       }
     }
   },

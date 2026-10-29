@@ -23,7 +23,7 @@ export function SiteHeader() {
             <NavLinks />
           </Suspense>
         </nav>
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ml-auto flex shrink-0 items-center gap-1">
           <Link
             href="/search"
             className="inline-flex size-10 items-center justify-center rounded-md text-muted-foreground hover:bg-surface-muted hover:text-foreground"
