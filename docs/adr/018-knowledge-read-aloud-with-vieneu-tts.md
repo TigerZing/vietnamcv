@@ -34,7 +34,7 @@ Option 2, with option 3 as the fallback.
 - **Generator.** `tools/knowledge-tts/generate.py` reads each section of
   `Knowledge.<topic>.sections` from `messages/<locale>.json`, turns it into speech text
   (title, paragraphs, list items as sentences; `×` and `−` said as words; formulas
-  skipped), synthesizes it with the preset voice "Mai Anh" and writes
+  skipped), synthesizes it with the preset voice "Minh Triết" (male, Southern accent; the owner's choice) and writes
   `public/knowledge/audio/<locale>/<topic>/<section>-<hash>.mp3`.
   `src/content/knowledge-audio.json` records each file with a hash of the section's
   title and body. Unchanged sections are skipped. `scripts/run.sh tts` sets up a

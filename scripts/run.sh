@@ -234,7 +234,7 @@ admin() {
 
 # Renders the read-aloud MP3s of the Knowledge articles on this computer (CPU is enough;
 # no GPU needed) into apps/web/public/knowledge/audio. Only changed sections are redone.
-# Arguments go to tools/knowledge-tts/generate.py, e.g. --locale vi en, --voice "Hải Đăng".
+# Arguments go to tools/knowledge-tts/generate.py, e.g. --locale vi en, --voice "Thái Sơn".
 tts() {
   local dir="$ROOT_DIR/tools/knowledge-tts" python="" candidate
   for candidate in python3.13 python3.12 python3.11 python3.10 python3; do

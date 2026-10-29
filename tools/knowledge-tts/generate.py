@@ -9,9 +9,9 @@ text and falls back to the browser's own voice otherwise (ADR-018).
 
 Unchanged sections are skipped, so a rerun after a copy edit only renders what changed.
 
-    python generate.py                     # Vietnamese, voice "Mai Anh"
+    python generate.py                     # Vietnamese, voice "Minh Triết" (male, Southern)
     python generate.py --locale vi en      # also English
-    python generate.py --voice "Hải Đăng" --force
+    python generate.py --voice "Thái Sơn" --force
     python generate.py --topic cnn --section convolution
 """
 
@@ -33,7 +33,7 @@ MESSAGES = WEB / "messages"
 AUDIO_DIR = WEB / "public" / "knowledge" / "audio"
 MANIFEST = WEB / "src" / "content" / "knowledge-audio.json"
 MODEL = "VieNeu-TTS v3 Turbo"
-DEFAULT_VOICE = "Mai Anh"
+DEFAULT_VOICE = "Minh Triết"  # male, Southern accent, news style
 
 # Symbols the articles use that a reader says as words (multiplication and minus signs
 # are written as escapes).
