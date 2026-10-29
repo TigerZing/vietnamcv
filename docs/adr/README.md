@@ -19,6 +19,7 @@
 | [015](015-admin-dashboard-and-deletion.md) | Admin dashboard with password sign-in, and deleting content | Accepted |
 | [016](016-discover-picks-from-sheet.md) | Discover picks from the owner's Google Sheet | Accepted |
 | [017](017-knowledge-tab-and-cnn-explainer.md) | Knowledge tab and CNN Explainer built into the page | Accepted |
+| [018](018-knowledge-read-aloud-with-vieneu-tts.md) | Read-aloud for Knowledge articles with VieNeu-TTS | Accepted |
 
 New ADRs copy the structure below: Context, Decision, Consequences. An ADR that changes a
 spec says which spec section it overrides.

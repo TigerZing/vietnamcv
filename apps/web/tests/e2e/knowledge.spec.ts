@@ -123,6 +123,112 @@ test.describe("knowledge", () => {
     await expect(bias).toHaveAttribute("aria-checked", "true");
   });
 
+  test("reads the whole page aloud, or one section", async ({ page }) => {
+    await page.addInitScript(mockSpeech);
+    await page.goto("/vi/knowledge/cnn");
+    const toggle = page.getByRole("button", { name: "Đọc to", exact: true });
+    await expect(toggle).toHaveAttribute("aria-pressed", "false");
+    await expect(page.getByRole("button", { name: /^Nghe phần/ })).toHaveCount(
+      0,
+    );
+
+    // Turning it on starts at the first section and goes on to the next ones.
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    const player = page.getByRole("region", { name: "Trình đọc bài" });
+    await expect(player).toBeVisible();
+    await expect(player.getByText(/^Đang đọc 1\/9:/)).toBeVisible();
+    await expect(page.locator("section[data-reading]")).toHaveCount(1);
+    await expect(player.getByText("Giọng đọc của trình duyệt")).toBeVisible();
+    // The title is read first, as its own sentence.
+    expect(await page.evaluate(() => window.__spoken[0])).toBe(
+      "Vì sao cần CNN?",
+    );
+    // Finishing every sentence of the first section moves on to the second.
+    const second = await page.evaluate(() => {
+      const heading = document.querySelectorAll("section[id] > div > h2")[1];
+      const title = heading?.lastChild?.textContent ?? "";
+      for (
+        let i = 0;
+        i < 100 && !window.__spoken.at(-1)?.startsWith(title);
+        i++
+      )
+        window.__finishUtterance();
+      return title;
+    });
+    expect(second).not.toBe("");
+    await expect(
+      player.getByText(`Đang đọc 2/9: ${second}`, { exact: true }),
+    ).toBeVisible();
+
+    await player.getByRole("button", { name: "Tạm dừng" }).click();
+    await expect(player.getByText(/^Đã dừng ở phần/)).toBeVisible();
+    await player.getByRole("button", { name: "Tiếp tục" }).click();
+
+    // A section's own button reads just that section.
+    await page
+      .getByRole("button", { name: "Nghe phần “Pooling và downsampling”" })
+      .click();
+    await expect(
+      player.getByText(/^Đang đọc 4\/9: Pooling và downsampling/),
+    ).toBeVisible();
+    await expect(page.locator("section#pooling")).toHaveAttribute(
+      "data-reading",
+      "",
+    );
+    await page
+      .getByRole("button", { name: "Dừng đọc phần “Pooling và downsampling”" })
+      .click();
+    await expect(page.locator("section[data-reading]")).toHaveCount(0);
+
+    // Read to its end, a single section does not go on to the next one.
+    await page
+      .getByRole("button", { name: "Nghe phần “Hàm kích hoạt ReLU”" })
+      .click();
+    const spoken = await page.evaluate(() => {
+      for (let i = 0; i < 100; i++) window.__finishUtterance();
+      return window.__spoken.at(-1);
+    });
+    expect(spoken).not.toMatch(/^Pooling/);
+    await expect(player.getByText(/^Bấm “Đọc toàn bài”/)).toBeVisible();
+
+    // The choice is remembered, but reading only starts on a press.
+    await page.reload();
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    await expect(player.getByText(/^Bấm “Đọc toàn bài”/)).toBeVisible();
+    await player.getByRole("button", { name: "Tắt đọc to" }).click();
+    await expect(player).toHaveCount(0);
+    await expect(toggle).toHaveAttribute("aria-pressed", "false");
+  });
+
+  for (const theme of ["dark", "light"] as const) {
+    test(`has no serious accessibility violations with the reader open (${theme})`, async ({
+      page,
+    }) => {
+      await page.addInitScript((value) => {
+        localStorage.setItem("vietnamcv-theme", value);
+        localStorage.setItem("vietnamcv-read-aloud", "on");
+      }, theme);
+      await page.goto("/vi/knowledge/transformer");
+      await expect(
+        page.getByRole("region", { name: "Trình đọc bài" }),
+      ).toBeVisible();
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze();
+      const serious = results.violations.filter((violation) =>
+        ["serious", "critical"].includes(violation.impact ?? ""),
+      );
+      expect(serious).toEqual([]);
+      const overflow = await page.evaluate(
+        () =>
+          document.documentElement.scrollWidth -
+          document.documentElement.clientWidth,
+      );
+      expect(overflow).toBeLessThanOrEqual(0);
+    });
+  }
+
   for (const path of [
     "/vi/knowledge",
     "/vi/knowledge/cnn",
@@ -165,3 +271,39 @@ test.describe("knowledge", () => {
     }
   }
 });
+
+declare global {
+  interface Window {
+    __spoken: string[];
+    __finishUtterance: () => void;
+  }
+}
+
+/**
+ * Replaces the browser's speech synthesis (headless Chromium has no voices): records
+ * each utterance, which only ends when the test calls `__finishUtterance`.
+ */
+function mockSpeech() {
+  window.__spoken = [];
+  let current: SpeechSynthesisUtterance | undefined;
+  window.__finishUtterance = () => {
+    const utterance = current;
+    current = undefined;
+    utterance?.onend?.(new Event("end") as SpeechSynthesisEvent);
+  };
+  const synth = {
+    speak(utterance: SpeechSynthesisUtterance) {
+      current = utterance;
+      window.__spoken.push(utterance.text);
+    },
+    cancel() {
+      current = undefined;
+    },
+    pause() {},
+    resume() {},
+    getVoices: () => [],
+    addEventListener() {},
+    removeEventListener() {},
+  };
+  Object.defineProperty(window, "speechSynthesis", { value: synth });
+}
