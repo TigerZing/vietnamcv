@@ -1631,15 +1631,16 @@
     "cnn": {
       "explainer": {
         "title": "Minh hoạ tương tác: CNN Explainer",
-        "body": "Một CNN nhỏ (TinyVGG, 10 lớp) chạy ngay trong trình duyệt của bạn bằng TensorFlow.js. Chọn một ảnh mẫu hoặc tải ảnh của bạn lên, rồi bấm vào từng neuron để xem convolution, ReLU, max pooling và softmax được tính thế nào. Bên dưới phần minh hoạ (cuộn trong khung) là bài giải thích chi tiết bằng tiếng Anh của tác giả.",
-        "frameTitle": "CNN Explainer: minh hoạ tương tác một mạng CNN",
-        "narrowHint": "CNN Explainer được thiết kế cho màn hình rộng. Trên điện thoại, hãy mở toàn màn hình và xoay ngang.",
-        "openFull": "Mở toàn màn hình",
-        "openOriginal": "Trang gốc",
-        "credit": "CNN Explainer của Zijie J. Wang, Robert Turko, Omar Shaikh, Haekyu Park, Nilaksh Das, Fred Hohman, Minsuk Kahng và Polo Chau (Polo Club of Data Science, Georgia Tech), phát hành theo giấy phép MIT. VietnamCV lưu một bản sao nguyên vẹn để nhúng vào trang này.",
+        "body": "Một CNN nhỏ (TinyVGG, 10 lớp) chạy ngay trong trình duyệt của bạn bằng TensorFlow.js. Chọn một ảnh mẫu ở hàng trên cùng, rồi bấm vào từng neuron để xem convolution, ReLU, max pooling và softmax được tính thế nào. Bấm vào tên một lớp (bật Show detail) để nhảy tới phần giải thích tương ứng bên dưới.",
+        "label": "CNN Explainer: mạng CNN tương tác",
+        "loading": "Đang tải mô hình và minh hoạ…",
+        "error": "Không tải được phần minh hoạ. Hãy tải lại trang.",
+        "narrowHint": "Mạng được vẽ cho màn hình rộng. Trên điện thoại, hãy xoay ngang và vuốt sang hai bên để xem hết.",
+        "credit": "CNN Explainer của Zijie J. Wang, Robert Turko, Omar Shaikh, Haekyu Park, Nilaksh Das, Fred Hohman, Minsuk Kahng và Polo Chau (Polo Club of Data Science, Georgia Tech), phát hành theo giấy phép MIT. VietnamCV tách phần minh hoạ tương tác từ mã nguồn gốc và tích hợp trực tiếp vào trang này; nhãn trong minh hoạ giữ nguyên tiếng Anh.",
         "license": "Giấy phép MIT",
         "paper": "Bài báo (IEEE VIS 2020)",
-        "source": "Mã nguồn"
+        "source": "Mã nguồn",
+        "openOriginal": "Trang gốc"
       },
       "sections": {
         "why": {

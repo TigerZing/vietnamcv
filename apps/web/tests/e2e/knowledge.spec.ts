@@ -24,7 +24,7 @@ test.describe("knowledge", () => {
     await expect(page).toHaveURL(/\/vi\/knowledge\/transformer$/);
   });
 
-  test("embeds the vendored CNN Explainer with its credit", async ({
+  test("mounts the CNN Explainer overview in the page with its credit", async ({
     page,
   }) => {
     await page.goto("/vi/knowledge/cnn");
@@ -34,26 +34,27 @@ test.describe("knowledge", () => {
         name: "Convolutional Neural Network (CNN)",
       }),
     ).toBeVisible();
-    const frame = page.getByTitle(
-      "CNN Explainer: minh hoạ tương tác một mạng CNN",
-    );
-    await expect(frame).toHaveAttribute("src", "/cnn-explainer/index.html");
+    const explainer = page.getByRole("region", {
+      name: "CNN Explainer: mạng CNN tương tác",
+    });
+    // The network is drawn straight into the page (no iframe) once the model has run.
+    await expect(explainer.locator("#cnn-svg rect").first()).toBeAttached({
+      timeout: 30_000,
+    });
+    await expect(explainer).toHaveAttribute("aria-busy", "false");
+    await expect(page.locator("iframe")).toHaveCount(0);
     await expect(
       page.getByRole("link", { name: "Giấy phép MIT" }),
     ).toHaveAttribute(
       "href",
       "https://github.com/poloclub/cnn-explainer/blob/master/LICENSE",
     );
-
-    const response = await page.request.get("/cnn-explainer/index.html");
-    expect(response.ok()).toBe(true);
-    const html = await response.text();
-    expect(html).toContain("/cnn-explainer/bundle.js");
-    expect(html).not.toContain("googletagmanager");
-    expect(html).not.toContain("polyfill.io");
     expect((await page.request.get("/cnn-explainer/LICENSE.txt")).ok()).toBe(
       true,
     );
+
+    // A layer name scrolls to the matching Vietnamese section.
+    await expect(page.locator("#article-convolution")).toBeAttached();
   });
 
   test("lists the sections in the contents and jumps to one", async ({
@@ -126,8 +127,8 @@ test.describe("knowledge", () => {
         await page.goto(path);
         const results = await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-          // The embedded CNN Explainer is third-party content we keep unmodified.
-          .exclude('iframe[src="/cnn-explainer/index.html"]')
+          // CNN Explainer's own markup is third-party content we keep unmodified.
+          .exclude(".cnn-explainer")
           .analyze();
         const serious = results.violations.filter((violation) =>
           ["serious", "critical"].includes(violation.impact ?? ""),

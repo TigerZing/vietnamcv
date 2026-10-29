@@ -1631,15 +1631,16 @@
     "cnn": {
       "explainer": {
         "title": "Interactive illustration: CNN Explainer",
-        "body": "A small CNN (TinyVGG, 10 classes) runs right in your browser with TensorFlow.js. Pick a sample image or upload your own, then click any neuron to see how convolution, ReLU, max pooling and softmax are computed. Below the visualization (scroll inside the frame) is the authors' detailed explanation.",
-        "frameTitle": "CNN Explainer: an interactive visualization of a CNN",
-        "narrowHint": "CNN Explainer is designed for wide screens. On a phone, open it full screen and turn the phone sideways.",
-        "openFull": "Open full screen",
-        "openOriginal": "Original site",
-        "credit": "CNN Explainer by Zijie J. Wang, Robert Turko, Omar Shaikh, Haekyu Park, Nilaksh Das, Fred Hohman, Minsuk Kahng and Polo Chau (Polo Club of Data Science, Georgia Tech), released under the MIT License. VietnamCV keeps an unmodified copy to embed on this page.",
+        "body": "A small CNN (TinyVGG, 10 classes) runs right in your browser with TensorFlow.js. Pick a sample image in the top row, then click any neuron to see how convolution, ReLU, max pooling and softmax are computed. Click a layer name (with Show detail on) to jump to its explanation below.",
+        "label": "CNN Explainer: an interactive CNN",
+        "loading": "Loading the model and the illustration…",
+        "error": "The illustration could not be loaded. Please reload the page.",
+        "narrowHint": "The network is drawn for wide screens. On a phone, turn it sideways and swipe left and right to see all of it.",
+        "credit": "CNN Explainer by Zijie J. Wang, Robert Turko, Omar Shaikh, Haekyu Park, Nilaksh Das, Fred Hohman, Minsuk Kahng and Polo Chau (Polo Club of Data Science, Georgia Tech), released under the MIT License. VietnamCV extracted the interactive visualization from the original source and integrates it directly into this page; labels inside it stay in English.",
         "license": "MIT License",
         "paper": "Paper (IEEE VIS 2020)",
-        "source": "Source code"
+        "source": "Source code",
+        "openOriginal": "Original site"
       },
       "sections": {
         "why": {
