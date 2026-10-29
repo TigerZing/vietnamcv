@@ -60,6 +60,14 @@ describe("knowledge topics", () => {
       { kind: "paragraph", text: "Last." },
     ]);
   });
+
+  it("starts a list right after its lead-in line", () => {
+    expect(bodyBlocks("Three rules:\n- a\n- b\nAfter.")).toEqual([
+      { kind: "paragraph", text: "Three rules:" },
+      { kind: "list", items: ["a", "b"] },
+      { kind: "paragraph", text: "After." },
+    ]);
+  });
 });
 
 describe("toy self-attention", () => {

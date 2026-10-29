@@ -1642,6 +1642,10 @@
         "source": "Source code",
         "openOriginal": "Original site"
       },
+      "hyperparameters": {
+        "label": "Convolution hyperparameter playground",
+        "caption": "Playground from CNN Explainer: drag the sliders to change the input size, padding (the border cells in a different shade), kernel size and stride, and hover over the matrices to move the kernel (red). The output on the right shrinks or keeps its size exactly as the formula above says; a stride that cannot slide evenly to the edge is flagged. Labels inside stay in English."
+      },
       "sections": {
         "why": {
           "title": "Why CNNs?",

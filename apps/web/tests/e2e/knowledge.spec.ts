@@ -57,6 +57,17 @@ test.describe("knowledge", () => {
     await expect(page.locator("#article-convolution")).toBeAttached();
   });
 
+  test("mounts the convolution hyperparameter playground", async ({ page }) => {
+    await page.goto("/vi/knowledge/cnn");
+    const playground = page.getByRole("region", {
+      name: "Bảng thử siêu tham số của convolution",
+    });
+    await expect(playground.locator('input[type="range"]')).toHaveCount(4, {
+      timeout: 30_000,
+    });
+    await expect(playground).toHaveAttribute("aria-busy", "false");
+  });
+
   test("lists the sections in the contents and jumps to one", async ({
     page,
   }) => {

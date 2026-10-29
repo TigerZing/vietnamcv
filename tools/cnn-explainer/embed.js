@@ -1,4 +1,5 @@
 import Explainer from "./Explainer.svelte";
+import HyperparameterView from "./detail-view/Hyperparameterview.svelte";
 
 // The upstream page binds smooth-scroll to every in-page link of the document and scrolls
 // to its article sections. Embedded, the host page owns its links, so only the explicit
@@ -9,9 +10,16 @@ window.SmoothScroll = function SmoothScroll() {
   };
 };
 
-window.CnnExplainer = {
-  mount(target) {
-    const app = new Explainer({ target });
+function mounter(Component) {
+  return (target) => {
+    const app = new Component({ target });
     return () => app.$destroy();
-  },
+  };
+}
+
+window.CnnExplainer = {
+  /** The network overview and its detail views. */
+  mount: mounter(Explainer),
+  /** The convolution hyperparameter playground from the upstream article. */
+  mountHyperparameters: mounter(HyperparameterView),
 };
