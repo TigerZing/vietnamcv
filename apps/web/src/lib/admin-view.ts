@@ -48,6 +48,7 @@ export function adminQuery(view: Partial<AdminView>): Record<string, string> {
 
 /** Where a content item is shown on the site, without the locale prefix. */
 export function contentPath(type: string, slug: string): string {
+  if (type === "video") return `/videos#${slug}`;
   return type === "demo"
     ? `/demos/${slug.replace(/^demo-/, "")}`
     : `/news/${slug}`;

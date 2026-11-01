@@ -18,6 +18,7 @@ from app.modules.content.models import (
 from app.modules.identity.models import AdminAccount, User
 from app.modules.media.models import MediaAsset
 from app.modules.news.models import NewsItem
+from app.modules.videos.models import VideoLike
 
 __all__ = [
     "AdminAccount",
@@ -34,4 +35,5 @@ __all__ = [
     "OutboxEvent",
     "Source",
     "User",
+    "VideoLike",
 ]

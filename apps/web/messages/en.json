@@ -21,6 +21,7 @@
     "knowledge": "Knowledge",
     "tasks": "Tasks",
     "demos": "Demos",
+    "videos": "Videos",
     "search": "Search",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
@@ -159,6 +160,43 @@
     "aboutNote": "Summary written by VietnamCV from the original post.",
     "emptyTitle": "No demo products yet",
     "emptyBody": "Demo products will appear here once they are added."
+  },
+  "Videos": {
+    "title": "Videos",
+    "lead": "Short computer vision videos: swipe to keep watching, with bilingual captions.",
+    "loading": "Loading videos…",
+    "offlineTitle": "Cannot reach the video server",
+    "offlineBody": "This tab reads videos from your machine. Run the command below in Terminal, then try again.",
+    "retry": "Try again",
+    "emptyTitle": "No videos yet",
+    "emptyBody": "Add videos to the fb_videos folder, then reload the page.",
+    "controls": "Playback settings",
+    "fontSize": "Text size",
+    "fontSmaller": "Smaller text",
+    "fontLarger": "Larger text",
+    "captions": "Captions",
+    "captionModes": {
+      "both": "Bilingual",
+      "vi": "Vietnamese",
+      "orig": "Original",
+      "off": "Off"
+    },
+    "speed": "Speed",
+    "player": "Video: {title}",
+    "play": "Play",
+    "pause": "Pause",
+    "seek": "Seek",
+    "like": "Like",
+    "unlike": "Remove like",
+    "comments": "Comments",
+    "commentsOn": "Comments on {title}",
+    "closeComments": "Close comments",
+    "share": "Copy link",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "openOriginal": "View original post",
+    "linkCopied": "Link copied",
+    "likeFailed": "Could not save your like. Please try again."
   },
   "Discover": {
     "title": "Discover",
@@ -1850,6 +1888,7 @@
       }
     },
     "types": {
+      "video": "Video",
       "news": "News",
       "demo": "Demo"
     },

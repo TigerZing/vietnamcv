@@ -21,6 +21,7 @@
     "knowledge": "Kiến thức",
     "tasks": "Chủ đề",
     "demos": "Sản phẩm demo",
+    "videos": "Video",
     "search": "Tìm kiếm",
     "openMenu": "Mở menu",
     "closeMenu": "Đóng menu"
@@ -159,6 +160,43 @@
     "aboutNote": "Tóm tắt do VietnamCV viết từ bài đăng gốc.",
     "emptyTitle": "Chưa có sản phẩm demo",
     "emptyBody": "Các sản phẩm demo sẽ xuất hiện ở đây khi được thêm vào."
+  },
+  "Videos": {
+    "title": "Video",
+    "lead": "Video ngắn về thị giác máy tính, vuốt để xem tiếp, có phụ đề song ngữ.",
+    "loading": "Đang tải video…",
+    "offlineTitle": "Chưa kết nối được máy chủ video",
+    "offlineBody": "Tab này lấy video từ máy của bạn. Hãy chạy lệnh dưới đây trong Terminal rồi thử lại.",
+    "retry": "Thử lại",
+    "emptyTitle": "Chưa có video nào",
+    "emptyBody": "Thêm video vào thư mục fb_videos rồi tải lại trang.",
+    "controls": "Tùy chỉnh phát video",
+    "fontSize": "Cỡ chữ",
+    "fontSmaller": "Giảm cỡ chữ",
+    "fontLarger": "Tăng cỡ chữ",
+    "captions": "Phụ đề",
+    "captionModes": {
+      "both": "Song ngữ",
+      "vi": "Tiếng Việt",
+      "orig": "Gốc",
+      "off": "Tắt"
+    },
+    "speed": "Tốc độ",
+    "player": "Video: {title}",
+    "play": "Phát",
+    "pause": "Tạm dừng",
+    "seek": "Tua video",
+    "like": "Thích",
+    "unlike": "Bỏ thích",
+    "comments": "Bình luận",
+    "commentsOn": "Bình luận về {title}",
+    "closeComments": "Đóng bình luận",
+    "share": "Sao chép liên kết",
+    "mute": "Tắt tiếng",
+    "unmute": "Bật tiếng",
+    "openOriginal": "Xem bài gốc",
+    "linkCopied": "Đã sao chép liên kết",
+    "likeFailed": "Chưa lưu được lượt thích. Vui lòng thử lại."
   },
   "Discover": {
     "title": "Khám phá",
@@ -1850,6 +1888,7 @@
       }
     },
     "types": {
+      "video": "Video",
       "news": "Tin tức",
       "demo": "Demo"
     },

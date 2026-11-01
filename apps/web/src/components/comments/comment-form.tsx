@@ -3,7 +3,7 @@
 import { LogOut } from "lucide-react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useActionState, useId, useState } from "react";
+import { useActionState, useEffect, useId, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import type { CommentThread } from "@/lib/comments";
@@ -41,12 +41,15 @@ export function CommentForm({
   viewer,
   googleEnabled,
   signInFailed,
+  onPosted,
 }: {
   thread: CommentThread;
   returnTo: string;
   viewer: CommentViewer | null;
   googleEnabled: boolean;
   signInFailed: boolean;
+  /** For threads loaded in the browser, which the action's refresh does not reach. */
+  onPosted?: () => void;
 }) {
   const t = useTranslations("Comments");
   const [state, action, pending] = useActionState<CommentFormState, FormData>(
@@ -66,6 +69,13 @@ export function CommentForm({
     setClearedAt(state.at);
     setBody("");
   }
+  const postedAt =
+    state.status === "error" || state.status === "idle" ? 0 : state.at;
+  useEffect(() => {
+    if (postedAt) onPosted?.();
+    // Once per submission: the callback's identity must not re-fire it.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postedAt]);
 
   const modes: { value: Mode; disabled: boolean }[] = [
     { value: "anonymous", disabled: false },

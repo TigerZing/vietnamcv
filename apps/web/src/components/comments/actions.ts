@@ -61,7 +61,9 @@ export async function postComment(
   const { data, error, response } =
     thread.kind === "demos"
       ? await api.POST("/api/v1/demos/{slug}/comments", options)
-      : await api.POST("/api/v1/news/{slug}/comments", options);
+      : thread.kind === "videos"
+        ? await api.POST("/api/v1/videos/{slug}/comments", options)
+        : await api.POST("/api/v1/news/{slug}/comments", options);
 
   if (data) {
     refresh();
