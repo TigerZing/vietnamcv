@@ -3,8 +3,8 @@ import "server-only";
 import { api, ApiError } from "./api";
 import type { CommentPage } from "./news";
 
-/** What a comment thread hangs off: a news post or a demo product (ADR-013). */
-export type CommentThread = { kind: "news" | "demos"; slug: string };
+/** What a comment thread hangs off: a news post, a demo (ADR-013) or a video (ADR-019). */
+export type CommentThread = { kind: "news" | "demos" | "videos"; slug: string };
 
 export async function listComments(
   thread: CommentThread,
@@ -17,7 +17,9 @@ export async function listComments(
   const { data, error, response } =
     thread.kind === "demos"
       ? await api.GET("/api/v1/demos/{slug}/comments", options)
-      : await api.GET("/api/v1/news/{slug}/comments", options);
+      : thread.kind === "videos"
+        ? await api.GET("/api/v1/videos/{slug}/comments", options)
+        : await api.GET("/api/v1/news/{slug}/comments", options);
   if (!data) throw ApiError.fromEnvelope(response.status, error);
   return data;
 }

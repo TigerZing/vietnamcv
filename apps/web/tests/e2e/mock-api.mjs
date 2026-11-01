@@ -102,6 +102,8 @@ const news = [
   },
 ];
 const comments = new Map(news.map((item) => [item.slug, []]));
+const videoComments = new Map();
+const videoLikes = new Map();
 // Demo threads, keyed `demo-<id>` like services/api/seed/demos.json.
 const demoComments = new Map(
   Array.from({ length: 19 }, (_, i) => [
@@ -343,11 +345,35 @@ createServer(async (req, res) => {
     });
     return send(res, 200, { items, next_cursor: null });
   }
+  const engagementMatch = path.match(
+    /^\/api\/v1\/videos\/([a-z0-9-]+)\/(engagement|like)$/,
+  );
+  if (engagementMatch) {
+    const [, slug, action] = engagementMatch;
+    const likes = videoLikes.get(slug) ?? new Set();
+    videoLikes.set(slug, likes);
+    const visitor = req.headers["x-visitor-id"];
+    if (action === "like" && req.method === "PUT") likes.add(visitor);
+    if (action === "like" && req.method === "DELETE") likes.delete(visitor);
+    return send(res, 200, {
+      likes: likes.size,
+      comments: videoComments.get(slug)?.length ?? 0,
+      liked: likes.has(visitor),
+    });
+  }
+
   const commentsMatch = path.match(
-    /^\/api\/v1\/(news|demos)\/([a-z0-9-]+)\/comments$/,
+    /^\/api\/v1\/(news|demos|videos)\/([a-z0-9-]+)\/comments$/,
   );
   if (commentsMatch) {
-    const threads = commentsMatch[1] === "demos" ? demoComments : comments;
+    const threads =
+      commentsMatch[1] === "demos"
+        ? demoComments
+        : commentsMatch[1] === "videos"
+          ? videoComments
+          : comments;
+    if (commentsMatch[1] === "videos" && !threads.has(commentsMatch[2]))
+      threads.set(commentsMatch[2], []);
     const list = threads.get(commentsMatch[2]);
     if (!list) return notFound(res);
     if (req.method === "POST") {

@@ -27,6 +27,7 @@ from app.core.db import Base, TimestampMixin, UUIDPrimaryKeyMixin
 class ContentType(StrEnum):
     NEWS = "news"
     DEMO = "demo"  # a demo product shown on /demos (ADR-013)
+    VIDEO = "video"  # a short video shown on /videos, registered on first use (ADR-019)
 
 
 class ContentStatus(StrEnum):
@@ -105,7 +106,7 @@ class Source(UUIDPrimaryKeyMixin, Base):
 class Content(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     __tablename__ = "contents"
     __table_args__ = (
-        CheckConstraint("type IN ('news', 'demo')", name="type"),
+        CheckConstraint("type IN ('news', 'demo', 'video')", name="type"),
         CheckConstraint(
             _in("status", ContentStatus),
             name="status",
