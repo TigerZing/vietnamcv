@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.7
 # One image runs the API, the Celery worker and Celery beat (different commands).
 
-FROM python:3.12-slim-bookworm AS builder
+FROM python:3.15-slim-bookworm AS builder
 RUN pip install --no-cache-dir uv==0.11.32
 ENV UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
@@ -13,7 +13,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-install-project
 COPY services/api/ ./
 
-FROM python:3.12-slim-bookworm AS runtime
+FROM python:3.15-slim-bookworm AS runtime
 ENV PATH="/opt/venv/bin:$PATH" \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
